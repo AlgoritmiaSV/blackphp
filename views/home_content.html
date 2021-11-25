@@ -1,0 +1,25 @@
+	<div class="company_header table">
+		<div class="cell">
+			<img class="company_logo" src="{{ comp_logo }}" alt="Logo">
+		</div>
+		<div class="cell">
+			<h3 class="center">{{ comp_name }}</h3>
+			<table class="info_table">
+				<tbody>
+					<tr>
+						<td>Sucursal:</td>
+						<td>{{ branch_name }}</td>
+					</tr>
+					<tr>
+						<td>Fecha del servidor:</td>
+						<td>{{ real_date }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div>
+		[[ modules ]]
+		<div class="menu_title">{{ module_name }}</div>
+		{{ module_menu }} [[/ modules ]]
+	</div>

@@ -1,0 +1,103 @@
+.show_details_table
+{
+	border-collapse: collapse;
+	border: 1px solid #a0a0a0;
+	margin: 10px 0px;
+	width: 100%;
+}
+
+.show_details_table td, .show_details_table th
+{
+	border: 1px solid #a0a0a0;
+	vertical-align: top;
+}
+
+.details_main_content
+{
+	background-color: #D9D9D9;
+}
+
+.close_details
+{
+	width: 15px;
+	float: right;
+	padding: 5px;
+	border-radius: 3px;
+	margin:-5px -5px 0px 0px;
+}
+
+.close_details:hover
+{
+	background-color: #cccccc;
+}
+
+.close_details img
+{
+	width: 100%;
+}
+
+.float_container
+{
+	overflow: hidden;
+}
+
+.details_body
+{
+	padding: 10px;
+	overflow: hidden;
+}
+
+.details_content
+{
+	background-color:#ffffff;
+	border-radius: 5px;
+	margin: 5px;
+	box-shadow: 0px 0px 4px 4px #999999;
+	transition: all 1s ease-out;
+}
+
+.details_title
+{
+	padding: 10px;
+	border-radius: 5px 5px 0px 0px;
+	background:linear-gradient(#71A6DB, #559BDB, #438AC9);
+	color: #ffffff;
+}
+
+.totals_table
+{
+	border: 1px solid #a0a0a0;
+	border-collapse: collapse;
+	float: right;
+}
+
+.totals_table td
+{
+	border: 1px solid #a0a0a0;
+}
+
+.details_foot
+{
+	padding: 10px;
+	text-align: right;
+}
+
+.details_users
+{
+	font-style: italic;
+	color: #666644;
+	padding: 10px 5px;
+	border-top: 3px solid #a9a9a9;
+}
+
+.field_label
+{
+	font-weight: bold;
+}
+
+.field_data
+{
+	padding: 5px 0px 10px 5px;
+	display: block;
+	text-align: justify;
+}

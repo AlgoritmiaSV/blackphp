@@ -1,0 +1,102 @@
+/*
+	Styles for print area
+	By: Edwin Fajardo
+	Date-time: 2018-05-20 15:22
+*/
+
+#print_area
+{
+	width:700px;
+	margin:0px auto;
+	display:none;
+}
+
+.data
+{
+	font-weight:bold;
+	display: inline-block;
+}
+
+.new_sheet
+{
+	page-break-before:always;
+}
+
+@media print
+{
+	header, footer, #main_nav, .filter_options, .no_print
+	{
+		display:none;
+	}
+
+	body
+	{
+		background-color:#ffffff;
+	}
+
+	article
+	{
+		padding: 0px;
+	}
+
+	#container
+	{
+		box-shadow: none;
+		background-color:#ffffff;
+		border-radius: 0px;
+	}
+
+	.padding_left
+	{
+		padding:0px 0px 0px 20px;
+	}
+
+	.padding_right
+	{
+		padding:0px 20px 0px 0px;
+	}
+
+	#main_content
+	{
+		padding: 0px;
+		overflow:auto;
+	}
+
+	.form_content
+	{
+		margin: 0px;
+		border-radius: 0px;
+		box-shadow: none;
+	}
+
+	.list_options
+	{
+		display: none;
+	}
+
+	.content-viewer
+	{
+		overflow-x: visible;
+	}
+
+	.details_content
+	{
+		margin: 0px;
+		box-shadow: none;
+		border-radius: 0px;
+		transition: none;
+	}
+}
+
+@media screen
+{
+	.no_screen
+	{
+		display:none;
+	}
+
+	.padding_left, .padding_right
+	{
+		padding:0px 0px 10px 0px;
+	}
+}

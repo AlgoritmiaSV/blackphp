@@ -1,0 +1,710 @@
+/*
+	Main Styles
+	By: Edwin Fajardo.
+		https://www.edwinfajardo.com
+	Date-Time: 2019-12-08 20:58
+	All right reserved.
+*/
+
+@font-face {font-family: "Verdana V2 V1";
+	src: url("../external/fonts/VerdanaV2.eot"); /* IE9*/
+	src: url("../external/fonts/VerdanaV2.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+	url("../external/fonts/VerdanaV2.woff2") format("woff2"), /* chrome、firefox */
+	url("../external/fonts/VerdanaV2.woff") format("woff"), /* chrome、firefox */
+	url("../external/fonts/VerdanaV2.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+	url("../external/fonts/VerdanaV2.svg#Verdana V2 V1") format("svg"); /* iOS 4.1- */
+}
+
+#content_section
+{
+	overflow-y: scroll;
+}
+
+#main_aside
+{
+	display: none;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 200px;
+	background: #ffffff;
+	height: 100%;
+	box-shadow: 0px 0px 5px 5px #999999;
+	/*transition: All 1s ease-out;
+	transform: translateX(210px);*/
+	z-index: 1002;
+}
+
+#main_aside span, #main_aside a
+{
+	display: block;
+	padding: 10px;
+}
+
+#main_aside span
+{
+	display: block;
+	padding: 20px 10px;
+	text-decoration: none;
+	text-align: center;
+}
+
+#main_aside a
+{
+	display: block;
+	padding: 20px 10px;
+	text-decoration: none;
+	border-bottom: 1px solid #d0d0d0;
+}
+
+#main_aside a:hover
+{
+	background-color: #d8f5ee;
+}
+
+#main_content
+{
+	position: relative;
+	overflow: hidden;
+	width: calc(100% - 100px);
+}
+
+#main_footer
+{
+	padding: 10px;
+	background-color: #666666;
+	color: #ffffff;
+}
+
+#main_footer a
+{
+	text-decoration: none;
+	color: #ccccff;
+}
+
+#main_header
+{
+	position: relative;
+	overflow: hidden;
+	padding: 0px 10px;
+	background: linear-gradient(#6083C9, #3E70CA, #2E61BE);
+	color: #ffffff;
+	/*box-shadow: 0px 0px 5px 5px #d9d9d9;*/
+}
+
+#main_title_bar
+{
+	margin: 0px;
+	font-size: 1em;
+}
+
+#main_title_bar .small_logo
+{
+	max-height: 38px;
+	float: left;
+}
+
+#main_title_bar span
+{
+	vertical-align: top;
+	padding: 10px;
+}
+
+#main_nav
+{
+	background-color: #909cb5;
+	width: 80px;
+	/*padding: 10px;*/
+	font-size: 9pt;
+}
+
+#main_nav a
+{
+	display: block;
+	padding: 20px 10px;
+	/*text-align: center;*/
+	background-color: #56698c;;
+	margin-bottom: 2px;
+	color: #ffffff;
+	text-decoration: none;
+	/*border-radius: 3px;*/
+}
+
+#main_nav a:hover
+{
+	text-decoration: underline;
+	background-color: #6F8ABC;
+}
+
+#user_link
+{
+	display: inline-block;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	padding: 10px;
+	color: #d9d9d9;
+	text-decoration: none;
+	border-radius: 3px;
+}
+
+#user_link:hover
+{
+	background-color: #3333;
+}
+
+.blue_button
+{
+	text-decoration: none;
+	background-color: #0000ff;
+	color: #ffffff;
+	border-radius: 3px;
+	padding: 8px;
+	vertical-align: bottom;
+	border: 0px;
+	cursor: pointer;
+}
+
+.blue_button:hover
+{
+	background-color: #3333ff;
+}
+
+.blue_button span
+{
+	display: inline-block;
+	vertical-align: top;
+	padding: 4px 0px;
+}
+
+.float_container
+{
+	overflow: hidden;
+}
+
+.grey_button
+{
+	text-decoration: none;
+	background-color: #444444;
+	color: #ffffff;
+	border-radius: 3px;
+	padding: 8px;
+	vertical-align: bottom;
+	border: 0px;
+	cursor: pointer;
+}
+
+.grey_button:hover
+{
+	background-color: #777777;
+}
+
+.grey_button span
+{
+	display: inline-block;
+	vertical-align: top;
+	padding: 4px 0px;
+}
+
+.red_button
+{
+	text-decoration: none;
+	background-color: #660000;
+	color: #ffffff;
+	border-radius: 3px;
+	padding: 8px;
+	vertical-align: bottom;
+	border: 0px;
+	cursor: pointer;
+}
+
+.red_button:hover
+{
+	background-color: #990000;
+}
+
+.red_button span
+{
+	display: inline-block;
+	vertical-align: top;
+	padding: 4px 0px;
+}
+
+.delete_button
+{
+	float: left;
+}
+
+.cell
+{
+	display: table-cell;
+	vertical-align: top;
+}
+
+.center
+{
+	text-align: center;
+}
+
+.center_table
+{
+	margin: 0px auto;
+}
+
+.company_header
+{
+	overflow: auto;
+	display: table;
+	width: 100%;
+}
+
+.company_header > div
+{
+	display: table-cell;
+	vertical-align: top;
+	padding: 20px;
+}
+
+.company_logo
+{
+	max-width: 200px;
+	max-height: 150px;
+}
+
+.content_viewer
+{
+	overflow-y: scroll;
+	position: relative;
+}
+
+.icon
+{
+	width: 100px;
+}
+
+.medium_icon
+{
+	width: 50px;
+}
+
+.nav_link_active, .nav_link_active_form
+{
+	position: relative;
+}
+
+.nav_link_active:after
+{
+	content: '';
+	position: absolute;
+	top: 16px;
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-right: 10px solid #ffffff;
+	clear: both;
+	right: 0px;
+}
+
+.pagination
+{
+	text-align: right;
+}
+
+.small_button
+{
+	display: inline-block;
+	font-size: 10pt;
+	text-decoration: none;
+	background-color: #d9d9d9;
+	border-radius: 3px;
+	padding: 3px;
+	vertical-align: bottom;
+}
+
+.small_button span
+{
+	display: inline-block;
+	vertical-align: top;
+	padding: 4px 0px;
+}
+
+.small_icon
+{
+	width: 25px;
+}
+
+.right
+{
+	text-align: right;
+}
+
+.table
+{
+	display: table;
+	width: 100%;
+}
+
+html, body
+{
+	height: 100%;
+}
+
+body
+{
+	font-family: "Verdana V2 V1", Verdana, Geneva, Sans-Serif;
+	font-size: 10pt;
+	margin: 0px;
+	padding: 0px;
+}
+
+input, select, textarea
+{
+	font-family: "Verdana V2 V1", Verdana, Geneva, Sans-Serif;
+	font-size: 10pt;
+	padding: 5px;
+	border: 0px;
+	border-bottom: 1px solid #99ccff;
+	outline: 0px;
+}
+
+input:not(.select2-search__field):focus
+{
+	border-bottom: 1px solid #ffffff;
+	box-shadow: 0px 0px 5px 2px #999999;
+}
+
+textarea
+{
+	resize: none;
+}
+
+button
+{
+	font-family: "Verdana V2 V1", Verdana, Geneva, Sans-Serif;
+	font-size: 10pt;
+	padding: 7px;
+}
+
+/* Customize the label (the container) */
+.checkbox_container
+{
+	display: block;
+	position: relative;
+	padding-left: 30px;
+	cursor: grab;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.checkbox_container:hover
+{
+	background-color: #eeeeff;
+}
+
+.checkbox_container label
+{
+	cursor: pointer;
+	display: block;
+	padding: 5px 0px;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox_container input
+{
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark
+{
+	position: absolute;
+	top: 5px;
+	left: 2px;
+	height: 20px;
+	width: 20px;
+	background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox_container:hover input ~ .checkmark
+{
+	background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox_container input:checked ~ .checkmark
+{
+	background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after
+{
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox_container input:checked ~ .checkmark:after
+{
+	display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox_container .checkmark:after
+{
+	left: 6px;
+	top: 2px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+/* Radio buttons */
+/* Customize the label (the container) */
+.radio_container
+{
+	display: block;
+	position: relative;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	padding: 6px 0px 6px 30px;
+}
+
+.radio_inline
+{
+	display: inline-block !important;
+}
+
+/* Hide the browser's default radio button */
+.radio_container input
+{
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+/* Create a custom radio button */
+.radio_checkmark
+{
+	position: absolute;
+	top: 5px;
+	left: 2px;
+	height: 20px;
+	width: 20px;
+	background-color: #eee;
+	border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.radio_container:hover input ~ .radio_checkmark
+{
+	background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.radio_container input:checked ~ .radio_checkmark
+{
+	background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radio_checkmark:after
+{
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio_container input:checked ~ .radio_checkmark:after
+{
+	display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radio_container .radio_checkmark:after
+{
+	top: 6px;
+	left: 6px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+
+/* For prints */
+.print_header
+{
+	display: none;
+}
+
+.company_logo_print
+{
+	width: 100px;
+}
+
+.print_header_content table
+{
+	width: 100%;
+	border-collapse: collapse;
+	border: 0px;
+	border-bottom: 1px solid #666666;
+}
+
+.info_table
+{
+	width: 100%;
+	border-collapse: collapse;
+	color: #666666;
+}
+
+.info_table td
+{
+	padding: 10px;
+	border: 1px solid #999999;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: #ccc;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+.user_container
+{
+	text-align: center;
+}
+
+.user_photo_container
+{
+	display: inline-block;
+	width: 150px;
+	border-radius: 50%;
+	border: 1px solid #d9d9d9;
+}
+
+.user_photo
+{
+	width: 150px;
+}
+
+#user_nickname
+{
+	color: #666666;
+	font-style: italic;
+}
+
+@media screen and (max-width: 799px)
+{
+	.table, .cell:not(.pc_cell)
+	{
+		display: block;
+		width: auto;
+	}
+
+	.content_viewer
+	{
+		overflow-x: scroll;
+	}
+
+	.phone_block
+	{
+		display: block;
+	}
+
+	.phone_inline
+	{
+		display: inline-block;
+	}
+
+	.pc_block, .pc_inline, .pc_cell
+	{
+		display: none;
+	}
+
+	.company_header
+	{
+		text-align: center;
+	}
+
+	#main_nav
+	{
+		width: auto;
+	}
+
+	#main_header
+	{
+		padding: 0px 5px;
+	}
+
+	#main_header h3
+	{
+		margin: 0px;
+		position: relative;
+		padding: 7px 0px 7px 35px;
+	}
+
+	#menu_button
+	{
+		position: absolute;
+		top: 12px;
+		left: 0px;
+	}
+
+	#main_footer
+	{
+		padding: 0px;
+	}
+
+	#main_content
+	{
+		width: auto;
+	}
+}
+
+@media screen and (min-width: 801px)
+{
+	.pc_block
+	{
+		display: block;
+	}
+
+	.pc_inline
+	{
+		display: inline-block;
+	}
+
+	.phone_block, .phone_inline
+	{
+		display: none;
+	}
+}

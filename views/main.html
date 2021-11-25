@@ -1,0 +1,77 @@
+<!DocType html>
+<html>
+	<head>
+		<base href="{{ base_href }}">
+		<title>{{ title }} - NegKit</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		[[ styles ]]
+		<link rel="stylesheet" href="{{ css }}">[[/ styles ]]
+		[[ scripts ]]
+		<script type="text/javascript" src="{{ js }}"></script>[[/ scripts ]]
+		<!-- favicon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="public/icons/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="public/icons/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="public/icons/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="public/icons/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="public/icons/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="public/icons/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="public/icons/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="public/icons/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="public/icons/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="public/icons/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="public/icons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="public/icons/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="public/icons/favicon-16x16.png">
+		<link rel="manifest" href="public/icons/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="public/icons/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+		<!-- end favicon -->
+	</head>
+	<body>
+		<div id="container">
+			<header id="main_header">
+				<h3 id="main_title_bar">
+					<a href="#" id="menu_button" class="phone_inline">
+						<img src="public/images/menu.png" class="small_icon" alt="Menu">
+					</a>
+					<img src="public/images/negkit_dark.png" alt="NegKit logo" class="small_logo">
+					<span class="pc_inline">&laquo; {{ comp_name }} &raquo; {{ title }}</span>
+					<span class="phone_inline">{{ title }}</span>
+				</h3>
+				<!-- user -->
+				<a id="user_link" href="#">{{ user_name }}</a>
+				<!-- /user -->
+			</header>
+			<section id="content_section" class="table">
+				<!-- user -->
+				<nav id="main_nav" class="cell pc_cell">
+					{{ nav }}
+				</nav>
+				<!-- /user -->
+				<article class="cell" id="main_content">
+					{{ content }}
+					<!-- user -->
+					<aside id="main_aside">
+						<span id="u_name">{{ user_name }}</span>
+						<div class="user_container">
+							<div class="user_photo_container">
+								<img class="user_photo" src="{{ user_photo }}" alt="Foto">
+							</div>
+						</div>
+						<span id="user_nickname">{{ nickname }}</span>
+						<a href="#">Mi cuenta</a>
+						<!--a href="#">Mi actividad</a-->
+						<a id="u_close" href="#">Cerrar sesi&oacute;n</a>
+					</aside>
+					<!-- /user -->
+				</article>
+			</section>
+			<footer id ="main_footer">
+				<small>
+					Copyright &copy;2021 <a href="https://www.fayrasystems.com">FAYRA SYSTEMS</a>. All right reserved.
+				</small>
+			</footer>
+		</div>
+	</body>
+</html>

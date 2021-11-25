@@ -1,0 +1,62 @@
+/*
+#	Styles for lists
+#	By: Edwin Fajardo
+#	Date-time: 2018-05-20 17:59
+*/
+
+.loading_data, .loading_error, .loading_success
+{
+	text-align: center;
+	padding:40px 0px;
+}
+
+.sending, .success, .error
+{
+	text-align: center;
+	display: none;
+	padding: 10px 0px;
+}
+
+.loading_data span, .loading_error span, .loading_success span
+{
+	display:inline-block;
+	padding:15px;
+	vertical-align:top;
+}
+
+.sending span, .success span, .error span
+{
+	display: inline-block;
+	padding: 3px;
+	vertical-align: top;
+}
+
+.loading_data span, .sending span
+{
+	color:#777777;
+}
+
+.loading_error
+{
+	display:none;
+}
+
+.loading_error span, .error span
+{
+	color:#ff0000;
+}
+
+.loading_group
+{
+	min-height:100px;
+}
+
+.loading_success
+{
+	display:none;
+}
+
+.loading_success span, .success span
+{
+	color:#009900;
+}

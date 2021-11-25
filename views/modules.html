@@ -1,0 +1,18 @@
+<div class="parent_item">
+	<div class="checkbox_container">
+		<label>{{ module_name }}
+			<input type="checkbox" class="parent_checkbox update_check" name="modules[]" value="{{ module_id }}" data-source="modules">
+			<span class="checkmark"></span>
+		</label>
+	</div>
+	<ul class="children_container">
+		[[ methods ]]
+		<li class="child_item checkbox_container">
+			<label>{{ method_name }}
+				<input type="checkbox" name="methods[]" value="{{ method_id }}" class="child_checkbox update_check" data-source="methods">
+				<span class="checkmark"></span>
+			</label>
+			<span class="aditional_note">{{ method_description }}</span>
+		</li>[[/ methods ]]
+	</ul>
+</div>

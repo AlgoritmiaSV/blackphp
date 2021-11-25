@@ -1,0 +1,16 @@
+/**
+	Print Ticket
+	By: Edwin Fajardo
+	Date-Time: 2021-10-13 09:58
+*/
+
+@page
+{
+	margin: 0px;
+}
+
+.ticket_area
+{
+	font-size: 9pt;
+	padding: 10px;
+}

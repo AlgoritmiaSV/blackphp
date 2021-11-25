@@ -1,0 +1,65 @@
+	<div id="login">
+		<div class="title">Iniciar sesi&oacute;n</div>
+		<form action="test_login" data-module="index">
+			<div class="content table">
+				<div class="cell" id="locked">
+					<img src="{{ comp_logo }}">
+				</div>
+				<div class="cell">
+					<div class="entry">
+						<input id="user_input" type="text" name="nickname" placeholder="Usuario" required>
+					</div>
+					<div class="entry">
+						<input id="pass_input" type="password" name="password" placeholder="Contrase&ntilde;a" required>
+					</div>
+					<div class="entry">
+						<select id="branch_filter" class="data_filter" name="branch_id" data-width="72%" data-module="index">
+						</select>
+					</div>
+					<div class="entry">
+						<button class="blue_button" type="submit" id="login_button">Entrar</button>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="sending">
+			<img src="public/images/loading.gif" class="medium_icon">
+			<span>Accediendo...</span>
+		</div>
+		<div class="error">
+			<img src="public/images/error.png" class="small_icon">
+			<span>Error</span>
+		</div>
+		<div class="success">
+			<img src="public/images/success.png" class="small_icon">
+			<span>&Eacute;xito</span>
+		</div>
+	</div>
+	<div class="credits">
+		<a href="https://www.negkit.com">
+			<img src="public/images/negkit_light.png" alt="NegKit">
+		</a>
+		<span>Es producido por:</span>
+		<a href="https://www.fayrasystems.com">
+			<img src="public/images/fs_logo.png" alt="FAYRA Systems">
+		</a>
+		<span>y distribuido en Centroamérica por:</span>
+		<a href="https://www.redteleinformatica.com">
+			<img src="public/images/rti_logo.png" alt="Red Teleinform&aacute;tica">
+		</a>
+	</div>
+	<div class="center">
+		<table class="info_table">
+			<tr>
+				<td rowspan="2">Cont&aacute;tanos:</td>
+				<td>El Salvador</td>
+				<td>Nicaragua</td>
+				<td>Costa Rica</td>
+			</tr>
+			<tr>
+				<td>(503) 77812455</td>
+				<td>(505) 85959804</td>
+				<td>(506) 71988646</td>
+			</tr>
+		</table>
+	</div>

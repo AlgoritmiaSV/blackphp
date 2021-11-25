@@ -1,0 +1,15 @@
+/*
+	PrintThis CSS
+	By: Edwin Fajardo
+	Date-Time: 2021-08-08 17:21
+*/
+.currency
+{
+	min-width: auto !important;
+}
+
+@page
+{
+	margin: 1.5cm 1cm;
+	size: landscape;
+}

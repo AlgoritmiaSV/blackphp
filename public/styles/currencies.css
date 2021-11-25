@@ -1,0 +1,75 @@
+.currency
+{
+	text-align: right;
+	position: relative;
+	padding-left: 20px !important;
+}
+
+.currency:before
+{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	content: '$';
+	position: absolute;
+	left: 5px;
+	top: 0px;
+	padding-top: inherit;
+	padding-bottom: inherit;
+}
+
+.currencySV
+{
+	text-align: right;
+	position: relative;
+	padding-left: 20px !important;
+}
+
+.currencySV:before
+{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	content: '$';
+	position: absolute;
+	left: 5px;
+	top: 0px;
+	padding-top: inherit;
+	padding-bottom: inherit;
+}
+
+.currencyNI
+{
+	text-align: right;
+	position: relative;
+	padding-left: 20px !important;
+}
+
+.currencyNI:before
+{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	content: 'C$';
+	position: absolute;
+	left: 1px;
+	top: 0px;
+	padding-top: inherit;
+	padding-bottom: inherit;
+}
+
+.currencyCR
+{
+	text-align: right;
+	position: relative;
+	padding-left: 20px !important;
+}
+
+.currencyCR:before
+{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	content: '₡';
+	position: absolute;
+	left: 5px;
+	top: 0px;
+	padding-top: inherit;
+	padding-bottom: inherit;
+}

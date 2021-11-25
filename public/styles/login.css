@@ -1,0 +1,138 @@
+/*
+#	Styles for login
+#	By: Edwin Fajardo
+#	Date-time: 2017-09-20 00:00
+*/
+
+/*	Elements */
+#login
+{
+	width:100%;
+	max-width:600px;
+	margin:40px auto;
+	background-color:#f2f2f2;
+	border-radius:7px;
+}
+
+#locked img
+{
+	width: 160px;
+}
+
+/*	Classes */
+.content
+{
+	padding:10px;
+}
+
+.entry
+{
+	padding:10px 0px;
+}
+
+.entry label
+{
+	display:block;
+}
+
+.title
+{
+	color:#ffffff;
+	background:linear-gradient(#71A6DB, #559BDB, #438AC9);
+	border-radius:7px 7px 0px 0px;
+	padding:10px;
+	text-align:center;
+}
+
+.credits
+{
+	overflow: auto;
+	text-align: center;
+	margin-top: 70px;
+}
+
+.credits a
+{
+	text-decoration: none;
+}
+
+.credits img
+{
+	height: 50px;
+	vertical-align: top;
+}
+
+.credits span
+{
+	color: #666666;
+	display: inline-block;
+	padding: 23px 0px 30px 0px;
+	vertical-align: bottom;
+}
+
+/* tags */
+
+/*	Responsive styles */
+@media screen and (max-width: 800px)
+{
+	/* Elements */
+	#locked
+	{
+		width:100%;
+		text-align:center;
+	}
+
+	#locked img
+	{
+		margin:0px;
+	}
+	/* Class */
+	.entry input
+	{
+		width:90%;
+	}
+
+	/* Tags */
+	button
+	{
+		width:93%;
+	}
+}
+
+@media screen and (min-width: 800px)
+{
+	/* Elements */
+	#locked
+	{
+		width:30%;
+	}
+
+	#locked img
+	{
+		margin:30px 0px;
+	}
+
+	/* Class */
+	.cell
+	{
+		display:table-cell;
+		vertical-align:top;
+	}
+
+	.entry input
+	{
+		width:70%;
+	}
+
+	.table
+	{
+		display:table;
+		width:100%;
+	}
+	
+	/* Tags */
+	button
+	{
+		width:73%;		
+	}
+}

@@ -1,0 +1,26 @@
+/*
+	PrintThis CSS
+	By: Edwin Fajardo
+	Date-Time: 2021-07-29 12:58
+*/
+.currency
+{
+	min-width: auto !important;
+}
+
+@page
+{
+	margin: 0.5cm;
+	size: 10cm 20cm;
+}
+
+body
+{
+	font-size: 10pt;
+	font-family: 'Courier New', Courier, monospace;
+}
+
+*
+{
+	color: #000000 !important;
+}

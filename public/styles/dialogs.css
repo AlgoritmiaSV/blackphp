@@ -1,0 +1,58 @@
+/*
+	Styles for dialogs
+	By: Edwin Fajardo
+	Date-Time: 2020-06-14 22:04
+*/
+
+.ui-dialog
+{
+	box-shadow:0px 0px 20px;
+}
+
+.ui-dialog-titlebar
+{
+	background-color:#5b9bd5;
+}
+
+.ui-dialog-content input
+{
+	width: 278px;
+}
+
+.ui-dialog-content input[type="checkbox"]
+{
+	width: auto;
+}
+
+.ui-dialog-content select
+{
+	width: 290px;
+}
+
+.ui-dialog-content table
+{
+	width: 100%;
+}
+
+.ui-menu-item-wrapper
+{
+	padding: 7px 3px !important;
+}
+
+.ui-datepicker
+{
+	font-size: 12pt;
+}
+
+@media screen and (max-width: 799px)
+{
+	.ui-dialog-content input
+	{
+		width: -webkit-fill-available;
+	}
+	
+	.ui-dialog-content input[type="checkbox"]
+	{
+		width: auto;
+	}
+}

@@ -623,6 +623,11 @@ button
 	font-style: italic;
 }
 
+.table_container
+{
+	overflow-x: auto;
+}
+
 @media screen and (max-width: 799px)
 {
 	.table, .cell:not(.pc_cell)

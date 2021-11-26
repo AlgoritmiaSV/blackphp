@@ -7,6 +7,7 @@ Por hacer
 - Crear opciones para intengrar todo o partes del Framework, en instalaciones existentes o nuevas.
 - Probar enlaces simbólicos para evitar repeticiones de código.
 - Incorporar Controller.php
+- Cambiar el nombre a entidad, para refereirse a una empresa u organización.
 
 Edwin Fajardo  
 [www.edwinfajardo.com](https://www.edwinfajardo.com)

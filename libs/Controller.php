@@ -26,62 +26,72 @@ class Controller
 			$this->view->restrict = array("user");
 		}
 
-		# Company is the enterprise, bussines or organization that use the system
-		# The online version works with subdomain names as company
-		$company = Array();
-		if(Session::get("company") == null)
+		# Entity is the enterprise, bussines or organization that use the system
+		# The online version works with subdomain names as entity
+		$entity = Array();
+		if(Session::get("entity") == null)
 		{
-			$this->loadModel("company");
+			$this->loadModel("entity");
 
-			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first company from database
+			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
 			if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
 			{
-				# Get the first company
-				$company = $this->model->get_company();
+				# Get the first entity
+				$entity = $this->model->get_entity();
 			}
 			else
 			{
-				# Get the company by subdomain
+				# Get the entity by subdomain
 				$server_name = explode(".", $_SERVER["SERVER_NAME"]);
 				$subdomain = $server_name[0];
 				if($subdomain != "installer")
 				{
-					$company = $this->model->get_company_by_subdomain($subdomain);
-					if(!isset($company["sys_name"]))
+					$entity = $this->model->get_entity_by_subdomain($subdomain);
+					if(!isset($entity["sys_name"]))
 					{
 						$protocol = "http";
 						if( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
 							$protocol .= "s";
 						}
-						header("Location: " . $protocol . "://installer." . $server_name[1] . "." . $server_name[2] . "/Instalacion/NuevaEmpresa/" . $subdomain . "/");
+						header("Location: " . $protocol . "://installer." . $server_name[1] . "." . $server_name[2] . "/Instalacion/NuevaEntidad/" . $subdomain . "/");
 						return;
 					}
 				}
 			}
-			Session::set("company", $company);
+			Session::set("entity", $entity);
 		}
 		else
 		{
-			$company = Session::get("company");
+			$entity = Session::get("entity");
 		}
 		$this->view->data["modules"] = Session::get("modules");
 
-		# Each company has a folder on the companies/ location
+		# Each entity has a folder on the entities/ location
 		# default is used in local installations
-		if(!empty($company["comp_subdomain"]))
+		if(!empty($entity["entity_subdomain"]))
 		{
-			$this->view->data["comp_dir"] = "companies/" . $company["comp_subdomain"] . "/";
+			$this->view->data["entity_dir"] = "entities/" . $entity["entity_subdomain"] . "/";
 		}
 		else
 		{
-			$this->view->data["comp_dir"] = "companies/local/";
+			$this->view->data["comp_dir"] = "entities/local/";
 		}
-		$this->view->data["comp_logo"] = glob($this->view->data["comp_dir"] . "logo.*")[0];
+		$this->view->data["entity_logo"] = glob($this->view->data["entity_dir"] . "logo.*")[0];
 
-		# Company vars are always available in the views
-		foreach($company as $key => $item)
+		# Entity vars are always available in the views
+		foreach($entity as $key => $item)
 		{
 			$this->view->data[$key] = $item;
+		}
+
+		#Default theme
+		if(Session::get("theme") == null)
+		{
+			$theme = $this->model->get_first_theme();
+			Session::set("theme_id", $theme["theme_id"]);
+			Session::set("theme_url", $theme["theme_url"]);
+			$this->view->data["theme_id"] = $theme["theme_id"];
+			$this->view->data["theme_url"] = $theme["theme_url"];
 		}
 
 		#Restrictions
@@ -186,7 +196,7 @@ class Controller
 				'external/css/select2.css',
 				'styles/main.css',
 				'styles/loading.css',
-				'styles/login.css'
+				'styles/forms.css'
 				));
 			$this->view->add("scripts", "js", Array(
 				'external/js/jquery-3.2.1.min.js',

@@ -56,110 +56,25 @@ $(function ()
 		$("#" + $(this).data("dialog")).dialog("open");
 	});
 
-	$("#add_category_dialog").dialog({
-		title: "Agregar Categoría",
-		buttons:
-		{
-			"Agregar": function(evt) {
-				$("#category_submit").click();
-			},
-			"Cerrar": function() {
-				$(this).dialog("close");
+	$(".dialog").each(function() {
+		accept = $(this).data("accept") || "Agregar";
+		options = {
+			buttons:
+			{
+				[accept]: function(evt) {
+					$(this).find("form").submit();
+				},
+				"Cerrar": function() {
+					$(this).dialog("close");
+				}
 			}
-		}
-	});
-
-	$("#add_measure_dialog").dialog({
-		title: "Agregar Unidad de medida",
-		buttons:
+		};
+		$(this).dialog(options);
+		if($(this).data("reload"))
 		{
-			"Agregar": function(evt) {
-				$("#measure_submit").click();
-			},
-			"Cerrar": function() {
-				$(this).dialog("close");
-			}
-		}
-	});
-
-	$("#add_provider_dialog").dialog({
-		title: "Agregar Proveedor",
-		buttons:
-		{
-			"Agregar": function(evt) {
-				$("#provider_submit").click();
-			},
-			"Cerrar": function() {
-				$(this).dialog("close");
-			}
-		}
-	});
-
-	$("#add_customer_dialog").dialog({
-		title: "Agregar Cliente",
-		buttons:
-		{
-			"Agregar": function(evt) {
-				$("#customer_submit").click();
-			},
-			"Cerrar": function() {
-				$(this).dialog("close");
-			}
-		}
-	});
-	
-	$("#add_requester_dialog").dialog({
-		title: "Agregar solicitante",
-		buttons:
-		{
-			"Agregar": function(evt) {
-				$("#requester_submit").click();
-			},
-			"Cerrar": function() {
-				$(this).dialog("close");
-			}
-		}
-	});
-
-	$("#add_user_dialog").dialog({
-		title: "Agregar Usuario",
-		buttons:
-		{
-			"Agregar": function(evt) {
-				$("#user_submit").click();
-			},
-			"Cerrar": function() {
-				$(this).dialog("close");
-			}
-		}
-	});
-
-	$("#set_payment_dialog").dialog({
-		title: "Registrar pago",
-		buttons:
-		{
-			"Guardar": function(evt) {
-				$("#payment_submit").click();
-			},
-			"Cerrar": function() {
-				$(this).dialog("close");
-			}
-		}
-	});
-
-	$("#add_physician_dialog").dialog({
-		title: "Registrar médico",
-		buttons:
-		{
-			"Guardar": function(evt) {
-				$("#physician_submit").click();
-			},
-			"Cerrar": function() {
-				$(this).dialog("close");
-			}
-		},
-		close: function(){
-			location.reload();
+			$(this).dialog("option", "close", function() {
+				location.reload();
+			});
 		}
 	});
 });

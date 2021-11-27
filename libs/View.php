@@ -102,5 +102,139 @@ class View
 			}
 		}
 	}
+
+	/**
+	 * Standard methods BlackPHP
+	 * @version 1.0.0
+	 * Default lists, forms, details, menu and errors
+	 */
+
+	public function standard_list()
+	{
+		$this->add("styles", "css", Array(
+			'external/css/jquery-ui.min.css',
+			'external/css/jAlert.css',
+			'external/css/jqpagination.css',
+			'external/css/select2.css',
+			'styles/main.css',
+			'styles/lists.css',
+			'styles/loading.css',
+			'styles/forms.css',
+			'styles/print_area.css',
+			'styles/dialogs.css',
+			'styles/currencies.css'
+		));
+		$this->add("scripts", "js", Array(
+			'external/js/jquery-3.2.1.min.js',
+			'external/js/jquery-ui.min.js',
+			'external/js/jAlert.min.js',
+			'external/js/jquery.jqpagination.min.js',
+			'external/js/select2.min.js',
+			'external/js/printThis.js',
+			'external/js/jquery.floatThead.min.js',
+			'scripts/main.js',
+			'scripts/lists.js',
+			'scripts/forms.js',
+			'scripts/dialogs.js'
+		));
+	}
+
+	public function standard_form()
+	{
+		$this->add("styles", "css", Array(
+			'external/css/jquery-ui.min.css',
+			'external/css/jAlert.css',
+			'external/css/select2.css',
+			'external/css/image-uploader.min.css',
+			'external/css/imagereader.css',
+			'styles/main.css',
+			'styles/loading.css',
+			'styles/forms.css',
+			'styles/dialogs.css',
+			'styles/print_area.css',
+			"styles/currencies.css",
+			'styles/tree.css'
+		));
+		$this->add("scripts", "js", Array(
+			'external/js/jquery-3.2.1.min.js',
+			'external/js/jquery-ui.min.js',
+			'external/js/jAlert.min.js',
+			'external/js/select2.min.js',
+			'external/js/image-uploader.js',
+			'external/js/jquery.imagereader-1.1.0.min.js',
+			'scripts/main.js',
+			'scripts/forms.js',
+			'scripts/lists.js',
+			'scripts/dialogs.js',
+			'scripts/tree.js'
+		));
+	}
+
+	public function standard_details()
+	{
+		$this->add("styles", "css", Array(
+			'external/css/jquery-ui.min.css',
+			'external/css/jAlert.css',
+			'external/css/select2.css',
+			'styles/main.css',
+			'styles/loading.css',
+			'styles/forms.css',
+			'styles/dialogs.css',
+			'styles/print_area.css',
+			'styles/details.css',
+			"styles/currencies.css"
+		));
+		$this->add("scripts", "js", Array(
+			'external/js/jquery-3.2.1.min.js',
+			'external/js/jquery-ui.min.js',
+			'external/js/jAlert.min.js',
+			'external/js/select2.min.js',
+			'external/js/printThis.js',
+			'scripts/main.js',
+			'scripts/lists.js',
+			'scripts/forms.js',
+			'scripts/dialogs.js'
+		));
+	}
+
+	public function standard_menu()
+	{
+		$this->add("styles", "css", Array(
+			'external/css/jquery-ui.min.css',
+			'external/css/jAlert.css',
+			'external/css/select2.css',
+			'styles/main.css',
+			'styles/forms.css',
+			'styles/loading.css',
+			'styles/menu.css'
+		));
+		$this->add("scripts", "js", Array(
+			'external/js/jquery-3.2.1.min.js',
+			'external/js/jquery-ui.min.js',
+			'external/js/jAlert.min.js',
+			'external/js/select2.min.js',
+			'scripts/main.js',
+			'scripts/lists.js',
+			'scripts/dialogs.js',
+			'scripts/forms.js'
+		));
+	}
+
+	public function standard_error()
+	{
+		$this->add("styles", "css", Array(
+			'external/css/jquery-ui.min.css',
+			'external/css/jAlert.css',
+			'external/css/select2.css',
+			'styles/main.css'
+		));
+		$this->add("scripts", "js", Array(
+			'external/js/jquery-3.2.1.min.js',
+			'external/js/jquery-ui.min.js',
+			'external/js/jAlert.min.js',
+			'external/js/select2.min.js',
+			'scripts/main.js'
+		));
+	}
 }
 ?>

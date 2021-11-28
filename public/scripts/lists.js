@@ -118,9 +118,20 @@ $( function()
 			});
 			_div.find(".print_button").click(function() {
 				rand = Math.floor(Math.random() * 100000);
+				print_header = null;
+				if($(".print_header").length)
+				{
+					print_header = $(".print_header").html();
+				}
+				print_footer = null;
+				if($(".print_footer").length)
+				{
+					print_footer = $(".print_footer").html();
+				}
 				$($(this).data("print")).printThis({
 					'loadCSS': $(this).data("css") || "",
-					'header': $(".print_header").html()
+					'header': print_header,
+					'footer': print_footer
 				});
 			});
 			$(".open_dialog_button").click(function() {
@@ -250,9 +261,20 @@ $( function()
 		/* Destroy floatThead to avoid conficts with printThis */
 		$($(this).data("print")).floatThead('destroy');
 		rand = Math.floor(Math.random() * 100000);
+		print_header = null;
+		if($(".print_header").length)
+		{
+			print_header = $(".print_header").html();
+		}
+		print_footer = null;
+		if($(".print_footer").length)
+		{
+			print_footer = $(".print_footer").html();
+		}
 		$($(this).data("print")).printThis({
 			'loadCSS': 'public/styles/print_list.css?r=' + rand,
-			'header': $(".print_header").html()
+			'header': print_header,
+			'footer': print_footer
 		});
 	});
 });

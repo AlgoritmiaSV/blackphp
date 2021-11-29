@@ -396,8 +396,9 @@ $( function()
 		div_success.fadeIn();
 		if(add_selector != null)
 		{
-			json[$("#" + add_selector).data("source")][json[$("#" + add_selector).data("source")].length] = json_result;
-			$("#" + add_selector).select2({"data":json[$("#" + add_selector).data("source")]});
+			source = $("#" + add_selector).data("source");
+			json[source][json[source].length] = json_result;
+			$("#" + add_selector).select2({"data":json[source]});
 			$("#" + add_selector).val(json_result.id).trigger("change");
 		}
 		if(close_dialog != null && !json_result.reload_after)

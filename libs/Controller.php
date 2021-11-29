@@ -64,6 +64,7 @@ class Controller
 		{
 			$entity = Session::get("entity");
 		}
+		$this->entity_id = $entity["entity_id"];
 		$this->view->data["modules"] = Session::get("modules");
 
 		# Each entity has a folder on the entities/ location
@@ -85,7 +86,7 @@ class Controller
 		}
 
 		#Default theme
-		if(Session::get("theme") == null)
+		if(Session::get("theme_id") == null)
 		{
 			$theme = $this->model->get_first_theme();
 			Session::set("theme_id", $theme["theme_id"]);
@@ -152,19 +153,9 @@ class Controller
 					else
 					{
 						$this->view->data["title"] = 'Entrar';
-						$this->view->add("styles", "css", Array(
-							'external/css/jAlert.css',
-							'styles/preloader.css',
-							'styles/main.css',
-							'styles/loading.css'
-							));
-						$this->view->add("scripts", "js", Array(
-							'external/js/jquery-3.2.1.min.js',
-							'external/js/jAlert.min.js',
-							'scripts/main.js'
-							));
-							$this->view->data["nav"] = $this->view->render("nav", true);
-							$this->view->data["content"] = $this->view->render("forbidden", true);
+						$this->view->standard_error();
+						$this->view->data["nav"] = $this->view->render("nav", true);
+						$this->view->data["content"] = $this->view->render("forbidden", true);
 						$this->view->render('main');
 					}
 					exit();
@@ -190,23 +181,7 @@ class Controller
 		else
 		{
 			$this->view->data["title"] = 'Entrar';
-			$this->view->add("styles", "css", Array(
-				'external/css/jquery-ui.min.css',
-				'external/css/jAlert.css',
-				'external/css/select2.css',
-				'styles/main.css',
-				'styles/loading.css',
-				'styles/forms.css'
-				));
-			$this->view->add("scripts", "js", Array(
-				'external/js/jquery-3.2.1.min.js',
-				'external/js/jquery-ui.min.js',
-				'external/js/jAlert.min.js',
-				'external/js/select2.min.js',
-				'scripts/main.js',
-				'scripts/forms.js',
-				'scripts/lists.js'
-				));
+			$this->view->standard_form();
 			$this->view->data["nav"] = "";
 			$this->view->data["content"] = $this->view->render("login", true);
 			$this->view->render('main');

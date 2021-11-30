@@ -47,7 +47,7 @@ class Controller
 				if($subdomain != "installer")
 				{
 					$entity = $this->model->get_entity_by_subdomain($subdomain);
-					if(!isset($entity["sys_name"]))
+					if(!isset($entity["entity_id"]))
 					{
 						$protocol = "http";
 						if( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
@@ -65,19 +65,22 @@ class Controller
 			$entity = Session::get("entity");
 		}
 		$this->entity_id = $entity["entity_id"];
+		$this->entity_subdomain = $entity["entity_subdomain"];
+		$this->entity_name = $entity["entity_name"];
 		$this->view->data["modules"] = Session::get("modules");
 
 		# Each entity has a folder on the entities/ location
 		# default is used in local installations
 		if(!empty($entity["entity_subdomain"]))
 		{
-			$this->view->data["entity_dir"] = "entities/" . $entity["entity_subdomain"] . "/";
+			$this->store_dir = "entities/" . $entity["entity_subdomain"] . "/";
 		}
 		else
 		{
-			$this->view->data["comp_dir"] = "entities/local/";
+			$this->store_dir = "entities/local/";
 		}
-		$this->view->data["entity_logo"] = glob($this->view->data["entity_dir"] . "logo.*")[0];
+		$this->view->data["entity_dir"] = $this->store_dir;
+		$this->view->data["entity_logo"] = glob($this->store_dir . "logo.*")[0];
 
 		# Entity vars are always available in the views
 		foreach($entity as $key => $item)

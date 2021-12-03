@@ -224,7 +224,10 @@ $(function() {
 	$(document).tooltip();
 
 	$("#menu_button").click(function() {
-		$("#main_nav").slideToggle("slow");
+		if($(this).attr("href") == "#")
+		{
+			$("#main_nav").slideToggle("slow");
+		}
 	});
 
 	/* Tabs */

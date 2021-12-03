@@ -265,11 +265,16 @@ class ZKLibrary {
 		$u = unpack('S', $this->checkSum($buf));
 		if(is_array($u))
 		{
-			while(list($key) = each($u))
+			/**
+			 * each is deprecated in PHP 8.0
+			 * Edited by: Edwin Fajardo
+			 */
+			/*while(list($key) = each($u))
 			{
 				$u = $u[$key];
 				break;
-			}
+			}*/
+			$u = array_values($u)[0];
 		}
 		$chksum = $u;
 		$reply_id += 1;

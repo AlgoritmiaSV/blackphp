@@ -29,6 +29,7 @@ class Controller
 		# Entity is the enterprise, bussines or organization that use the system
 		# The online version works with subdomain names as entity
 		$entity = Array();
+		$restrictions = Array();
 		if(Session::get("entity") == null)
 		{
 			$this->loadModel("entity");
@@ -59,10 +60,13 @@ class Controller
 				}
 			}
 			Session::set("entity", $entity);
+			$restrictions = $this->model->get_restrictions($entity["entity_id"]);
+			Session::set("restrictions", $restrictions);
 		}
 		else
 		{
 			$entity = Session::get("entity");
+			$restrictions = Session::get("restrictions");
 		}
 		$this->entity_id = $entity["entity_id"];
 		$this->entity_subdomain = $entity["entity_subdomain"];
@@ -99,9 +103,12 @@ class Controller
 		}
 
 		#Restrictions
-		if($company["barcode"] == 0)
+		foreach($restrictions as $key => $restriction)
 		{
-			$this->view->restrict[] = "company:barcode";
+			if($restriction == 0)
+			{
+				$this->view->restrict[] = "entity:" . $key;
+			}
 		}
 	}
 
@@ -185,6 +192,9 @@ class Controller
 		{
 			$this->view->data["title"] = 'Entrar';
 			$this->view->standard_form();
+			$this->view->add("styles", "css", Array(
+				'styles/login.css'
+				));
 			$this->view->data["nav"] = "";
 			$this->view->data["content"] = $this->view->render("login", true);
 			$this->view->render('main');
@@ -230,6 +240,35 @@ class Controller
 		{
 			$this->view->restrict[] = "edited";
 		}
+	}
+
+	/**
+	 * user_actions
+	 * @version 1.0.9 or higher
+	 * @author Edwin Fajardo <contacto@edwinfajardo.com>
+	 * Date-time: 2021-12-05 16:44
+	 */
+	public function set_user_log($action_key, $element_key, $element_link = 0, $date_time = "")
+	{
+		if(empty($date_time))
+		{
+			$date_time = Date("Y-m-d H:i:s");
+		}
+		$user_model = $this->loadModel("user", "models/", false);
+		$action = $user_model->get_action_id($action_key);
+		$element = $user_model->get_element_id($element_key);
+		if(!isset($action["action_id"]) || !isset($element["element_id"]))
+		{
+			return;
+		}
+		$data_set = Array(
+			"user_id" => Session::get("user_id"),
+			"element_id" => $element["element_id"],
+			"action_id" => $action["action_id"],
+			"date_time" => $date_time,
+			"element_link" => $element_link
+		);
+		$user_model->set_log($data_set);
 	}
 }
 ?>

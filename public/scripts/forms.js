@@ -9,6 +9,12 @@ $( function()
 	json = [];
 	row_count = 1;
 
+	action_module = "index";
+	if(url.module != null && url.module != "")
+	{
+		action_module = url.module;
+	}
+
 	$("#main_content").has(".form_content").addClass("form_main_content");
 
 	/* Build select2 */
@@ -51,7 +57,7 @@ $( function()
 	/* Get form data */
 	$.ajax({
 		method: "POST",
-		url: url.module + "/load_form_data/",
+		url: action_module + "/load_form_data/",
 		data: url,
 		dataType: "json"
 	})
@@ -264,11 +270,6 @@ $( function()
 		close_dialog = $(this).data("close_dialog");
 		add_selector = $(this).data("selector");
 		last_form = $(this);
-		action_module = "index";
-		if(url.module != null && url.module != "")
-		{
-			action_module = url.module;
-		}
 		if($(this).data("module") != null)
 		{
 			action_module = $(this).data("module");

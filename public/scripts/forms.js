@@ -7,7 +7,6 @@ $( function()
 {
 	new_item_row = $(".item_row").first().clone(true);
 	json = [];
-	row_count = 1;
 
 	action_module = "index";
 	if(url.module != null && url.module != "")
@@ -468,7 +467,7 @@ $( function()
 	{
 		if(e.which == 13)
 		{
-			_table = $(this).closest("table");
+			tbody = $(this).closest("tbody");
 			if($(this).closest("tr").is(':last-child'))
 			{
 				last_price = $(this).closest("tr").find(".row_price");
@@ -484,9 +483,9 @@ $( function()
 					return false;
 				}
 				_tr = $(this).closest("tr").clone();
-				_table.append(_tr);
+				tbody.append(_tr);
 				/* Prepare row */
-				_tr.find(".row_count").text(++row_count);
+				_tr.find(".row_count").text(tbody.find("tr").length);
 				_tr.find("input").first().focus();
 				_tr.find("input").val('');
 				_tr.find(".clearable").text("");
@@ -781,13 +780,15 @@ $( function()
 	delete_row_click = function(e) {
 		e.preventDefault();
 		delete_button = $(this);
+		tbody = $(this).closest("tbody");
+		row_count = tbody.find("tr").length;
 		if(row_count < 2)
 		{
 			return false;
 		}
 		$.jAlert({
 			'title': "Confirmar",
-			'content': "¿Está seguro de que desea eliminar la entrada?",
+			'content': "¿Está seguro de que desea eliminar la fila?",
 			'theme': "red",
 			'autofocus': '.jalert_cancel',
 			'btns': [
@@ -805,7 +806,7 @@ $( function()
 					delete_button.closest("tr").remove();
 					calc_bill_total();
 					row_count = 0;
-					$(".row_count").each(function() {
+					tbody.find(".row_count").each(function() {
 						$(this).text(++row_count);
 					});
 					if(row_count < 2)
@@ -867,13 +868,18 @@ $( function()
 
 	/* Add item from button */
 	$(".add_row_button").click(function() {
-		last_tr = $(".items_container").find("tr").last();
+		tbody = $($(this).data("tbody"));
+		if(tbody == null)
+		{
+			tbody = $(".items_container").first();
+		}
+		last_tr = tbody.find("tr").last();
 		last_price = last_tr.find(".row_price");
 		last_product = last_tr.find(".row_product_name");
 		_tr = last_tr.clone();
-		$(".items_container").append(_tr);
+		tbody.append(_tr);
 		/* Prepare row */
-		_tr.find(".row_count").text(++row_count);
+		_tr.find(".row_count").text(tbody.find("tr").length);
 		_tr.find("input").first().focus();
 		_tr.find("input").val('');
 		_tr.find(".date_input").each(set_date_picker);

@@ -134,7 +134,7 @@ tr:hover .action_icon
 	padding: 10px 0px;
 }
 
-.form_entry input, .form_entry textarea
+.form_entry input:not(.default_width), .form_entry textarea
 {
 	width: calc(100% - 181px);
 }

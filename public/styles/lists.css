@@ -58,6 +58,7 @@
 .list_options
 {
 	padding: 5px;
+	min-height: 35px;
 }
 
 .list_options table tr

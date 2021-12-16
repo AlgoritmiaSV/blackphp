@@ -144,7 +144,7 @@ tr:hover .action_icon
 	resize: none;
 }
 
-.form_entry:not(:is(.cell)) label
+.form_entry:not(.cell) label:not(.radio_container)
 {
 	display: inline-block;
 	width: 160px;

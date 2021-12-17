@@ -150,6 +150,7 @@ $( function()
 						_tr.find(".local_code").val(value.local_code);
 						_tr.find(".product_id").val(value.product_id);
 						_tr.find(".gproduct_id").val(value.gproduct_id);
+						_tr.find(".service_id").val(value.service_id);
 						_tr.find(".row_product_name").val(value.product_name);
 						_tr.find(".measure_name").text(value.measure_name);
 						_tr.find(".row_available").text(value.available);
@@ -793,6 +794,8 @@ $( function()
 			'autofocus': '.jalert_cancel',
 			'btns': [
 				{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept', 'onClick':function(){
+					// Temporary Solution:
+					// Products
 					product_id = delete_button.closest("tr").find(".product_id").val();
 					if(product_id != null && product_id != "")
 					{
@@ -803,6 +806,18 @@ $( function()
 						input.attr("type", "hidden");
 						delete_button.closest("form").append(input);
 					}
+					// Services
+					service_id = delete_button.closest("tr").find(".service_id").val();
+					if(service_id != null && service_id != "")
+					{
+						removed = delete_button.closest("tr").find(".item_id").val();
+						input = $(document.createElement("input"));
+						input.val(removed);
+						input.attr("name", "removed_services[]");
+						input.attr("type", "hidden");
+						delete_button.closest("form").append(input);
+					}
+					// Others
 					delete_button.closest("tr").remove();
 					calc_bill_total();
 					row_count = 0;

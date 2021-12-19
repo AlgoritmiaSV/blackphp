@@ -14,18 +14,6 @@ class Index extends Controller
 
 	public function index()
 	{
-		if(Session::get("user_id") == null)
-		{
-			$this->login();
-		}
-		else
-		{
-			$this->home();
-		}
-	}
-
-	public function home()
-	{
 		$this->session_required();
 		$this->view->data["title"] = 'Inicio';
 		$this->view->add("styles", "css", Array(
@@ -44,33 +32,8 @@ class Index extends Controller
 			'scripts/lists.js'
 		));
 		$this->view->data["nav"] = $this->view->render("nav", true);
-		$this->view->data["content"] = $this->view->render("begin", true);
-		$this->view->render('main');
-	}
-
-	public function login()
-	{
-		$this->view->data["title"] = 'Entrar';
-		$this->view->add("styles", "css", Array(
-			'external/css/jquery-ui.min.css',
-			'external/css/jAlert.css',
-			'external/css/select2.css',
-			'styles/preloader.css',
-			'styles/main.css',
-			'styles/loading.css',
-			'styles/login.css'
-			));
-		$this->view->add("scripts", "js", Array(
-			'external/js/jquery-3.2.1.min.js',
-			'external/js/jquery-ui.min.js',
-			'external/js/jAlert.min.js',
-			'external/js/select2.min.js',
-			'scripts/main.js',
-			'scripts/forms.js',
-			'scripts/lists.js'
-			));
-		$this->view->data["nav"] = "";
-		$this->view->data["content"] = $this->view->render("login", true);
+		$this->view->data["content_id"] = "home_content";
+		$this->view->data["content"] = $this->view->render("content_loader", true);
 		$this->view->render('main');
 	}
 
@@ -139,11 +102,6 @@ class Index extends Controller
 			$data["age"] = date_utilities::sql_date_to_age($date);
 		}
 		echo json_encode($data);
-	}
-
-	public function unique_id()
-	{
-		echo phpinfo();
 	}
 }
 ?>

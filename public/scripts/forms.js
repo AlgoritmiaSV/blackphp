@@ -145,18 +145,23 @@ $( function()
 						_tr.find(".delete_row_icon").click(delete_row_click);
 						build_autocomplete(_tr);
 						/* Fill */
-						_tr.find(".item_id").val(value.item_id);
+						//_tr.find(".item_id").val(value.item_id);
 						_tr.find(".row_count").text(++row_count);
-						_tr.find(".local_code").val(value.local_code);
+						/*_tr.find(".local_code").val(value.local_code);
 						_tr.find(".product_id").val(value.product_id);
 						_tr.find(".gproduct_id").val(value.gproduct_id);
 						_tr.find(".service_id").val(value.service_id);
 						_tr.find(".row_product_name").val(value.product_name);
-						_tr.find(".measure_name").text(value.measure_name);
+						_tr.find(".measure_name").text(value.measure_name);*/
 						_tr.find(".row_available").text(value.available);
 						_tr.find(".row_quantity").val(value.quantity);
 						_tr.find(".row_price").val(value.price);
-						_tr.find(".exp_date").val(value.exp_date);
+						//_tr.find(".exp_date").val(value.exp_date);
+						$.each(value, function(v_index, v_value) {
+							_tr.find("input." + v_index).val(v_value);
+							_tr.find("span." + v_index).text(v_value);
+						});
+					
 						if(value.pres_id)
 						{
 							_tr.find(".pres_id").val(value.pres_id);
@@ -171,7 +176,8 @@ $( function()
 						_tr.find(".partial_value").hide();
 						_tr.find(".partial_value").blur(partial_blur);
 						_tr.find(".partial_value").change(partial_change);
-						_tr.find(".row_generics").text("");	
+						/* Generics */
+						_tr.find(".row_generics").text("");
 					});
 					if(row_count > 1)
 					{

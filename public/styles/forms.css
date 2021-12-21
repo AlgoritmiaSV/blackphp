@@ -170,6 +170,13 @@ tr:hover .action_icon
 	color: #ffffff;
 }
 
+.form_section_title
+{
+	padding: 10px;
+	background-color: #eeeeee;
+	font-weight: bold;
+}
+
 .hidden_entry
 {
 	display: none;

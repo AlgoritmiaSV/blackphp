@@ -94,7 +94,7 @@ tr:hover .action_icon
 	padding: 0px;
 }
 
-.details_table td span
+.details_table td:not(.select2_td) span
 {
 	padding: 5px;
 }
@@ -205,7 +205,7 @@ tr:hover .action_icon
 	color: #ffffff;
 }
 
-.form_content th, .form_content td
+.form_content th, .form_content td:not(.select2_td)
 {
 	font-size: 10pt;
 	padding: 5px;

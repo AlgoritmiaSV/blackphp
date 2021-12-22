@@ -489,6 +489,9 @@ $( function()
 					last_price.focus();
 					return false;
 				}
+				$(this).closest("tr").find(".data_selector").each(function() {
+					$(this).select2("destroy");
+				});
 				_tr = $(this).closest("tr").clone();
 				tbody.append(_tr);
 				/* Prepare row */
@@ -514,6 +517,7 @@ $( function()
 				_tr.find(".partial_value").change(partial_change);
 				_tr.find(".row_generics").text("");
 				build_autocomplete(_tr);
+				build_selectors();
 			}
 			return false;
 		}
@@ -897,6 +901,9 @@ $( function()
 		last_tr = tbody.find("tr").last();
 		last_price = last_tr.find(".row_price");
 		last_product = last_tr.find(".row_product_name");
+		last_tr.find(".data_selector").each(function() {
+			$(this).select2("destroy");
+		});
 		_tr = last_tr.clone();
 		tbody.append(_tr);
 		/* Prepare row */
@@ -922,6 +929,7 @@ $( function()
 		_tr.find(".partial_value").blur(partial_blur);
 		_tr.find(".partial_value").change(partial_change);
 		build_autocomplete(_tr);
+		build_selectors();
 	});
 
 	/* Image uploader */

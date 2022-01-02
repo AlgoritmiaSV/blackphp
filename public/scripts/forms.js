@@ -145,18 +145,10 @@ $( function()
 						_tr.find(".delete_row_icon").click(delete_row_click);
 						build_autocomplete(_tr);
 						/* Fill */
-						//_tr.find(".item_id").val(value.item_id);
 						_tr.find(".row_count").text(++row_count);
-						/*_tr.find(".local_code").val(value.local_code);
-						_tr.find(".product_id").val(value.product_id);
-						_tr.find(".gproduct_id").val(value.gproduct_id);
-						_tr.find(".service_id").val(value.service_id);
-						_tr.find(".row_product_name").val(value.product_name);
-						_tr.find(".measure_name").text(value.measure_name);*/
 						_tr.find(".row_available").text(value.available);
 						_tr.find(".row_quantity").val(value.quantity);
 						_tr.find(".row_price").val(value.price);
-						//_tr.find(".exp_date").val(value.exp_date);
 						$.each(value, function(v_index, v_value) {
 							_tr.find("input." + v_index).val(v_value);
 							_tr.find("span." + v_index).text(v_value);
@@ -976,8 +968,18 @@ $( function()
 			$(this).val("");
 			$(this).removeAttr("required");
 		});
+		$(".hidden_entry").find("select").each(function() {
+			$(this).val("");
+			$(this).removeAttr("required");
+		});
 		$(".entry_type_" + value).show();
 		$(".entry_type_" + value).find("input").each(function() {
+			if($(this).data("required") != null)
+			{
+				$(this).attr("required", true);
+			}
+		});
+		$(".entry_type_" + value).find("select").each(function() {
 			if($(this).data("required") != null)
 			{
 				$(this).attr("required", true);

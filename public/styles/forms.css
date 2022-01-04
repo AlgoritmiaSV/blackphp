@@ -205,7 +205,13 @@ tr:hover .action_icon
 	color: #ffffff;
 }
 
-.form_content th, .form_content td:not(.select2_td)
+.form_content th
+{
+	font-size: 8pt;
+	padding: 5px;
+}
+
+.form_content td:not(.select2_td)
 {
 	font-size: 10pt;
 	padding: 5px;

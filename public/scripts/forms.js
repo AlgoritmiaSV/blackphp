@@ -151,6 +151,7 @@ $( function()
 						_tr.find(".row_price").val(value.price);
 						$.each(value, function(v_index, v_value) {
 							_tr.find("input." + v_index).val(v_value);
+							_tr.find("select." + v_index).data("value", v_value);
 							_tr.find("span." + v_index).text(v_value);
 						});
 					
@@ -256,6 +257,7 @@ $( function()
 		}
 		action = $(this).attr("action") || "save";
 		$(this).find(".date_input").each(function() {
+			$(this).data("value", $(this).val());
 			$(this).val($.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate")));
 		});
 		//form_data = $.parseJSON(JSON.stringify($(this).serializeArray()));
@@ -339,6 +341,13 @@ $( function()
 		})
 		.always(function() {
 			div_sending.hide();
+			$(".date_input").each(function() {
+				if($(this).data("value") != null)
+				{
+					$(this).val($(this).data("value"));
+					$(this).removeAttr("data-value");
+				}
+			});
 		});
 	});
 

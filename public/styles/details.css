@@ -101,3 +101,9 @@
 	display: block;
 	text-align: justify;
 }
+
+.profile_photo
+{
+	max-width: 150px;
+	max-height: 200px;
+}

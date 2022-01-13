@@ -4,7 +4,14 @@
 #	By: Edwin Fajardo
 #	Date-time: 2017-09-12 00:00
 */
-include 'config.php';
+if(file_exists('config.php'))
+{
+	include 'config.php';
+}
+else
+{
+	include 'default_config.php';
+}
 #Include all php files from libs folder
 foreach(glob("libs/*") as $file)
 {

@@ -7,7 +7,7 @@
 	define('DB_TYPE', 'mysql');
 	define('DB_HOST', 'localhost');
 	define('DB_PORT', '3306');
-	define('DB_NAME', 'negkit');
-	define('DB_USER', 'user');
-	define('DB_PASS', 'pass');
+	define('DB_NAME', 'blackphp');
+	define('DB_USER', 'bphpuser');
+	define('DB_PASS', 'x/p-29B%&ELYr.6A');
 ?>

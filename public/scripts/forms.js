@@ -517,6 +517,7 @@ $( function()
 				_tr.find(".partial_value").blur(partial_blur);
 				_tr.find(".partial_value").change(partial_change);
 				_tr.find(".row_generics").text("");
+				_tr.find(".local_code").change(search_by_code);
 				build_autocomplete(_tr);
 				build_selectors();
 			}
@@ -579,26 +580,6 @@ $( function()
 							_tr.find(".sale_price").val(ui.item.nvat_price);
 						}
 						_tr.find(".row_available").text(ui.item.quantity);
-						/*if(json.check_availability)
-						{
-							if(ui.item.quantity == 0)
-							{
-								$.jAlert({
-									'title': "Aviso",
-									'content': "Ya no hay disponibilidad para este producto",
-									'theme': "red",
-									'autofocus': '.jalert_accept',
-									'btns': [
-										{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
-								});
-							}
-							else
-							{
-								_tr.find(".row_quantity").val(1);
-								calc_row_total(_tr);
-								calc_bill_total();
-							}
-						}*/
 						row_quantity = _tr.find(".row_quantity").val();
 						if(row_quantity == "")
 						{
@@ -929,6 +910,7 @@ $( function()
 		_tr.find(".partial_value").show();
 		_tr.find(".partial_value").blur(partial_blur);
 		_tr.find(".partial_value").change(partial_change);
+		_tr.find(".local_code").change(search_by_code);
 		build_autocomplete(_tr);
 		build_selectors();
 	});
@@ -1080,4 +1062,20 @@ $( function()
 	{
 		$('#photo').imageReader();
 	}
+
+	/* Search by local_code */
+	function search_by_code()
+	{
+		local_code = $(this).val();
+		list_input = $(this).closest("tr").find(".list_input");
+		items = json[list_input.data("source")];
+		$.each(items, function(index, value) {
+			if(value.local_code == local_code && !value.pres_id)
+			{
+				list_input.val(value.product_name);
+				list_input.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item:value});
+			}
+		});
+	}
+	$(".local_code").change(search_by_code);
 });

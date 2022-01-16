@@ -239,6 +239,12 @@ tr:hover .action_icon
 	visibility: hidden;
 }
 
+.medium_form
+{
+	max-width: 700px;
+	margin: 25px auto;
+}
+
 .small_form
 {
 	max-width: 500px;
@@ -249,8 +255,8 @@ tr:hover .action_icon
 {
 	background-attachment: local;
 	background-image:
-	linear-gradient(to right, white 10px, transparent 10px),
-	linear-gradient(to left, white 10px, transparent 10px),
+	/*linear-gradient(to right, white 10px, transparent 10px),
+	linear-gradient(to left, white 10px, transparent 10px),*/
 	repeating-linear-gradient(white, white 30px, #ccc 30px, #ccc 31px, white 31px);
 	line-height: 31px;
 	border: 0px !important;
@@ -286,6 +292,11 @@ tr:hover .action_icon
 {
 	border: 0px;
 	border-bottom: 1px solid #666666;
+}
+
+.card_table textarea
+{
+	width: 100%;
 }
 
 @media screen and (max-width: 799px)

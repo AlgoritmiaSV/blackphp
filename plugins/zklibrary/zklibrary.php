@@ -655,7 +655,7 @@ class ZKLibrary {
 		$command_string = $byte1.$byte2.chr($finger);
 		return $this->execCommand($command, $command_string);
 	}
-	public function getUser()
+	public function getUser($mode = 1)
 	{
 		$command = CMD_USERTEMP_RRQ;
 		$command_string = chr(5);
@@ -693,28 +693,57 @@ class ZKLibrary {
 				}
 				$user_data = implode('', $this->user_data);
 				$user_data = substr($user_data, 11);
-				while(strlen($user_data) > 72)
+				if($mode == 1)
 				{
-					$u = unpack('H144', substr($user_data, 0, 72));
-					$u1 = hexdec(substr($u[1], 2, 2));
-					$u2 = hexdec(substr($u[1], 4, 2));
-					$uid = $u1+($u2*256);                               // 2 byte
-					$role = hexdec(substr($u[1], 6, 2)).' ';            // 1 byte
-					$password = hex2bin(substr( $u[1], 8, 16 )).' ';    // 8 byte
-					$name = hex2bin(substr($u[1], 24, 74 )). ' ';      // 37 byte
-					$userid = hex2bin(substr($u[1], 98, 72)).' ';      // 36 byte
-					$passwordArr = explode(chr(0), $password, 2);       // explode to array
-					$password = $passwordArr[0];                        // get password
-					$useridArr = explode(chr(0), $userid, 2);           // explode to array
-					$userid = $useridArr[0];                            // get user ID
-					$nameArr = explode(chr(0), $name, 3);               // explode to array
-					$name = $nameArr[0];                                // get name
-					if($name == "")
+					while(strlen($user_data) > 72)
 					{
-						$name = $uid;
+						$u = unpack('H144', substr($user_data, 0, 72));
+						$u1 = hexdec(substr($u[1], 2, 2));
+						$u2 = hexdec(substr($u[1], 4, 2));
+						$uid = $u1+($u2*256);                               // 2 byte
+						$role = hexdec(substr($u[1], 6, 2)).' ';            // 1 byte
+						$password = hex2bin(substr( $u[1], 8, 16 )).' ';    // 8 byte
+						$name = hex2bin(substr($u[1], 24, 74 )). ' ';      // 37 byte
+						$userid = hex2bin(substr($u[1], 98, 72)).' ';      // 36 byte
+						$passwordArr = explode(chr(0), $password, 2);       // explode to array
+						$password = $passwordArr[0];                        // get password
+						$useridArr = explode(chr(0), $userid, 2);           // explode to array
+						$userid = $useridArr[0];                            // get user ID
+						$nameArr = explode(chr(0), $name, 3);               // explode to array
+						$name = $nameArr[0];                                // get name
+						if($name == "")
+						{
+							$name = $uid;
+						}
+						$users[$uid] = array($userid, $name, intval($role), $password);
+						$user_data = substr($user_data, 72);
 					}
-					$users[$uid] = array($userid, $name, intval($role), $password);
-					$user_data = substr($user_data, 72);
+				}
+				else
+				{
+					while(strlen($user_data) > 28)
+					{
+						$u = unpack('H56', substr($user_data, 0, 28));
+						$u1 = hexdec(substr($u[1], 2, 2));
+						$u2 = hexdec(substr($u[1], 4, 2));
+						$uid = $u1+($u2*256);                               // 2 byte
+						$role = hexdec(substr($u[1], 6, 2)).' ';            // 1 byte
+						$password = hex2bin(substr( $u[1], 8, 16 )).' ';    // 8 byte
+						$name = hex2bin(substr($u[1], 18, 16 )). ' ';      // 37 byte
+						$userid = hex2bin(substr($u[1], 34, 2)).' ';      // 36 byte
+						$passwordArr = explode(chr(0), $password, 2);       // explode to array
+						$password = $passwordArr[0];                        // get password
+						$useridArr = explode(chr(0), $userid, 2);           // explode to array
+						$userid = $useridArr[0];                            // get user ID
+						$nameArr = explode(chr(0), $name, 3);               // explode to array
+						$name = $nameArr[0];                                // get name
+						if($name == "")
+						{
+							$name = $uid;
+						}
+						$users[$uid] = array($userid, $name, intval($role), $password);
+						$user_data = substr($user_data, 28);
+					}
 				}
 			}
 			return $users;
@@ -972,7 +1001,7 @@ class ZKLibrary {
 		$command = CMD_CANCELCAPTURE;
 		return $this->execCommand($command);
 	}
-	public function getAttendance() 
+	public function getAttendance($mode = 1) 
 	{
 		$command = CMD_ATTLOG_RRQ;
 		$command_string = '';
@@ -1009,21 +1038,39 @@ class ZKLibrary {
 				}
 				$attendance_data = implode('', $this->attendance_data);
 				$attendance_data = substr($attendance_data, 10);
-				while(strlen($attendance_data) > 40) 
+				if($mode == 1)
 				{
-					$u = unpack('H78', substr($attendance_data, 0, 39));
-					$u1 = hexdec(substr($u[1], 4, 2));
-					$u2 = hexdec(substr($u[1], 6, 2));
-					$uid = $u1+($u2*256);
-					$id = str_replace("\0", '', hex2bin(substr($u[1], 8, 16)));
-					$state = hexdec(substr( $u[1], 56, 2 ) );
-					$timestamp = $this->decodeTime(hexdec($this->reverseHex(substr($u[1], 58, 8)))); 
-					array_push($attendance, array($uid, $id, $state, $timestamp));
-					$attendance_data = substr($attendance_data, 40 );
+					while(strlen($attendance_data) > 40)
+					{
+						$u = unpack('H78', substr($attendance_data, 0, 39));
+						$u1 = hexdec(substr($u[1], 4, 2));
+						$u2 = hexdec(substr($u[1], 6, 2));
+						$uid = $u1+($u2*256);
+						$id = str_replace("\0", '', hex2bin(substr($u[1], 8, 16)));
+						$state = hexdec(substr( $u[1], 56, 2 ) );
+						$timestamp = $this->decodeTime(hexdec($this->reverseHex(substr($u[1], 58, 8)))); 
+						array_push($attendance, array($uid, $id, $state, $timestamp));
+						$attendance_data = substr($attendance_data, 40 );
+					}
+				}
+				else
+				{
+					while(strlen($attendance_data) > 10)
+					{
+						$u = unpack('H20', substr($attendance_data, 0, 10));
+						$u1 = hexdec(substr($u[1], 4, 2));
+						$u2 = hexdec(substr($u[1], 6, 2));
+						$uid = $u1+($u2*256);
+						$id = str_replace("\0", '', hex2bin(substr($u[1], 8, 6)));
+						$state = hexdec(substr( $u[1], 10, 2 ) );
+						$timestamp = $this->decodeTime(hexdec($this->reverseHex(substr($u[1], 12, 8))));
+						array_push($attendance, array($uid, $id, $state, $timestamp));
+						$attendance_data = substr($attendance_data, 8);
+					}
 				}
 			}
 			return $attendance;
-		} 
+		}
 		catch(exception $e) 
 		{
 			return false;

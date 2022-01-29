@@ -915,6 +915,28 @@ $( function()
 		build_selectors();
 	});
 
+	$(".add_entry_button").click(function() {
+		container = $($(this).data("container"));
+		last_entry = container.find(".form_entry").last();
+		last_entry.find(".data_selector").each(function() {
+			$(this).select2("destroy");
+		});
+		entry = last_entry.clone();
+		container.append(entry);
+		/* Prepare entry */
+		entry.find(".entry_count").text(container.find(".form_entry").length);
+		entry.find("input").first().focus();
+		entry.find("input").val('');
+		entry.find(".date_input").each(set_date_picker);
+		//entry.find(".delete_entry_icon").click(delete_entry_click);
+		entry.find(".extra_data").text("");
+		$(".delete_entry_icon").css({
+			"visibility":"visible"
+		});
+		build_autocomplete(entry);
+		build_selectors();
+	});
+
 	/* Image uploader */
 	if($('.input-images').length)
 	{

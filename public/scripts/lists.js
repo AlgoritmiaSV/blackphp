@@ -176,7 +176,22 @@ $( function()
 	/* Filter loader */
 	filter_content = [];
 	$(".data_filter").each(function() {
-		load_filter($(this).attr("id"));
+		if($(this).is("select"))
+		{
+			load_filter($(this).attr("id"));
+		}
+		else
+		{
+			$(this).change(function(){
+				if($(this).is(".date_input"))
+				{
+					$(this).data("value", $(this).val());
+					$(this).val($.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate")));
+				}
+				url.options[$(this).data("identifier")] = $(this).val();
+				goto_url();
+			});
+		}
 	});
 
 	function load_filter(selector_id)

@@ -143,6 +143,11 @@ $( function()
 			}
 			//Show data viewer
 			_div.find(".data_viewer").show();
+
+			/* Link row */
+			$(".link_row").click(function() {
+				location.href = $(this).data("href");
+			});
 		})
 		.fail(function() {
 			$("div.loading_error").show();

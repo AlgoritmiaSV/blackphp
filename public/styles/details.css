@@ -107,3 +107,14 @@
 	max-width: 150px;
 	max-height: 200px;
 }
+
+.link_row
+{
+	cursor: pointer;
+}
+
+.link_row:hover
+{
+	color: #0000ff;
+	background-color: #d9d9d9;
+}

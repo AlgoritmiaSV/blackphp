@@ -47,8 +47,8 @@ class Index extends Controller
 
 	public function home_content_loader()
 	{
-		$this->loadModel("company");
-		$company = Session::get("company");
+		$this->loadModel("entity");
+		$company = Session::get("entity");
 		$this->view->data["real_date"] = date_utilities::sql_date_to_string(Date("Y-m-d"));
 		foreach($company as $key => $value)
 		{
@@ -60,7 +60,7 @@ class Index extends Controller
 		foreach($this->view->data["modules"] as $key => $module)
 		{
 			$this->view->data["module"] = $module["module_url"];
-			$this->view->data["methods"] = $this->model->get_company_methods(Session::get("company")["comp_id"], $module["module_id"]);
+			$this->view->data["methods"] = $this->model->get_entity_methods($this->entity_id, $module["module_id"]);
 			$this->view->data["modules"][$key]["module_menu"] = $this->view->render("generic_menu", true);
 		}
 		$this->view->render('home_content');
@@ -75,7 +75,7 @@ class Index extends Controller
 	public function branch_filter_loader()
 	{
 		$data = Array();
-		$this->loadModel("company");
+		/*$this->loadModel("company");
 		if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
 		{
 			$data["results"] = $this->model->get_branches_by_company(1);
@@ -84,7 +84,7 @@ class Index extends Controller
 		{
 			$subdomain = explode(".", $_SERVER["SERVER_NAME"])[0];
 			$data["results"] = $this->model->get_branches_by_subdomain($subdomain);
-		}
+		}*/
 		echo json_encode($data);
 	}
 

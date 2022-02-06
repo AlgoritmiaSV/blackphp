@@ -1,0 +1,83 @@
+<div class="form_content">
+	<form action="save_installation" data-reset="{{ module }}/">
+		<div class="form_title">
+			Sistema
+		</div>
+		<div class="form_body">
+			<input type="hidden" name="entity_id" class="update_input">
+			<input type="hidden" name="subdomain" value="{{ subdomain }}">
+			<div class="form_entry">
+				<label>Nombre de la distribuci&oacute;n:</label>
+				<input name="sys_name" maxlength="64" class="update_input" value="ERP">
+			</div>
+			<div>
+				<label>M&oacute;dulos:</label>
+				{{ modules }}
+			</div>
+		</div>
+		<div class="form_title">
+			Datos de la empresa
+		</div>
+		<div class="form_body">
+			<div class="form_entry">
+				<label>Nombre de la empresa o negocio:</label>
+				<input name="entity_name" maxlength="64" class="update_input" required>
+			</div>
+			<div class="form_entry">
+				<label>Eslogan:</label>
+				<input name="entity_slogan" maxlength="64" class="update_input">
+			</div>
+		</div>
+		<p>Logotipo de la empresa:</p>
+		<div class="input-images"></div>
+		<div class="form_title">
+			Usuario administrador
+		</div>
+		<div class="form_body">
+			<input type="hidden" name="admin_user" class="update_input">
+			<div class="form_entry">
+				<label>Nombre completo:</label>
+				<input name="user_name" maxlength="64" class="update_input" required>
+			</div>
+			<div class="form_entry">
+				<label>Usuario:</label>
+				<input name="nickname" maxlength="32" class="update_input" required>
+			</div>
+			<div class="form_entry">
+				<label>Contrase&ntilde;a:</label>
+				<input name="password" type="password" maxlength="256">
+			</div>
+			<div class="form_entry">
+				<label>Confirmar ontrase&ntilde;a:</label>
+				<input name="confirm_password" type="password" maxlength="256">
+			</div>
+		</div>
+		<div class="form_title">
+			Otras configuraciones
+		</div>
+		<div class="form_body">
+			<p>No hay m&aacute;s configuraciones que realizar.</p>
+		</div>
+		<div class="form_foot">
+			<button class="blue_button" type="submit">Guardar</button>
+			<!-- inside_installation -->
+			<button class="grey_button cancel_button" type="reset">Cancelar</button>
+			<!-- /inside_installation -->
+			<!-- outside_installation -->
+			<button class="grey_button" type="button" id="u_close">Cancelar</button>
+			<!-- /outside_installation -->
+		</div>
+	</form>
+	<div class="sending">
+		<img src="public/images/loading.gif" class="small_icon">
+		<span>Guardando...</span>
+	</div>
+	<div class="error">
+		<img src="public/images/error.png" class="small_icon">
+		<span>Error al guardar</span>
+	</div>
+	<div class="success">
+		<img src="public/images/success.png" class="small_icon">
+		<span>Guardado con &eacute;xito</span>
+	</div>
+</div>

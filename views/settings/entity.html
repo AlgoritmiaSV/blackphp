@@ -1,0 +1,39 @@
+<div class="content_viewer">
+	<div class="form_content medium_form">
+		<form action="save_entity" data-reset="{{ module }}/" enctype="multipart/form-data">
+			<div class="form_title">
+				Datos de la entidad
+				<a class="close_form" href="#"><img src="public/images/close.png"></a>
+			</div>
+			<div class="form_body">
+				<input type="hidden" name="entity_id" class="update_input">
+				<div class="form_entry">
+					<label>Nombre de la entidad:</label>
+					<input name="entity_name" maxlength="64" class="update_input">
+				</div>
+				<div class="form_entry">
+					<label>Eslogan:</label>
+					<input name="entity_slogan" maxlength="128" class="update_input">
+				</div>
+			</div>
+			<p>Logotipo de la empresa:</p>
+			<div class="input-images"></div>
+			<div class="form_foot">
+				<button class="blue_button" type="submit">Guardar</button>
+				<button class="grey_button cancel_button" type="reset">Cancelar</button>
+			</div>
+		</form>
+		<div class="sending">
+			<img src="public/images/loading.gif" class="small_icon">
+			<span>Guardando...</span>
+		</div>
+		<div class="error">
+			<img src="public/images/error.png" class="small_icon">
+			<span>Error al guardar</span>
+		</div>
+		<div class="success">
+			<img src="public/images/success.png" class="small_icon">
+			<span>Guardado con &eacute;xito</span>
+		</div>
+	</div>
+</div>

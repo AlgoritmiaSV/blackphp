@@ -6,18 +6,18 @@
 
 class user_Model extends Model
 {
-	public function get_access($nickname, $password, $comp_id)
+	public function get_access($nickname, $password, $entity_id)
 	{
 		$params = Array("nickname" => $nickname,
 					"password" => md5($password),
 					"status" => 1,
-					"comp_id" => $comp_id);
+					"entity_id" => $entity_id);
 		$query =	"SELECT u.*,
 						t.theme_url
 					FROM users AS u
 					LEFT JOIN app_themes AS t
 						ON u.theme_id = t.theme_id
-					WHERE u.comp_id = :comp_id
+					WHERE u.entity_id = :entity_id
 						AND u.nickname = :nickname
 						AND u.password = :password
 						AND u.status = :status";
@@ -33,15 +33,15 @@ class user_Model extends Model
 		return $this->db->select($query, false, $params);
 	}
 
-	public function get_user_by_nickname($nickname, $comp_id)
+	public function get_user_by_nickname($nickname, $entity_id)
 	{
 		$params = Array(
 			"nickname" => $nickname,
-			"comp_id" => $comp_id
+			"entity_id" => $entity_id
 		);
 		$query =	"SELECT *
 					FROM users
-					WHERE comp_id = :comp_id
+					WHERE entity_id = :entity_id
 						AND nickname = :nickname";
 		return $this->db->select($query, false, $params);
 	}
@@ -95,16 +95,16 @@ class user_Model extends Model
 		return $this->db->select($query, false, $params);
 	}
 
-	public function get_all($comp_id)
+	public function get_all($entity_id)
 	{
 		$params = Array(
 			"system_user" => "system",
 			"status" => 0,
-			"comp_id" => $comp_id
+			"entity_id" => $entity_id
 		);
 		$query =	"SELECT *
 					FROM users
-					WHERE comp_id = :comp_id
+					WHERE entity_id = :entity_id
 						AND NOT nickname = :system_user
 						AND NOT status = :status
 					ORDER BY user_name ASC";
@@ -213,50 +213,18 @@ class user_Model extends Model
 		return $this->db->select($query, false, $params);
 	}
 
-	public function get_user_branches($user_id)
+	public function get_user_entity_modules($entity_id, $user_id)
 	{
 		$params = Array(
-			"user_id" => $user_id
-		);
-		$query =	"SELECT b.branch_name,
-							b.branch_id,
-							b.branch_id AS id
-					FROM branches AS b,
-						user_branches AS ub
-					WHERE b.branch_id = ub.branch_id
-						AND ub.user_id = :user_id
-						AND b.status = 1
-						AND ub.status = 1";
-		return $this->db->select($query, true, $params);
-	}
-
-	public function set_branch_access($data)
-	{
-		$result = Array();
-		$result["affected"] = $this->db->insert("user_branches", $data);
-		$result["id"] = $this->db->lastInsertId();
-		return $result;
-	}
-
-	public function update_branch_access($data)
-	{
-		$result = Array();
-		$result["affected"] = $this->db->update("user_branches", $data, "ubranch_id = :ubranch_id");
-		return $result;
-	}
-
-	public function get_user_company_modules($comp_id, $user_id)
-	{
-		$params = Array(
-			"comp_id" => $comp_id,
+			"entity_id" => $entity_id,
 			"user_id" => $user_id
 		);
 		$query =	"SELECT m.*,
 						um.access_type
-					FROM company_modules AS cm,
+					FROM entity_modules AS cm,
 						app_modules AS m,
 						user_modules AS um
-					WHERE cm.comp_id = :comp_id
+					WHERE cm.entity_id = :entity_id
 						AND m.module_id = cm.module_id
 						AND cm.status = 1
 						AND um.module_id = m.module_id

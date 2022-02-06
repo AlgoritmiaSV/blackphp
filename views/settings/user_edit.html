@@ -1,0 +1,66 @@
+<div class="form_content medium_form">
+	<form action="save_user" data-reset="{{ module }}/Usuarios">
+		<div class="form_title">
+			Editar usuario
+			<a class="close_form" href="#"><img src="public/images/close.png"></a>
+		</div>
+		<div class="form_body">
+			<input type="hidden" name="user_id" class="update_input">
+			<div class="form_entry">
+				<label>Nombre completo:</label>
+				<input type="text" name="user_name" maxlength="64" class="update_input" required>
+			</div>
+			<div class="form_entry">
+				<label>Usuario:</label>
+				<!-- edition -->
+				<input type="text" name="nickname" maxlength="32" class="update_input" readonly>
+				<!-- /edition -->
+				<!-- creation -->
+				<input type="text" name="nickname" maxlength="32">
+				<!-- /creation -->
+			</div>
+			<div class="form_entry">
+				<label>Contrase&ntilde;a:</label>
+				<input type="password" name="password" maxlength="32" class="equal_value">
+			</div>
+			<!-- edition -->
+			<small>Para conservar la contrase&ntilde;a anterior, deje los campos vac&iacute;os.</small>
+			<!-- /edition -->
+			<div class="form_entry">
+				<label>Confirmar contrase&ntilde;a:</label>
+				<input type="password" name="confirm_password" maxlength="32" class="equal_value">
+			</div>
+			<!-- no_self -->
+			<div>
+				<p>Dar acceso a:</p>
+				[[ modules ]]
+				<div class="checkbox_container">
+					<label>{{ module_url }}
+						<input type="checkbox" name="modules[]" value="{{ module_id }}" class="update_check" data-source="modules">
+						<span class="checkmark"></span>
+					</label>
+				</div>[[/ modules ]]
+			</div>
+			<!-- /no_self -->
+		</div>
+		<div class="form_foot">
+			<!-- no_self --><!-- edition -->
+			<button class="red_button delete_button" type="button" data-url="{{ module }}/delete_user/" data-next="{{ module }}/Usuarios/">Eliminar</button>
+			<!-- /no_self --><!-- /edition -->
+			<button class="blue_button" type="submit">Guardar</button>
+			<button class="grey_button cancel_button" type="reset">Cancelar</button>
+		</div>
+	</form>
+	<div class="sending">
+		<img src="public/images/loading.gif" class="small_icon">
+		<span>Guardando...</span>
+	</div>
+	<div class="error">
+		<img src="public/images/error.png" class="small_icon">
+		<span>Error al guardar</span>
+	</div>
+	<div class="success">
+		<img src="public/images/success.png" class="small_icon">
+		<span>Guardado con &eacute;xito</span>
+	</div>
+</div>

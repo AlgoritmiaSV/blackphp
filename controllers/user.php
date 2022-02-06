@@ -28,11 +28,11 @@ class User extends Controller
 			return;
 		}
 		$this->loadModel("user");
-		$user = $this->model->get_access($_POST["nickname"], $_POST["password"], Session::get("company")["comp_id"]);
+		$user = $this->model->get_access($_POST["nickname"], $_POST["password"], $this->entity_id);
 		if(isset($user["nickname"]))
 		{
 			# Select branch
-			$branch = $this->model->get_branch($_POST["branch_id"], $user["user_id"]);
+			/*$branch = $this->model->get_branch($_POST["branch_id"], $user["user_id"]);
 			if(!isset($branch["branch_name"]))
 			{
 				$data["title"] = "Error";
@@ -44,8 +44,8 @@ class User extends Controller
 			else
 			{
 				Session::set("branch", $branch);
-				$data["reload"] = true;
-			}
+			}*/
+			$data["reload"] = true;
 
 			foreach ($user as $key => $value) {
 				Session::set($key, $value);
@@ -87,7 +87,7 @@ class User extends Controller
 			);
 			$this->model->set_user_session($data_set);
 			#Set modules
-			Session::set("modules", $this->model->get_user_company_modules(Session::get("company")["comp_id"], $user["user_id"]));
+			Session::set("modules", $this->model->get_user_entity_modules($this->entity_id, $user["user_id"]));
 		}
 		else
 		{

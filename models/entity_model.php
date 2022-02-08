@@ -128,39 +128,31 @@ class entity_Model extends Model
 		return $result;
 	}
 
-	public function get_company_method($comp_id, $method_id)
+	public function get_entity_method($entity_id, $method_id)
 	{
 		$params = Array(
-			"comp_id" => $comp_id,
+			"entity_id" => $entity_id,
 			"method_id" => $method_id
 		);
 		$query =	"SELECT *
-					FROM company_methods
-					WHERE comp_id = :comp_id
+					FROM entity_methods
+					WHERE entity_id = :entity_id
 						AND method_id = :method_id";
 		return $this->db->select($query, false, $params);
 	}
 
-	public function set_company_method($data)
+	public function set_entity_method($data)
 	{
 		$result = Array();
-		$result["affected"] = $this->db->insert("company_methods", $data);
+		$result["affected"] = $this->db->insert("entity_methods", $data);
 		$result["id"] = $this->db->lastInsertId();
 		return $result;
 	}
 
-	public function set_branch($data)
+	public function update_entity_method($data)
 	{
 		$result = Array();
-		$result["affected"] = $this->db->insert("branches", $data);
-		$result["id"] = $this->db->lastInsertId();
-		return $result;
-	}
-
-	public function update_company_method($data)
-	{
-		$result = Array();
-		$result["affected"] = $this->db->update("company_methods", $data, "comp_id = :comp_id AND method_id = :method_id");
+		$result["affected"] = $this->db->update("entity_methods", $data, "entity_id = :entity_id AND method_id = :method_id");
 		return $result;
 	}
 

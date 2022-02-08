@@ -30,10 +30,9 @@ class Controller
 		# The online version works with subdomain names as entity
 		$entity = Array();
 		$restrictions = Array();
+		$this->loadModel("entity");
 		if(Session::get("entity") == null)
 		{
-			$this->loadModel("entity");
-
 			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
 			if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
 			{

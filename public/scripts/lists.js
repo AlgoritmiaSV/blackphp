@@ -222,12 +222,12 @@ $( function()
 					placeholder: _selector.data("placeholder") || "",
 					width: _selector.data("width") || "resolve"
 				}
-				if(_selector.data("search") == "true" || _selector.data("default") == "none")
+				if(_selector.data("search") != "none" || _selector.data("default") == "none")
 				{
 					item = $(document.createElement("option"));
 					item.appendTo(_selector);
 				}
-				if(_selector.data("search") != "true")
+				if(_selector.data("search") == "none")
 				{
 					select_params.minimumResultsForSearch = Infinity;
 				}

@@ -299,6 +299,11 @@ tr:hover .action_icon
 	width: 100%;
 }
 
+.template
+{
+	display: none;
+}
+
 @media screen and (max-width: 799px)
 {
 	.form_entry label

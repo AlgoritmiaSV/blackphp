@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 06, 2022 at 05:22 PM
+-- Generation Time: Feb 07, 2022 at 11:53 PM
 -- Server version: 10.3.31-MariaDB-0+deb10u1
 -- PHP Version: 7.3.31-1~deb10u1
 
@@ -336,7 +336,7 @@ CREATE TABLE `user_recovery` (
 CREATE TABLE `user_sessions` (
   `usession_id` int(11) NOT NULL COMMENT 'ID de la tabla',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
-  `branch_id` int(11) NOT NULL COMMENT 'Sucursal en la que inició sesión',
+  `branch_id` int(11) DEFAULT NULL COMMENT 'Sucursal en la que inició sesión',
   `ip_address` varchar(15) NOT NULL COMMENT 'Dirección IP desde donde se conecta',
   `browser_id` int(11) DEFAULT NULL COMMENT 'Navegador que usa',
   `date_time` datetime NOT NULL COMMENT 'Fecha y hora'

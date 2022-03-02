@@ -73,6 +73,13 @@ $( function()
 					'scrollContainer': true
 				});
 			}
+			/* Fill content outside table after load */
+			if(data.load_after)
+			{
+				$.each(data.load_after, function(index, value) {
+					$("." + index).text(value);
+				});
+			}
 		})
 		.fail(function() {
 			$("div.loading_error").show();

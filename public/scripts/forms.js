@@ -686,6 +686,7 @@ $( function()
 	$("#paid_amount_input").change(function() {
 		payment = parseFloat($(this).val());
 		total = $("#total").val();
+		total = parseFloat(total.replace(",",""));
 		change = payment - total;
 		if(!isNaN(change))
 		{

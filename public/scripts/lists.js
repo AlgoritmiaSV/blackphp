@@ -298,8 +298,9 @@ $( function()
 		{
 			print_footer = $(".print_footer").html();
 		}
+		css = $(this).data("css") == null ? 'public/styles/print_list.css?r=' + rand : $(this).data("css");
 		$($(this).data("print")).printThis({
-			'loadCSS': 'public/styles/print_list.css?r=' + rand,
+			'loadCSS': css,
 			'header': print_header,
 			'footer': print_footer
 		});

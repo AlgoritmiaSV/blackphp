@@ -89,7 +89,6 @@
 	padding: 0px 10px;
 	background: linear-gradient(#6083C9, #3E70CA, #2E61BE);
 	color: #ffffff;
-	/*box-shadow: 0px 0px 5px 5px #d9d9d9;*/
 }
 
 #main_title_bar
@@ -114,14 +113,13 @@
 {
 	background-color: #909cb5;
 	width: 80px;
-	/*padding: 10px;*/
 	font-size: 9pt;
 }
 
 #main_nav a
 {
 	display: block;
-	padding: 15px 10px;
+	padding: 14px 10px;
 	/*text-align: center;*/
 	background-color: #56698c;;
 	margin-bottom: 2px;

@@ -17,6 +17,7 @@ $( function()
 	$("#main_content").has(".form_content").addClass("form_main_content");
 
 	/* Build select2 */
+	building_entry_selector = true;
 	function build_selectors()
 	{
 		$(".data_selector:not(.select2-hidden-accessible)").each(function() {
@@ -51,6 +52,8 @@ $( function()
 			}
 		});
 		$("#bill_type").change();
+		$(".entry_selector").change();
+		building_entry_selector = false;
 	}
 
 	/* Get form data */
@@ -979,11 +982,17 @@ $( function()
 		value = $(e.target).val();
 		$(".hidden_entry").hide();
 		$(".hidden_entry").find("input").each(function() {
-			$(this).val("");
+			if(!building_entry_selector)
+			{
+				$(this).val("");
+			}
 			$(this).removeAttr("required");
 		});
 		$(".hidden_entry").find("select").each(function() {
-			$(this).val("");
+			if(!building_entry_selector)
+			{
+				$(this).val("");
+			}
 			$(this).removeAttr("required");
 		});
 		$(".entry_type_" + value).show();

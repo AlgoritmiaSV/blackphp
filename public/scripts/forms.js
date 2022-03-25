@@ -1102,7 +1102,7 @@ $( function()
 		list_input = $(this).closest("tr").find(".list_input");
 		items = json[list_input.data("source")];
 		$.each(items, function(index, value) {
-			if(value.local_code == local_code && !value.pres_id)
+			if((value.local_code == local_code || value.barcode == local_code) && !value.pres_id)
 			{
 				list_input.val(value.product_name);
 				list_input.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item:value});

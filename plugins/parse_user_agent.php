@@ -54,7 +54,11 @@ function parse_user_agent( $u_agent = null ) {
 	// If nothing matched, return null (to avoid undefined index errors)
 	if( !isset($result['browser'][0]) || !isset($result['version'][0]) ) {
 		if( preg_match('%^(?!Mozilla)(?P<browser>[A-Z0-9\-]+)(/(?P<version>[0-9A-Z.]+))?%ix', $u_agent, $result) ) {
-			return array( 'platform' => $platform ?: null, 'browser' => $result['browser'], 'version' => isset($result['version']) ? $result['version'] ?: null : null );
+			return array(
+				'platform' => $platform ?: null,
+				'browser' => $result['browser'],
+				'version' => isset($result['version']) ? $result['version'] : null
+			);
 		}
 		return $empty;
 	}

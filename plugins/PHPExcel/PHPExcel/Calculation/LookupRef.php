@@ -500,7 +500,7 @@ class PHPExcel_Calculation_LookupRef
      * @param    match_type        The number -1, 0, or 1. -1 means above, 0 means exact match, 1 means below. If match_type is 1 or -1, the list has to be ordered.
      * @return    integer            The relative position of the found item
      */
-    public static function MATCH($lookup_value, $lookup_array, $match_type = 1)
+    public static function MATCH1($lookup_value, $lookup_array, $match_type = 1)
     {
         $lookup_array = PHPExcel_Calculation_Functions::flattenArray($lookup_array);
         $lookup_value = PHPExcel_Calculation_Functions::flattenSingleValue($lookup_value);

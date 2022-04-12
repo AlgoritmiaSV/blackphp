@@ -146,3 +146,19 @@
 {
 	width: 100%;
 }
+
+.bill_table
+{
+	width: 100%;
+}
+
+.list_options
+{
+	padding: 5px;
+	min-height: 40px;
+}
+
+.list_options table tr
+{
+	height: 35px;
+}

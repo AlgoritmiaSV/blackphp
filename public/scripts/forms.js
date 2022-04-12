@@ -184,6 +184,8 @@ $( function()
 					calc_bill_total();
 				}
 			});
+			$(".current").change(calculate_consumption);
+			$(".current").trigger("change");
 		}
 		if(json.presentations)
 		{
@@ -1095,7 +1097,7 @@ $( function()
 		$('#photo').imageReader();
 	}
 
-	/* Search by local_code */
+	/* Search by local_code and barcode */
 	function search_by_code()
 	{
 		local_code = $(this).val();
@@ -1145,4 +1147,33 @@ $( function()
 		.always(function() {
 		});	
 	});
+
+	/** Calculate consumption */
+	calculate_consumption = function() {
+		tr = $(this).closest("tr");
+		previous_value = parseInt(tr.find(".previous").text());
+		current_value = parseInt($(this).val());
+		consumption_span = tr.find(".consumption");
+		if(isNaN(previous_value) || isNaN(current_value))
+		{
+			return false;
+		}
+		consumption = current_value - previous_value;
+		if(consumption < 0)
+		{
+			$.jAlert({
+				'title': "Error",
+				'content': "La lectura no puede ser inferior a " + previous_value + ".",
+				'theme': "red",
+				'autofocus': '.jalert_accept',
+				'btns': [
+					{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
+			});
+			consumption_span.text("");
+		}
+		else
+		{
+			consumption_span.text(consumption);
+		}
+	};
 });

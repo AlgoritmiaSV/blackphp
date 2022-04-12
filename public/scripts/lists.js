@@ -286,7 +286,10 @@ $( function()
 	/* Print button */
 	$(".print_button").click(function() {
 		/* Destroy floatThead to avoid conficts with printThis */
-		$($(this).data("print")).floatThead('destroy');
+		if($(".data_viewer").length > 0)
+		{
+			$($(this).data("print")).floatThead('destroy');
+		}
 		rand = Math.floor(Math.random() * 100000);
 		print_header = null;
 		if($(".print_header").length)

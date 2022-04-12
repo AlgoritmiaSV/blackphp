@@ -233,7 +233,10 @@ $(function() {
 	/* Tabs */
 	$( "#tabs" ).accordion({
 		collapsible: true,
-		heightStyle: "content"
+		heightStyle: "content",
+		activate: function() {
+			$("textarea").trigger("input");
+		}
 	});
 
 	$(".back_button").click(function() {

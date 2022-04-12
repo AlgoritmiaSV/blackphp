@@ -230,6 +230,7 @@ $( function()
 			setTimeout(unique_selection, 500);
 		});
 		unique_selection();
+		$("textarea").trigger("input");
 	})
 	.fail(function() {
 	})

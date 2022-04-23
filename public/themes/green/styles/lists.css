@@ -14,13 +14,13 @@
 
 .data_viewer, .data_viewer td, .data_viewer th
 {
-	border: 1px solid #666666;
+	border: 1px solid #cccccc;
 	border-collapse:collapse;
 }
 
 .data_viewer tbody tr:nth-child(even)
 {
-	background-color: #000000;
+	background-color: #f0f0ff;
 }
 
 /*.data_viewer tbody tr:nth-child(odd)
@@ -35,12 +35,12 @@
 
 .data_viewer thead
 {
-	background-color: #666666;
+	background-color: #ffffff;
 }
 
 .data_viewer tfoot
 {
-	background-color: #666666;
+	background-color: #ffffff;
 	font-weight: bold;
 }
 
@@ -58,16 +58,17 @@
 .list_options
 {
 	padding: 5px;
+	min-height: 40px;
 }
 
-.list_options tr
+.list_options table tr
 {
 	height: 35px;
 }
 
 .data_search
 {
-	border: 1px solid #394b5e;
+	border: 1px solid #99ccff;
 	border-radius: 3px;
 	width: 50%;
 	min-width: 300px;
@@ -81,7 +82,7 @@
 
 .data_viewer tbody tr:hover
 {
-	background-color: #222c36;
+	background-color: #99ccff;
 }
 
 @media screen and (max-width: 799px)

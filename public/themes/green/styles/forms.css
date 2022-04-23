@@ -26,7 +26,7 @@ tr:hover .action_icon
 
 .form_main_content
 {
-	background-color: #0f0f0f;
+	background-color: #D9D9D9;
 }
 
 .classifier_button
@@ -41,12 +41,12 @@ tr:hover .action_icon
 	padding: 5px;
 	border-radius: 3px;
 	margin:-5px -5px 0px 0px;
-	background-color: #808080;
+	background-color: transparent;
 }
 
 .close_form:hover
 {
-	background-color: #666666;
+	background-color: #cccccc;
 }
 
 .close_form img
@@ -94,19 +94,19 @@ tr:hover .action_icon
 	padding: 0px;
 }
 
-.details_table td span
+.details_table td:not(.select2_td) span
 {
 	padding: 5px;
 }
 
 .details_table tbody tr:nth-child(even)
 {
-	background-color: #444444;
+	background-color: #ffffff;
 }
 
 .details_table tbody tr:nth-child(odd)
 {
-	background-color: #666666;
+	background-color: #f0f0ff;
 }
 
 .details_table input
@@ -122,10 +122,10 @@ tr:hover .action_icon
 
 .form_content
 {
-	background-color:#525252;
+	background-color:#ffffff;
 	border-radius: 5px;
 	margin: 5px;
-	box-shadow: 0px 0px 4px 4px #686868;
+	box-shadow: 0px 0px 4px 4px #999999;
 	transition: all 1s ease-out;
 }
 
@@ -134,12 +134,17 @@ tr:hover .action_icon
 	padding: 10px 0px;
 }
 
-.form_entry input, .form_entry textarea
+.form_entry input:not(.default_width), .form_entry textarea
 {
 	width: calc(100% - 181px);
 }
 
-.form_entry:not(:is(.cell)) label
+.form_entry textarea
+{
+	resize: none;
+}
+
+.form_entry:not(.cell) label:not(.radio_container):not(.cbox_container)
 {
 	display: inline-block;
 	width: 160px;
@@ -161,8 +166,15 @@ tr:hover .action_icon
 {
 	padding: 10px;
 	border-radius: 5px 5px 0px 0px;
-	background:linear-gradient(#39546e, #294968, #000000);
+	background: linear-gradient(#71db79, #3ca552, #51c943);
 	color: #ffffff;
+}
+
+.form_section_title
+{
+	padding: 10px;
+	background-color: #eeeeee;
+	font-weight: bold;
 }
 
 .hidden_entry
@@ -183,17 +195,23 @@ tr:hover .action_icon
 
 .form_content table, .form_content td, .form_content th
 {
-	border: 1px solid #757575;
+	border: 1px solid #f0f0f0;
 	border-collapse: collapse;
 }
 
 .form_content thead tr
 {
-	background-color: #182741;
+	background-color: #215c5a;
 	color: #ffffff;
 }
 
-.form_content th, .form_content td
+.form_content th
+{
+	font-size: 8pt;
+	padding: 5px;
+}
+
+.form_content td:not(.select2_td)
 {
 	font-size: 10pt;
 	padding: 5px;
@@ -221,6 +239,12 @@ tr:hover .action_icon
 	visibility: hidden;
 }
 
+.medium_form
+{
+	max-width: 700px;
+	margin: 25px auto;
+}
+
 .small_form
 {
 	max-width: 500px;
@@ -231,9 +255,9 @@ tr:hover .action_icon
 {
 	background-attachment: local;
 	background-image:
-	linear-gradient(to right, #000000 10px, transparent 10px),
-	linear-gradient(to left, #000000 10px, transparent 10px),
-	repeating-linear-gradient(#000000, #000000 30px, #666666 30px, #666666 31px, #000000 31px);
+	/*linear-gradient(to right, white 10px, transparent 10px),
+	linear-gradient(to left, white 10px, transparent 10px),*/
+	repeating-linear-gradient(white, white 30px, #ccc 30px, #ccc 31px, white 31px);
 	line-height: 31px;
 	border: 0px !important;
 }
@@ -246,7 +270,7 @@ tr:hover .action_icon
 .aditional_note
 {
 	font-style: italic;
-	color: #999999;
+	color: #666666;
 }
 
 .image-uploader
@@ -257,6 +281,27 @@ tr:hover .action_icon
 .image-uploader:hover
 {
 	background-color: #d9d9d9;
+}
+
+.card_table input, .card_table select, .card_table textarea
+{
+	min-width: 300px;
+}
+
+.card_table input
+{
+	border: 0px;
+	border-bottom: 1px solid #666666;
+}
+
+.card_table textarea
+{
+	width: 100%;
+}
+
+.template
+{
+	display: none;
 }
 
 @media screen and (max-width: 799px)

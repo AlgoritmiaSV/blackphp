@@ -9,6 +9,10 @@ $(function() {
 	{
 		content_height -= $(".list_options").outerHeight();
 	}
+	if($("#main_nav").css("width") == $("#main_nav").parent().css("width"))
+	{
+		content_height -= $("#main_nav").outerHeight();
+	}
 	if(content_height > 0)
 	{
 		$("#content_section").css("min-height", content_height + "px");

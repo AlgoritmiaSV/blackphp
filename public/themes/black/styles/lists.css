@@ -1,0 +1,95 @@
+/*
+	Styles for lists
+	By: Edwin Fajardo
+	Date-Time: 2020-06-18 13:06
+*/
+
+.data_viewer
+{
+	display: none;
+	width: 100%;
+	font-size: 10pt;
+	min-width: 800px;
+}
+
+.data_viewer, .data_viewer td, .data_viewer th
+{
+	border: 1px solid #666666;
+	border-collapse:collapse;
+}
+
+.data_viewer tbody tr:nth-child(even)
+{
+	background-color: #000000;
+}
+
+/*.data_viewer tbody tr:nth-child(odd)
+{
+
+}*/
+
+.data_viewer tbody td, .data_viewer tfoot td
+{
+	padding: 10px 3px;
+}
+
+.data_viewer thead
+{
+	background-color: #666666;
+}
+
+.data_viewer tfoot
+{
+	background-color: #666666;
+	font-weight: bold;
+}
+
+.data_viewer thead th
+{
+	padding: 3px;
+	font-size: 9pt;
+}
+
+.template
+{
+	display: none;
+}
+
+.list_options
+{
+	padding: 5px;
+	min-height: 40px;
+}
+
+.list_options table tr
+{
+	height: 35px;
+}
+
+.data_search
+{
+	border: 1px solid #394b5e;
+	border-radius: 3px;
+	width: 50%;
+	min-width: 300px;
+	padding: 7px;
+}
+
+.data_viewer tbody tr
+{
+	cursor: pointer;
+}
+
+.data_viewer tbody tr:hover
+{
+	background-color: #222c36;
+}
+
+@media screen and (max-width: 799px)
+{
+	.data_search
+	{
+		width: -webkit-fill-available;
+		margin: 5px 0px;
+	}
+}

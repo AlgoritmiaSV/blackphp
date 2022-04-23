@@ -34,7 +34,7 @@ class Controller
 		if(Session::get("entity") == null)
 		{
 			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
-			if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
+			if($this->is_ip_address($_SERVER["SERVER_NAME"]))
 			{
 				# Get the first entity
 				$entity = $this->model->get_entity();
@@ -268,6 +268,32 @@ class Controller
 			"element_link" => $element_link
 		);
 		$user_model->set_log($data_set);
+	}
+
+	/**
+	 * Is IP Address
+	 * Check if SERVER_NAME is IP
+	 */
+	public function is_ip_address($str)
+	{
+		$octets = explode(".", $str);
+		if(count($octets) != 4)
+		{
+			return false;
+		}
+		foreach($octets as $octet)
+		{
+			if(!is_numeric($octet))
+			{
+				return false;
+			}
+			$octet = intval($octet);
+			if($octet < 0 || $octet > 255)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 }
 ?>

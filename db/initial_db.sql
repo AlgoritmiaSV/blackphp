@@ -3,19 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 07, 2022 at 11:53 PM
--- Server version: 10.3.31-MariaDB-0+deb10u1
--- PHP Version: 7.3.31-1~deb10u1
+-- Generation Time: Apr 23, 2022 at 05:19 PM
+-- Server version: 10.3.34-MariaDB-0+deb10u1
+-- PHP Version: 8.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `blackphp`
@@ -111,18 +105,19 @@ CREATE TABLE `app_methods` (
   `method_name` varchar(32) NOT NULL COMMENT 'Nombre del método',
   `method_url` varchar(32) NOT NULL COMMENT 'URL del método (Nombre de la función PHP)',
   `method_icon` varchar(32) NOT NULL COMMENT 'Ícono del método en el menú',
-  `method_description` tinytext NOT NULL COMMENT 'Descripción del método'
+  `method_description` tinytext NOT NULL COMMENT 'Descripción del método',
+  `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Todos los métodos disponibles en el sistema';
 
 --
 -- Dumping data for table `app_methods`
 --
 
-INSERT INTO `app_methods` (`method_id`, `module_id`, `method_name`, `method_url`, `method_icon`, `method_description`) VALUES
-(1, 1, 'Entidad', 'Datos', 'store_info', 'Permite configurar la información general del negocio/empresa'),
-(2, 1, 'Usuarios', 'Usuarios', 'manage_users', 'Permite gestionar usuarios y los permisos para cada usuario'),
-(3, 1, 'Preferencias', 'Preferencias', 'preferences', 'Permite establecer y modificar parámetros opcionales del sistema en la empresa'),
-(4, 1, 'Acerca de BlackPHP', 'Informacion', 'info', 'Muestra la información del sistema: Versión, contacto y soporte técnico');
+INSERT INTO `app_methods` (`method_id`, `module_id`, `method_name`, `method_url`, `method_icon`, `method_description`, `default_order`) VALUES
+(1, 1, 'Entidad', 'Datos', 'store_info', 'Permite configurar la información general del negocio/empresa', 0),
+(2, 1, 'Usuarios', 'Usuarios', 'manage_users', 'Permite gestionar usuarios y los permisos para cada usuario', 0),
+(3, 1, 'Preferencias', 'Preferencias', 'preferences', 'Permite establecer y modificar parámetros opcionales del sistema en la empresa', 0),
+(4, 1, 'Acerca de BlackPHP', 'Informacion', 'info', 'Muestra la información del sistema: Versión, contacto y soporte técnico', 0);
 
 -- --------------------------------------------------------
 
@@ -136,15 +131,16 @@ CREATE TABLE `app_modules` (
   `module_url` varchar(32) NOT NULL COMMENT 'URL del módulo',
   `module_key` char(1) NOT NULL COMMENT 'Tecla de acceso rápido',
   `module_html` varchar(32) NOT NULL COMMENT 'Nombre en formato HTML',
-  `module_description` tinytext NOT NULL COMMENT 'Descripción del módulo'
+  `module_description` tinytext NOT NULL COMMENT 'Descripción del módulo',
+  `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Todos los módulos disponibles en el sistema';
 
 --
 -- Dumping data for table `app_modules`
 --
 
-INSERT INTO `app_modules` (`module_id`, `module_name`, `module_url`, `module_key`, `module_html`, `module_description`) VALUES
-(1, 'Ajustes', 'Ajustes', 'A', 'Ajustes', 'Configuraciones');
+INSERT INTO `app_modules` (`module_id`, `module_name`, `module_url`, `module_key`, `module_html`, `module_description`, `default_order`) VALUES
+(1, 'Ajustes', 'Ajustes', 'A', 'Ajustes', 'Configuraciones', 0);
 
 -- --------------------------------------------------------
 
@@ -163,7 +159,10 @@ CREATE TABLE `app_themes` (
 --
 
 INSERT INTO `app_themes` (`theme_id`, `theme_name`, `theme_url`) VALUES
-(1, 'BlackPHP Default', 'blackphp');
+(1, 'Azul - Menú lateral', 'blackphp'),
+(2, 'Negro - Menú lateral', 'black'),
+(3, 'Verde - Menú lateral', 'green'),
+(4, 'Azul - Menú superior', 'blue_top');
 
 -- --------------------------------------------------------
 
@@ -507,7 +506,7 @@ ALTER TABLE `app_modules`
 -- AUTO_INCREMENT for table `app_themes`
 --
 ALTER TABLE `app_themes`
-  MODIFY `theme_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=2;
+  MODIFY `theme_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `browsers`
@@ -648,7 +647,3 @@ ALTER TABLE `user_sessions`
   ADD CONSTRAINT `usession_browser` FOREIGN KEY (`browser_id`) REFERENCES `browsers` (`browser_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `usession_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

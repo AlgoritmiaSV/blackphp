@@ -1,0 +1,111 @@
+/*
+*	Order Styles
+*	By: Edwin Fajardo. https://www.edwinfajardo.com
+*	Date-Time: 2021-10-07 06:42
+*	All right reserved.
+*/
+
+.order_container
+{
+	overflow: hidden;
+}
+
+.order_item
+{
+	display: inline-block;
+	position: relative;
+	width: 160px;
+	height: 120px;
+	text-align: center;
+	margin: 20px;
+	background-color: #DAE3F3;
+	color: #000000;
+	font-size: 10pt;
+	border-radius: 3px;
+	transition: transform 1s ease-out, opacity 1s ease-out;
+}
+
+.order_item a
+{
+	display: block;
+	position: relative;
+	text-decoration: none;
+}
+
+.order_item:hover
+{
+	background-color: #CAD3E3;
+}
+
+.order_item:active
+{
+	background-color: #BAC3D3;
+}
+
+.order_item img
+{
+	width: 60px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.order_item > span
+{
+	display: block;
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	width: 60px;
+}
+
+.order_item > span input
+{
+	width: 100%;
+	text-align: right;
+}
+
+.order_item a span
+{
+	display: block;
+	position: absolute;
+	text-align: center;
+	top: 65px;
+	left: 0px;
+	padding: 3px;
+	font-size: 9pt;
+}
+
+.order_item input
+{
+	background-color: transparent;
+}
+
+.order_title
+{
+	background-color: lavender;
+	border: 0px;
+	border-top: 2px solid #6d6dd6;
+	padding: 5px;
+}
+
+.order_totals
+{
+	display: inline-block;
+	padding: 8px;
+	color: #726060;
+	font-weight: bold;
+}
+
+@media screen and (max-width: 799px)
+{
+	.order_item
+	{
+		margin: 10px;
+	}
+
+	.order_container
+	{
+		text-align: center;
+	}
+}

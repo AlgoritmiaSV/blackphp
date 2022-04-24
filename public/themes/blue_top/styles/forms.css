@@ -26,7 +26,7 @@ tr:hover .action_icon
 
 .form_main_content
 {
-	background: linear-gradient(to right, #ffffff, #cccccc 20%);
+	background: linear-gradient(to bottom, #ffffff, #cccccc 20%);
 }
 
 .classifier_button
@@ -166,7 +166,7 @@ tr:hover .action_icon
 {
 	padding: 10px;
 	border-radius: 5px 5px 0px 0px;
-	background: linear-gradient(#71db79, #3ca552, #51c943);
+	background:linear-gradient(#71A6DB, #559BDB, #438AC9);
 	color: #ffffff;
 }
 
@@ -201,7 +201,7 @@ tr:hover .action_icon
 
 .form_content thead tr
 {
-	background-color: #215c5a;
+	background-color: #4472C4;
 	color: #ffffff;
 }
 

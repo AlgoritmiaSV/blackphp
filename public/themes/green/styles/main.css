@@ -7,12 +7,12 @@
 */
 
 @font-face {font-family: "Verdana V2 V1";
-	src: url("../external/fonts/VerdanaV2.eot"); /* IE9*/
-	src: url("../external/fonts/VerdanaV2.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-	url("../external/fonts/VerdanaV2.woff2") format("woff2"), /* chrome、firefox */
-	url("../external/fonts/VerdanaV2.woff") format("woff"), /* chrome、firefox */
-	url("../external/fonts/VerdanaV2.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-	url("../external/fonts/VerdanaV2.svg#Verdana V2 V1") format("svg"); /* iOS 4.1- */
+	src: url("../../../external/fonts/VerdanaV2.eot"); /* IE9*/
+	src: url("../../../external/fonts/VerdanaV2.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+	url("../../../external/fonts/VerdanaV2.woff2") format("woff2"), /* chrome、firefox */
+	url("../../../external/fonts/VerdanaV2.woff") format("woff"), /* chrome、firefox */
+	url("../../../external/fonts/VerdanaV2.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+	url("../../../external/fonts/VerdanaV2.svg#Verdana V2 V1") format("svg"); /* iOS 4.1- */
 }
 
 #content_section

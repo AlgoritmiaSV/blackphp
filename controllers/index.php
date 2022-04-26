@@ -49,6 +49,7 @@ class Index extends Controller
 	{
 		$this->loadModel("entity");
 		$company = Session::get("entity");
+		$this->view->restrict[] = "standalone";
 		$this->view->data["real_date"] = date_utilities::sql_date_to_string(Date("Y-m-d"));
 		foreach($company as $key => $value)
 		{
@@ -75,16 +76,6 @@ class Index extends Controller
 	public function branch_filter_loader()
 	{
 		$data = Array();
-		/*$this->loadModel("company");
-		if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
-		{
-			$data["results"] = $this->model->get_branches_by_company(1);
-		}
-		else
-		{
-			$subdomain = explode(".", $_SERVER["SERVER_NAME"])[0];
-			$data["results"] = $this->model->get_branches_by_subdomain($subdomain);
-		}*/
 		echo json_encode($data);
 	}
 

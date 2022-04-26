@@ -1,36 +1,38 @@
-<div class="form_content small_form">
-	<form action="test_authorization" data-reset="{{ module }}/">
-		<div class="form_title">
-			Instalaci&oacute;n
-		</div>
-		<div class="form_body">
-			<div class="form_message">
-				Est&aacute;s creando una nueva cuenta de empresa en BlackPHP. Para esta acci&oacute;n necesitas tener una cuenta como instalador.
+<div class="content_viewer">
+	<div class="form_content small_form">
+		<form action="test_authorization" data-reset="{{ module }}/">
+			<div class="form_title">
+				Instalaci&oacute;n
 			</div>
-			<div class="form_entry">
-				<label>Usuario:</label>
-				<input name="nickname" maxlength="64">
+			<div class="form_body">
+				<div class="form_message">
+					Est&aacute;s creando una nueva cuenta de empresa en BlackPHP. Para esta acci&oacute;n necesitas tener una cuenta como instalador.
+				</div>
+				<div class="form_entry">
+					<label>Usuario:</label>
+					<input name="nickname" maxlength="64">
+				</div>
+				<div class="form_entry">
+					<label>Contrase&ntilde;a:</label>
+					<input type="password" name="password" maxlength="32" required>
+				</div>
 			</div>
-			<div class="form_entry">
-				<label>Contrase&ntilde;a:</label>
-				<input type="password" name="password" maxlength="32" required>
+			<div class="form_foot">
+				<button class="blue_button" type="submit">Continuar</button>
+				<button class="grey_button cancel_button" type="reset">Cancelar</button>
 			</div>
+		</form>
+		<div class="sending">
+			<img src="public/images/loading.gif" class="small_icon">
+			<span>Guardando...</span>
 		</div>
-		<div class="form_foot">
-			<button class="blue_button" type="submit">Continuar</button>
-			<button class="grey_button cancel_button" type="reset">Cancelar</button>
+		<div class="error">
+			<img src="public/images/error.png" class="small_icon">
+			<span>Error al guardar</span>
 		</div>
-	</form>
-	<div class="sending">
-		<img src="public/images/loading.gif" class="small_icon">
-		<span>Guardando...</span>
-	</div>
-	<div class="error">
-		<img src="public/images/error.png" class="small_icon">
-		<span>Error al guardar</span>
-	</div>
-	<div class="success">
-		<img src="public/images/success.png" class="small_icon">
-		<span>Guardado con &eacute;xito</span>
+		<div class="success">
+			<img src="public/images/success.png" class="small_icon">
+			<span>Guardado con &eacute;xito</span>
+		</div>
 	</div>
 </div>

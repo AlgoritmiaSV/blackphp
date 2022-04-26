@@ -1,49 +1,33 @@
-<div class="form_content medium_form">
-	<form action="save_preferences" data-reset="{{ module }}/">
-		<div class="form_title">
-			Preferencias del usuario
-			<a class="close_form" href="#"><img src="public/images/close.png"></a>
-		</div>
-		<div class="form_body">
-			<div class="form_entry">
-				<label>Tema de visualizaci&oacute;n:</label>
-				<select class="data_selector update_input" name="theme_id" data-source="themes" data-search="none" data-placeholder="Seleccionar">
-				</select>
+<div class="content_viewer">
+	<div class="form_content medium_form">
+		<form action="save_preferences" data-reset="{{ module }}/">
+			<div class="form_title">
+				Preferencias del usuario
+				<a class="close_form" href="#"><img src="public/images/close.png"></a>
 			</div>
-			<!--div class="form_title">
-				Preferencias del sistema
+			<div class="form_body">
+				<div class="form_entry">
+					<label>Tema de visualizaci&oacute;n:</label>
+					<select class="data_selector update_input" name="theme_id" data-source="themes" data-search="none" data-placeholder="Seleccionar">
+					</select>
+				</div>
 			</div>
-				<div class="radio_group">
-				<p>Cierre diario de operaciones</p>
-				<label class="radio_container">Autom&aacute;tico (A las cero horas).
-					<input type="radio" name="daily_close" value="auto">
-					<span class="radio_checkmark"></span>
-				</label>
-				<label class="radio_container">Manual.
-					<input type="radio" name="daily_close" value="manual">
-					<span class="radio_checkmark"></span>
-				</label>
+			<div class="form_foot">
+				<button class="blue_button" type="submit">Guardar</button>
+				<button class="grey_button cancel_button" type="reset">Cancelar</button>
 			</div>
-			<div class="form_entry">
-				<label>Porcentaje de utlidad:</label>
-				<input name="profit" type="number" min="1" max="200" step="0.01" class="update_input">
-			</div-->
+		</form>
+		<div class="sending">
+			<img src="public/images/loading.gif" class="small_icon">
+			<span>Guardando...</span>
 		</div>
-		<div class="form_foot">
-			<button class="blue_button" type="submit">Guardar</button>
-			<button class="grey_button cancel_button" type="reset">Cancelar</button>
+		<div class="error">
+			<img src="public/images/error.png" class="small_icon">
+			<span>Error al guardar</span>
 		</div>
-	</form>
-	<div class="sending">
-		<img src="public/images/loading.gif" class="small_icon">
-		<span>Guardando...</span>
-	</div>
-	<div class="error">
-		<img src="public/images/error.png" class="small_icon">
-		<span>Error al guardar</span>
-	</div>
-	<div class="success">
-		<img src="public/images/success.png" class="small_icon">
-		<span>Guardado con &eacute;xito</span>
+		<div class="success">
+			<img src="public/images/success.png" class="small_icon">
+			<span>Guardado con &eacute;xito</span>
+		</div>
 	</div>
 </div>

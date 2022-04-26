@@ -46,28 +46,27 @@
 
 .credits
 {
-	overflow: auto;
 	text-align: center;
-	margin-top: 70px;
 }
 
 .credits a
 {
-	text-decoration: none;
-}
-
-.credits img
-{
-	height: 50px;
-	vertical-align: top;
-}
-
-.credits span
-{
-	color: #666666;
 	display: inline-block;
-	padding: 23px 0px 30px 0px;
-	vertical-align: bottom;
+	text-decoration: none;
+	margin: 10px;
+	border-radius: 5px;
+	background-color: #e9e9e9;
+	padding: 10px;
+}
+
+.credits a span
+{
+	display: block;
+}
+
+.credits a:hover
+{
+	background-color: #d9d9d9;
 }
 
 .foot_info
@@ -92,11 +91,26 @@
 	#locked img
 	{
 		margin:0px;
+		width: calc(100% - 10px);
+		max-width: 250px;
 	}
+
+	#login
+	{
+		width: calc(100% - 10px);
+		margin: 20px auto;
+	}
+
 	/* Class */
 	.entry input
 	{
 		width:90%;
+	}
+
+	.title
+	{
+		color: inherit;
+		background: none;
 	}
 
 	/* Tags */
@@ -120,6 +134,13 @@
 	}
 
 	/* Class */
+	.credits
+	{
+		position: absolute;
+		width: 100%;
+		bottom: 40px;
+	}
+
 	.cell
 	{
 		display:table-cell;

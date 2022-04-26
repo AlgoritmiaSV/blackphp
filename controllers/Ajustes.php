@@ -468,6 +468,10 @@ class Ajustes extends Controller
 			$this->view->data["user_photo"] = "public/images/user.png";
 		}
 		$this->user_actions($user);
+		if($id == Session::get("user_id"))
+		{
+			$this->view->restrict[] = "no_self";
+		}
 		$this->view->data["print_title"] = "Datos del usuario";
 		$this->view->data["print_header"] = $this->view->render("print_header", true);
 		$this->view->render("settings/user_details");

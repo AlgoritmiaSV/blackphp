@@ -5,7 +5,7 @@ Framework PHP para creación rápida de sistemas basados en PHP.
 
 Descripción
 -----------
-**BlackPHP** es una estructura de proyecto, actualmente utilizado en sistemas como Negkit [www.negkit.com](https://www.negkit.com), SICOIM [sicoim.com](https://www.sicoim.com).
+**BlackPHP** es una estructura de proyecto, actualmente utilizado en sistemas como Negkit [www.negkit.com](https://www.negkit.com), SICOIM [sicoim.com](https://www.sicoim.com) y MimaKit [mimakit.com](https://www.mimakit.com).
 
 El equipo desarrollador
 -----------------------

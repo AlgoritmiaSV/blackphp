@@ -59,11 +59,12 @@ class entity_Model extends Model
 		return $result;
 	}
 
-
 	public function get_all_modules()
 	{
 		$query =	"SELECT *
-					FROM app_modules";
+					FROM app_modules
+					WHERE status = 1
+					ORDER BY default_order";
 		return $this->db->select($query, true);
 	}
 
@@ -74,7 +75,8 @@ class entity_Model extends Model
 		);
 		$query =	"SELECT *
 					FROM app_methods
-					WHERE module_id = :module_id";
+					WHERE module_id = :module_id
+						AND status = 1";
 		return $this->db->select($query, true, $params);
 	}
 

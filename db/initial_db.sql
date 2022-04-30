@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2022 at 05:19 PM
+-- Generation Time: Apr 29, 2022 at 08:56 PM
 -- Server version: 10.3.34-MariaDB-0+deb10u1
 -- PHP Version: 8.1.4
 
@@ -106,18 +106,19 @@ CREATE TABLE `app_methods` (
   `method_url` varchar(32) NOT NULL COMMENT 'URL del método (Nombre de la función PHP)',
   `method_icon` varchar(32) NOT NULL COMMENT 'Ícono del método en el menú',
   `method_description` tinytext NOT NULL COMMENT 'Descripción del método',
-  `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto'
+  `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Todos los métodos disponibles en el sistema';
 
 --
 -- Dumping data for table `app_methods`
 --
 
-INSERT INTO `app_methods` (`method_id`, `module_id`, `method_name`, `method_url`, `method_icon`, `method_description`, `default_order`) VALUES
-(1, 1, 'Entidad', 'Datos', 'store_info', 'Permite configurar la información general del negocio/empresa', 0),
-(2, 1, 'Usuarios', 'Usuarios', 'manage_users', 'Permite gestionar usuarios y los permisos para cada usuario', 0),
-(3, 1, 'Preferencias', 'Preferencias', 'preferences', 'Permite establecer y modificar parámetros opcionales del sistema en la empresa', 0),
-(4, 1, 'Acerca de BlackPHP', 'Informacion', 'info', 'Muestra la información del sistema: Versión, contacto y soporte técnico', 0);
+INSERT INTO `app_methods` (`method_id`, `module_id`, `method_name`, `method_url`, `method_icon`, `method_description`, `default_order`, `status`) VALUES
+(1, 1, 'Entidad', 'Datos', 'store_info', 'Permite configurar la información general del negocio/empresa', 1, 1),
+(2, 1, 'Usuarios', 'Usuarios', 'manage_users', 'Permite gestionar usuarios y los permisos para cada usuario', 2, 1),
+(3, 1, 'Preferencias', 'Preferencias', 'preferences', 'Permite establecer y modificar parámetros opcionales del sistema en la empresa', 3, 1),
+(4, 1, 'Acerca de BlackPHP', 'Informacion', 'info', 'Muestra la información del sistema: Versión, contacto y soporte técnico', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -132,15 +133,16 @@ CREATE TABLE `app_modules` (
   `module_key` char(1) NOT NULL COMMENT 'Tecla de acceso rápido',
   `module_html` varchar(32) NOT NULL COMMENT 'Nombre en formato HTML',
   `module_description` tinytext NOT NULL COMMENT 'Descripción del módulo',
-  `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto'
+  `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Todos los módulos disponibles en el sistema';
 
 --
 -- Dumping data for table `app_modules`
 --
 
-INSERT INTO `app_modules` (`module_id`, `module_name`, `module_url`, `module_key`, `module_html`, `module_description`, `default_order`) VALUES
-(1, 'Ajustes', 'Ajustes', 'A', 'Ajustes', 'Configuraciones', 0);
+INSERT INTO `app_modules` (`module_id`, `module_name`, `module_url`, `module_key`, `module_html`, `module_description`, `default_order`, `status`) VALUES
+(1, 'Ajustes', 'Ajustes', 'A', 'Ajustes', 'Configuraciones', 127, 1);
 
 -- --------------------------------------------------------
 

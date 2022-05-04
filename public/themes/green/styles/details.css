@@ -162,3 +162,21 @@
 {
 	height: 35px;
 }
+
+.signature_space
+{
+	display: inline-block;
+	width: 200px;
+	height: 80px;
+}
+
+.field_cell
+{
+	min-width: 200px;
+}
+
+.vertical_page
+{
+	max-width: 720px;
+	margin: 0px auto;
+}

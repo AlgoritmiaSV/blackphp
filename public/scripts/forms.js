@@ -98,6 +98,10 @@ $( function()
 					$(this).removeAttr("checked");
 				}
 			});
+			$(".update_text").each(function()
+			{
+				$(this).text(json.update[$(this).data("id")]);
+			});
 		}
 		$(".age_input").trigger("change");
 
@@ -148,6 +152,7 @@ $( function()
 						_tr.find(".delete_row_icon").click(delete_row_click);
 						build_autocomplete(_tr);
 						/* Fill */
+						_tr.find(".row_number").val(row_count);
 						_tr.find(".row_count").text(++row_count);
 						_tr.find(".row_available").text(value.available);
 						_tr.find(".row_quantity").val(value.quantity);
@@ -505,6 +510,7 @@ $( function()
 				_tr.find(".row_count").text(tbody.find("tr").length);
 				_tr.find("input").first().focus();
 				_tr.find("input").val('');
+				_tr.find(".row_number").val(tbody.find("tr").length - 1);
 				_tr.find(".clearable").text("");
 				_tr.find(".date_input").each(set_date_picker);
 				_tr.find("input").keypress(input_keypress);
@@ -823,6 +829,10 @@ $( function()
 					tbody.find(".row_count").each(function() {
 						$(this).text(++row_count);
 					});
+					row_number = 0;
+					tbody.find(".row_number").each(function() {
+						$(this).val(row_number++);
+					});
 					if(row_count < 2)
 					{
 						$(".delete_row_icon").css({
@@ -899,6 +909,7 @@ $( function()
 		_tr.find(".row_count").text(tbody.find("tr").length);
 		_tr.find("input").first().focus();
 		_tr.find("input").val('');
+		_tr.find(".row_number").val(tbody.find("tr").length - 1);
 		_tr.find(".date_input").each(set_date_picker);
 		_tr.find("input").keypress(input_keypress);
 		_tr.find(".row_quantity, .row_price").change(function() {

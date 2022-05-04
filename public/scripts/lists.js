@@ -153,7 +153,10 @@ $( function()
 
 			/* Link row */
 			$(".link_row").click(function() {
-				location.href = $(this).data("href");
+				if($(this).data("href") != "#")
+				{
+					location.href = $(this).data("href");
+				}
 			});
 		})
 		.fail(function() {

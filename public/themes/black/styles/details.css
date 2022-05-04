@@ -89,3 +89,21 @@
 	padding: 10px 5px;
 	border-top: 3px solid #a9a9a9;
 }
+
+.signature_space
+{
+	display: inline-block;
+	width: 200px;
+	height: 80px;
+}
+
+.field_cell
+{
+	min-width: 200px;
+}
+
+.vertical_page
+{
+	max-width: 720px;
+	margin: 0px auto;
+}

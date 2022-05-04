@@ -211,7 +211,7 @@ tr:hover .action_icon
 	padding: 5px;
 }
 
-.form_content td:not(.select2_td)
+.form_content td:not(.select2_td):not(.radio_td)
 {
 	font-size: 10pt;
 	padding: 5px;
@@ -302,6 +302,12 @@ tr:hover .action_icon
 .template
 {
 	display: none;
+}
+
+.radio_td
+{
+	text-align: center;
+	padding: 0px !important;
 }
 
 @media screen and (max-width: 799px)

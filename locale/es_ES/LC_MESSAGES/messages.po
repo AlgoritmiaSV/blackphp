@@ -1,0 +1,36 @@
+# PAQUETE DE IDIOMA ESPAÑOL PARA BLACKPHP
+# Copyright (C)2022 Red Teleinformática
+# This file is distributed under the same license as the PACKAGE BlackPHP.
+# Edwin Fajardo <contacto@edwinfajardo.com>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-04 15:17-0600\n"
+"PO-Revision-Date: 2022-05-04 15:20+UTC-6\n"
+"Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Log in"
+msgstr "Iniciar sesi&oacute;n"
+
+msgid "User"
+msgstr "Usuario"
+
+msgid "Password"
+msgstr "Contrase&ntilde;a"
+
+msgid "Loggin in"
+msgstr "Iniciando sesi&oacute;n"
+
+msgid "Success"
+msgstr "&Eacute;xito"
+
+msgid "Home"
+msgstr "Inicio"

@@ -67,6 +67,19 @@ class View
 			$template = preg_replace("/<!-- $restrict -->.*\<!-- \/$restrict -->/", "", $template);
 		}
 
+		#Translate
+		$all_matches = Array();
+		if (preg_match_all("/_\(([^\)]+)\)/i", $template, $all_matches)) {
+			if(!empty($all_matches[1]))
+			{
+				$matches = $all_matches[1];
+				for($i = 0; $i < count($matches); $i++)
+				{
+					$template = str_replace("_($matches[$i])", _($matches[$i]), $template);
+				}
+			}
+		}
+
 		# Remove the unused vars
 		$template = preg_replace("/\[\[ [a-z0-9_]* \]\].*\[\[\/ [a-z0-9_]* \]\]/", "", $template);
 		$template = preg_replace("/\{\{ [a-z0-9_]* \}\}/", "", $template);

@@ -10,6 +10,23 @@ class Controller
 		# Default time zone of servers is Lithuania/Europe, UTC+00; America/El_Salvador is UTC-06
 		date_default_timezone_set('America/El_Salvador');
 
+		# Locale
+		$locale = empty(Session::get("locale")) ? "es_ES" : Session::get("locale");
+		$charset = empty(Session::get("charset")) ? "UTF-8" : Session::get("charset");
+
+		if (defined('LC_MESSAGES'))
+		{
+			putenv("LANGUAGE=$locale.$charset");
+			setlocale(LC_MESSAGES, $locale . "." . $charset); // Linux
+			bindtextdomain("messages", "locale/");
+		}
+		else
+		{
+			putenv("LC_ALL={$locale}"); // windows
+			bindtextdomain("messages", ".\locale");
+		}
+		textdomain("messages");
+
 		# In Windows, this line remove the warnings from the client side
 		error_reporting(E_ERROR | E_PARSE);
 
@@ -189,7 +206,7 @@ class Controller
 		}
 		else
 		{
-			$this->view->data["title"] = 'Entrar';
+			$this->view->data["title"] = _("Log in");
 			$this->view->standard_form();
 			$this->view->add("styles", "css", Array(
 				'styles/login.css'

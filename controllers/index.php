@@ -15,7 +15,7 @@ class Index extends Controller
 	public function index()
 	{
 		$this->session_required();
-		$this->view->data["title"] = 'Inicio';
+		$this->view->data["title"] = _("Home");
 		$this->view->add("styles", "css", Array(
 			'external/css/jquery-ui.min.css',
 			'external/css/jAlert.css',

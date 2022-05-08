@@ -70,7 +70,7 @@ class Controller
 						if( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
 							$protocol .= "s";
 						}
-						header("Location: " . $protocol . "://installer." . $server_name[1] . "." . $server_name[2] . "/Instalacion/NuevaEntidad/" . $subdomain . "/");
+						header("Location: " . $protocol . "://installer." . $server_name[1] . "." . $server_name[2] . "/Instalation/NewEntity/" . $subdomain . "/");
 						return;
 					}
 				}
@@ -170,7 +170,7 @@ class Controller
 						$data = Array(
 							"success" => false,
 							"error" => true,
-							"message" => "No tiene permisos para realizar esta operación",
+							"message" => _("You do not have permissions to perform this operation"),
 							"title" => "Error",
 							"theme" => "red"
 						);
@@ -178,7 +178,7 @@ class Controller
 					}
 					else
 					{
-						$this->view->data["title"] = 'Entrar';
+						$this->view->data["title"] = _("Not authorized");
 						$this->view->standard_error();
 						$this->view->data["nav"] = $this->view->render("nav", true);
 						$this->view->data["content"] = $this->view->render("forbidden", true);
@@ -194,7 +194,7 @@ class Controller
 			$data = Array(
 				"success" => false,
 				"error" => true,
-				"message" => "No ha iniciado sesión",
+				"message" => _("You are not logged in"),
 				"title" => "Error",
 				"theme" => "red"
 			);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 03, 2022 at 09:12 PM
+-- Generation Time: May 08, 2022 at 03:06 AM
 -- Server version: 10.3.34-MariaDB-0+deb10u1
 -- PHP Version: 8.1.4
 
@@ -115,10 +115,10 @@ CREATE TABLE `app_methods` (
 --
 
 INSERT INTO `app_methods` (`method_id`, `module_id`, `method_name`, `method_url`, `method_icon`, `method_description`, `default_order`, `status`) VALUES
-(1, 1, 'Entidad', 'Datos', 'store_info', 'Permite configurar la información general del negocio/empresa', 1, 1),
-(2, 1, 'Usuarios', 'Usuarios', 'manage_users', 'Permite gestionar usuarios y los permisos para cada usuario', 2, 1),
-(3, 1, 'Preferencias', 'Preferencias', 'preferences', 'Permite establecer y modificar parámetros opcionales del sistema en la empresa', 3, 1),
-(4, 1, 'Acerca de BlackPHP', 'Informacion', 'info', 'Muestra la información del sistema: Versión, contacto y soporte técnico', 4, 1);
+(1, 1, 'Entity', 'Entity', 'store_info', 'Allows you to configure the general information of the business/company', 1, 1),
+(2, 1, 'Users', 'Users', 'manage_users', 'Allows you to manage users and permissions for each user', 2, 1),
+(3, 1, 'Preferences', 'Preferences', 'preferences', 'Allows to set and modify optional system parameters in the company', 3, 1),
+(4, 1, 'About BlackPHP', 'About', 'info', 'Shows system information: Version, contact and technical support', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -142,7 +142,7 @@ CREATE TABLE `app_modules` (
 --
 
 INSERT INTO `app_modules` (`module_id`, `module_name`, `module_url`, `module_key`, `module_html`, `module_description`, `default_order`, `status`) VALUES
-(1, 'Ajustes', 'Ajustes', 'A', 'Ajustes', 'Configuraciones', 127, 1);
+(1, 'Settings', 'Settings', 'A', 'Settings', 'Settings', 127, 1);
 
 -- --------------------------------------------------------
 
@@ -161,10 +161,10 @@ CREATE TABLE `app_themes` (
 --
 
 INSERT INTO `app_themes` (`theme_id`, `theme_name`, `theme_url`) VALUES
-(1, 'Azul - Menú lateral', 'blackphp'),
-(2, 'Negro - Menú lateral', 'black'),
-(3, 'Verde - Menú lateral', 'green'),
-(4, 'Azul - Menú superior', 'blue_top');
+(1, 'Blue - Lateral menu', 'blackphp'),
+(2, 'Black - Lateral menu', 'black'),
+(3, 'Green - Lateral menu', 'green'),
+(4, 'Blue - Top menu', 'blue_top');
 
 -- --------------------------------------------------------
 

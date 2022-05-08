@@ -1,7 +1,7 @@
 {{ print_header }}
 <div class="details_content">
 	<div class="details_title no_print">
-		Detalle del usuario
+		_(User details)
 		<a class="close_details" href="#"><img src="public/images/close.png"></a>
 	</div>
 	<div class="details_body">
@@ -12,15 +12,15 @@
 						<img class="user_photo" src="{{ user_photo }}" alt="Foto">
 					</div>
 				</td>
-				<td>Usuario</td>
+				<td>_(Nickname)</td>
 				<td>{{ nickname }}</td>
 			</tr>
 			<tr>
-				<td>Nombre completo:</td>
+				<td>_(Complete name):</td>
 				<td>{{ user_name }}</td>
 			</tr>
 		</table>
-		<p>Permisos:</p>
+		<p>_(Permissions):</p>
 		<table class="show_details_table">
 			<tbody>
 				[[ user_modules ]]
@@ -32,14 +32,14 @@
 				</tr>[[/ user_modules ]]
 			</tbody>
 		</table>
-		<p>&Uacute;ltimas sesiones:</p>
+		<p>_(Last sessions):</p>
 		<table class="show_details_table">
 			<thead>
 				<th>No.</th>
-				<th>Fecha</th>
-				<th>Hora</th>
+				<th>_(Date)</th>
+				<th>_(Hour)</th>
 				<th>IP</th>
-				<th>Cliente</th>
+				<th>_(Browser)</th>
 			</thead>
 			<tbody>
 				[[ sessions ]]
@@ -55,17 +55,17 @@
 	</div>
 	<div class="details_users">
 		<!-- created -->
-		Creado por: {{ cr_user_name }}, el {{ cr_time }}<br>
+		_(Created by): {{ cr_user_name }}, el {{ cr_time }}<br>
 		<!-- /created -->
 		<!-- edited -->
-		Editado por última vez por: {{ ed_user_name }}, el {{ ed_time }}
+		_(Last edition by): {{ ed_user_name }}, el {{ ed_time }}
 		<!-- /edited -->
 	</div>
 	<div class="details_foot no_print">
 		<!-- no_self -->
-		<button class="delete_button red_button" data-url="Ajustes/delete_user" data-next="Ajustes/Usuarios">Eliminar usuario</button>
+		<button class="delete_button red_button" data-url="{{ module }}/delete_user" data-next="{{ module }}/Users">_(Delete user)</button>
 		<!-- /no_self -->
-		<button class="blue_button link_button" data-href="Ajustes/EditarUsuario/{{ user_id }}/">Editar</button>
-		<button type="button" class="blue_button print_button" data-print=".details_body">Imprimir</button>
+		<button class="blue_button link_button" data-href="{{ module }}/EditUser/{{ user_id }}/">_(Edit)</button>
+		<button type="button" class="blue_button print_button" data-print=".details_body">_(Print)</button>
 	</div>
 </div>

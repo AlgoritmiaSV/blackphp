@@ -1,10 +1,10 @@
 <?php
 
-#	Options controller
+#	Installation controller
 #	By: Edwin Fajardo
 #	Date-time: 2020-06-18 23:46
 
-class Instalacion extends Controller
+class Installation extends Controller
 {
 	public function __construct()
 	{
@@ -16,7 +16,7 @@ class Instalacion extends Controller
 	public function index($subdomain = "")
 	{
 		#$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Instalaci&oacute;n';
+		$this->view->data["title"] = _('Installation');
 		$this->view->standard_form();
 		$this->view->data["nav"] = "";
 		if(Session::get("authorization_code") != null)
@@ -51,7 +51,7 @@ class Instalacion extends Controller
 		$this->view->render('main');
 	}
 
-	public function NuevaEntidad($subdomain)
+	public function NewEntity($subdomain)
 	{
 		$this->index($subdomain);
 	}
@@ -91,7 +91,7 @@ class Instalacion extends Controller
 				if(empty($data["subdomain"]))
 				{
 					$data["title"] = "Error";
-					$data["message"] = "No se eligió un subdominio.";
+					$data["message"] = _("No subdomain chosen");
 					$data["theme"] = "red";
 					echo json_encode($data);
 					return;
@@ -101,7 +101,7 @@ class Instalacion extends Controller
 			if(isset($entity["entity_id"]) || in_array($data["subdomain"], $reserved_subdomains))
 			{
 				$data["title"] = "Error";
-				$data["message"] = "El subdominio " . $data["subdomain"] . " no está disponible.";
+				$data["message"] = _("The subdomain") . " " . $data["subdomain"] . " " . _("is no available");
 				$data["theme"] = "red";
 				echo json_encode($data);
 				return;
@@ -138,7 +138,7 @@ class Instalacion extends Controller
 		if(empty($entity_id))
 		{
 			$data["title"] = "Error";
-			$data["message"] = "No se ha podido crear la empresa.";
+			$data["message"] = _("Failed to create the entity");
 			$data["theme"] = "red";
 			echo json_encode($data);
 			return;
@@ -313,8 +313,8 @@ class Instalacion extends Controller
 
 		#Finish and response
 		$data["success"] = true;
-		$data["title"] = "Éxito";
-		$data["message"] = "Instalación realizada exitosamente";
+		$data["title"] = _("Success");
+		$data["message"] = _("Installation completed successfully");
 		$data["theme"] = "green";
 		$data["no_reset"] = true;
 		if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
@@ -342,7 +342,7 @@ class Instalacion extends Controller
 		if(empty($data["nickname"]) || empty($data["password"]))
 		{
 			$data["title"] = "Error";
-			$data["message"] = "Introduzca su usuario y contraseña de instalador.";
+			$data["message"] = _("Enter your installer user and password");
 			$data["theme"] = "red";
 			echo json_encode($data);
 			return;
@@ -358,7 +358,7 @@ class Instalacion extends Controller
 		else
 		{
 			$data["title"] = "Error";
-			$data["message"] = "Usuario o contraseña incorectos.";
+			$data["message"] = _("Bad user or password");
 			$data["theme"] = "red";
 			$data["no_reset"] = true;
 		}
@@ -368,7 +368,7 @@ class Instalacion extends Controller
 
 	function get_started() 
 	{
-		$this->view->data["title"] = 'Iniciar';
+		$this->view->data["title"] = _("Start");
 		$this->view->standard_error();
 		$this->view->data["nav"] = "";
 		$this->view->data["content"] = $this->view->render("installation/install_missing_conf", true);

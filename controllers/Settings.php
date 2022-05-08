@@ -1,10 +1,10 @@
 <?php
 
-#	Options controller
+#	Settings controller
 #	By: Edwin Fajardo
 #	Date-time: 2020-06-18 23:46
 
-class Ajustes extends Controller
+class Settings extends Controller
 {
 	public function __construct()
 	{
@@ -16,7 +16,7 @@ class Ajustes extends Controller
 	public function index()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Configuraci&oacute;n';
+		$this->view->data["title"] = _("Settings");
 		$this->view->standard_menu();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->loadModel("entity");
@@ -26,42 +26,42 @@ class Ajustes extends Controller
 		$this->view->render('main');
 	}
 
-	public function Datos()
+	public function Entity()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Datos del negocio';
+		$this->view->data["title"] = _('Company data');
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->data["content"] = $this->view->render("settings/entity", true);
 		$this->view->render('main');
 	}
 
-	public function Preferencias()
+	public function Preferences()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Preferencias';
+		$this->view->data["title"] = _("Preferences");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->data["content"] = $this->view->render("settings/preferences", true);
 		$this->view->render('main');
 	}
 
-	public function Usuarios()
+	public function Users()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Usuarios';
+		$this->view->data["title"] = _("Users");
 		$this->view->standard_list();
 		$this->view->data["nav"] = $this->view->render("nav", true);
-		$this->view->data["print_title"] = "Usuarios";
+		$this->view->data["print_title"] = _("Users");
 		$this->view->data["print_header"] = $this->view->render("print_header", true);
 		$this->view->data["content"] = $this->view->render("settings/user_list", true);
 		$this->view->render('main');
 	}
 
-	public function RegistrarUsuario()
+	public function NewUser()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Registrar usuario';
+		$this->view->data["title"] = _("New user");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->restrict[] = "edition";
@@ -70,10 +70,10 @@ class Ajustes extends Controller
 		$this->view->render('main');
 	}
 
-	public function EditarUsuario($user_id)
+	public function EditUser($user_id)
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Editar usuario';
+		$this->view->data["title"] = 'Edit user';
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		if($user_id == Session::get("user_id"))
@@ -96,7 +96,7 @@ class Ajustes extends Controller
 		$this->loadModel("user");
 		$data = Array();
 		$users = $this->model->get_all($this->entity_id);
-		$status = Array("Eliminado", "Activo", "Inactivo");
+		$status = Array(_("Deleted"), _("Active"), _("Inactive"));
 		foreach($users as $key => $user)
 		{
 			$users[$key]["status"] = $status[$users[$key]["status"]];
@@ -139,7 +139,7 @@ class Ajustes extends Controller
 			if(isset($nickname["user_id"]))
 			{
 				$data["title"] = "Error";
-				$data["message"] = "El nombre de usuario ya existe.";
+				$data["message"] = _("The nickname already exists!");
 				$data["theme"] = "red";
 				echo json_encode($data);
 				return;
@@ -201,7 +201,7 @@ class Ajustes extends Controller
 		}
 		$data["success"] = true;
 		$data["title"] = "Éxito";
-		$data["message"] = "Los cambios se han guardado";
+		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
 		$data["reload_after"] = true;
 		echo json_encode($data);
@@ -210,22 +210,27 @@ class Ajustes extends Controller
 	public function load_form_data()
 	{
 		$data = Array();
-		if($_POST["method"] == "Datos")
+		if($_POST["method"] == "Entity")
 		{
 			$this->loadModel("entity");
 			$data["update"] = $this->model->get_entity_by_id($this->entity_id);
 		}
-		if($_POST["method"] == "EditarUsuario")
+		if($_POST["method"] == "EditUser")
 		{
 			$this->loadModel("user");
 			$data["update"] = $this->model->get_user($_POST["id"]);
 			$data["check"] = Array();
 			$data["check"]["modules"] = $this->model->get_all_permissions($_POST["id"]);
 		}
-		if($_POST["method"] == "Preferencias")
+		if($_POST["method"] == "Preferences")
 		{
 			$this->loadModel("entity");
-			$data["themes"] = $this->model->get_themes();
+			$themes = $this->model->get_themes();
+			foreach($themes as $key => $theme)
+			{
+				$themes[$key]["text"] = _($theme["text"]);
+			}
+			$data["themes"] = $themes;
 			$data["update"] = Array(
 				"theme_id" => Session::get("theme_id")
 			);
@@ -251,8 +256,8 @@ class Ajustes extends Controller
 			$data = $this->model->update_entity($data_set);
 			Session::set("entity", $this->model->get_entity_by_id($this->entity_id));
 			$data["success"] = true;
-			$data["title"] = "Éxito";
-			$data["message"] = "Datos guardados con éxito";
+			$data["title"] = _("Success");
+			$data["message"] = _("Changes have been saved");
 			$data["theme"] = "green";
 			$data["no_reset"] = true;
 
@@ -310,10 +315,10 @@ class Ajustes extends Controller
 		echo json_encode($data);
 	}
 
-	public function Informacion()
+	public function About()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Informaci&oacute;n';
+		$this->view->data["title"] = _("About BlackPHP");
 		$this->view->standard_details();
 		$this->view->data["system_short_date"] = Date("d/m/Y");
 		$this->view->data["nav"] = $this->view->render("nav", true);
@@ -374,7 +379,7 @@ class Ajustes extends Controller
 		}
 		$data["success"] = true;
 		$data["title"] = "Éxito";
-		$data["message"] = "Preferencias guardadas con éxito";
+		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
 		echo json_encode($data);
 	}
@@ -382,7 +387,7 @@ class Ajustes extends Controller
 	public function DetalleSucursal()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Detalle de sucursal';
+		$this->view->data["title"] = _("Branch details");
 		$this->view->standard_details();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->data["content_id"] = "branch_details";
@@ -394,20 +399,20 @@ class Ajustes extends Controller
 	{
 		$this->session_required("internal");
 		$this->loadModel("entity");
-		$store_types = Array("", "Sala de ventas", "Bodega", "Sala de ventas y bodega");
+		$store_types = Array("", _("Sales room"), _("Warehouse"), _("Sales room and warehouse"));
 		$branch = $this->model->get_branch($_POST["id"]);
 		$branch["store_type"] = $store_types[$branch["store_type"]];
 		$this->view->data = array_merge($this->view->data, $branch);
 		$this->user_actions($branch);
-		$this->view->data["print_title"] = "Detalle de sucursal";
+		$this->view->data["print_title"] = _("Branch details");
 		$this->view->data["print_header"] = $this->view->render("print_header", true);
 		$this->view->render("settings/branch_details");
 	}
 
-	public function DetalleUsuario()
+	public function UserDetails()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Detalle de usuario';
+		$this->view->data["title"] = _("User details");
 		$this->view->standard_details();
 		$this->view->data["system_short_date"] = Date("d/m/Y");
 		$this->view->data["nav"] = $this->view->render("nav", true);
@@ -472,7 +477,7 @@ class Ajustes extends Controller
 		{
 			$this->view->restrict[] = "no_self";
 		}
-		$this->view->data["print_title"] = "Datos del usuario";
+		$this->view->data["print_title"] = _("User details");
 		$this->view->data["print_header"] = $this->view->render("print_header", true);
 		$this->view->render("settings/user_details");
 	}

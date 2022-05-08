@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2022-05-04 15:20+UTC-6\n"
+"PO-Revision-Date: 2022-05-08 01:44+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +30,298 @@ msgid "Loggin in"
 msgstr "Iniciando sesi&oacute;n"
 
 msgid "Success"
-msgstr "&Eacute;xito"
+msgstr "Éxito"
 
 msgid "Home"
 msgstr "Inicio"
+
+msgid "Bad request."
+msgstr "Solicitud incorrecta."
+
+msgid "Bad user or password."
+msgstr "Usuario o contraseña incorrectos."
+
+msgid "Settings"
+msgstr "Configuraciones"
+
+msgid "Server date"
+msgstr "Fecha del servidor"
+
+msgid "Entity"
+msgstr "Entidad"
+
+msgid "Users"
+msgstr "Usuarios"
+
+msgid "Preferences"
+msgstr "Preferencias"
+
+msgid "About BlackPHP"
+msgstr "Acerca de BlackPHP"
+
+msgid "Allows you to configure the general information of the business/company"
+msgstr "Permite configurar la información general del negocio/empresa"
+
+msgid "Allows you to manage users and permissions for each user"
+msgstr "Permite gestionar usuarios y los permisos para cada usuario"
+
+msgid "Allows to set and modify optional system parameters in the company"
+msgstr "Permite establecer y modificar parámetros opcionales del sistema en la empresa"
+
+msgid "Shows system information: Version, contact and technical support"
+msgstr "Muestra la información del sistema: Versión, contacto y soporte técnico"
+
+msgid "Installation"
+msgstr "Instalación"
+
+msgid "No subdomain chosen"
+msgstr "No se eligió un subdominio"
+
+msgid "The subdomain"
+msgstr "El subdominio"
+
+msgid "is not available"
+msgstr "no está disponible"
+
+msgid "Failed to create the entity"
+msgstr "No se ha podido crear la entidad"
+
+msgid "Installation completed successfully"
+msgstr "La instalación se completó con éxito"
+
+msgid "Enter your installer user and password"
+msgstr "Introduzca su usuario y contraseña de instalador"
+
+msgid "Start"
+msgstr "Iniciar"
+
+msgid "Welcome to BlackPHP!"
+msgstr "¡Bienvenido a BlackPHP!"
+
+msgid "It's time to start"
+msgstr "¡Es hora de iniciar!"
+
+msgid "To get started, paste the config file into the program's installation folder"
+msgstr "Para comenzar, pegue el archivo de configuración en la carpeta de instalación del programa"
+
+msgid "If you don't have a configuration file, request one now!"
+msgstr "Si no tiene un archivo de configuración, ¡solicite uno ahora!"
+
+msgid "Click here"
+msgstr "Clic aquí"
+
+msgid "Company data"
+msgstr "Datos de la empresa"
+
+msgid "You do not have permissions to perform this operation"
+msgstr "No tiene permisos para realizar esta operación"
+
+msgid "Not authorized"
+msgstr "No autorizado"
+
+msgid "You are not logged in"
+msgstr "No ha iniciado sesión"
+
+msgid "New user"
+msgstr "Nuevo usuario"
+
+msgid "Edit user"
+msgstr "Editar usuario"
+
+msgid "Deleted"
+msgstr "Eliminado"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Inactive"
+msgstr "Inactivo"
+
+msgid "The nickname already exists!"
+msgstr "¡El nombre de usuario ya existe!"
+
+msgid "Changes have been saved"
+msgstr "Los cambios se han guardado"
+
+msgid "Sales room"
+msgstr "Sala de ventas"
+
+msgid "Warehouse"
+msgstr "Bodega"
+
+msgid "Sala de ventas y bodega"
+msgstr "Sales room and warehouse"
+
+msgid "Branch details"
+msgstr "Detalle de sucursal"
+
+msgid "User details"
+msgstr "Detalle de usuario"
+
+msgid "You are creating a new company account in BlackPHP. For this action you need to have an account as an installer"
+msgstr "Estás creando una nueva cuenta de empresa en BlackPHP. Para esta acción necesitas tener una cuenta como instalador"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Saving"
+msgstr "Failed to save"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Distribution name"
+msgstr "Nombre de la distribución"
+
+msgid "Modules"
+msgstr "Módulos"
+
+msgid "Entity data"
+msgstr "Datos de la entidad"
+
+msgid "Entity name"
+msgstr "Nombre de la entidad"
+
+msgid "Slogan"
+msgstr "Eslogan"
+
+msgid "Entity logo"
+msgstr "Logotipo de la entidad"
+
+msgid "Admin user"
+msgstr "Usuario administrador"
+
+msgid "Confirm password"
+msgstr "Confirmar contraseña"
+
+msgid "Complete name"
+msgstr "Nombre completo"
+
+msgid "Other settings"
+msgstr "Otras configuraciones"
+
+msgid "There is no more settings to do"
+msgstr "No hay más configuraciones que realizar"
+
+msgid "System information"
+msgstr "Información del sistema"
+
+msgid "Version"
+msgstr "Versión"
+
+msgid "Distribution"
+msgstr "Distribución"
+
+msgid "Last update"
+msgstr "Última actualización"
+
+msgid "Contact and technical support"
+msgstr "Contacto y soporte técnico"
+
+msgid "member of"
+msgstr "miembro de"
+
+msgid "Website"
+msgstr "Sitio web"
+
+msgid "Print"
+msgstr "Imprimir"
+
+msgid "User preferences"
+msgstr "Preferencias del usuario"
+
+msgid "Display theme"
+msgstr "Tema de visualización"
+
+msgid "Select"
+msgstr "Seleccionar"
+
+msgid "Nickname"
+msgstr "Usuario"
+
+msgid "Permissions"
+msgstr "Permisos"
+
+msgid "Last sessions"
+msgstr "Últimas sesiones"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Hour"
+msgstr "Hora"
+
+msgid "Browser"
+msgstr "Navegador"
+
+msgid "Delete user"
+msgstr "Eliminar usuario"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "To keep the old password, leave the fields empty"
+msgstr "Para conservar la contrase&ntilde;a anterior, deje los campos vac&iacute;os"
+
+msgid "Give access to"
+msgstr "Dar acceso a"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Type a word for search"
+msgstr "Escriba una palabra para buscar"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Loading"
+msgstr "Cargando"
+
+msgid "Failed to load page"
+msgstr "Error al cargar la página"
+
+msgid "In construction"
+msgstr "En construcción"
+
+msgid "This method will be available very soon"
+msgstr "Muy pronto estará disponible este método"
+
+msgid "Thanks for waiting!"
+msgstr "¡Gracias por esperar!"
+
+msgid "Go back"
+msgstr "Regresar"
+
+msgid "We are sorry! We could not find the requested method"
+msgstr "¡Lo sentimos! No pudimos encontrar el método solicitado"
+
+msgid "We are sorry! You do not have permissions to access this method"
+msgstr "¡Lo sentimos! No tiene permisos para acceder a este método"
+
+msgid "Technical support"
+msgstr "Soporte técnico"
+
+msgid "My account"
+msgstr "Mi cuenta"
+
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+msgid "Phone"
+msgstr "Teléfono"
+
+msgid "Blue - Lateral menu"
+msgstr "Azul - Menú lateral"
+
+msgid "Black - Lateral menu"
+msgstr "Negro - Menú lateral"
+
+msgid "Green - Lateral menu"
+msgstr "Verde-  Menú lateral"
+
+msgid "Blue - Top menu"
+msgstr "Azul - Menú superior"

@@ -22,7 +22,7 @@ class User extends Controller
 		if(empty($_POST["nickname"]))
 		{
 			$data["title"] = "Error";
-			$data["message"] = "Solicitud incorrecta.";
+			$data["message"] = _("Bad request.");
 			$data["theme"] = "red";
 			echo json_encode($data);
 			return;
@@ -92,7 +92,7 @@ class User extends Controller
 		else
 		{
 			$data["title"] = "Error";
-			$data["message"] = "Usuario o contraseña incorrectos.";
+			$data["message"] = "Bad user or password.";
 			$data["theme"] = "red";
 		}
 		echo json_encode($data);

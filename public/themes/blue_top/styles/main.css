@@ -297,7 +297,7 @@
 	border-left: 10px solid transparent;
 	border-right: 10px solid transparent;
 	clear: both;
-	right: 25px;
+	left: calc(50% - 10px);
 }
 
 .pagination

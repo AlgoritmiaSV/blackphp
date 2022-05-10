@@ -10,8 +10,20 @@ class Controller
 		# Default time zone of servers is Lithuania/Europe, UTC+00; America/El_Salvador is UTC-06
 		date_default_timezone_set('America/El_Salvador');
 
-		# Locale
-		$locale = empty(Session::get("locale")) ? "es_ES" : Session::get("locale");
+		# Locale (Default locale = en_US)
+		$locale = "en_US";
+		if(empty(Session::get("locale")))
+		{
+			$browser_language = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"], 0, 2);
+			if($browser_language == "es")
+			{
+				$locale = "es_ES";
+			}
+		}
+		else
+		{
+			$locale = Session::get("locale");
+		}
 		$charset = empty(Session::get("charset")) ? "UTF-8" : Session::get("charset");
 
 		if (defined('LC_MESSAGES'))
@@ -70,7 +82,7 @@ class Controller
 						if( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
 							$protocol .= "s";
 						}
-						header("Location: " . $protocol . "://installer." . $server_name[1] . "." . $server_name[2] . "/Instalation/NewEntity/" . $subdomain . "/");
+						header("Location: " . $protocol . "://installer." . $server_name[1] . "." . $server_name[2] . "/Installation/NewEntity/" . $subdomain . "/");
 						return;
 					}
 				}

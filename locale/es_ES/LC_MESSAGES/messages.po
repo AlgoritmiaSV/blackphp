@@ -41,12 +41,14 @@ msgstr "Solicitud incorrecta."
 msgid "Bad user or password."
 msgstr "Usuario o contraseña incorrectos."
 
-msgid "Settings"
-msgstr "Configuraciones"
-
 msgid "Server date"
 msgstr "Fecha del servidor"
 
+################################ Module names
+msgid "Settings"
+msgstr "Configuraciones"
+
+################################ Method names
 msgid "Entity"
 msgstr "Entidad"
 
@@ -59,6 +61,7 @@ msgstr "Preferencias"
 msgid "About BlackPHP"
 msgstr "Acerca de BlackPHP"
 
+################################ Method descriptions
 msgid "Allows you to configure the general information of the business/company"
 msgstr "Permite configurar la información general del negocio/empresa"
 
@@ -71,8 +74,12 @@ msgstr "Permite establecer y modificar parámetros opcionales del sistema en la 
 msgid "Shows system information: Version, contact and technical support"
 msgstr "Muestra la información del sistema: Versión, contacto y soporte técnico"
 
+################################ Installation
 msgid "Installation"
 msgstr "Instalación"
+
+msgid "You are creating a new company account in BlackPHP. For this action you need to have an account as an installer"
+msgstr "Estás creando una nueva cuenta de empresa en BlackPHP. Para esta acción necesitas tener una cuenta como instalador"
 
 msgid "No subdomain chosen"
 msgstr "No se eligió un subdominio"
@@ -122,6 +129,7 @@ msgstr "No autorizado"
 msgid "You are not logged in"
 msgstr "No ha iniciado sesión"
 
+################################ Users
 msgid "New user"
 msgstr "Nuevo usuario"
 
@@ -157,9 +165,6 @@ msgstr "Detalle de sucursal"
 
 msgid "User details"
 msgstr "Detalle de usuario"
-
-msgid "You are creating a new company account in BlackPHP. For this action you need to have an account as an installer"
-msgstr "Estás creando una nueva cuenta de empresa en BlackPHP. Para esta acción necesitas tener una cuenta como instalador"
 
 msgid "Continue"
 msgstr "Continuar"
@@ -314,6 +319,7 @@ msgstr "Cerrar sesión"
 msgid "Phone"
 msgstr "Teléfono"
 
+################################ Themes
 msgid "Blue - Lateral menu"
 msgstr "Azul - Menú lateral"
 

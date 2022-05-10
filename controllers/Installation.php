@@ -16,7 +16,7 @@ class Installation extends Controller
 	public function index($subdomain = "")
 	{
 		#$this->session_required("html", $this->module);
-		$this->view->data["title"] = _('Installation');
+		$this->view->data["title"] = _("Installation");
 		$this->view->standard_form();
 		$this->view->data["nav"] = "";
 		if(Session::get("authorization_code") != null)

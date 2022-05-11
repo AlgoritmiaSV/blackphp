@@ -326,7 +326,7 @@ $( function()
 						}
 					},
 					'btns': [
-						{'text':'Aceptar', 'closeAlert':true, 'theme': json.theme, 'class': 'jalert_accept'}]
+						{'text':json.accept||'Accept', 'closeAlert':true, 'theme': json.theme, 'class': 'jalert_accept'}]
 				});
 			}
 			if(json.success || json.saved)
@@ -741,11 +741,11 @@ $( function()
 			{
 				$.jAlert({
 					'title': "Éxito",
-					'content': "El registro ha sido eliminado con éxito",
+					'content': deletion_data.message || "Deleted succesfully",
 					'theme': "blue",
 					'autofocus': '.jalert_accept',
 					'btns': [
-						{'text':'Aceptar', 'closeAlert':true, 'theme': 'blue', 'class': 'jalert_accept', 'onClick': function() {
+						{'text': deletion_data.accept || 'OK', 'closeAlert':true, 'theme': 'blue', 'class': 'jalert_accept', 'onClick': function() {
 							location.href = deletion_next;
 						}}]
 				});
@@ -753,19 +753,19 @@ $( function()
 			else if(deletion_data.message)
 			{
 				$.jAlert({
-					'title': deletion_data.title || "Mensaje",
+					'title': deletion_data.title || "Message",
 					'content': deletion_data.message,
 					'theme': deletion_data.theme || "red",
 					'autofocus': '.jalert_accept',
 					'btns': [
-						{'text':'Aceptar', 'closeAlert':true, 'theme': deletion_data.theme || "red", 'class': 'jalert_accept'}]
+						{'text':deletion_data.accept||'OK', 'closeAlert':true, 'theme': deletion_data.theme || "red", 'class': 'jalert_accept'}]
 				});
 			}
 			else
 			{
 				$.jAlert({
 					'title': "Error",
-					'content': "Ha ocurrido un error al intentar eliminar el registro.",
+					'content': "Failed to delete.",
 					'theme': "red",
 					'autofocus': '.jalert_accept',
 					'btns': [

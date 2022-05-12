@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 08, 2022 at 03:06 AM
+-- Generation Time: May 11, 2022 at 08:25 PM
 -- Server version: 10.3.34-MariaDB-0+deb10u1
 -- PHP Version: 8.1.4
 
@@ -131,7 +131,6 @@ CREATE TABLE `app_modules` (
   `module_name` varchar(32) NOT NULL COMMENT 'Nombre del módulo',
   `module_url` varchar(32) NOT NULL COMMENT 'URL del módulo',
   `module_key` char(1) NOT NULL COMMENT 'Tecla de acceso rápido',
-  `module_html` varchar(32) NOT NULL COMMENT 'Nombre en formato HTML',
   `module_description` tinytext NOT NULL COMMENT 'Descripción del módulo',
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo'
@@ -141,8 +140,8 @@ CREATE TABLE `app_modules` (
 -- Dumping data for table `app_modules`
 --
 
-INSERT INTO `app_modules` (`module_id`, `module_name`, `module_url`, `module_key`, `module_html`, `module_description`, `default_order`, `status`) VALUES
-(1, 'Settings', 'Settings', 'A', 'Settings', 'Settings', 127, 1);
+INSERT INTO `app_modules` (`module_id`, `module_name`, `module_url`, `module_key`, `module_description`, `default_order`, `status`) VALUES
+(1, 'Settings', 'Settings', 'A', 'Settings', 127, 1);
 
 -- --------------------------------------------------------
 

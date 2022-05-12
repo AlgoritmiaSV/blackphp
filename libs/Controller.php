@@ -37,6 +37,7 @@ class Controller
 			putenv("LC_ALL={$locale}"); // windows
 			bindtextdomain("messages", ".\locale");
 		}
+		bind_textdomain_codeset("messages", 'UTF-8');
 		textdomain("messages");
 
 		# In Windows, this line remove the warnings from the client side

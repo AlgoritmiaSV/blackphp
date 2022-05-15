@@ -209,17 +209,17 @@ $( function()
 		if(json.found_rows != null)
 		{
 			current_page = 0;
-			if(url.options.pagina == null)
+			if(url.options.page == null)
 			{
 				current_page = json.found_rows > 0 ? 1 : 0;
 			}
 			else
 			{
-				current_page = url.options.pagina;
+				current_page = url.options.page;
 			}
 			$('.pagination').jqPagination({
 				paged: function(page) {
-					url.options["pagina"] = page;
+					url.options["page"] = page;
 					goto_url();
 				},
 				max_page: Math.ceil(json.found_rows / 100),

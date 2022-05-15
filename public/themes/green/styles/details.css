@@ -180,3 +180,18 @@
 	max-width: 720px;
 	margin: 0px auto;
 }
+
+.small_text
+{
+	font-size: smaller;
+}
+
+.small_text h3
+{
+	margin: 0px;
+}
+
+.small_text .show_details_table
+{
+	margin: 0px;
+}

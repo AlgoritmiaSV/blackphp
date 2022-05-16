@@ -1,26 +1,19 @@
 	<div id="login">
-		<div class="title">_(Log in)</div>
-		<form action="test_login" data-module="index">
-			<div class="content table">
-				<div class="cell" id="locked">
-					<img src="{{ entity_logo }}">
-				</div>
-				<div class="cell">
-					<div class="entry">
-						<input id="user_input" type="text" name="nickname" placeholder="_(User)" required>
-					</div>
-					<div class="entry">
-						<input id="pass_input" type="password" name="password" placeholder="_(Password)" required>
-					</div>
-					<div class="entry">
-						<button class="blue_button" type="submit" id="login_button">_(Log in)</button>
-					</div>
-				</div>
+		<!--div class="title">_(Log in)</div-->
+		<form action="test_login" class="table" data-module="index">
+			<div class="entry cell">
+				<input id="user_input" type="text" name="nickname" placeholder="_(User)" required>
+			</div>
+			<div class="entry cell">
+				<input id="pass_input" type="password" name="password" placeholder="_(Password)" required>
+			</div>
+			<div class="entry cell">
+				<button class="blue_button" type="submit" id="login_button">_(Log in)</button>
 			</div>
 		</form>
 		<div class="sending">
 			<img src="public/images/loading.gif" class="medium_icon">
-			<span>_(Loggin in)...</span>
+			<span>_(Login in)...</span>
 		</div>
 		<div class="error">
 			<img src="public/images/error.png" class="small_icon">
@@ -31,13 +24,23 @@
 			<span>_(Success)</span>
 		</div>
 	</div>
+	<div class="content table">
+		<div class="cell">
+			<img src="public/images/blackphp_logo.png" alt="System Logo">
+			<p>_(The framework to maximize productivity!)</p>
+		</div>
+		<div class="cell">
+			<p>_(Provided to):</p>
+			<img src="{{ entity_logo }}">
+		</div>
+	</div>
 	<div class="credits">
 		<a href="#">
-			<img src="public/images/technical_support.png" class="medium_icon">
+			<img src="public/images/technical_support.png" class="small_icon">
 			<span>_(Technical support)</span>
 		</a>
 		<a href="#">
-			<img src="public/images/info.png" class="medium_icon">
+			<img src="public/images/info.png" class="small_icon">
 			<span>_(About BlackPHP)</span>
 		</a>
 	</div>

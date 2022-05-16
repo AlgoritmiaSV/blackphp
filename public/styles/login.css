@@ -7,11 +7,11 @@
 /*	Elements */
 #login
 {
-	width:100%;
-	max-width:600px;
-	margin:40px auto;
-	background-color:#f2f2f2;
-	border-radius:7px;
+	padding: 0px 10px;
+	text-align: right;
+	float: right;
+	width: 100%;
+	max-width: 800px;
 }
 
 #locked img
@@ -22,7 +22,20 @@
 /*	Classes */
 .content
 {
-	padding:10px;
+	margin: 100px 0px 0px 0px;
+	text-align: center;
+}
+
+.content img
+{
+	max-width: 350px;
+	max-height: 200px;
+}
+
+.content p
+{
+	font-size: large;
+	color: #663300;
 }
 
 .entry
@@ -46,7 +59,7 @@
 
 .credits
 {
-	text-align: center;
+	text-align: right;
 }
 
 .credits a
@@ -61,7 +74,9 @@
 
 .credits a span
 {
-	display: block;
+	display: inline-block;
+	vertical-align: top;
+	padding: 5px 0px;
 }
 
 .credits a:hover
@@ -147,6 +162,11 @@
 		vertical-align:top;
 	}
 
+	.content .cell
+	{
+		width: 50%;
+	}
+	
 	.entry input
 	{
 		width:70%;
@@ -156,11 +176,5 @@
 	{
 		display:table;
 		width:100%;
-	}
-	
-	/* Tags */
-	button
-	{
-		width:73%;		
 	}
 }

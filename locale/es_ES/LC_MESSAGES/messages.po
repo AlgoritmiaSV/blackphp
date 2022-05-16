@@ -32,6 +32,12 @@ msgstr "Iniciando sesi&oacute;n"
 msgid "Success"
 msgstr "Éxito"
 
+msgid "The framework to maximize productivity!"
+msgstr "¡El framework para maximizar la productividad!"
+
+msgid "Provided to"
+msgstr "Proporcionado a"
+
 msgid "Home"
 msgstr "Inicio"
 

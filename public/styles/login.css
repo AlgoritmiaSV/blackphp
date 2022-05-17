@@ -148,18 +148,31 @@
 		margin:30px 0px;
 	}
 
+	#main_content
+	{
+		background: repeating-linear-gradient(45deg, #ffffff, #f6f6ff 200px);
+	}
+
 	/* Class */
 	.credits
 	{
 		position: absolute;
 		width: 100%;
-		bottom: 40px;
+		bottom: 0px;
 	}
 
 	.cell
 	{
 		display:table-cell;
 		vertical-align:top;
+	}
+
+	.content
+	{
+		margin: 0px auto;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 
 	.content .cell

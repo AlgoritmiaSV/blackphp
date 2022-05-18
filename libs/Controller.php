@@ -14,10 +14,14 @@ class Controller
 		$locale = "en_US";
 		if(empty(Session::get("locale")))
 		{
-			$browser_language = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"], 0, 2);
-			if($browser_language == "es")
+			if(isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]))
 			{
-				$locale = "es_ES";
+				$browser_language = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"], 0, 2);
+				if($browser_language == "es")
+				{
+					$locale = "es_ES";
+				}
+				Session::set("locale", $locale);
 			}
 		}
 		else

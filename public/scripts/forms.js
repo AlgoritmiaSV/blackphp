@@ -578,6 +578,7 @@ $( function()
 						_tr = $(this).closest("tr");
 						_tr.find(".local_code").val(ui.item.local_code);
 						_tr.find(".measure_name").text(ui.item.measure_name);
+						_tr.find(".cost").text(ui.item.cost);
 						_tr.find(".product_id").val(ui.item.product_id);
 						_tr.find(".pres_id").val(ui.item.pres_id);
 						_tr.find(".service_id").val(ui.item.service_id);

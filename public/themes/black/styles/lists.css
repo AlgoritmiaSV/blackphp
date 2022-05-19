@@ -66,6 +66,11 @@
 	height: 35px;
 }
 
+.list_options form
+{
+	display: inline-block;
+}
+
 .data_search
 {
 	border: 1px solid #394b5e;
@@ -73,6 +78,32 @@
 	width: 50%;
 	min-width: 300px;
 	padding: 7px;
+}
+
+.action_icons
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	padding: 5px 0px;
+}
+
+.action_icons a
+{
+	display: inline-block;
+	padding: 0px 10px;
+	text-align: center;
+	border-radius: 3px;
+}
+
+.action_icons a:hover
+{
+	background-color: #d9d9d9;
+}
+
+.action_icons img
+{
+	width: 35px;
 }
 
 .data_viewer tbody tr

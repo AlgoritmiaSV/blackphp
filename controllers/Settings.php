@@ -262,7 +262,7 @@ class Settings extends Controller
 			$data["no_reset"] = true;
 
 			#Save image
-			if(!empty($_FILES["images"]["name"]))
+			if(!empty($_FILES["images"]["name"][0]))
 			{
 				$extension = strtolower(pathinfo($_FILES["images"]["name"][0], PATHINFO_EXTENSION));
 				if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])

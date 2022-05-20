@@ -1,7 +1,15 @@
 <div class="list_options">
-	<input class="data_search" type="text" placeholder="_(Type a word for search)">
-	<button class="link_button blue_button" data-href="/{{ module }}/NewUser/">_(New user)</button>
-	<button class="print_button blue_button" data-print=".data_viewer">_(Print)</button>
+	<div class="action_icons">
+		<a href="/{{ module }}/NewUser/">
+			<img src="public/images/add.png" alt="_(New user)" title="_(New user)">
+		</a>
+		<a href="#" class="print_button" data-print=".data_viewer">
+			<img src="public/images/printer.png" alt="Print">
+		</a>
+	</div>
+	<div class="action_filter">
+		<input class="data_search" type="text" placeholder="_(Type a word for search)">
+	</div>
 </div>
 {{ print_header }}
 <div class="content_viewer">

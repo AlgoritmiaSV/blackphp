@@ -580,6 +580,8 @@ $( function()
 						_tr.find(".measure_name").text(ui.item.measure_name);
 						_tr.find(".cost").text(ui.item.cost);
 						_tr.find(".product_id").val(ui.item.product_id);
+						//Solución inmediata
+						_tr.find(".fitem_id").val(ui.item.fitem_id);
 						_tr.find(".pres_id").val(ui.item.pres_id);
 						_tr.find(".service_id").val(ui.item.service_id);
 						_tr.find(".combo_id").val(ui.item.combo_id);
@@ -741,8 +743,8 @@ $( function()
 			if(deletion_data.deleted)
 			{
 				$.jAlert({
-					'title': "Éxito",
-					'content': deletion_data.message || "Deleted succesfully",
+					'title': deletion_data.title || "Success",
+					'content': deletion_data.message || "Deleted succesfully!",
 					'theme': "blue",
 					'autofocus': '.jalert_accept',
 					'btns': [

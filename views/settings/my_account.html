@@ -1,0 +1,40 @@
+<div class="content_viewer">
+	<div class="form_content medium_form">
+		<form action="save_my_account" data-reset="{{ module }}/">
+			<div class="form_title">
+				_(My account)
+				<a class="close_form" href="#"><img src="public/images/close.png"></a>
+			</div>
+			<div class="form_body">
+				<div class="form_entry">
+					<label>_(Display theme):</label>
+					<select class="data_selector update_input" name="theme_id" data-source="themes" data-search="none" data-placeholder="_(Select)">
+					</select>
+				</div>
+			</div>
+			<div class="form_body">
+				<div class="form_entry">
+					<label>_(Language):</label>
+					<select class="data_selector update_input" name="locale" data-source="locales" data-search="none" data-placeholder="_(Select)">
+					</select>
+				</div>
+			</div>
+			<div class="form_foot">
+				<button class="blue_button" type="submit">_(Save)</button>
+				<button class="grey_button cancel_button" type="reset">_(Cancel)</button>
+			</div>
+		</form>
+		<div class="sending">
+			<img src="public/images/loading.gif" class="small_icon">
+			<span>_(Saving)...</span>
+		</div>
+		<div class="error">
+			<img src="public/images/error.png" class="small_icon">
+			<span>_(Failed to save)</span>
+		</div>
+		<div class="success">
+			<img src="public/images/success.png" class="small_icon">
+			<span>_(Success)</span>
+		</div>
+	</div>
+</div>

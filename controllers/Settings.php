@@ -46,6 +46,16 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
+	public function MyAccount()
+	{
+		$this->session_required("html", $this->module);
+		$this->view->data["title"] = _("My account");
+		$this->view->standard_form();
+		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["content"] = $this->view->render("settings/my_account", true);
+		$this->view->render('main');
+	}
+
 	public function Users()
 	{
 		$this->session_required("html", $this->module);
@@ -235,6 +245,24 @@ class Settings extends Controller
 				"theme_id" => Session::get("theme_id")
 			);
 		}
+		if($_POST["method"] == "MyAccount")
+		{
+			$this->loadModel("entity");
+			$themes = $this->model->get_themes();
+			foreach($themes as $key => $theme)
+			{
+				$themes[$key]["text"] = _($theme["text"]);
+			}
+			$data["themes"] = $themes;
+			$data["locales"] = Array(
+				Array("id" => "en_US", "text" => _("English")),
+				Array("id" => "es_ES", "text" => _("Spanish"))
+			);
+			$data["update"] = Array(
+				"theme_id" => Session::get("theme_id"),
+				"locale" => Session::get("locale")
+			);
+		}
 		echo json_encode($data);
 	}
 
@@ -377,6 +405,34 @@ class Settings extends Controller
 			Session::set("theme_url", $theme["theme_url"]);
 			$data["reload_after"] = true;
 		}
+		$data["success"] = true;
+		$data["title"] = _("Success");
+		$data["message"] = _("Changes have been saved");
+		$data["theme"] = "green";
+		echo json_encode($data);
+	}
+
+	public function save_my_account()
+	{
+		$this->session_required("json");
+		$data = $_POST;
+		$data["success"] = false;
+		$this->loadModel("user");
+		$user = $this->model->get_user(Session::get("user_id"));
+		if($data["theme_id"] != Session::get("theme_id"))
+		{
+			$user["theme_id"] = $data["theme_id"];
+			$theme = $this->model->get_theme($data["theme_id"]);
+			Session::set("theme_id", $theme["theme_id"]);
+			Session::set("theme_url", $theme["theme_url"]);
+		}
+		if($data["locale"] != Session::get("locale"))
+		{
+			$user["locale"] = $data["locale"];
+			Session::set("locale", $data["locale"]);
+		}
+		$this->model->update_user($user);
+		$data["reload_after"] = true;
 		$data["success"] = true;
 		$data["title"] = _("Success");
 		$data["message"] = _("Changes have been saved");

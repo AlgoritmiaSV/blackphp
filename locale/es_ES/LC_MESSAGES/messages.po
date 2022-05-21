@@ -337,3 +337,11 @@ msgstr "Verde-  Menú lateral"
 
 msgid "Blue - Top menu"
 msgstr "Azul - Menú superior"
+
+################################ Settings
+
+msgid "English"
+msgstr "Inglés"
+
+msgid "Spanish"
+msgstr "Español"

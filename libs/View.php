@@ -79,6 +79,7 @@ class View
 				}
 			}
 		}
+		$template = str_replace("_()", "", $template);
 
 		# Remove the unused vars
 		$template = preg_replace("/\[\[ [a-z0-9_]* \]\].*\[\[\/ [a-z0-9_]* \]\]/", "", $template);

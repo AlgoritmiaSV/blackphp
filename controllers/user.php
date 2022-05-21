@@ -31,20 +31,6 @@ class User extends Controller
 		$user = $this->model->get_access($_POST["nickname"], $_POST["password"], $this->entity_id);
 		if(isset($user["nickname"]))
 		{
-			# Select branch
-			/*$branch = $this->model->get_branch($_POST["branch_id"], $user["user_id"]);
-			if(!isset($branch["branch_name"]))
-			{
-				$data["title"] = "Error";
-				$data["message"] = "El usuario no tiene permiso para acceder a la sucursal seleccionada.";
-				$data["theme"] = "red";
-				echo json_encode($data);
-				return;
-			}
-			else
-			{
-				Session::set("branch", $branch);
-			}*/
 			$data["reload"] = true;
 
 			foreach ($user as $key => $value) {
@@ -92,7 +78,7 @@ class User extends Controller
 		else
 		{
 			$data["title"] = "Error";
-			$data["message"] = "Bad user or password.";
+			$data["message"] = _("Bad user or password.");
 			$data["theme"] = "red";
 		}
 		echo json_encode($data);

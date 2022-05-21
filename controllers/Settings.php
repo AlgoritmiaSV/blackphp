@@ -29,7 +29,7 @@ class Settings extends Controller
 	public function Entity()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = _('Company data');
+		$this->view->data["title"] = _("Entity data");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->data["content"] = $this->view->render("settings/entity", true);
@@ -73,7 +73,7 @@ class Settings extends Controller
 	public function EditUser($user_id)
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = 'Edit user';
+		$this->view->data["title"] = _("Edit user");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		if($user_id == Session::get("user_id"))
@@ -200,7 +200,7 @@ class Settings extends Controller
 			}
 		}
 		$data["success"] = true;
-		$data["title"] = "Éxito";
+		$data["title"] = _("Success");
 		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
 		$data["reload_after"] = true;
@@ -378,35 +378,10 @@ class Settings extends Controller
 			$data["reload_after"] = true;
 		}
 		$data["success"] = true;
-		$data["title"] = "Éxito";
+		$data["title"] = _("Success");
 		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
 		echo json_encode($data);
-	}
-
-	public function DetalleSucursal()
-	{
-		$this->session_required("html", $this->module);
-		$this->view->data["title"] = _("Branch details");
-		$this->view->standard_details();
-		$this->view->data["nav"] = $this->view->render("nav", true);
-		$this->view->data["content_id"] = "branch_details";
-		$this->view->data["content"] = $this->view->render("content_loader", true);
-		$this->view->render('main');
-	}
-
-	public function branch_details_loader()
-	{
-		$this->session_required("internal");
-		$this->loadModel("entity");
-		$store_types = Array("", _("Sales room"), _("Warehouse"), _("Sales room and warehouse"));
-		$branch = $this->model->get_branch($_POST["id"]);
-		$branch["store_type"] = $store_types[$branch["store_type"]];
-		$this->view->data = array_merge($this->view->data, $branch);
-		$this->user_actions($branch);
-		$this->view->data["print_title"] = _("Branch details");
-		$this->view->data["print_header"] = $this->view->render("print_header", true);
-		$this->view->render("settings/branch_details");
 	}
 
 	public function UserDetails()

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 11, 2022 at 08:25 PM
+-- Generation Time: May 20, 2022 at 10:13 PM
 -- Server version: 10.3.34-MariaDB-0+deb10u1
 -- PHP Version: 8.1.4
 
@@ -196,6 +196,7 @@ CREATE TABLE `entities` (
   `entity_begin` date NOT NULL COMMENT 'Fecha de inicio de las operaciones',
   `entity_subdomain` varchar(32) DEFAULT NULL COMMENT 'Subdominio (Para funcionamiento en línea)',
   `sys_name` varchar(32) NOT NULL COMMENT 'Nombre de la distribución del sistema',
+  `default_locale` char(5) DEFAULT NULL COMMENT 'Idioma por defecto de la empresa',
   `creation_installer` int(11) DEFAULT NULL COMMENT 'ID del usuario que instaló el sistema',
   `creation_time` datetime NOT NULL,
   `edition_installer` int(11) DEFAULT NULL,
@@ -251,6 +252,7 @@ CREATE TABLE `users` (
   `email` varchar(64) DEFAULT NULL COMMENT 'Correo electrónico',
   `password` char(32) NOT NULL COMMENT 'Contraseña',
   `theme_id` int(11) DEFAULT 1 COMMENT 'Tema de visualización del usuario',
+  `locale` char(5) DEFAULT NULL COMMENT 'Idioma del usuario',
   `creation_user` int(11) NOT NULL,
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,

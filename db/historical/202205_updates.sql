@@ -10,5 +10,8 @@ UPDATE `app_themes` SET `theme_name` = 'Black - Lateral menu' WHERE `app_themes`
 UPDATE `app_themes` SET `theme_name` = 'Green - Lateral menu' WHERE `app_themes`.`theme_id` = 3;
 UPDATE `app_themes` SET `theme_name` = 'Blue - Top menu' WHERE `app_themes`.`theme_id` = 4;
 ALTER TABLE `app_modules` DROP `module_html`;
--- Teleinf Local test
+-- 2022-05-19
+ALTER TABLE `entities` ADD `default_locale` CHAR(5) NULL COMMENT 'Idioma por defecto de la empresa' AFTER `sys_name`;
+ALTER TABLE `users` ADD `locale` CHAR(5) NULL COMMENT 'Idioma del usuario' AFTER `theme_id`;
 -- Nahutech Local Test
+-- Teleinf Local test

@@ -292,6 +292,9 @@ msgstr "Estado"
 msgid "Loading"
 msgstr "Cargando"
 
+msgid "Error!"
+msgstr "¡Error!"
+
 msgid "Failed to load page"
 msgstr "Error al cargar la página"
 

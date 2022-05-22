@@ -32,15 +32,22 @@
 		<div id="container">
 			<header id="main_header">
 				<h3 id="main_title_bar">
+					<!-- user -->
 					<a href="#" id="menu_button" class="phone_inline">
 						<img src="public/images/menu.png" class="small_icon" alt="Menu">
 					</a>
+					<!-- /user -->
 					<img src="public/images/blackphp_logo.png" alt="BlackPHP logo" class="small_logo">
 					<span class="pc_inline">&laquo; {{ entity_name }} &raquo; {{ title }}</span>
 					<span class="phone_inline">{{ title }}</span>
 				</h3>
 				<!-- user -->
-				<a id="user_link" href="#">{{ user_name }}</a>
+				<a id="user_link" href="#">
+					<span class="user_icon">
+						<img class="small_icon" src="public/images/user.png" alt="_(User)">
+					</span>
+					<span class="pc_inline user_name">{{ user_name }}</span>
+				</a>
 				<!-- /user -->
 			</header>
 			<section id="content_section" class="table">

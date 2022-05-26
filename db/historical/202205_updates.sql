@@ -1,4 +1,3 @@
--- Initial, GitHub
 UPDATE `app_modules` SET `module_name` = 'Settings', `module_url` = 'Settings', `module_html` = 'Settings', `module_description` = 'Settings' WHERE `app_modules`.`module_id` = 1;
 UPDATE `app_methods` SET `method_name` = 'Entity', `method_url` = 'Entity', `method_description` = 'Allows you to configure the general information of the business/company' WHERE `app_methods`.`method_id` = 1;
 UPDATE `app_methods` SET `method_name` = 'Users', `method_url` = 'Users', `method_description` = 'Allows you to manage users and permissions for each user' WHERE `app_methods`.`method_id` = 2;
@@ -13,5 +12,6 @@ ALTER TABLE `app_modules` DROP `module_html`;
 -- 2022-05-19
 ALTER TABLE `entities` ADD `default_locale` CHAR(5) NULL COMMENT 'Idioma por defecto de la empresa' AFTER `sys_name`;
 ALTER TABLE `users` ADD `locale` CHAR(5) NULL COMMENT 'Idioma del usuario' AFTER `theme_id`;
+-- Initial, GitHub
 -- Nahutech Local Test
 -- Teleinf Local test

@@ -3,6 +3,7 @@
 #	User controller
 #	By: Edwin Fajardo
 #	Date-time: 2020-6-12 23:55
+use donatj\UserAgent\UserAgentParser;
 
 class User extends Controller
 {
@@ -22,7 +23,7 @@ class User extends Controller
 		if(empty($_POST["nickname"]))
 		{
 			$data["title"] = "Error";
-			$data["message"] = _("Bad request.");
+			$data["message"] = _("Bad request");
 			$data["theme"] = "red";
 			echo json_encode($data);
 			return;
@@ -51,13 +52,15 @@ class User extends Controller
 			else
 			{
 				#Set new browser
-				include "plugins/PhpUserAgent/src/UserAgentParser.php";
-				$browser_data = parse_user_agent();
+				//include "plugins/PhpUserAgent/src/UserAgentParser.php";
+				//$browser_data = parse_user_agent();
+				$parser = new UserAgentParser();
+				$ua = $parser->parse($user_agent);
 				$data_set = Array(
 					"user_agent" => $user_agent,
-					"browser_name" => $browser_data["browser"],
-					"browser_version" => $browser_data["version"],
-					"platform" => $browser_data["platform"],
+					"browser_name" => $ua->browser(),
+					"browser_version" => $ua->browserVersion(),
+					"platform" => $ua->platform(),
 					"creation_user" => $user["user_id"],
 					"creation_time" => $now
 				);
@@ -78,7 +81,7 @@ class User extends Controller
 		else
 		{
 			$data["title"] = "Error";
-			$data["message"] = _("Bad user or password.");
+			$data["message"] = _("Bad user or password");
 			$data["theme"] = "red";
 		}
 		echo json_encode($data);

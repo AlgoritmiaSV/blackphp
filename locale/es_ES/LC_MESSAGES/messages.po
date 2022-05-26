@@ -151,6 +151,9 @@ msgstr "Activo"
 msgid "Inactive"
 msgstr "Inactivo"
 
+msgid "Export to Excel"
+msgstr "Exportar a Excel"
+
 msgid "The nickname already exists!"
 msgstr "¡El nombre de usuario ya existe!"
 

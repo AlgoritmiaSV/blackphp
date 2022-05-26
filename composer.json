@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.23",
+        "donatj/phpuseragentparser": "^1.6"
+    }
+}

@@ -100,7 +100,7 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
-	public function users_table_loader()
+	public function users_table_loader($response = "JSON")
 	{
 		$this->session_required("json");
 		$this->loadModel("user");
@@ -112,7 +112,17 @@ class Settings extends Controller
 			$users[$key]["status"] = $status[$users[$key]["status"]];
 		}
 		$data["content"] = $users;
-		echo json_encode($data);
+		if($response == "Excel")
+		{
+			$data["title"] = _("Users");
+			$data["headers"] = Array(_("User"), _("Complete name"), _("Status"));
+			$data["fields"] = Array("nickname", "user_name", "status");
+			excel::create_from_table($data, "Users_" . Date("YmdHis") . ".xlsx");
+		}
+		else
+		{
+			echo json_encode($data);
+		}
 	}
 
 	public function save_user()

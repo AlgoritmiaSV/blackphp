@@ -304,7 +304,12 @@ $( function()
 		{
 			print_footer = $(".print_footer").html();
 		}
-		css = $(this).data("css") == null ? 'public/styles/print_list.css?r=' + rand : $(this).data("css");
+		
+		css = 'public/styles/print_list.css?r=' + rand;
+		if($($(this).data("print")).data("css") !== undefined)
+		{
+			css = $($(this).data("print")).data("css");
+		}
 		$($(this).data("print")).printThis({
 			'loadCSS': css,
 			'header': print_header,

@@ -487,6 +487,10 @@ $( function()
 		if(e.which == 13)
 		{
 			tbody = $(this).closest("tbody");
+			if(tbody.is(".locked_tbody"))
+			{
+				return false;
+			}
 			if($(this).closest("tr").is(':last-child'))
 			{
 				last_price = $(this).closest("tr").find(".row_price");

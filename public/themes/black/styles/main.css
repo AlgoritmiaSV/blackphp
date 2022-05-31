@@ -614,6 +614,12 @@ button
 	max-height: 100px;
 }
 
+.small_logo_print
+{
+	max-width: 200px;
+	max-height: 70px;
+}
+
 .print_header_content table
 {
 	width: 100%;
@@ -679,6 +685,11 @@ button
 .table_container
 {
 	overflow-x: auto;
+}
+
+.small_chart
+{
+	width: 200px;
 }
 
 @media screen and (max-width: 799px)

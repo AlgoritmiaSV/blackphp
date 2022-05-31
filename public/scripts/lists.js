@@ -158,6 +158,13 @@ $( function()
 					location.href = $(this).data("href");
 				}
 			});
+
+			/* Charts */
+			var ctx = $(".myChart");
+			if(ctx.length > 0)
+			{
+				init_chart();
+			}
 		})
 		.fail(function() {
 			$("div.loading_error").show();

@@ -90,6 +90,16 @@
 	border-top: 3px solid #a9a9a9;
 }
 
+.signature_table
+{
+	width: 100%;
+}
+
+.signature_table td
+{
+	vertical-align: top;
+}
+
 .signature_space
 {
 	display: inline-block;

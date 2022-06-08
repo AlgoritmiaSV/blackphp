@@ -29,7 +29,7 @@ CREATE TABLE `app_actions` (
   `past_verb` varchar(16) NOT NULL COMMENT 'Verbo en pasado',
   PRIMARY KEY (`action_id`),
   UNIQUE KEY `action_key` (`action_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='Acciones a realizar sobre los diferentes elementos';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Acciones a realizar sobre los diferentes elementos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +52,7 @@ CREATE TABLE `app_elements` (
   UNIQUE KEY `element_key` (`element_key`),
   KEY `element_method` (`module_id`),
   CONSTRAINT `element_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='Elementos de la aplicación para actividad del usuario';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Elementos de la aplicación para actividad del usuario';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `app_installers` (
   `creation_time` datetime NOT NULL COMMENT 'Hora y fecha de creación',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Eliminado, inactivo, activo',
   PRIMARY KEY (`installer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='Instaladores del sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Instaladores del sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `app_methods` (
   PRIMARY KEY (`method_id`),
   KEY `module_id` (`module_id`),
   CONSTRAINT `method_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='Todos los métodos disponibles en el sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Todos los métodos disponibles en el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,7 +113,7 @@ CREATE TABLE `app_modules` (
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo',
   PRIMARY KEY (`module_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='Todos los módulos disponibles en el sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Todos los módulos disponibles en el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `app_themes` (
   `theme_name` varchar(32) NOT NULL COMMENT 'Nombre del tema',
   `theme_url` varchar(16) NOT NULL COMMENT 'Nombre de la carpeta pública',
   PRIMARY KEY (`theme_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='Temas (estilos) del sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Temas (estilos) del sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +148,7 @@ CREATE TABLE `browsers` (
   `creation_time` datetime NOT NULL COMMENT 'Hora y fecha de registro',
   PRIMARY KEY (`browser_id`),
   UNIQUE KEY `user_agent` (`user_agent`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='Navegadores con los que se ha accedido';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Navegadores con los que se ha accedido';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +181,7 @@ CREATE TABLE `entities` (
   KEY `company_editor` (`edition_installer`),
   CONSTRAINT `company_creator` FOREIGN KEY (`creation_installer`) REFERENCES `app_installers` (`installer_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `company_editor` FOREIGN KEY (`edition_installer`) REFERENCES `app_installers` (`installer_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='Negocios, empresas y compañías que utilizarán el sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Negocios, empresas y compañías que utilizarán el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +204,7 @@ CREATE TABLE `entity_methods` (
   KEY `method_id` (`method_id`),
   CONSTRAINT `cmethod_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cmethod_method` FOREIGN KEY (`method_id`) REFERENCES `app_methods` (`method_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='Métodos habilitados para cada empresa';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Métodos habilitados para cada empresa';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +227,7 @@ CREATE TABLE `entity_modules` (
   KEY `module_id` (`module_id`),
   CONSTRAINT `cmodule_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cmodule_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='Módulos habilitados para cada empresa';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Módulos habilitados para cada empresa';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,7 +302,7 @@ CREATE TABLE `user_modules` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `umodule_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `umodule_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='Acceso a los usaurios por módulo';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Acceso a los usaurios por módulo';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +348,7 @@ CREATE TABLE `user_sessions` (
   KEY `usession_branch` (`branch_id`),
   CONSTRAINT `usession_browser` FOREIGN KEY (`browser_id`) REFERENCES `browsers` (`browser_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `usession_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COMMENT='Registro de sesiones del usuario';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Registro de sesiones del usuario';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -378,7 +378,7 @@ CREATE TABLE `users` (
   KEY `theme_id` (`theme_id`),
   CONSTRAINT `user_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_theme` FOREIGN KEY (`theme_id`) REFERENCES `app_themes` (`theme_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='Usuarios';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Usuarios';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

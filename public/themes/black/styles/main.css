@@ -214,6 +214,11 @@
 	padding: 4px 0px;
 }
 
+.justify
+{
+	text-align: justify;
+}
+
 .red_button
 {
 	text-decoration: none;

@@ -163,6 +163,16 @@
 	height: 35px;
 }
 
+.signature_table
+{
+	width: 100%;
+}
+
+.signature_table td
+{
+	vertical-align: top;
+}
+
 .signature_space
 {
 	display: inline-block;

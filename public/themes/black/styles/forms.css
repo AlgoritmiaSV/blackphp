@@ -255,10 +255,8 @@ tr:hover .action_icon
 {
 	background-attachment: local;
 	background-image:
-	linear-gradient(to right, #000000 10px, transparent 10px),
-	linear-gradient(to left, #000000 10px, transparent 10px),
-	repeating-linear-gradient(#000000, #000000 30px, #666666 30px, #666666 31px, #000000 31px);
-	line-height: 31px;
+	repeating-linear-gradient(#000000, #000000 24px, #666666 24px, #666666 25px, #000000 25px);
+	line-height: 25px;
 	border: 0px !important;
 }
 

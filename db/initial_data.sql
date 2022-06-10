@@ -70,7 +70,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `app_themes` WRITE;
 /*!40000 ALTER TABLE `app_themes` DISABLE KEYS */;
-INSERT INTO `app_themes` VALUES (1,'Blue - Lateral menu','blackphp'),(2,'Black - Lateral menu','black'),(3,'Green - Lateral menu','green'),(4,'Blue - Top menu','blue_top');
+INSERT INTO `app_themes` VALUES (1,'Blue - Lateral menu','blackphp'),(2,'Black - Lateral menu','black'),(3,'Green - Lateral menu','green'),(4,'Blue - Top menu','blue_top'),(5,'White - Lateral menu','white');
 /*!40000 ALTER TABLE `app_themes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

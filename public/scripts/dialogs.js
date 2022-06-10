@@ -57,7 +57,7 @@ $(function ()
 	});
 
 	$(".dialog").each(function() {
-		accept = $(this).data("accept") || "Agregar";
+		var accept = $(this).data("accept") || "Agregar";
 		options = {
 			buttons:
 			{

@@ -5,8 +5,9 @@
 #	Date-time: 2017-09-12 00:00
 */
 
-############ Redirección temporal
 $server_name = explode(".", $_SERVER["SERVER_NAME"]);
+
+############ Redirección temporal
 if($server_name[0] == "fccastillo" && $server_name[1] != "mimakit")
 {
 	header("Location: https://fccastillo.mimakit.com/");
@@ -14,7 +15,12 @@ if($server_name[0] == "fccastillo" && $server_name[1] != "mimakit")
 }
 ############ Fin de redirección temporal
 
-if(file_exists('config.php'))
+############ Config (Entity, Main, BlackPHP)
+if(file_exists("entities/" . $server_name[0] . "/config.php"))
+{
+	include 'config.php';
+}
+elseif(file_exists('config.php'))
 {
 	include 'config.php';
 }

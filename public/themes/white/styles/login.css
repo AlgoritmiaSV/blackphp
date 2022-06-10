@@ -1,0 +1,53 @@
+/*
+	Login Styles
+	By: Edwin Fajardo
+	Date-Time: 2021-12-16 11:40
+*/
+.credits
+{
+	background-color: #e9e9e9;
+    border-top: 3px solid #cccccc;
+	padding: 10px;
+}
+
+.credits span
+{
+	display: block;
+	padding: 20px;
+	float: right;
+}
+
+.credits img
+{
+	max-height: 50px;
+}
+
+.credits a
+{
+	text-decoration: none;
+	color: #0000ff;
+}
+
+.credits a:hover
+{
+	text-decoration: underline;
+}
+
+@media screen and (min-width: 800px)
+{
+	.form_main_content
+	{
+		background: repeating-linear-gradient(90deg, #ffffff, #f0f0f9, #e0e0f0, #F0F0F8, #ffffff 50px);
+	}
+	
+	.form_content
+	{
+		box-shadow: 0px 0px 30px #000000 !important;
+		margin: 0px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+	}
+}

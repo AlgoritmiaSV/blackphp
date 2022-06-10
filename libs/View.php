@@ -146,10 +146,7 @@ class View
 			'external/js/select2.min.js',
 			'external/js/printThis.js',
 			'external/js/jquery.floatThead.min.js',
-			'scripts/main.js',
-			'scripts/lists.js',
-			'scripts/forms.js',
-			'scripts/dialogs.js'
+			'scripts/bpscript.min.js'
 		));
 	}
 
@@ -176,11 +173,7 @@ class View
 			'external/js/select2.min.js',
 			'external/js/image-uploader.js',
 			'external/js/jquery.imagereader-1.1.0.min.js',
-			'scripts/main.js',
-			'scripts/forms.js',
-			'scripts/lists.js',
-			'scripts/dialogs.js',
-			'scripts/tree.js'
+			'scripts/bpscript.min.js'
 		));
 	}
 
@@ -204,10 +197,7 @@ class View
 			'external/js/jAlert.min.js',
 			'external/js/select2.min.js',
 			'external/js/printThis.js',
-			'scripts/main.js',
-			'scripts/lists.js',
-			'scripts/forms.js',
-			'scripts/dialogs.js'
+			'scripts/bpscript.min.js'
 		));
 	}
 
@@ -227,10 +217,7 @@ class View
 			'external/js/jquery-ui.min.js',
 			'external/js/jAlert.min.js',
 			'external/js/select2.min.js',
-			'scripts/main.js',
-			'scripts/lists.js',
-			'scripts/dialogs.js',
-			'scripts/forms.js'
+			'scripts/bpscript.min.js'
 		));
 	}
 
@@ -247,7 +234,7 @@ class View
 			'external/js/jquery-ui.min.js',
 			'external/js/jAlert.min.js',
 			'external/js/select2.min.js',
-			'scripts/main.js'
+			'scripts/bpscript.min.js'
 		));
 	}
 }

@@ -1,0 +1,206 @@
+.show_details_table
+{
+	border-collapse: collapse;
+	border: 1px solid #a0a0a0;
+	margin: 10px 0px;
+	width: 100%;
+}
+
+.show_details_table td, .show_details_table th
+{
+	border: 1px solid #a0a0a0;
+	vertical-align: top;
+}
+
+.details_main_content
+{
+	background: #ffffff;
+}
+
+.close_details
+{
+	width: 25px;
+	float: right;
+	border-radius: 3px;
+	margin:-5px -5px 0px 0px;
+}
+
+.close_details:hover
+{
+	background-color: #cccccc;
+}
+
+.close_details img
+{
+	width: 100%;
+}
+
+.float_container
+{
+	overflow: hidden;
+}
+
+.details_body
+{
+	padding: 10px;
+	overflow: hidden;
+}
+
+.details_content
+{
+	background-color:#ffffff;
+	border-radius: 10px;
+	margin: 5px 5px 5px 10px;
+	box-shadow: 0px 0px 4px 4px #999999;
+	transition: all 1s ease-out;
+}
+
+.details_title
+{
+	padding: 10px;
+	border-radius: 5px 5px 0px 0px;
+	background-color: #0066ff;
+	color: #ffffff;
+}
+
+.totals_table
+{
+	border: 1px solid #a0a0a0;
+	border-collapse: collapse;
+	float: right;
+}
+
+.totals_table td
+{
+	border: 1px solid #a0a0a0;
+}
+
+.details_foot
+{
+	padding: 10px;
+	text-align: right;
+}
+
+.details_users
+{
+	font-style: italic;
+	color: #666644;
+	padding: 10px 5px;
+	border-top: 3px solid #a9a9a9;
+}
+
+.field_label
+{
+	font-weight: bold;
+}
+
+.field_data
+{
+	padding: 5px 0px 10px 5px;
+	display: block;
+	text-align: justify;
+}
+
+.profile_photo
+{
+	max-width: 150px;
+	max-height: 200px;
+}
+
+.link_row
+{
+	cursor: pointer;
+}
+
+.link_row:hover
+{
+	color: #0000ff;
+	background-color: #d9d9d9;
+}
+
+.half_page_column
+{
+	vertical-align: top;
+	height: 250px;
+}
+
+.half_page_left_column
+{
+	border-right: 1px solid #666666;
+	padding-right: 10px;
+}
+
+.half_page_right_column
+{
+	padding-left: 10px;
+}
+
+.half_page_footer
+{
+	border: 0px;
+	border-top: 1px solid #000000;
+}
+
+.half_page_footer table
+{
+	width: 100%;
+}
+
+.bill_table
+{
+	width: 100%;
+}
+
+.list_options
+{
+	padding: 5px;
+	min-height: 40px;
+}
+
+.list_options table tr
+{
+	height: 35px;
+}
+
+.signature_table
+{
+	width: 100%;
+}
+
+.signature_table td
+{
+	vertical-align: top;
+}
+
+.signature_space
+{
+	display: inline-block;
+	width: 200px;
+	height: 80px;
+}
+
+.field_cell
+{
+	min-width: 200px;
+}
+
+.vertical_page
+{
+	max-width: 720px;
+	margin: 0px auto;
+}
+
+.small_text
+{
+	font-size: smaller;
+}
+
+.small_text h3
+{
+	margin: 0px;
+}
+
+.small_text .show_details_table
+{
+	margin: 0px;
+}

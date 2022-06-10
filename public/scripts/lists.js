@@ -24,7 +24,7 @@ $( function()
 			if(data.content != null)
 			{
 				$.each(data.content, function(index, value) {
-					tr = _template;
+					var tr = _template;
 					$.each(value, function(e_index, e_value) {
 						tr = tr.replace(new RegExp("{{" + e_index + "}}", 'g'), e_value);
 					});
@@ -47,7 +47,7 @@ $( function()
 			}
 			if(data.found_rows != null)
 			{
-				current_page = 0;
+				var current_page = 0;
 				if(url.options.page == null)
 				{
 					current_page = data.found_rows > 0 ? 1 : 0;
@@ -124,7 +124,7 @@ $( function()
 				location.href = $(this).data("href");
 			});
 			_div.find(".print_button").click(function() {
-				rand = Math.floor(Math.random() * 100000);
+				//rand = Math.floor(Math.random() * 100000);
 				print_header = null;
 				if($(".print_header").length)
 				{
@@ -175,7 +175,7 @@ $( function()
 	}
 
 	$(".data_search").keyup(function() {
-		string_value = $(this).val();
+		var string_value = $(this).val();
 		$(".data_viewer tbody tr").not(".template").each(function() {
 			found = false;
 			$(this).find("td").each(function() {
@@ -196,7 +196,7 @@ $( function()
 	});
 
 	/* Filter loader */
-	filter_content = [];
+	//filter_content = [];
 	$(".data_filter").each(function() {
 		if($(this).is("select"))
 		{
@@ -218,7 +218,7 @@ $( function()
 
 	function load_filter(selector_id)
 	{
-		action_module = url.module || "index";
+		var action_module = url.module || "index";
 		var _selector = $("#" + selector_id);
 		if(_selector.data("module") != null)
 		{
@@ -282,7 +282,7 @@ $( function()
 		{
 			url.method = "listar";
 		}
-		href = url.module + "/" + url.method + "/";
+		var href = url.module + "/" + url.method + "/";
 		$.each(url.options, function(key, value) {
 			if(value != null && value != 0)
 			{
@@ -300,19 +300,19 @@ $( function()
 		{
 			$($(this).data("print")).floatThead('destroy');
 		}
-		rand = Math.floor(Math.random() * 100000);
-		print_header = null;
+		var rand = Math.floor(Math.random() * 100000);
+		var print_header = null;
 		if($(".print_header").length)
 		{
 			print_header = $(".print_header").html();
 		}
-		print_footer = null;
+		var print_footer = null;
 		if($(".print_footer").length)
 		{
 			print_footer = $(".print_footer").html();
 		}
 		
-		css = 'public/styles/print_list.css?r=' + rand;
+		var css = 'public/styles/print_list.css?r=' + rand;
 		if($($(this).data("print")).data("css") !== undefined)
 		{
 			css = $($(this).data("print")).data("css");

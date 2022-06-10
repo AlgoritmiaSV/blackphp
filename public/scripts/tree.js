@@ -5,13 +5,13 @@
 */
 $(function() {
 	$(".parent_checkbox").click(function() {
-		parent_item = $(this).closest(".parent_item");
+		var parent_item = $(this).closest(".parent_item");
 		parent_item.find(".child_checkbox").prop("checked", $(this).prop("checked"));
 	});
 
 	$(".child_checkbox").click(function() {
-		parent_checkbox = $(this).closest(".parent_item").find(".parent_checkbox");
-		container = $(this).closest(".children_container");
+		var parent_checkbox = $(this).closest(".parent_item").find(".parent_checkbox");
+		var container = $(this).closest(".children_container");
 		if($(this).prop("checked"))
 		{
 			parent_checkbox.prop("checked", true);

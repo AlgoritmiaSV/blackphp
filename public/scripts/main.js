@@ -4,7 +4,7 @@
 	Date-Time: 2019-06-21 22:36
 */
 $(function() {
-	content_height = $(window).height() - $("#main_header").outerHeight() - $("#main_footer").outerHeight();
+	var content_height = $(window).height() - $("#main_header").outerHeight() - $("#main_footer").outerHeight();
 	if($(".list_options").length)
 	{
 		content_height -= $(".list_options").outerHeight();
@@ -74,7 +74,7 @@ $(function() {
 	/* Manage click on all links */
 	$("a").not(".link_exclude").click(function(e) {
 		e.preventDefault();
-		href = $(this).attr("href");
+		var href = $(this).attr("href");
 		if(href == "#")
 		{
 			return false;

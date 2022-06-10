@@ -31,16 +31,19 @@
 	<body>
 		<div id="container">
 			<header id="main_header">
-				<h3 id="main_title_bar">
+				<div id="main_title_bar">
+					<a href="/" id="app_logo">
+						<img src="public/icons/ms-icon-310x310.png" alt="Logo">
+					</a>
 					<!-- user -->
 					<a href="#" id="menu_button" class="phone_inline">
 						<img src="public/images/menu.png" class="small_icon" alt="Menu">
 					</a>
 					<!-- /user -->
-					<img src="public/images/blackphp_logo.png" alt="BlackPHP logo" class="small_logo">
+					<!--img src="public/icons/ms-icon-310x310.png" alt="BlackPHP logo" class="small_logo"-->
 					<span class="pc_inline">&laquo; {{ entity_name }} &raquo; {{ title }}</span>
 					<span class="phone_inline">{{ title }}</span>
-				</h3>
+				</div>
 				<!-- user -->
 				<a id="user_link" href="#">
 					<span class="user_icon">
@@ -50,13 +53,13 @@
 				</a>
 				<!-- /user -->
 			</header>
-			<section id="content_section" class="table">
+			<section id="content_section">
 				<!-- user -->
-				<nav id="main_nav" class="cell pc_cell">
+				<nav id="main_nav">
 					{{ nav }}
 				</nav>
 				<!-- /user -->
-				<article class="cell" id="main_content">
+				<article id="main_content">
 					{{ content }}
 					<!-- user -->
 					<aside id="main_aside">
@@ -67,8 +70,7 @@
 							</div>
 						</div>
 						<span id="user_nickname">{{ nickname }}</span>
-						<a href="Settings/MyAccount">_(My account)</a>
-						<!--a href="#">Mi actividad</a-->
+						<a href="Settings/MyAccount/">_(My account)</a>
 						<a id="u_close" href="#">_(Log out)</a>
 					</aside>
 					<!-- /user -->

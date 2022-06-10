@@ -21,7 +21,7 @@ $( function()
 	function build_selectors()
 	{
 		$(".data_selector:not(.select2-hidden-accessible)").each(function() {
-			selector = $(this);
+			var selector = $(this);
 			if($(window).width() < 900)
 			{
 				selector.data("width", "100%");
@@ -110,10 +110,10 @@ $( function()
 		{
 			$(".update_check").each(function()
 			{
-				check = $(this);
+				var check = $(this);
 				if(json.check[check.data("source")])
 				{
-					checked = false;
+					var checked = false;
 					$.each(json.check[check.data("source")], function(index, value){
 						if(value.id == check.attr("value"))
 						{
@@ -134,15 +134,15 @@ $( function()
 		{
 			$(".items_container").each(function()
 			{
-				container = $(this);
+				var container = $(this);
 				if(json.items[container.data("source")] && json.items[container.data("source")].length > 0)
 				{
-					_template = container.find("tr").first().clone(true);
+					var _template = container.find("tr").first().clone(true);
 					container.find("tr:first").first().remove();
 					row_count = 0;
 					$.each(json.items[container.data("source")], function(index, value) {
 						/* Prepare */
-						_tr = _template.clone(false);
+						var _tr = _template.clone(false);
 						_tr.find(".date_input").each(set_date_picker);
 						_tr.find("input").keypress(input_keypress);
 						_tr.find(".row_quantity, .row_price").change(function() {
@@ -197,7 +197,7 @@ $( function()
 			trs = $("#pres_container tr");
 			for(i = 0; i < trs.length && i < json.presentations.length; i++)
 			{
-				pres = json.presentations[i];
+				var pres = json.presentations[i];
 				_tr = $(trs.get(i));
 				_tr.find(".pres_id").val(pres.pres_id);
 				_tr.find(".pres_name").val(pres.pres_name);
@@ -208,7 +208,7 @@ $( function()
 		/* Form Pagination */
 		if(json.found_rows != null)
 		{
-			current_page = 0;
+			var current_page = 0;
 			if(url.options.page == null)
 			{
 				current_page = json.found_rows > 0 ? 1 : 0;
@@ -266,13 +266,13 @@ $( function()
 		{
 			return false;
 		}
-		action = $(this).attr("action") || "save";
+		var action = $(this).attr("action") || "save";
 		$(this).find(".date_input").each(function() {
 			$(this).data("value", $(this).val());
 			$(this).val($.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate")));
 		});
 		//form_data = $.parseJSON(JSON.stringify($(this).serializeArray()));
-		form_data = new FormData(this);
+		var form_data = new FormData(this);
 		first_input = $(this).find("input").first();
 		div_sending = $(this).siblings(".sending");
 		div_success = $(this).siblings(".success");
@@ -285,7 +285,7 @@ $( function()
 		{
 			action_module = $(this).data("module");
 		}
-		ajax_options = {
+		var ajax_options = {
 			'method': "POST",
 			'url': action_module + "/" + action + "/",
 			'data': form_data,
@@ -293,11 +293,6 @@ $( function()
 			'processData': false,
 			'contentType': false
 		};
-		/*if($(this).prop("enctype") == "multipart/form-data")
-		{
-			ajax_options["processData"] = false;
-			ajax_options["contentType"] = false;
-		}*/
 		$.ajax(ajax_options)
 		.done(function(json) {
 			if(json.message)
@@ -363,7 +358,7 @@ $( function()
 	});
 
 	$("form .cancel_button").click(function() {
-		reset_location = $(this).closest("form").data("reset");
+		var reset_location = $(this).closest("form").data("reset");
 		if(reset_location)
 		{
 			$(".form_content").css({
@@ -457,9 +452,9 @@ $( function()
 	bill_type = 1;
 	function calc_row_total(_input)
 	{
-		row_quantity = _input.closest("tr").find(".row_quantity").val();
-		row_price = _input.closest("tr").find(".row_price").val();
-		total_cell = _input.closest("tr").find(".row_total").find("span");
+		var row_quantity = _input.closest("tr").find(".row_quantity").val();
+		var row_price = _input.closest("tr").find(".row_price").val();
+		var total_cell = _input.closest("tr").find(".row_total").find("span");
 		if(row_quantity == '' && !isNaN(row_price))
 		{
 			total_cell.text(parseFloat(row_price).toFixed(2));
@@ -470,7 +465,7 @@ $( function()
 		}
 		else
 		{
-			total = row_quantity * row_price;
+			var total = row_quantity * row_price;
 			total_cell.text(total.toFixed(2));
 		}
 	}
@@ -486,15 +481,15 @@ $( function()
 	{
 		if(e.which == 13)
 		{
-			tbody = $(this).closest("tbody");
+			var tbody = $(this).closest("tbody");
 			if(tbody.is(".locked_tbody"))
 			{
 				return false;
 			}
 			if($(this).closest("tr").is(':last-child'))
 			{
-				last_price = $(this).closest("tr").find(".row_price");
-				last_product = $(this).closest("tr").find(".row_product_name");
+				var last_price = $(this).closest("tr").find(".row_price");
+				var last_product = $(this).closest("tr").find(".row_product_name");
 				if(last_product.val() == "")
 				{
 					last_product.focus();
@@ -508,7 +503,7 @@ $( function()
 				$(this).closest("tr").find(".data_selector").each(function() {
 					$(this).select2("destroy");
 				});
-				_tr = $(this).closest("tr").clone();
+				var _tr = $(this).closest("tr").clone();
 				tbody.append(_tr);
 				/* Prepare row */
 				_tr.find(".row_count").text(tbody.find("tr").length);
@@ -543,7 +538,7 @@ $( function()
 
 	function calc_bill_total()
 	{
-		bill_total = 0;
+		var bill_total = 0;
 		$(".row_total").each(function() {
 			bill_total += parseFloat($(this).find("span").text());
 		});
@@ -632,7 +627,7 @@ $( function()
 
 	function check_generic(_tr, combo_id)
 	{
-		combo_tr = _tr;
+		var combo_tr = _tr;
 		$.ajax({
 			method: "GET",
 			url: url.module + "/generic_by_combo/" + combo_id,
@@ -641,16 +636,16 @@ $( function()
 		.done(function(generic_data) {
 			combo_tr.find(".row_generics").html("");
 			$.each(generic_data, function(index, value) {
-				div = $(document.createElement("div"));
-				generic_span = $(document.createElement("span"));
+				var div = $(document.createElement("div"));
+				var generic_span = $(document.createElement("span"));
 				generic_span.text(value.product_name + ":");
 				div.append(generic_span);
-				select = $(document.createElement("select"));
+				var select = $(document.createElement("select"));
 				select.attr("name", "generics[]");
 				div.append(select);
 				combo_tr.find(".row_generics").append(div);
 				$.each(value.options, function(oindex, ovalue) {
-					new_option = $(document.createElement("option"));
+					var new_option = $(document.createElement("option"));
 					new_option.attr("value", ovalue.product_id);
 					new_option.text(ovalue.product_name);
 					select.append(new_option);
@@ -667,7 +662,7 @@ $( function()
 	//$("#vat_total, #subtotal_div").hide();
 	$("#bill_type").change(function()
 	{
-		type_id = $(this).val();
+		var type_id = $(this).val();
 		if(type_id == 2)
 		{
 			$("#vat_total, #subtotal_div").show();
@@ -703,10 +698,10 @@ $( function()
 
 	/* Calculate change */
 	$("#paid_amount_input").change(function() {
-		payment = parseFloat($(this).val());
-		total = $("#total").val();
+		var payment = parseFloat($(this).val());
+		var total = $("#total").val();
 		total = parseFloat(total.replace(",",""));
-		change = payment - total;
+		var change = payment - total;
 		if(!isNaN(change))
 		{
 			$("#change_input").val(change.toFixed(2));
@@ -885,8 +880,8 @@ $( function()
 
 	/* Code generator */
 	$(".code_generator").change(function() {
-		object_data = $(this).select2("data")[0];
-		code_input = $($(this).data("code_input"));
+		var object_data = $(this).select2("data")[0];
+		var code_input = $($(this).data("code_input"));
 		if(code_input.data("default_cat") != null && object_data.id == code_input.data("default_cat"))
 		{
 			code_input.val(code_input.data("default_value"));
@@ -899,14 +894,12 @@ $( function()
 
 	/* Add item from button */
 	$(".add_row_button").click(function() {
-		tbody = $($(this).data("tbody"));
+		var tbody = $($(this).data("tbody"));
 		if(tbody == null)
 		{
 			tbody = $(".items_container").first();
 		}
-		last_tr = tbody.find("tr").last();
-		last_price = last_tr.find(".row_price");
-		last_product = last_tr.find(".row_product_name");
+		var last_tr = tbody.find("tr").last();
 		last_tr.find(".data_selector").each(function() {
 			$(this).select2("destroy");
 		});

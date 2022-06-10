@@ -7,17 +7,17 @@ $(function(){
 	$(".price_input, .quantity_input").change(update_total);
 
 	$(".order_item a").click(function() {
-		input = $(this).parent().find(".quantity_input");
-		value = input.val() == "" ? 0 : parseInt(input.val());
+		var input = $(this).parent().find(".quantity_input");
+		var value = input.val() == "" ? 0 : parseInt(input.val());
 		input.val(value + 1);
 		update_total();
 	});
 
 	function update_total()
 	{
-		total_price = 0;
+		var total_price = 0;
 		$(".order_item").each(function() {
-			order_price = $(this).find(".price_input").val() * $(this).find(".quantity_input").val();
+			var order_price = $(this).find(".price_input").val() * $(this).find(".quantity_input").val();
 			total_price += order_price;
 		});
 		$("#form_total").text(total_price.toFixed(2));

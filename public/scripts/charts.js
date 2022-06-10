@@ -55,8 +55,8 @@ $(function() {
 			}
 		});
 
-		container = element.parent().next(".small_chart").first();
-		img = $(document.createElement("img"));
+		var container = element.parent().next(".small_chart").first();
+		var img = $(document.createElement("img"));
 		img.attr("src", myChart.toBase64Image());
 		img.css("width", "100%");
 		container.html(img);

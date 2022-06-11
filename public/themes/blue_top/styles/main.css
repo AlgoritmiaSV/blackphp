@@ -136,6 +136,11 @@
 	float: left;
 }
 
+#main_title_bar nav
+{
+	display: none !important;
+}
+
 #main_title_bar span
 {
 	vertical-align: top;
@@ -252,14 +257,14 @@
 	margin: 0px auto;
 }
 
-.company_header
+.company_header, .institution_header
 {
 	overflow: auto;
 	display: table !important;
 	width: 100% !important;
 }
 
-.company_header > div
+.company_header > div, .institution_header > div
 {
 	display: table-cell;
 	vertical-align: top;
@@ -330,6 +335,18 @@
 	border: 1px solid #999999;
 }
 
+.institution_header > div
+{
+	padding: 20px;
+	vertical-align: middle;
+}
+
+.institution_logo
+{
+	max-width: 300px;
+	max-height: 180px;
+}
+
 .justify
 {
 	text-align: justify;
@@ -338,6 +355,15 @@
 .medium_icon
 {
 	width: 50px;
+}
+
+.module_name
+{
+	color: #e0e0e0;
+	display: inline-block;
+	padding: 10px;
+	vertical-align: top;
+	font-weight: bold;
 }
 
 .nav_link_active, .nav_link_active_form
@@ -734,13 +760,14 @@ textarea
 		display: none;
 	}
 
-	.company_header
+	.company_header, .institution_header
 	{
 		text-align: center;
 	}
 
 	#main_nav
 	{
+		display: none;
 		width: auto;
 	}
 

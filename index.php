@@ -18,7 +18,7 @@ if($server_name[0] == "fccastillo" && $server_name[1] != "mimakit")
 ############ Config (Entity, Main, BlackPHP)
 if(file_exists("entities/" . $server_name[0] . "/config.php"))
 {
-	include 'config.php';
+	include "entities/" . $server_name[0] . "/config.php";
 }
 elseif(file_exists('config.php'))
 {

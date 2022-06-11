@@ -5,6 +5,7 @@
 	Date-Time: 2019-12-08 20:58
 	All right reserved.
 */
+
 @font-face {font-family: "Verdana V2 V1";
 	src: url("../../../external/fonts/VerdanaV2.eot"); /* IE9*/
 	src: url("../../../external/fonts/VerdanaV2.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
@@ -108,6 +109,40 @@
 	display: none;
 }
 
+#main_nav a
+{
+	display: block;
+	padding: 14px 10px;
+	background-color: #56698c;;
+	margin-bottom: 2px;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#main_nav a:hover
+{
+	text-decoration: underline;
+	background-color: #6F8ABC;
+}
+
+#main_title_bar
+{
+	margin: 0px;
+	font-size: 1em;
+}
+
+#main_title_bar .small_logo
+{
+	max-height: 38px;
+	float: left;
+}
+
+#main_title_bar span
+{
+	vertical-align: top;
+	padding: 10px;
+}
+
 #user_link
 {
 	display: inline-block;
@@ -137,6 +172,46 @@
 }
 
 /* Classes */
+.action_filter
+{
+	display: inline-block;
+	padding: 0px 0px 10px 0px;
+	color: #333333;
+	vertical-align: bottom;
+}
+
+.action_filter > span:not(.select2)
+{
+	display: inline-block;
+	padding: 4px 0px;
+}
+
+.action_icons
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	padding: 5px 0px;
+}
+
+.action_icons a
+{
+	display: inline-block;
+	padding: 0px 10px;
+	text-align: center;
+	border-radius: 3px;
+}
+
+.action_icons a:hover
+{
+	background-color: #d9d9d9;
+}
+
+.action_icons img
+{
+	width: 35px;
+}
+
 .blue_button
 {
 	text-decoration: none;
@@ -170,6 +245,31 @@
 .center
 {
 	text-align: center;
+}
+
+.center_table
+{
+	margin: 0px auto;
+}
+
+.company_header
+{
+	overflow: auto;
+	display: table;
+	width: 100%;
+}
+
+.company_header > div
+{
+	display: table-cell;
+	vertical-align: top;
+	padding: 20px;
+}
+
+.company_logo
+{
+	max-width: 200px;
+	max-height: 150px;
 }
 
 .content_viewer
@@ -257,6 +357,30 @@
 	font-weight: bold;
 }
 
+.nav_link_active, .nav_link_active_form
+{
+	position: relative;
+}
+
+.nav_link_active:after
+{
+	content: '';
+	position: absolute;
+	top: 16px;
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-right: 10px solid #ffffff;
+	clear: both;
+	right: 0px;
+}
+
+.pagination
+{
+	text-align: right;
+}
+
 .red_button
 {
 	text-decoration: none;
@@ -315,46 +439,6 @@
 	width: 100%;
 }
 
-.action_icons
-{
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	padding: 5px 0px;
-}
-
-.action_icons a
-{
-	display: inline-block;
-	padding: 0px 10px;
-	text-align: center;
-	border-radius: 3px;
-}
-
-.action_icons a:hover
-{
-	background-color: #d9d9d9;
-}
-
-.action_icons img
-{
-	width: 35px;
-}
-
-.action_filter
-{
-	display: inline-block;
-	padding: 0px 0px 10px 0px;
-	color: #333333;
-	vertical-align: bottom;
-}
-
-.action_filter > span:not(.select2)
-{
-	display: inline-block;
-	padding: 4px 0px;
-}
-
 /* Tags */
 html, body
 {
@@ -376,27 +460,6 @@ button
 	padding: 7px;
 }
 
-input, select, textarea
-{
-	font-family: "Verdana V2 V1", Verdana, Geneva, Sans-Serif;
-	font-size: 10pt;
-	padding: 3px;
-	border: 1px solid #d9d9d9;
-	outline: 0px;
-}
-
-input
-{
-	border: 0px;
-	border-bottom: 1px solid #d9d9d9;
-}
-
-textarea
-{
-	resize: none;
-}
-
-
 nav
 {
 	display: inline-block;
@@ -415,6 +478,26 @@ nav .nav_links a
 nav .nav_links a:hover
 {
 	background: linear-gradient(#f6f6f6, #cccccc) !important;
+}
+
+input, select, textarea
+{
+	font-family: "Verdana V2 V1", Verdana, Geneva, Sans-Serif;
+	font-size: 10pt;
+	padding: 3px;
+	border: 1px solid #d9d9d9;
+	outline: 0px;
+}
+
+input
+{
+	border: 0px;
+	border-bottom: 1px solid #d9d9d9;
+}
+
+textarea
+{
+	resize: none;
 }
 
 /* Checkboxes */

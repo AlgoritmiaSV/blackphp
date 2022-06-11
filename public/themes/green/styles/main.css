@@ -142,6 +142,11 @@
 	float: left;
 }
 
+#main_title_bar nav
+{
+	display: none !important;
+}
+
 #main_title_bar span
 {
 	vertical-align: top;
@@ -336,6 +341,18 @@
 	border: 1px solid #999999;
 }
 
+.institution_header > div
+{
+	padding: 20px;
+	vertical-align: middle;
+}
+
+.institution_logo
+{
+	max-width: 300px;
+	max-height: 180px;
+}
+
 .justify
 {
 	text-align: justify;
@@ -344,6 +361,15 @@
 .medium_icon
 {
 	width: 50px;
+}
+
+.module_name
+{
+	color: #e0e0e0;
+	display: inline-block;
+	padding: 10px;
+	vertical-align: top;
+	font-weight: bold;
 }
 
 .nav_link_active, .nav_link_active_form
@@ -753,7 +779,7 @@ textarea
 
 	#main_nav
 	{
-		display: block;
+		display: none;
 		width: auto;
 	}
 

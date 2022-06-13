@@ -37,6 +37,10 @@ class User extends Controller
 			foreach ($user as $key => $value) {
 				Session::set($key, $value);
 			}
+			if(!empty($user["locale"]))
+			{
+				Session::set("lang", explode("_", $user["locale"])[0]);
+			}
 			$now = Date("Y-m-d H:i:s");
 			# Get user agent
 			$user_agent = $_SERVER['HTTP_USER_AGENT'];

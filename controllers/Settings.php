@@ -359,16 +359,14 @@ class Settings extends Controller
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("About BlackPHP");
 		$this->view->standard_details();
-		$this->view->data["system_short_date"] = Date("d/m/Y");
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->data["content_id"] = "info_details";
 		$this->view->data["content"] = $this->view->render("content_loader", true);
 		$this->view->render('main');
 	}
 
-	public function info_details_loader()
+	public function info_details_loader($mode = "embedded")
 	{
-		$this->session_required("internal");
 		$info = Array();
 		if(file_exists("app_info.json"))
 		{
@@ -397,7 +395,21 @@ class Settings extends Controller
 		{
 			$this->view->data[$key] = $item;
 		}
-		$this->view->render('settings/info_details');
+		if($mode == "standalone")
+		{
+			$this->view->data["title"] = _("About BlackPHP");
+			$this->view->standard_details();
+			$this->view->add("styles", "css", Array(
+				'styles/standalone.css'
+			));
+			$this->view->restrict[] = "embedded";
+			$this->view->data["content"] = $this->view->render('settings/info_details', true);
+			$this->view->render('clean_main');
+		}
+		else
+		{
+			$this->view->render('settings/info_details');
+		}
 	}
 
 	public function save_preferences()
@@ -441,6 +453,7 @@ class Settings extends Controller
 		{
 			$user["locale"] = $data["locale"];
 			Session::set("locale", $data["locale"]);
+			Session::set("lang", explode("_", $data["locale"])[0]);
 		}
 		$this->model->update_user($user);
 		$data["reload_after"] = true;

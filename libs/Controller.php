@@ -12,6 +12,7 @@ class Controller
 
 		# Locale (Default locale = en_US)
 		$locale = "en_US";
+		$lang = "en";
 		if(empty(Session::get("locale")))
 		{
 			if(isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]))
@@ -20,15 +21,19 @@ class Controller
 				if($browser_language == "es")
 				{
 					$locale = "es_ES";
+					$lang = "es";
 				}
 				Session::set("locale", $locale);
+				Session::set("lang", $lang);
 			}
 		}
 		else
 		{
 			$locale = Session::get("locale");
+			$lang = Session::get("lang");
 		}
 		$charset = empty(Session::get("charset")) ? "UTF-8" : Session::get("charset");
+		$this->view->data["lang"] = $lang;
 
 		if (defined('LC_MESSAGES'))
 		{

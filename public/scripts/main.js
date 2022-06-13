@@ -79,6 +79,22 @@ $(function() {
 		{
 			return false;
 		}
+		if(href == "#alert")
+		{
+			var alert_href = $(this).data("href");
+			$.jAlert({
+				'title': $(this).data("title") || false,
+				'theme': $(this).data("theme") || "blue",
+				'iframe': alert_href,
+				'size': {
+					"height": content_height + "px",
+					"width": "100%"
+				},
+				'iframeHeight': (content_height - 41) + "px",
+				'noPadContent':true
+			});
+			return false;
+		}
 		if(href.indexOf("#") == 0)
 		{
 			return false;

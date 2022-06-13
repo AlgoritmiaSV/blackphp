@@ -30,57 +30,7 @@
 	</head>
 	<body>
 		<div id="container">
-			<header id="main_header">
-				<div id="main_title_bar">
-					<a href="/" id="app_logo">
-						<img src="public/icons/ms-icon-310x310.png" alt="Logo">
-					</a>
-					<!-- user -->
-					<a href="#" id="menu_button" class="phone_inline">
-						<img src="public/images/menu.png" class="small_icon" alt="Menu">
-					</a>
-					<!-- /user -->
-					<!--img src="public/icons/ms-icon-310x310.png" alt="BlackPHP logo" class="small_logo"-->
-					<span class="pc_inline">&laquo; {{ entity_name }} &raquo; {{ title }}</span>
-					<span class="phone_inline">{{ title }}</span>
-				</div>
-				<!-- user -->
-				<a id="user_link" href="#">
-					<span class="user_icon">
-						<img class="small_icon" src="public/images/user.png" alt="_(User)">
-					</span>
-					<span class="pc_inline user_name">{{ user_name }}</span>
-				</a>
-				<!-- /user -->
-			</header>
-			<section id="content_section">
-				<!-- user -->
-				<nav id="main_nav">
-					{{ nav }}
-				</nav>
-				<!-- /user -->
-				<article id="main_content">
-					{{ content }}
-					<!-- user -->
-					<aside id="main_aside">
-						<span id="u_name">{{ user_name }}</span>
-						<div class="user_container">
-							<div class="user_photo_container">
-								<img class="user_photo" src="{{ user_photo }}" alt="Foto">
-							</div>
-						</div>
-						<span id="user_nickname">{{ nickname }}</span>
-						<a href="Settings/MyAccount/">_(My account)</a>
-						<a id="u_close" href="#">_(Log out)</a>
-					</aside>
-					<!-- /user -->
-				</article>
-			</section>
-			<footer id ="main_footer">
-				<small>
-					Copyright &copy;2022 <a href="https://www.redteleinformatica.com">Red Teleinform&aacute;tica</a>. All right reserved.
-				</small>
-			</footer>
+			{{ content }}
 		</div>
 	</body>
 </html>

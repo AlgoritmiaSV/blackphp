@@ -1,0 +1,10 @@
+/**
+*	Standalone styles
+*	@author Edwin Fajardo
+*	Date-Time: 2022-06-13 04:19
+*/
+.details_content {
+	background-color: transparent !important;
+	margin: 0px !important;
+	box-shadow: none !important;
+}

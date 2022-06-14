@@ -19,10 +19,11 @@
 
 .close_details
 {
-	width: 25px;
+	width: 15px;
+	padding: 5px;
 	float: right;
 	border-radius: 3px;
-	margin:-5px -5px 0px 0px;
+	margin:-6px -6px 0px 0px;
 }
 
 .close_details:hover

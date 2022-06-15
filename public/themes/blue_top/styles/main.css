@@ -27,11 +27,6 @@
 	max-height: 40px;
 }
 
-/*#content_section
-{
-	overflow-y: scroll;
-}*/
-
 #main_aside
 {
 	display: none;
@@ -738,11 +733,6 @@ textarea
 	{
 		display: block;
 		width: auto;
-	}
-
-	.content_viewer
-	{
-		overflow-x: scroll;
 	}
 
 	.phone_block

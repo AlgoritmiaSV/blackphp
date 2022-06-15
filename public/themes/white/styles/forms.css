@@ -37,8 +37,8 @@ tr:hover .action_icon
 .close_form
 {
 	width: 15px;
-	padding: 5px;
 	float: right;
+	padding: 5px;
 	border-radius: 3px;
 	margin:-6px -6px 0px 0px;
 	background-color: transparent;
@@ -97,6 +97,7 @@ tr:hover .action_icon
 .details_table td:not(.select2_td):not(.radio_td) span
 {
 	padding: 5px;
+	vertical-align: top;
 }
 
 .details_table tbody tr:nth-child(even)
@@ -332,5 +333,39 @@ tr:hover .action_icon
 	.form_title
 	{
 		border-radius: 0px;
+	}
+
+	.details_table, .details_table tbody, .details_table tr, .details_table td:not(.pc_cell), .details_table tfoot
+	{
+		display: block;
+		width: auto;
+	}
+
+	.details_table td
+	{
+		padding: 5px 0px 5px 100px;
+	}
+
+	.details_table thead, .details_table th
+	{
+		display: none;
+	}
+
+	.details_table tbody td::before
+	{
+		content: attr(data-label);
+		width: 100px;
+		display: inline-block;
+		text-align: left;
+	}
+
+	.details_table tbody td input
+	{
+		width: calc(100% - 105px);
+	}
+
+	.details_table tbody td .complete_value
+	{
+		width: calc(100% - 105px);
 	}
 }

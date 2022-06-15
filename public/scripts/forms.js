@@ -173,7 +173,7 @@ $( function()
 						/* Partial values */
 						_tr.find(".complete_value").text(value.product_name);
 						_tr.find(".complete_value").click(complete_click);
-						_tr.find(".complete_value").show();
+						_tr.find(".complete_value").css("display", "inline-block");
 						_tr.find(".partial_value").hide();
 						_tr.find(".partial_value").blur(partial_blur);
 						_tr.find(".partial_value").change(partial_change);
@@ -1079,7 +1079,7 @@ $( function()
 		if($(this).val().length > 0)
 		{
 			$(this).siblings(".complete_value").text($(this).val());
-			$(this).siblings(".complete_value").show();
+			$(this).siblings(".complete_value").css("display", "inline-block");
 			$(this).hide();
 		}
 	}
@@ -1087,11 +1087,11 @@ $( function()
 	$(".complete_value").click(complete_click);
 	function complete_click()
 	{
-		partial_value = $(this).siblings(".partial_value").first();
+		var partial_value = $(this).siblings(".partial_value").first();
 		partial_value.show();
 		partial_value.focus();
 		partial_value.select();
-		$(this).hide();
+		$(this).css("display", "none");
 	}
 
 	$(".partial_value").change(partial_change);

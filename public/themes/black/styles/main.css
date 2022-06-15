@@ -31,7 +31,6 @@
 {
 	display: table;
 	width: 100%;
-	overflow-y: scroll;
 }
 
 #main_aside
@@ -756,11 +755,6 @@ textarea
 	{
 		display: block;
 		width: auto;
-	}
-
-	.content_viewer
-	{
-		overflow-x: scroll;
 	}
 
 	.phone_block

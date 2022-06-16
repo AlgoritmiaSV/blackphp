@@ -1,8 +1,14 @@
 <?php
-#	Error log reader
-#	By: Edwin Fajardo.
-#	Date-Time: 2021-09-18 15:16
-#	Copyright (c)Edwin Fajardo. All rights reserved.
+/**
+ * error_log reader
+ * 
+ * Este fichero lee el archivo error_log que se genera en el servidor, en el directorio
+ * raíz del sistema, y lo muestra en pantalla. También es posible descargarlo en formato txt.
+ * 
+ * Date-Time: 2021-09-18 15:16
+ * @author Edwin Fajardo <contacto@edwinfajardo.com>
+ * @link https://www.edwinfajardo.com
+ */
 
 #--------------------------------------------------------------------------
 $time_diff = 0;

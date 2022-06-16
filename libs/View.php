@@ -1,19 +1,53 @@
 <?php
-
-#	View
-#	Edited By: Edwin Fajardo
-#	Date-time: 2017-09-12 14:00
+/**
+ * Clase View
+ * 
+ * El presente fichero contiene la clase View, que se encarga de renderizar las vistas e imprimirlas.
+ * Incorporado desde 2017-09-12 14:00
+ * 
+ * Para crear las vistas, se hace uso de plantillas previamente escritas en HTML. En el documento HTML
+ * se hace una búsqueda de los patrones siguientes:
+ * 1) {{ variable }}: Una variable entre llaves dobles es sustituida por un velor del arreglo $data 
+ * con la clave especificada.
+ * 2) [[ variable ]]: Una variable entre corchetes dobles es sustituída por un array asociativo de 
+ * datos, cuya clave está definida por cada {{ clave }} entre corchetes contenida entre [[ variable ]] y [[/ variable ]]
+ * 3) &lt;!-- variable --&gt; Conjunto de etiquetas HTML &lt;!-- /variable --&gt;: Este conjunto de etiquetas HTML será omitido si en el arreglo $restrict existe la clave.
+ * 4) _(Palabra): La palabra contenida se busca en los archivos de idioma con gettext.
+ */
 
 class View
 {
-	public $data; # Data from the controller to render in the template
-	public $restrict; # Hide parts of HTML
+	/**
+	 * @var array $data Array asociativo con datos del controlador que se van a imprimir en la plantilla.
+	 */
+	public $data;
+
+	/**
+	 * @var array $restrict Array asociativo con datos del controlador que se van a omitir en la plantilla.
+	 */
+	public $restrict;
+
+	/**
+	 * Constructor de la clase.
+	 * 
+	 * Se inicializan los arreglos $data y $restrict.
+	 */
 	function __construct()
 	{
 		$this->restrict = Array();
 		$this->data = Array();
 	}
 
+	/**
+	 * render
+	 * 
+	 * Método que se encarga de renderizar la plantilla, y devolver un HTML con la vista que incluye los valores especificados en el arreglo $data
+	 * 
+	 * @param string $name Nombre del fichero HTML la vista
+	 * @param bool $return Si es verdadero, el método retorna el HTML en vez de imprimirlo.
+	 * 
+	 * @return string|void Vista renderizada o void.
+	 */
 	public function render($name, $return = false)
 	{
 		$filename = 'views/' . $name . '.html';
@@ -99,7 +133,19 @@ class View
 		}
 	}
 
-	# Add styles and JS scripts
+	/**
+	 * Add
+	 * 
+	 * Agrega hojas de estilo css o script js, evaluando previamente la existencia de los ficheros en
+	 * el tema de la sesión y añadiendo una marca de tiempo de modificación, para evitar la
+	 * desactualización por caché del navegador.
+	 * 
+	 * @param string $type Tipo de archivo a agregar (scripts o styles)
+	 * @param string $extension Extensión del archivo (css o js)
+	 * @param array $files Conjunto de archivos a agregar
+	 * 
+	 * @return void
+	 */
 	public function add($type, $extension, $files)
 	{
 		foreach($files as $file)

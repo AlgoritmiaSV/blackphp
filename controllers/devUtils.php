@@ -1,8 +1,12 @@
 <?php
-
-#	User controller
-#	By: Edwin Fajardo
-#	Date-time: 2020-6-12 23:55
+/**
+ * DevUtils
+ * 
+ * Herramientas de depuración para desarrolladores
+ * Incorporado el 2020-6-12 23:55
+ * 
+ * @author Edwin Fajardo <contacto@edwinfajardo.com>
+ */
 
 class devUtils extends Controller
 {

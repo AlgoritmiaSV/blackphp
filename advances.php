@@ -9,7 +9,7 @@
 # Set the initial directory of your project, related to this script location.
 $init_directory = ".";
 # Set the list of excluded folders. No textual files and folders that contains no textual files only, will be excluded automatically. Exclude folders with no written code or text, as plugins, upload files or backups.
-$excluded_folders = Array("./public/external", "./plugins", "./db", "./public/icons");
+$excluded_folders = Array("./public/external", "./plugins", "./db", "./public/icons", "./vendor");
 # Set time zone to UTC-6.
 $time_diff = 0;
 date_default_timezone_set('America/El_Salvador');

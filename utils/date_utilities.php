@@ -1,9 +1,11 @@
 <?php
 /**
- * Date Utilities
+ * Funciones utilitarias para las fechas
+ * 
+ * Creation date-time: 2016-03-24 17:43
+ * 
  * @version	1.0.0
  * @author	Edwin Fajardo <contacto@edwinfajardo.com>
- * Creation date-time: 2016-03-24 17:43
  * @copyright 2016-2021 Edwin Fajardo. All rights reserved
  */
 

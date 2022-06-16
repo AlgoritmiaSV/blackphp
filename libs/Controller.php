@@ -1,9 +1,22 @@
 <?php
+/**
+ * Controller
+ * 
+ * Este fichero contiene la clase Controller de la que derivan todos los controladores.
+ */
+
+/**
+ * Clase Controller
+ * 
+ * Clase principal de la que derivan todos los controladores.
+ */
 class Controller
 {
 	function __construct()
 	{
-		# Initialize the view
+		/**
+		 * @var object View Se crea una vista para el controlador, que contiene un array (data) con cada una de las variables a ser renderizadas.
+		 */
 		$this->view = new View();
 		$this->view->data["base_href"] = "/";
 
@@ -151,9 +164,13 @@ class Controller
 	}
 
 	/**
-	 * @param string $name Name of the model
-	 * @param string $path Location of the models
-	 * @param boolean default_model If true, asign the object on $this->model, else return the object
+	 * Cargar el modelo
+	 * 
+	 * @param string $name Nombre del modelo
+	 * @param string $path Ruta donde se encuentra el modelo, por defecto models/
+	 * @param boolean $default_model Si es verdadero, asigna el objeto a $this->model, sino, retorna el objeto
+	 * 
+	 * @return object|void Un objeto de tipo Model, o void
 	 */
 	public function loadModel($name, $modelPath = 'models/', $default_model = true)
 	{
@@ -173,10 +190,14 @@ class Controller
 	}
 
 	/**
-	* Edited By: Edwin Fajardo
-	* Session requirements foreach method
-	* @param string $type Type of response
-	*/
+	 * Validación de sesión
+	 * 
+	 * Verifica si hay una sesión abierta para el usuario de forma general, o para el módulo
+	 * especificado.
+	 * 
+	 * @param string $type Tipo de respuesta esperada (html, internal o JSON)
+	 * @param string $module el módulo al que el usuario intenta acceder
+	 */
 	public function session_required($type = 'html', $module = "")
 	{
 		if(Session::get("user_id") != null)
@@ -250,10 +271,14 @@ class Controller
 	}
 
 	/**
-	 * user_actions
-	 * @version 1.0.9 or higher
-	 * @author Edwin Fajardo <contacto@edwinfajardo.com>
+	 * Acciones de usuario
+	 * 
+	 * Agrega información acerca de acciones de usuario para un objeto en particular, tales como el usuario y fecha de creación y el usuario y fecha de última edición
 	 * Date-time: 2021-11-18 09:32
+	 * 
+	 * @param array $element Un array asociativo que contiene los campos creation_user, creatio_time, edition_user y edition_time
+	 * 
+	 * @return void Realiza los cambios directamente en la vista
 	 */
 	public function user_actions($element)
 	{
@@ -281,10 +306,13 @@ class Controller
 	}
 
 	/**
-	 * user_actions
-	 * @version 1.0.9 or higher
-	 * @author Edwin Fajardo <contacto@edwinfajardo.com>
-	 * Date-time: 2021-12-05 16:44
+	 * Registro de actividades del usuario
+	 * 
+	 * Registra, en la base de datos, cada una de las actividades del usuario previamente definidas, a fin de poder consultar en el futuro el historial de actividades.
+	 * Incorporado el: 2021-12-05 16:44
+	 * 
+	 * @param string $action_key Clave de actividad realizada
+	 * @param int 
 	 */
 	public function set_user_log($action_key, $element_key, $element_link = 0, $date_time = "")
 	{
@@ -311,7 +339,11 @@ class Controller
 
 	/**
 	 * Is IP Address
-	 * Check if SERVER_NAME is IP
+	 * Verifica si SERVER_NAME es una dirección IP
+	 * 
+	 * @param string $str SERVER_NAME pasado por parámetro
+	 * 
+	 * @return boolean Verdadero si es una IP, falso en caso contrario.
 	 */
 	public function is_ip_address($str)
 	{

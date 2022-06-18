@@ -164,9 +164,10 @@ class View
 	}
 
 	/**
-	 * Standard methods BlackPHP
-	 * @version 1.0.0
-	 * Default lists, forms, details, menu and errors
+	 * Lista entándar
+	 * 
+	 * Definición de script y hojas de estilos para una vista que contiene una tabla con una lista
+	 * de objetos.
 	 */
 
 	public function standard_list()
@@ -196,6 +197,11 @@ class View
 		));
 	}
 
+	/**
+	 * Formulario estándar
+	 * 
+	 * Definición de scripts y hojas de estilos para una vista que contiene un formulario.
+	 */
 	public function standard_form()
 	{
 		$this->add("styles", "css", Array(
@@ -223,6 +229,12 @@ class View
 		));
 	}
 
+	/**
+	 * Detalle estándar
+	 * 
+	 * Definición de scripts y hojas de estilo para un vista que contiene una o varias tablas
+	 * con el detalle de un objeto.
+	 */
 	public function standard_details()
 	{
 		$this->add("styles", "css", Array(
@@ -247,6 +259,11 @@ class View
 		));
 	}
 
+	/**
+	 * Menú estándar
+	 * 
+	 * Definición de scripts y hojas de estilos para una vista que contiene un menú.
+	 */
 	public function standard_menu()
 	{
 		$this->add("styles", "css", Array(
@@ -267,6 +284,12 @@ class View
 		));
 	}
 
+	/**
+	 * Error estándar
+	 * 
+	 * Definición de scripts y hojas de estilos para una vista que contiene un error (400-404)
+	 * o una advertencia.
+	 */
 	public function standard_error()
 	{
 		$this->add("styles", "css", Array(

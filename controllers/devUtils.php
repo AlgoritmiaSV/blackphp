@@ -1,6 +1,6 @@
 <?php
 /**
- * DevUtils
+ * Utilidades para el desarrollador
  * 
  * Herramientas de depuración para desarrolladores
  * Incorporado el 2020-6-12 23:55
@@ -10,26 +10,56 @@
 
 class devUtils extends Controller
 {
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Inicializa la clase y llama al constructor de la clase base.
+	 */
 	public function __construct()
 	{
 		parent::__construct();
 		$this->module = get_class($this);
 	}
 
+	/**
+	 * Vista principal
+	 * @todo Registrar el módulo y los mçétodos en la base de datos para poderlos desplegar, p
+	 * añadirlos a un fichero, ya que se debe procurar que este módulo no utilice la base de datos.
+	 */
 	public function index()
 	{
 	}
 
+	/**
+	 * Información de PHP
+	 * 
+	 * Llama a la función phpinfo()
+	 */
 	public function phpinfo()
 	{
 		phpinfo();
 	}
 
+	/**
+	 * Variables de sesión
+	 * 
+	 * Imprime un arreglo con las variables de sesión al momento de ejecución
+	 */
 	public function session_vars()
 	{
 		echo '<pre>' . print_r($_SESSION, true) . '</pre>';
 	}
 
+	/**
+	 * Registro de errores
+	 * 
+	 * En la implementación en línea, imprime en pantalla el registro de excepciones almacenado
+	 * en el archivo error_log en el directorio raíz del sistema.
+	 * 
+	 * @param string $mode Modo de respuesta (html o txt)
+	 * 
+	 * @return void Todos los valores se imprimen
+	 */
 	public function error_log($mode = "html")
 	{
 		$time_diff = 0;
@@ -108,16 +138,21 @@ class devUtils extends Controller
 		}
 	}
 
+	/**
+	 * Resumen
+	 * 
+	 * Muestra un resumen de los datos principales de todos los ficheros de texto del sistema,
+	 * tales como: ubicación, nombre, fecha de última modificación y tamaño. Finalmente también
+	 * muestra un resumen general y los promedios del código escrito. Esata funcionalidad fue
+	 * incorporada el 2016-03-27 09:09
+	 * 
+	 * @param string $mode Modo en que será impreso el resumen (html o txt)
+	 * 
+	 * @return void No retorna valores, todos se imprimen
+	 */
 	public function summary($mode = "html")
 	{
-		#	Code stadistic generator.
-		#	By: Edwin Fajardo.
-		#	Date-Time: 2016-03-27 09:09
-		#	Copyright (c)Edwin Fajardo. All rights reserved.
-
-		#--------------------------------------------------------------------------
-		# Settings:
-		# Set the initial directory of your project, related to this script location.
+		/** Directorio inicial */
 		$init_directory = ".";
 		# Set time zone to UTC-6.
 		$time_diff = 0;
@@ -290,9 +325,24 @@ class devUtils extends Controller
 		}
 	}
 
+	/**
+	 * Agregado de carpetas
+	 * 
+	 * Esta función agregará a una lista cada uno de los archivos que serán procesados para el 
+	 * cálculo de las estadísticas de código.
+	 * 
+	 * En la variable local $excluded_folders, debe agregarse sólo las carpetas que incluyan archivos
+	 * de texto (Como la carpeta vendor/). Las carpetas que no incluyen archivos de texto son 
+	 * excluídas de forma automática.
+	 * 
+	 * @param string $dir Directorio que se va a agregar
+	 * @param array $array Arreglo en donde se agregará el directorio
+	 * 
+	 * @return void El resultado es recogido en la variable $array que es pasada por referencia.
+	 */
 	function add_folders($dir, &$array)
 	{
-		# Set the list of excluded folders. No textual files and folders that contains no textual files only, will be excluded automatically. Exclude folders with no written code or text, as plugins, upload files or backups.
+		# Carpetas a excluir
 		$excluded_folders = Array("./public/external", "./plugins", "./db", "./public/icons", "./vendor");
 		$list = glob($dir . "/*", GLOB_ONLYDIR);
 		foreach($list as $directory)

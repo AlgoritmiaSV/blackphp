@@ -2,17 +2,31 @@
 /**
  * Funciones utilitarias para las fechas
  * 
- * Creation date-time: 2016-03-24 17:43
+ * La clase date_utilities consiste en un conjunto de funciones relativas al tiempo, tales como
+ * la impresión de la fecha y hora en texto en español, y la edad en años, meses y días.
  * 
- * @version	1.0.0
+ * Fecha de creación: 2016-03-24 17:43
+ * 
  * @author	Edwin Fajardo <contacto@edwinfajardo.com>
- * @copyright 2016-2021 Edwin Fajardo. All rights reserved
+ * @copyright 2016-2022 Edwin Fajardo. All rights reserved
  */
-
 class date_utilities
 {
+	/** @var array<int,string> $months Nombre de los meses en español. */
 	public static $months = Array("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
 	
+	/**
+	 * Fecha del formato ISO a texto
+	 * 
+	 * Convierte una fecha dada en formato ISO, tal como viene de un campo date o datetime de la base
+	 * de datos, y la devuelve en texto.
+	 * 
+	 * @param string $sql_date La fecha en formato ISO.
+	 * @param boolean $hour Si es verdadero, se incluye la hora.
+	 * @param boolean $dayname Si es verdadero, se incluye el nombre del día de la semana.
+	 * 
+	 * @return string La fecha en texto
+	 */
 	public static function sql_date_to_string($sql_date, $hour = false, $dayname = false)
 	{
 		$time = strtotime($sql_date);
@@ -24,6 +38,16 @@ class date_utilities
 		return $string;
 	}
 	
+	/**
+	 * Fecha del formato DateTime a texto
+	 * 
+	 * Convierte una fecha dada en formato DateTime y la devuelve en texto.
+	 * 
+	 * @param DateTime $time La fecha en formato DateTime.
+	 * @param boolean $dayname Si es verdadero, se incluye el nombre del día de la semana.
+	 * 
+	 * @return string La fecha en texto
+	 */
 	public static function date_to_string($time, $dayname = false)
 	{
 		$time_data = Array(Date("Y", $time), Date("n", $time) - 1, Date("d", $time), Date("w", $time));
@@ -37,6 +61,17 @@ class date_utilities
 		return $date;
 	}
 	
+	/**
+	 * Intervalo a texto
+	 * 
+	 * Convierte un intervalo de fechas en texto, usando, de manera inteligente el mes y el año
+	 * sólo en caso de ser necesarios.
+	 * 
+	 * @param string $begin La fecha inicial en formato ISO.
+	 * @param string $end La fecha final en formato ISO.
+	 * 
+	 * @return string El intervalo en texto.
+	 */
 	public static function interval_to_string($begin, $end)
 	{
 		$time_begin = strtotime($begin);
@@ -62,12 +97,30 @@ class date_utilities
 		return $interval_str;
 	}
 	
+	/**
+	 * Hora
+	 * 
+	 * Devuelve la hora en formato hora:minuto (am o pm), en formato de doce horas.
+	 * 
+	 * @param string $date_str Fecha en formato ISO
+	 * 
+	 * @return string Hora
+	 */
 	public static function hour($date_str)
 	{
 		$time = strtotime($date_str);
 		return Date("h:i a", $time);
 	}
 	
+	/**
+	 * Día del mes
+	 * 
+	 * Devuelve el día del mes (Por ejemplo: 31 de diciembre) de una fecha dada en formato ISO.
+	 * 
+	 * @param string $date La fecha en formato ISO
+	 * 
+	 * @return string El día del mes
+	 */
 	public static function day_of_month($date)
 	{
 		$time = strtotime($date);
@@ -77,7 +130,15 @@ class date_utilities
 	}
 
 	/**
-	 * Calculate time
+	 * Calculadora de tiempo.
+	 * 
+	 * Calcula el tiempo transcurrido desde una fecha especificada hasta el momento de ejecución del
+	 * método. Devuelve la respuesta en años, meses, días, horas, minutos y/o segundos, de manera
+	 * razonable.
+	 * 
+	 * @param string $time_string La fecha dada
+	 * 
+	 * @return string El tiempo transcurrido en la unidad que parezca razonable.
 	 */
 	public static function sql_date_to_ago($time_string)
 	{
@@ -152,6 +213,17 @@ class date_utilities
 		return $string;
 	}
 
+	/**
+	 * Calculadora de edad
+	 * 
+	 * Calcula el tiempo transcurrido desde una fecha dada hasta el momento de ejecucion del método,
+	 * y devuelve un texto con la edad en forma razonable, utilizando días y meses cuando se 
+	 * considera necesario.
+	 * 
+	 * @param string $time_string La fecha inicial (Por ejemplo, la fecha de nacimiento)
+	 * 
+	 * @return string La edad
+	 */
 	public static function sql_date_to_age($time_string)
 	{
 		$time = new DateTime($time_string);

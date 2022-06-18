@@ -16,21 +16,7 @@ class Index extends Controller
 	{
 		$this->session_required();
 		$this->view->data["title"] = _("Home");
-		$this->view->add("styles", "css", Array(
-			'external/css/jquery-ui.min.css',
-			'external/css/jAlert.css',
-			'styles/preloader.css',
-			'styles/main.css',
-			'styles/loading.css',
-			'styles/menu.css'
-		));
-		$this->view->add("scripts", "js", Array(
-			'external/js/jquery-3.2.1.min.js',
-			'external/js/jquery-ui.min.js',
-			'external/js/jAlert.min.js',
-			'scripts/main.js',
-			'scripts/lists.js'
-		));
+		$this->view->standard_menu();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->data["content_id"] = "home_content";
 		$this->view->data["content"] = $this->view->render("content_loader", true);

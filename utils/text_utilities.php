@@ -1,9 +1,20 @@
 <?php
-	#	text_utilities: Utilities for text and strings.
-	#	By: Edwin Fajardo.
-	#	Date-Time: 2016-04-13 17:12
-	#	Copyright (c)2016 Edwin Fajardo. All right reserved.
-	
+/**
+ * Funciones utilitarias para textos.
+ * 
+ * Este fichero contiene una clase con funciones utilitarias para el manejo de textos, tales
+ * como la gestión de entidades HTML, sustitución de caracteres especiales e conversión de 
+ * números de documento.
+ * 
+ * Incorporado el 2016-04-13 17:12
+ * @author Edwin Fajardo <contacto@edwinfajardo.com>
+ */
+
+/**
+ * Utilidades para la gestión de texto
+ * 
+ * Conjunto de funciones utilitarias para la conversión y sustitución de textos.
+ */
 	class text_utilities
 	{
 		private static $url_out = Array("+", "%E1", "%E9", "%ED", "%F3", "%FA", "%BF", "%3F", "%2C", "%F1", "%28", "%29", "%2F", "%C3");

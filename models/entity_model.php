@@ -1,12 +1,30 @@
 <?php
 /**
-* BlackPHP Entity Model
-* @author: Edwin Fajardo <contacto@edwinfajardo.com>
-* Date-time: 2022-02-05 22:17
+ * Modelo de la Entidad/Compañía/Empresa
+ * 
+ * Este fichero contiene la clase entity_model, que a su vez contiene una serie de consultas relacionadas
+ * con la entidad o empresa.
+ * Incorporado el 2022-02-05 22:17
+ * 
+ * @author: Edwin Fajardo <contacto@edwinfajardo.com>
  */
 
+/**
+ * Clase Modelo de la entidad
+ * 
+ * La entidad en BlackPHP es la empresa, institución, organización, o negocio que hace uso del software.
+ * La clase incluye una serie de consultas relacionadas con la empresa.
+ */
 class entity_Model extends Model
 {
+	/**
+	 * Obtener entidad
+	 * 
+	 * Obtiene la primera entidad encontrada en la base de datos, y devuelve la información en un array
+	 * asociativo.
+	 * 
+	 * @return array<string,string> Array asociativo con información de la entidad.
+	 */
 	public function get_entity()
 	{
 		$query =	"SELECT *
@@ -15,6 +33,15 @@ class entity_Model extends Model
 		return $this->db->select($query, false);
 	}
 
+	/**
+	 * Obtener entidad por ID
+	 * 
+	 * Obtiene una entidad partiendo de un identificador dado.
+	 * 
+	 * @param int $entity_id Identificador de la entidad
+	 * 
+	 * @return array<string,string> Información de la entidad.
+	 */
 	public function get_entity_by_id($entity_id)
 	{
 		$params = Array(
@@ -52,6 +79,7 @@ class entity_Model extends Model
 					WHERE entity_subdomain = :subdomain";
 		return $this->db->select($query, false, $params);
 	}
+	
 	public function update_entity($data)
 	{
 		$result = Array();

@@ -12,18 +12,29 @@
  */
 class Controller
 {
+	/**
+	 * Constructor de la clase Controller
+	 * 
+	 * En el presente constructor se realizan los siguientes procedimientos:
+	 * 1) Se crea una vista (Objeto de la clase View).
+	 * 2) Se establece una zona horaria por defecto.
+	 * 3) Se establece un idioma regional por defecto, o se usa el establecido en la sesión
+	 * 4) Se define error_reporting a E_ERROR | E_PARSE; esto para evitar las advertencias de PHP
+	 * cuando se tiene en producción sobre Windows.
+	 * 5) Se verifica la sesión del usuario, y se envían los datos a la vista.
+	 * 6) Se elige la entidad, y se establece el directorio, el logo y las restricciones de dicha entidad.
+	 * 7) Se establece un tema por defecto
+	 */
 	function __construct()
 	{
-		/**
-		 * @var object View Se crea una vista para el controlador, que contiene un array (data) con cada una de las variables a ser renderizadas.
-		 */
+		#1 Creación de la vista
 		$this->view = new View();
 		$this->view->data["base_href"] = "/";
 
-		# Default time zone of servers is Lithuania/Europe, UTC+00; America/El_Salvador is UTC-06
+		#2 Zona horaria por defecto
 		date_default_timezone_set('America/El_Salvador');
 
-		# Locale (Default locale = en_US)
+		#3 Idioma regional (Por defecto = en_US)
 		$locale = "en_US";
 		$lang = "en";
 		if(empty(Session::get("locale")))
@@ -62,10 +73,10 @@ class Controller
 		bind_textdomain_codeset("messages", 'UTF-8');
 		textdomain("messages");
 
-		# In Windows, this line remove the warnings from the client side
+		#4 Error reporting
 		error_reporting(E_ERROR | E_PARSE);
 
-		# Check if an user session is open
+		#5 Verificación de usuario
 		if(Session::get("user_id") != null)
 		{
 			$this->view->data["user_name"] = Session::get("user_name");
@@ -74,12 +85,10 @@ class Controller
 		}
 		else
 		{
-			# If there is not open session, hide the user button
 			$this->view->restrict = array("user");
 		}
 
-		# Entity is the enterprise, bussines or organization that use the system
-		# The online version works with subdomain names as entity
+		#6 Entidad
 		$entity = Array();
 		$restrictions = Array();
 		$this->loadModel("entity");
@@ -88,12 +97,12 @@ class Controller
 			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
 			if($this->is_ip_address($_SERVER["SERVER_NAME"]))
 			{
-				# Get the first entity
+				# Primera entidad de la tabla
 				$entity = $this->model->get_entity();
 			}
 			else
 			{
-				# Get the entity by subdomain
+				# Subdominio de la entidad
 				$server_name = explode(".", $_SERVER["SERVER_NAME"]);
 				$subdomain = $server_name[0];
 				if($subdomain != "installer")
@@ -124,8 +133,7 @@ class Controller
 		$this->entity_name = $entity["entity_name"];
 		$this->view->data["modules"] = Session::get("modules");
 
-		# Each entity has a folder on the entities/ location
-		# default is used in local installations
+		#Directorio y logo
 		if(!empty($entity["entity_subdomain"]))
 		{
 			$this->store_dir = "entities/" . $entity["entity_subdomain"] . "/";
@@ -143,7 +151,16 @@ class Controller
 			$this->view->data[$key] = $item;
 		}
 
-		#Default theme
+		#Restricciones
+		foreach($restrictions as $key => $restriction)
+		{
+			if($restriction == 0)
+			{
+				$this->view->restrict[] = "entity:" . $key;
+			}
+		}
+
+		#7 Tema por defecto
 		if(Session::get("theme_id") == null)
 		{
 			$theme = $this->model->get_first_theme();
@@ -151,15 +168,6 @@ class Controller
 			Session::set("theme_url", $theme["theme_url"]);
 			$this->view->data["theme_id"] = $theme["theme_id"];
 			$this->view->data["theme_url"] = $theme["theme_url"];
-		}
-
-		#Restrictions
-		foreach($restrictions as $key => $restriction)
-		{
-			if($restriction == 0)
-			{
-				$this->view->restrict[] = "entity:" . $key;
-			}
 		}
 	}
 
@@ -261,6 +269,13 @@ class Controller
 		exit();
 	}
 
+	/**
+	 * Obtener IP
+	 * 
+	 * Ontiene la dirección IP del cliente desde la primera variable $_SERVER disponible
+	 * 
+	 * @return string IP del cliente
+	 */
 	public function getRealIP()
 	{
 		if (!empty($_SERVER['HTTP_CLIENT_IP']))
@@ -273,10 +288,12 @@ class Controller
 	/**
 	 * Acciones de usuario
 	 * 
-	 * Agrega información acerca de acciones de usuario para un objeto en particular, tales como el usuario y fecha de creación y el usuario y fecha de última edición
+	 * Agrega información acerca de acciones de usuario para un objeto en particular,
+	 * tales como el usuario y fecha de creación y el usuario y fecha de última edición
 	 * Date-time: 2021-11-18 09:32
 	 * 
-	 * @param array $element Un array asociativo que contiene los campos creation_user, creatio_time, edition_user y edition_time
+	 * @param array $element Un array asociativo que contiene los campos
+	 * creation_user, creation_time, edition_user y edition_time
 	 * 
 	 * @return void Realiza los cambios directamente en la vista
 	 */
@@ -308,11 +325,16 @@ class Controller
 	/**
 	 * Registro de actividades del usuario
 	 * 
-	 * Registra, en la base de datos, cada una de las actividades del usuario previamente definidas, a fin de poder consultar en el futuro el historial de actividades.
+	 * Registra, en la base de datos, cada una de las actividades del usuario previamente definidas,
+	 * a fin de poder consultar en el futuro el historial de actividades.
 	 * Incorporado el: 2021-12-05 16:44
 	 * 
 	 * @param string $action_key Clave de actividad realizada
-	 * @param int 
+	 * @param string $element_key Clave del elemento sobre el cual se realiza la actividad
+	 * @param int $element_link Identificador del elemento
+	 * @param string $date_time Fecha y hora en formato ISO
+	 * 
+	 * @return void No se devuelven valores
 	 */
 	public function set_user_log($action_key, $element_key, $element_link = 0, $date_time = "")
 	{

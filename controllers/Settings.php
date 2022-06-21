@@ -90,11 +90,11 @@ class Settings extends Controller
 		{
 			$this->view->restrict[] = "no_self";
 		}
-		else
+		/*else
 		{
 			$this->loadModel("user");
 			$this->view->data["branches"] = $this->model->get_user_branches(Session::get("user_id"));
-		}
+		}*/
 		$this->view->restrict[] = "creation";
 		$this->view->data["content"] = $this->view->render("settings/user_edit", true);
 		$this->view->render('main');

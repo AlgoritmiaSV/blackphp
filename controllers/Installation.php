@@ -1,11 +1,25 @@
 <?php
 
-#	Installation controller
-#	By: Edwin Fajardo
-#	Date-time: 2020-06-18 23:46
+/**
+ * Instalación
+ * 
+ * Esta clase permite la configuración inicial de los módulos y los métodos a utilizar por una
+ * entidad. Asimismo, permite establecer un usuario administrador dentro de dicha entidad.
+ * 
+ * Incorporado el 2020-06-18 23:46
+ * 
+ * @author Edwin Fajardo <contacto@edwinfajardo.com>
+ * @link https://www.edwinfajardo.com
+ */
 
 class Installation extends Controller
 {
+
+	/**
+	 * Constructor de la clase de instalación
+	 * 
+	 * Establece el nombre de la clase/módulo en la propiedad module
+	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -13,6 +27,16 @@ class Installation extends Controller
 		$this->view->data["module"] = $this->module;
 	}
 
+	/**
+	 * Inicio de la instalación
+	 * 
+	 * Verifica que se haya abierto sesión como instalador, de lo sontrario, muestra el
+	 * formulario de inicio de sesión.
+	 * 
+	 * @param string $subdomain El subdominio que se asignará a la entidad
+	 * 
+	 * @return void
+	 */
 	public function index($subdomain = "")
 	{
 		#$this->session_required("html", $this->module);
@@ -51,6 +75,15 @@ class Installation extends Controller
 		$this->view->render('main');
 	}
 
+	/**
+	 * Nueva entidad
+	 * 
+	 * Alias de index()
+	 * 
+	 * @param string $subdomain El subdominio que se aplicará a la entidad.
+	 * 
+	 * @return void
+	 */
 	public function NewEntity($subdomain)
 	{
 		$this->index($subdomain);
@@ -72,6 +105,9 @@ class Installation extends Controller
 		echo json_encode($data);
 	}
 
+	/**
+	 * Guardar datos de la entidad
+	 */
 	public function save_installation()
 	{
 		$data = $_POST;

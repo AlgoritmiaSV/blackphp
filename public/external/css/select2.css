@@ -14,7 +14,7 @@ user-select: none;
 .select2-container .select2-selection--single .select2-selection__rendered {
 display: block;
 padding-left: 8px;
-padding-right: 28px;
+padding-right: 32px;
 overflow: hidden;
 text-overflow: ellipsis;
 white-space: nowrap; }

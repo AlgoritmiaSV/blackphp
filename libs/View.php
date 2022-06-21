@@ -140,6 +140,11 @@ class View
 	 * el tema de la sesión y añadiendo una marca de tiempo de modificación, para evitar la
 	 * desactualización por caché del navegador.
 	 * 
+	 * La ruta del archivo a pasar por parámetro puede partir de las siguientes ubicaciones:
+	 * 1) Del directorio public/themes
+	 * 2) Del directorio public/
+	 * 3) Del directorio raíz /
+	 * 
 	 * @param string $type Tipo de archivo a agregar (scripts o styles)
 	 * @param string $extension Extensión del archivo (css o js)
 	 * @param array $files Conjunto de archivos a agregar
@@ -154,6 +159,10 @@ class View
 			if(!file_exists($filename))
 			{
 				$filename = "public/" . $file;
+			}
+			if(!file_exists($filename))
+			{
+				$filename = $file;
 			}
 			if(file_exists($filename))
 			{
@@ -173,10 +182,10 @@ class View
 	public function standard_list()
 	{
 		$this->add("styles", "css", Array(
-			'external/css/jquery-ui.min.css',
-			'external/css/jAlert.css',
+			'node_modules/jquery-ui-dist/jquery-ui.min.css',
+			'node_modules/jAlert/dist/jAlert.css',
+			'node_modules/select2/dist/css/select2.min.css',
 			'external/css/jqpagination.css',
-			'external/css/select2.css',
 			'styles/main.css',
 			'styles/lists.css',
 			'styles/loading.css',
@@ -186,13 +195,13 @@ class View
 			'styles/currencies.css'
 		));
 		$this->add("scripts", "js", Array(
-			'external/js/jquery-3.2.1.min.js',
-			'external/js/jquery-ui.min.js',
-			'external/js/jAlert.min.js',
+			'node_modules/jquery/dist/jquery.min.js',
+			'node_modules/jquery-ui-dist/jquery-ui.min.js',
+			'node_modules/jAlert/dist/jAlert.min.js',
+			'node_modules/select2/dist/js/select2.min.js',
+			'node_modules/print-this/printThis.js',
+			'node_modules/floatthead/dist/jquery.floatThead.min.js',
 			'external/js/jquery.jqpagination.min.js',
-			'external/js/select2.min.js',
-			'external/js/printThis.js',
-			'external/js/jquery.floatThead.min.js',
 			'scripts/bpscript.min.js'
 		));
 	}
@@ -205,8 +214,9 @@ class View
 	public function standard_form()
 	{
 		$this->add("styles", "css", Array(
-			'external/css/jquery-ui.min.css',
-			'external/css/jAlert.css',
+			'node_modules/jquery-ui-dist/jquery-ui.min.css',
+			'node_modules/jAlert/dist/jAlert.css',
+			//'node_modules/select2/dist/css/select2.min.css',
 			'external/css/select2.css',
 			'external/css/image-uploader.min.css',
 			'external/css/imagereader.css',
@@ -219,10 +229,10 @@ class View
 			'styles/tree.css'
 		));
 		$this->add("scripts", "js", Array(
-			'external/js/jquery-3.2.1.min.js',
-			'external/js/jquery-ui.min.js',
-			'external/js/jAlert.min.js',
-			'external/js/select2.min.js',
+			'node_modules/jquery/dist/jquery.min.js',
+			'node_modules/jquery-ui-dist/jquery-ui.min.js',
+			'node_modules/jAlert/dist/jAlert.min.js',
+			'node_modules/select2/dist/js/select2.min.js',
 			'external/js/image-uploader.js',
 			'external/js/jquery.imagereader-1.1.0.min.js',
 			'scripts/bpscript.min.js'
@@ -238,8 +248,8 @@ class View
 	public function standard_details()
 	{
 		$this->add("styles", "css", Array(
-			'external/css/jquery-ui.min.css',
-			'external/css/jAlert.css',
+			'node_modules/jquery-ui-dist/jquery-ui.min.css',
+			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
 			'styles/main.css',
 			'styles/loading.css',
@@ -250,11 +260,11 @@ class View
 			"styles/currencies.css"
 		));
 		$this->add("scripts", "js", Array(
-			'external/js/jquery-3.2.1.min.js',
-			'external/js/jquery-ui.min.js',
-			'external/js/jAlert.min.js',
-			'external/js/select2.min.js',
-			'external/js/printThis.js',
+			'node_modules/jquery/dist/jquery.min.js',
+			'node_modules/jquery-ui-dist/jquery-ui.min.js',
+			'node_modules/jAlert/dist/jAlert.min.js',
+			'node_modules/select2/dist/js/select2.min.js',
+			'node_modules/print-this/printThis.js',
 			'scripts/bpscript.min.js'
 		));
 	}
@@ -267,8 +277,8 @@ class View
 	public function standard_menu()
 	{
 		$this->add("styles", "css", Array(
-			'external/css/jquery-ui.min.css',
-			'external/css/jAlert.css',
+			'node_modules/jquery-ui-dist/jquery-ui.min.css',
+			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
 			'styles/main.css',
 			'styles/forms.css',
@@ -276,10 +286,10 @@ class View
 			'styles/menu.css'
 		));
 		$this->add("scripts", "js", Array(
-			'external/js/jquery-3.2.1.min.js',
-			'external/js/jquery-ui.min.js',
-			'external/js/jAlert.min.js',
-			'external/js/select2.min.js',
+			'node_modules/jquery/dist/jquery.min.js',
+			'node_modules/jquery-ui-dist/jquery-ui.min.js',
+			'node_modules/jAlert/dist/jAlert.min.js',
+			'node_modules/select2/dist/js/select2.min.js',
 			'scripts/bpscript.min.js'
 		));
 	}
@@ -293,16 +303,16 @@ class View
 	public function standard_error()
 	{
 		$this->add("styles", "css", Array(
-			'external/css/jquery-ui.min.css',
-			'external/css/jAlert.css',
+			'node_modules/jquery-ui-dist/jquery-ui.min.css',
+			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
 			'styles/main.css'
 		));
 		$this->add("scripts", "js", Array(
-			'external/js/jquery-3.2.1.min.js',
-			'external/js/jquery-ui.min.js',
-			'external/js/jAlert.min.js',
-			'external/js/select2.min.js',
+			'node_modules/jquery/dist/jquery.min.js',
+			'node_modules/jquery-ui-dist/jquery-ui.min.js',
+			'node_modules/jAlert/dist/jAlert.min.js',
+			'node_modules/select2/dist/js/select2.min.js',
 			'scripts/bpscript.min.js'
 		));
 	}

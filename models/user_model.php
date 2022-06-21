@@ -1,11 +1,30 @@
 <?php
+/**
+ * Modelo de usuarios
+ * 
+ * Agregado el 2020-06-13 00:35
+ * @author Edwin Fajardo <contacto@edwinfajardo.com>
+ */
 
-#	Users controller
-#	By: Edwin Fajardo
-#	Date-time: 2020-06-13 00:35
-
+/**
+ * Clase modelo de usuaios
+ * 
+ * Contiene una serie de consultas relacionadas con el registro y acceso de los usuarios del sistema.
+ */
 class user_Model extends Model
 {
+	/**
+	 * Obtener acceso
+	 * 
+	 * Verifica que una combinación $nickname y $password tengan acceso en una entidad.
+	 * 
+	 * @param string $nickname Usuario
+	 * @param string $password Contraseña
+	 * @param int $entity_id Identificador de la entidad
+	 * 
+	 * @return array Arreglo asociativo conteniendo datos del usuario, o un arreglo vacío,
+	 * si no se encuentran coincidencias.
+	 */
 	public function get_access($nickname, $password, $entity_id)
 	{
 		$params = Array("nickname" => $nickname,
@@ -24,6 +43,9 @@ class user_Model extends Model
 		return $this->db->select($query, false, $params);
 	}
 
+	/**
+	 * Obtener usuario por identificador
+	 */
 	public function get_user($user_id)
 	{
 		$params = Array("user_id" => $user_id);

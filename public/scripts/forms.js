@@ -37,7 +37,7 @@ $( function()
 					data: json[selector.data("source")],
 					dropdownAutoWidth: true,
 					placeholder: selector.data("placeholder") || "",
-					width: selector.data("width") || "resolve"
+					width: selector.data("width") || "fit-content"
 				}
 				if(selector.data("search") == "none")
 				{

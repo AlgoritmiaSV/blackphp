@@ -343,7 +343,7 @@ class devUtils extends Controller
 	function add_folders($dir, &$array)
 	{
 		# Carpetas a excluir
-		$excluded_folders = Array("./public/external", "./plugins", "./db", "./public/icons", "./vendor");
+		$excluded_folders = Array("./public/external", "./plugins", "./db", "./public/icons", "./vendor", "./node_modules");
 		$list = glob($dir . "/*", GLOB_ONLYDIR);
 		foreach($list as $directory)
 		{

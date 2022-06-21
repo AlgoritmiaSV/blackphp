@@ -237,7 +237,7 @@ $( function()
 					data: json_data.results,
 					dropdownAutoWidth: true,
 					placeholder: _selector.data("placeholder") || "",
-					width: _selector.data("width") || "resolve"
+					width: _selector.data("width") || "fit-content"
 				}
 				if(_selector.data("search") != "none" || _selector.data("default") == "none")
 				{

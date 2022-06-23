@@ -6,6 +6,16 @@ $(function() {
 		});
 	}
 
+	/**
+	 * Crear un gráfico
+	 * 
+	 * Por el momento este método está específico para el uso en una empresa de servicio de 
+	 * agua potable. alta generalizarlo.
+	 * 
+	 * @todo Generalizar el método
+	 * 
+	 * @param {object} element El canvas sobre el que se va a crear el gráfico
+	 */
 	function create_chart(element)
 	{
 		var ctx = element;

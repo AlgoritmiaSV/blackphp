@@ -1,39 +1,71 @@
 <?php
 
+/**
+ * Arranque del sistema
+ * 
+ * La clase bootstrap sirve para interpretar la URL (REQUEST_URI), y decidir qué controlador se va
+ * a cargar, y de qué forma se van a interpretar los parámetros.
+ */
 class Bootstrap {
 
+	/**
+	 * @var string $_url La url solicitada por el cliente
+	 */
 	private $_url = null;
+
+	/**
+	 * @var string $_controller El controlador slicitado en la URL
+	*/
 	private $_controller = null;
 	
-	private $_controllerPath = 'controllers/'; // Always include trailing slash
-	private $_modelPath = 'models/'; // Always include trailing slash
+	/**
+	 * @var string $_controllerPath La ruta donde están ubicados los controladores en el sistema
+	 * Se debe incluir siempre la barra / al final
+	 */
+	private $_controllerPath = 'controllers/';
+
+	/**
+	 * @var string $_modelPath La ruta donde se encuentran los modelos
+	 * Se debe incluir siempre la barra / al final
+	 */
+	private $_modelPath = 'models/';
+
+	/**
+	 * @var string $_errorFile El nombre del fichero con la clase o las clases que manejarán los errores.
+	 */
 	private $_errorFile = 'error.php';
+
+	/**
+	 * @var string $_defaultFile El nombre del archivo a cargar por defecto en caso de que no se llame
+	 * explícitamente a un controlador.
+	 */
 	private $_defaultFile = 'index.php';
 	
 	/**
-	 * Starts the Bootstrap
+	 * Iniciar
+	 * 
+	 * Inicia el proceso de arranque, llamando a los métodos correspondientes para cargar el controlador
+	 * y llamar al método correspondiente.
 	 * 
 	 * @return boolean
 	 */
 	public function init()
 	{
-		// Sets the protected $_url
 		$this->_getUrl();
-
-		// Load the default controller if no URL is set
-		// eg: Visit http://localhost it loads Default Controller
 		if (empty($this->_url[0])) {
 			$this->_loadDefaultController();
 			return false;
 		}
-
 		$this->_loadExistingController();
 		$this->_callControllerMethod();
 	}
 	
 	/**
-	 * (Optional) Set a custom path to controllers
-	 * @param string $path
+	 * (Opcional) Introducir una ruta personalizada para los controladores
+	 * 
+	 * @param string $path Ubicación de los controladores
+	 * 
+	 * @return void
 	 */
 	public function setControllerPath($path)
 	{
@@ -41,8 +73,11 @@ class Bootstrap {
 	}
 	
 	/**
-	 * (Optional) Set a custom path to models
-	 * @param string $path
+	 * (Optional) Introduci una ruta personalizada para los modelos
+	 * 
+	 * @param string $path Ubicación de los modelos
+	 * 
+	 * @return void
 	 */
 	public function setModelPath($path)
 	{
@@ -50,8 +85,11 @@ class Bootstrap {
 	}
 	
 	/**
-	 * (Optional) Set a custom path to the error file
-	 * @param string $path Use the file name of your controller, eg: error.php
+	 * (Optional) Ruta personalizada para el archivo de error
+	 * 
+	 * @param string $path Nombre del archivo controlador personalizado
+	 * 
+	 * @return void
 	 */
 	public function setErrorFile($path)
 	{

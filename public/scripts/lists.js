@@ -30,7 +30,7 @@ $( function()
 					});
 					$("#" + table_id + " tbody").append(tr);
 				});
-				$("#" + table_id + " tbody tr").click(function() {
+				$("#" + table_id + " tbody tr").on("click", function() {
 					if($(this).data("href"))
 					{
 						location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
@@ -105,14 +105,14 @@ $( function()
 		})
 		.done(function(data) {
 			_div.html(data);
-			$(".menu_item").click(function() {
+			$(".menu_item").on("click", function() {
 				$(this).css({
 					"opacity":"0.1",
 					"transform":"scale(2)"
 				});
 			});
 			$("#main_content").has(".details_content").addClass("details_main_content");
-			$(".close_details").click(function(e) {
+			$(".close_details").on("click", function(e) {
 				e.preventDefault();
 				$(".details_content").css({
 					"opacity":"0.1",
@@ -120,11 +120,10 @@ $( function()
 				});
 				history.back();
 			});
-			$(".link_button").click(function() {
+			$(".link_button").on("click", function() {
 				location.href = $(this).data("href");
 			});
-			_div.find(".print_button").click(function() {
-				//rand = Math.floor(Math.random() * 100000);
+			_div.find(".print_button").on("click", function() {
 				print_header = null;
 				if($(".print_header").length)
 				{
@@ -141,18 +140,18 @@ $( function()
 					'footer': print_footer
 				});
 			});
-			$(".open_dialog_button").click(function() {
+			$(".open_dialog_button").on("click", function() {
 				$("#" + $(this).data("dialog")).dialog("open");
 			});
 			if($(".delete_button").length)
 			{
-				$(".delete_button").click(delete_button_click);
+				$(".delete_button").on("click", delete_button_click);
 			}
 			//Show data viewer
 			_div.find(".data_viewer").show();
 
 			/* Link row */
-			$(".link_row").click(function() {
+			$(".link_row").on("click", function() {
 				if($(this).data("href") != "#")
 				{
 					location.href = $(this).data("href");
@@ -174,7 +173,7 @@ $( function()
 		});
 	}
 
-	$(".data_search").keyup(function() {
+	$(".data_search").on("keyup", function() {
 		var string_value = $(this).val();
 		$(".data_viewer tbody tr").not(".template").each(function() {
 			found = false;
@@ -204,7 +203,7 @@ $( function()
 		}
 		else
 		{
-			$(this).change(function(){
+			$(this).on("change", function(){
 				if($(this).is(".date_input"))
 				{
 					$(this).data("value", $(this).val());
@@ -261,7 +260,7 @@ $( function()
 						_selector.val(url.options[_selector.data("identifier")]);
 						_selector.trigger('change.select2');
 					}
-					_selector.change(function(){
+					_selector.on("change", function(){
 						url.options[_selector.data("identifier")] = _selector.val();
 						goto_url();
 					});
@@ -294,7 +293,7 @@ $( function()
 	}
 
 	/* Print button */
-	$(".print_button").click(function() {
+	$(".print_button").on("click", function() {
 		/* Destroy floatThead to avoid conficts with printThis */
 		if($(".data_viewer").length > 0)
 		{

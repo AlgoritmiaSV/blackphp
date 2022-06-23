@@ -89,6 +89,13 @@ class Installation extends Controller
 		$this->index($subdomain);
 	}
 
+	/**
+	 * Cargar datos de formulario.
+	 * 
+	 * Imprime en formato JSON los datos esenciales para el uso de formularios dentro del módulo.
+	 * 
+	 * @return void
+	 */
 	public function load_form_data()
 	{
 		$data = Array();
@@ -106,7 +113,14 @@ class Installation extends Controller
 	}
 
 	/**
-	 * Guardar datos de la entidad
+	 * Guardar datos de la entidad.
+	 * 
+	 * Crea o actualiza una entidad, crea o actualiza un usuario administrador, guarda el logotipo
+	 * enviado desde el formulario, y asigna los permisos a los métodos y módulos correspondientes
+	 * tanto a la entidad como al usuario administrador.
+	 * Finalmente, redirige hacia el subdominio creado.
+	 * 
+	 * @return void.
 	 */
 	public function save_installation()
 	{
@@ -371,6 +385,14 @@ class Installation extends Controller
 		echo json_encode($data);
 	}
 
+	/**
+	 * Verificación de sesión
+	 * 
+	 * Verifica elusuario y contraseña de instalador enviada a través del formulario de inicio de
+	 * sesión. Si es correcto, inicia la sesión, de los contrario, imprime un mensaje de error.
+	 * 
+	 * @return void
+	 */
 	public function test_authorization()
 	{
 		$data = $_POST;
@@ -402,6 +424,14 @@ class Installation extends Controller
 		echo json_encode($data);
 	}
 
+	/**
+	 * Iniciar
+	 * 
+	 * Este método es utilizado para las instalaciones locales a través del cliente Windows, como
+	 * primera pantalla antes de consigurarse la entidad.
+	 * 
+	 * @return void
+	 */
 	function get_started() 
 	{
 		$this->view->data["title"] = _("Start");

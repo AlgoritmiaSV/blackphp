@@ -231,7 +231,7 @@ $( function()
 		build_selectors();
 		build_autocomplete();
 		/* Unique selection */
-		$(".unique_selection").change(function() {
+		$(".unique_selection").on("change", function() {
 			setTimeout(unique_selection, 500);
 		});
 		unique_selection();
@@ -249,7 +249,7 @@ $( function()
 	//Flag to prevent duplicate submission 
 	duplicate = false;
 
-	$("form").submit(function(e){
+	$("form").on("submit", function(e){
 		e.preventDefault();
 		if(duplicate)
 		{
@@ -357,7 +357,7 @@ $( function()
 		});
 	});
 
-	$("form .cancel_button").click(function() {
+	$("form .cancel_button").on("click", function() {
 		var reset_location = $(this).closest("form").data("reset");
 		if(reset_location)
 		{
@@ -369,7 +369,7 @@ $( function()
 		}
 	});
 
-	$(".close_form").click(function(e) {
+	$(".close_form").on("click", function(e) {
 		e.preventDefault();
 		$(".form_content").css({
 			"opacity":"0.1",
@@ -438,8 +438,13 @@ $( function()
 		}, 5000);
 	}
 
-	/* before print, copy al values */
-	$(window).bind("beforeprint", function() {
+	/**
+	 * Copiar datos a span antes de imprimir
+	 * 
+	 * Esta función será removida en el futuro, ya que se está imprimiendo sólo reportes
+	 * con printThis
+	 */
+	$(window).on("beforeprint", function() {
 		$('input, textarea').each(function() {
 			$(this).parent().find('.no_screen').text($(this).val());
 		});
@@ -470,13 +475,18 @@ $( function()
 		}
 	}
 
-	$(".row_quantity, .row_price").change(function() {
+	$(".row_quantity, .row_price").on("change", function() {
 		calc_row_total($(this));
 		calc_bill_total();
 	});
 
-	$(".details_table input").keypress(input_keypress);
+	$(".details_table input").on("keypress", input_keypress);
 
+	/**
+	 * 
+	 * @param {object} e Evento de Javascript
+	 * @returns void
+	 */
 	function input_keypress(e)
 	{
 		if(e.which == 13)
@@ -619,8 +629,8 @@ $( function()
 				},
 				autoFocus: true
 			});
-			$(this).click(function() {
-				$(this).select();
+			$(this).on("click", function() {
+				$(this).trigger("select");
 			});
 		});
 	}
@@ -660,7 +670,7 @@ $( function()
 
 	/* Bill type */
 	//$("#vat_total, #subtotal_div").hide();
-	$("#bill_type").change(function()
+	$("#bill_type").on("change", function()
 	{
 		var type_id = $(this).val();
 		if(type_id == 2)
@@ -689,15 +699,14 @@ $( function()
 	});
 
 	/* Classifier */
-	$(".classifier_input").change(function() {
-		//$(".data_viewer").slideUp("slow");
+	$(".classifier_input").on("change", function() {
 		$(".content_viewer").css("visibility", "hidden");
 		$(".classifier_button").show();
 		$(".print_button").hide();
 	});
 
 	/* Calculate change */
-	$("#paid_amount_input").change(function() {
+	$("#paid_amount_input").on("change", function() {
 		var payment = parseFloat($(this).val());
 		var total = $("#total").val();
 		total = parseFloat(total.replace(",",""));
@@ -728,7 +737,7 @@ $( function()
 		});
 	}
 
-	$(".delete_button").click(delete_button_click);
+	$(".delete_button").on("click", delete_button_click);
 
 	function delete_entry()
 	{
@@ -781,7 +790,7 @@ $( function()
 		});	
 	}
 
-	$(".reload_button").click(function() {
+	$(".reload_button").on("click", function() {
 		location.reload();
 	});
 
@@ -847,7 +856,7 @@ $( function()
 		});
 	};
 
-	$(".delete_row_icon").click(delete_row_click);
+	$(".delete_row_icon").on("click", delete_row_click);
 
 	/* Go To URL */
 	function goto_url()
@@ -879,7 +888,7 @@ $( function()
 	}
 
 	/* Code generator */
-	$(".code_generator").change(function() {
+	$(".code_generator").on("change", function() {
 		var object_data = $(this).select2("data")[0];
 		var code_input = $($(this).data("code_input"));
 		if(code_input.data("default_cat") != null && object_data.id == code_input.data("default_cat"))
@@ -893,7 +902,7 @@ $( function()
 	});
 
 	/* Add item from button */
-	$(".add_row_button").click(function() {
+	$(".add_row_button").on("click", function() {
 		var tbody = $($(this).data("tbody"));
 		if(tbody == null)
 		{
@@ -933,7 +942,7 @@ $( function()
 		build_selectors();
 	});
 
-	$(".add_entry_button").click(function() {
+	$(".add_entry_button").on("click", function() {
 		container = $($(this).data("container"));
 		last_entry = container.find(".form_entry").last();
 		last_entry.find(".data_selector").each(function() {
@@ -992,7 +1001,7 @@ $( function()
 	/**
 	 * Selection of entries
 	 */
-	 $(".entry_selector").change(function(e) {
+	 $(".entry_selector").on("change", function(e) {
 		value = $(e.target).val();
 		$(".hidden_entry").hide();
 		$(".hidden_entry").find("input").each(function() {
@@ -1047,7 +1056,7 @@ $( function()
 	});
 
 	//Age inputs
-	$(".age_input").change(function() {
+	$(".age_input").on("change", function() {
 		if($(this).val() == "")
 		{
 			return true;
@@ -1072,7 +1081,7 @@ $( function()
 	});
 
 	/* Partial and complete values */
-	$(".partial_value").blur(partial_blur);
+	$(".partial_value").on("blur", partial_blur);
 
 	function partial_blur()
 	{
@@ -1084,17 +1093,17 @@ $( function()
 		}
 	}
 
-	$(".complete_value").click(complete_click);
+	$(".complete_value").on("click", complete_click);
 	function complete_click()
 	{
 		var partial_value = $(this).siblings(".partial_value").first();
 		partial_value.show();
-		partial_value.focus();
-		partial_value.select();
+		partial_value.trigger("focus");
+		partial_value.trigger("select");
 		$(this).css("display", "none");
 	}
 
-	$(".partial_value").change(partial_change);
+	$(".partial_value").on("change", partial_change);
 	function partial_change()
 	{
 		$(this).siblings(".complete_value").text($(this).val());
@@ -1123,10 +1132,10 @@ $( function()
 			}
 		});
 	}
-	$(".local_code").change(search_by_code);
+	$(".local_code").on("change", search_by_code);
 
 	/* Check DUI */
-	$(".check_identifier").change(function() {
+	$(".check_identifier").on("change", function() {
 		$(".identifier_clean").val("");
 		check_url = url.module + "/check_identifier/" + $(this).val();
 		if($(".list_selector").val() != null && $(".list_selector").val() != "")

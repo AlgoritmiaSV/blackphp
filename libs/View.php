@@ -184,7 +184,7 @@ class View
 		$this->add("styles", "css", Array(
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
-			'node_modules/select2/dist/css/select2.min.css',
+			'external/css/select2.css',
 			'external/css/jqpagination.css',
 			'styles/main.css',
 			'styles/lists.css',
@@ -216,7 +216,6 @@ class View
 		$this->add("styles", "css", Array(
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
-			//'node_modules/select2/dist/css/select2.min.css',
 			'external/css/select2.css',
 			'external/css/image-uploader.min.css',
 			'external/css/imagereader.css',
@@ -233,8 +232,8 @@ class View
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
 			'node_modules/select2/dist/js/select2.min.js',
+			'node_modules/jquery-image-reader/jquery.imagereader.min.js',
 			'external/js/image-uploader.js',
-			'external/js/jquery.imagereader-1.1.0.min.js',
 			'scripts/bpscript.min.js'
 		));
 	}

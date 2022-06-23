@@ -52,7 +52,7 @@ $(function ()
 	};
 
 	//buttons
-	$(".open_dialog_button").click(function() {
+	$(".open_dialog_button").on("click", function() {
 		$("#" + $(this).data("dialog")).dialog("open");
 	});
 
@@ -62,7 +62,7 @@ $(function ()
 			buttons:
 			{
 				[accept]: function(evt) {
-					$(this).find("form").submit();
+					$(this).find("form").trigger("submit");
 				},
 				"Cerrar": function() {
 					$(this).dialog("close");

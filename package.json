@@ -5,6 +5,7 @@
     "floatthead": "^2.2.4",
     "jAlert": "^4.9.1",
     "jquery": "^3.6.0",
+    "jquery-image-reader": "^1.0.0",
     "jquery-ui-dist": "^1.13.1",
     "print-this": "^1.16.0",
     "select2": "^4.1.0-rc.0"

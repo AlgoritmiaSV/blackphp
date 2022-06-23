@@ -4,12 +4,12 @@
 	Date-time: 2021-08-12 13:57
 */
 $(function() {
-	$(".parent_checkbox").click(function() {
+	$(".parent_checkbox").on("click", function() {
 		var parent_item = $(this).closest(".parent_item");
 		parent_item.find(".child_checkbox").prop("checked", $(this).prop("checked"));
 	});
 
-	$(".child_checkbox").click(function() {
+	$(".child_checkbox").on("click", function() {
 		var parent_checkbox = $(this).closest(".parent_item").find(".parent_checkbox");
 		var container = $(this).closest(".children_container");
 		if($(this).prop("checked"))

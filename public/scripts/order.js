@@ -4,9 +4,9 @@
  * Date-Time: 2021-10-11 15:28
  */
 $(function(){
-	$(".price_input, .quantity_input").change(update_total);
+	$(".price_input, .quantity_input").on("change", update_total);
 
-	$(".order_item a").click(function() {
+	$(".order_item a").on("click", function() {
 		var input = $(this).parent().find(".quantity_input");
 		var value = input.val() == "" ? 0 : parseInt(input.val());
 		input.val(value + 1);

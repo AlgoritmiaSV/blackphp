@@ -53,22 +53,10 @@ class Index extends Controller
 		$this->view->render('home_content');
 	}
 
-	function user_agent()
-	{
-		include "plugins/PhpUserAgent/src/UserAgentParser.php";
-		print_r(parse_user_agent());
-	}
-
 	public function branch_filter_loader()
 	{
 		$data = Array();
 		echo json_encode($data);
-	}
-
-	public function test_login()
-	{
-		$user = new user();
-		$user->test_login();
 	}
 
 	public function age_calculation($date)

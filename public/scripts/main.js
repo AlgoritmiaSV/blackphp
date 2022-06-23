@@ -26,20 +26,20 @@ $(function() {
 		}
 	});
 
-	$(".nav_link").click(function(e) {
+	$(".nav_link").on("click", function(e) {
 		$(".nav_link_active").removeClass("nav_link_active");
 		$(this).addClass("nav_link_active");
 	});
 
 	/* User link */
-	$("#user_link").click(function() {
+	$("#user_link").on("click", function() {
 		$("#main_aside").slideToggle("fast");
 	});
 
-	$("#u_close").click(function() {
+	$("#u_close").on("click", function() {
 		$.ajax({
 			method: "GET",
-			url: "user/logout/",
+			url: "User/logout/",
 			dataType: "json"
 		})
 		.done(function(json) {
@@ -72,7 +72,7 @@ $(function() {
 	});
 
 	/* Manage click on all links */
-	$("a").not(".link_exclude").click(function(e) {
+	$("a").not(".link_exclude").on("click", function(e) {
 		e.preventDefault();
 		var href = $(this).attr("href");
 		if(href == "#")
@@ -175,7 +175,7 @@ $(function() {
 
 	setInterval(keep_alive, 30000);
 
-	$(".link_button").click(function() {
+	$(".link_button").on("click", function() {
 		location.href = $(this).data("href");
 	});
 
@@ -200,7 +200,7 @@ $(function() {
 		});
 	}
 
-	$(".menu_item").click(function() {
+	$(".menu_item").on("click", function() {
 		$(this).css({
 			"opacity":"0.1",
 			"transform":"scale(2)"
@@ -243,7 +243,7 @@ $(function() {
 	});
 	$(document).tooltip();
 
-	$("#menu_button").click(function() {
+	$("#menu_button").on("click", function() {
 		if($(this).attr("href") == "#")
 		{
 			$("#main_nav").slideToggle("slow");
@@ -259,7 +259,7 @@ $(function() {
 		}
 	});
 
-	$(".back_button").click(function() {
+	$(".back_button").on("click", function() {
 		history.back();
 	});
 });

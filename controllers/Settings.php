@@ -1,11 +1,21 @@
 <?php
-
-#	Settings controller
-#	By: Edwin Fajardo
-#	Date-time: 2020-06-18 23:46
+/**
+ * Controlador de configuraciones
+ * 
+ * Permite gestionar datos de la entidad y de los usuarios.
+ * 
+ * Incorporado el 2020-06-18 23:46
+ * @author Edwin Fajardo <contacto@edwinfajardo.com>
+ * @link https://www.edwinfajardo.com
+ */
 
 class Settings extends Controller
 {
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Inicializa la propiedad module con el nombre de la clase
+	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -13,6 +23,14 @@ class Settings extends Controller
 		$this->view->data["module"] = $this->module;
 	}
 
+	################################ VISTAS
+	/**
+	 * Vista principal
+	 * 
+	 * Muestra un menú con las principales actividades que se pueden realizar en el módulo.
+	 * 
+	 * @return void
+	 */
 	public function index()
 	{
 		$this->session_required("html", $this->module);
@@ -26,6 +44,14 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
+	/**
+	 * Datos de la entidad
+	 * 
+	 * Muestra un formulario para modificar información general de la entidad, como el nombre,
+	 * dirección, logotipo y formas de contacto.
+	 * 
+	 * @return void
+	 */
 	public function Entity()
 	{
 		$this->session_required("html", $this->module);
@@ -36,6 +62,13 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
+	/**
+	 * Preferencias del sistema
+	 * 
+	 * Muestra un formulario para cambiar datos opcionales en el sistema
+	 * 
+	 * @return void
+	 */
 	public function Preferences()
 	{
 		$this->session_required("html", $this->module);
@@ -46,6 +79,13 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
+	/**
+	 * Usuarios
+	 * 
+	 * Muestra una lista de usuarios del sistema
+	 * 
+	 * @return void
+	 */
 	public function Users()
 	{
 		$this->session_required("html", $this->module);
@@ -58,6 +98,15 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
+	/**
+	 * Nuevo usuario
+	 * 
+	 * Muestra un formulario que permite registrar nuevos usuarios en el sistema, y asignarles
+	 * permisos a diferentes módulos. Un usuario autorizado para registrar usuarios, sólo puede
+	 * otorgar permisos que le han sido otorgados.
+	 * 
+	 * @return void
+	 */
 	public function NewUser()
 	{
 		$this->session_required("html", $this->module);
@@ -70,6 +119,13 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
+	/**
+	 * Editar usuario
+	 * 
+	 * Permite editar los datos y los permisos de un usuario.
+	 * 
+	 * @return void
+	 */
 	public function EditUser($user_id)
 	{
 		$this->session_required("html", $this->module);
@@ -80,16 +136,19 @@ class Settings extends Controller
 		{
 			$this->view->restrict[] = "no_self";
 		}
-		/*else
-		{
-			$this->loadModel("user");
-			$this->view->data["branches"] = $this->model->get_user_branches(Session::get("user_id"));
-		}*/
 		$this->view->restrict[] = "creation";
 		$this->view->data["content"] = $this->view->render("settings/user_edit", true);
 		$this->view->render('main');
 	}
 
+	################################ LISTAS Y FORMULARIOS
+	/**
+	 * Cargar tabla de usuarios
+	 * 
+	 * Devuelve, en formato JSON o en un archivo Excel, la lista de usuarios.
+	 * 
+	 * @return void
+	 */
 	public function users_table_loader($response = "JSON")
 	{
 		$this->session_required("json");

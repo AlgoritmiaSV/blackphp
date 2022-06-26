@@ -51,14 +51,21 @@ class View
 	public function render($name, $return = false)
 	{
 		$filename = 'views/' . $name . '.html';
-		if (!file_exists($filename)) {
-			return "Error loading template file ($filename).";
+		if (!file_exists($filename))
+		{
+			if($return)
+			{
+				return "Error loading template file ($filename).";
+			}
+			else
+			{
+				echo "Error loading template file ($filename).";
+			}
 		}
 		$template = file_get_contents($filename);
 
-		/* \1: Temporary value for the new line character to avoid problems with preg_replace */
-		$template = str_replace("\r\n", "\1", $template);
-		$template = str_replace("\n", "\1", $template);
+		# Quitando espacios
+		$template = preg_replace('/\s+/', ' ', $template);
 
 		foreach ($this->data as $key => $value)
 		{
@@ -118,9 +125,6 @@ class View
 		# Remove the unused vars
 		$template = preg_replace("/\[\[ [a-z0-9_]* \]\].*\[\[\/ [a-z0-9_]* \]\]/", "", $template);
 		$template = preg_replace("/\{\{ [a-z0-9_]* \}\}/", "", $template);
-
-		# Restore the newline character
-		$template = str_replace("\1", "\r\n", $template);
 
 		# Return rendered as string or print to output
 		if($return)

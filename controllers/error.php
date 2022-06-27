@@ -11,13 +11,26 @@
 
 class MainError extends Controller
 {
-
+	/**
+	 * Constructor de la clase MainError
+	 * 
+	 * Inicializa el valor de la propiedad module con el nombre de la clase.
+	 * 
+	 * @return object
+	 */
 	function __construct()
 	{
 		parent::__construct();
 		$this->module = get_class($this);
 	}
 	
+	/**
+	 * Vista principal
+	 * 
+	 * Muestra un error en caso de que no exista el módulo o el método que se está solicitando.
+	 * 
+	 * @return void
+	 */
 	function index() 
 	{
 		$this->view->data["title"] = 'Error';

@@ -52,7 +52,7 @@ Requisitos:
 `gh repo clone RedTeleinformatica/BlackPHP`
 
 - Instale y active las dependencias necesarias de PHP
-`apt install php8.1-gd php8.1-mbstring php8.1-zip php8.1-curl`
+`apt install php8.1-gd php8.1-mbstring php8.1-zip php8.1-curl php8.1-intl`
 
 - Instale Composer
 (Ver instrucciones en getcomposer.org)

@@ -192,22 +192,21 @@ class User extends Controller
 		$this->session_required("json");
 		$data = $_POST;
 		$data["success"] = false;
-		$this->loadModel("user");
-		$user = $this->model->get_user(Session::get("user_id"));
+		$user = users_model::find(Session::get("user_id"));
 		if($data["theme_id"] != Session::get("theme_id"))
 		{
-			$user["theme_id"] = $data["theme_id"];
-			$theme = $this->model->get_theme($data["theme_id"]);
-			Session::set("theme_id", $theme["theme_id"]);
-			Session::set("theme_url", $theme["theme_url"]);
+			$user->setTheme_id($data["theme_id"]);
+			$theme = app_themes_model::find($data["theme_id"]);
+			Session::set("theme_id", $theme->getTheme_id());
+			Session::set("theme_url", $theme->getTheme_url());
 		}
 		if($data["locale"] != Session::get("locale"))
 		{
-			$user["locale"] = $data["locale"];
+			$user->setLocale($data["locale"]);
 			Session::set("locale", $data["locale"]);
 			Session::set("lang", explode("_", $data["locale"])[0]);
 		}
-		$this->model->update_user($user);
+		$user->save();
 		$data["reload_after"] = true;
 		$data["success"] = true;
 		$data["title"] = _("Success");

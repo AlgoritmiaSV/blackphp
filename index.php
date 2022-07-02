@@ -46,8 +46,9 @@ foreach(glob("utils/*") as $file)
 /**
  * site_autoload
  * 
- * Este método incluye automáticamente el controlador con el nombre de la clase
- * en el momento que se crea un objeto de la clase.
+ * Este método incluye automáticamente el controlador o el modelo con el nombre de la clase
+ * en el momento que se crea un objeto de la clase. Los nombres de archivos en los modelos
+ * terminan siempre con la palabra _model.php
  * 
  * @param string $class El nombre de la clase que se va a cargar
  * 
@@ -55,7 +56,14 @@ foreach(glob("utils/*") as $file)
  */
 function site_autoload($class)
 {
-	require 'controllers/' . $class .".php";
+	if(file_exists("models/orm/$class.php"))
+	{
+		require "models/orm/$class.php";
+	}
+	else
+	{
+		require 'controllers/' . $class .".php";
+	}
 }
 spl_autoload_register('site_autoload');	
 

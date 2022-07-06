@@ -370,18 +370,11 @@ class Settings extends Controller
 			echo json_encode($data);
 			return;
 		}
-		$this->loadModel("user");
-		$user = $this->model->get_user($_POST["id"]);
-		$time = Date("Y-m-d H:i:s");
-		$data_set = Array(
-			"user_id" => $user["user_id"],
-			"nickname" => null,
-			"status" => 0,
-			"edition_user" => Session::get("user_id"),
-			"edition_time" => $time
-		);
-		$data = $this->model->update_user($data_set);
-		$data["deleted"] = $data["affected"] > 0;
+		$user = users_model::find($_POST["id"]);
+		$user->setNickname(null);
+		$user->setStatus(0);
+		$affected = $user->save();
+		$data["deleted"] = $affected > 0;
 		echo json_encode($data);
 	}
 
@@ -450,13 +443,12 @@ class Settings extends Controller
 		$data["success"] = false;
 		if($data["theme_id"] != Session::get("theme_id"))
 		{
-			$this->loadModel("user");
-			$user = $this->model->get_user(Session::get("user_id"));
-			$user["theme_id"] = $data["theme_id"];
-			$this->model->update_user($user);
-			$theme = $this->model->get_theme($data["theme_id"]);
-			Session::set("theme_id", $theme["theme_id"]);
-			Session::set("theme_url", $theme["theme_url"]);
+			$user = users_model::find(Session::get("user_id"));
+			$user->setTheme_id($data["theme_id"]);
+			$user->save();
+			$theme = app_themes_model::find($data["theme_id"]);
+			Session::set("theme_id", $theme->getTheme_id());
+			Session::set("theme_url", $theme->getTheme_url());
 			$data["reload_after"] = true;
 		}
 		$data["success"] = true;

@@ -5,10 +5,16 @@ trait ORM
 	private static $_db = null;
 
 	/** @var string $_select Columnas que se seleccionarán en una tabla */
-	private static $_select = "";
+	private static $_select = Array();
+
+	/** @var array $_join Uniones (JOIN) dentro de la consulta */
+	private static $_join = Array();
 
 	/** @var array $_where Conjunto de condiciones que se aplicarán a la consulta */
 	private static $_where = Array();
+
+	/** @var array $_order_by Criterios de ordenamiento de los resultados */
+	private static $_order_by = Array();
 
 	/**
 	 * Limpieza de flujo
@@ -18,8 +24,10 @@ trait ORM
 	 */
 	public static function flush()
 	{
-		self::$_select = "";
+		self::$_select = Array();
+		self::$_join = Array();
 		self::$_where = Array();
+		self::$_order_by = Array();
 	}
 
 	/** 
@@ -43,14 +51,7 @@ trait ORM
 	 */
 	public static function first()
 	{
-		self::init();
-		$class = get_called_class();
-		$instance = new $class;
-		$sql = "SELECT * FROM $instance->_table_name WHERE 1 LIMIT 1";
-		$sth = self::$_db->prepare($sql);
-		$sth->execute();
-		self::flush();
-		return $sth->fetchObject($class);
+		return self::get("FIRST");
 	}
 
 	/**
@@ -124,6 +125,10 @@ trait ORM
 		}
 		$sth->execute();
 		self::flush();
+		if(empty($this->{$this->_primary_key}))
+		{
+			$this->{$this->_primary_key} = self::$_db->lastInsertId();
+		}
 		return $sth->rowCount();
 	}
 
@@ -145,6 +150,185 @@ trait ORM
 			$affected = $this->save();
 		}
 		return $affected != 0;
+	}
+
+	public static function select()
+	{
+		self::$_select = array_merge(self::$_select, func_get_args());
+		return new static();
+	}
+
+	public static function join()
+	{
+		self::$_join[] = func_get_args();
+		return new static();
+	}
+
+	public static function where()
+	{
+		self::$_where[] = func_get_args();
+		return new static();
+	}
+
+	public static function orderBy()
+	{
+		self::$_order_by[] = func_get_args();
+		return new static();
+	}
+
+	public static function get($results = "FIRST")
+	{
+		$class = get_called_class();
+		$instance = new $class;
+
+		# Select
+		$objects = true;
+		$select = "*";
+		if(count(self::$_select) > 0)
+		{
+			$select = implode(",", self::$_select);
+			$objects = false;
+		}
+
+		# Join
+		$join = "";
+		if(count(self::$_join) > 0)
+		{
+			foreach(self::$_join as $value)
+			{
+				if(is_array($value))
+				{
+					if(count($value) == 3)
+					{
+						$join .= "LEFT JOIN $value[0] ON $instance->_table_name.$value[1] = $value[0].$value[2] ";
+					}
+				}
+			}
+		}
+
+		# Where
+		$wheres = Array();
+		$data = Array();
+		foreach(self::$_where as $value)
+		{
+			if(is_array($value))
+			{
+				$var = str_replace(".", "_", $value[0]);
+				if(count($value) == 3)
+				{
+					$data[$var] = $value[2];
+					$wheres[] = $value[0] . " " . $value[1] . " :" . $var;
+				}
+				if(count($value) == 2)
+				{
+					$data[$var] = $value[1];
+					$wheres[] = $value[0] . " = :" . $var;
+				}
+			}
+			if(is_string($value))
+			{
+				$wheres[] = $value;
+			}
+		}
+		$where = implode(" AND ", $wheres);
+		if(empty($where))
+		{
+			$where = 1;
+		}
+
+		# Order By
+		$order_by = "";
+		if(count(self::$_order_by) > 0)
+		{
+			$order_by .= "ORDER BY ";
+			$orders = Array();
+			foreach(self::$_order_by as $value)
+			{
+				if(is_array($value))
+				{
+					$order_item = $value[0];
+					if(count($value) == 2)
+					{
+						$order_item .= " " . $value[1];
+					}
+					$orders[] = $order_item;
+				}
+			}
+			$order_by .= implode(", ", $orders);
+		}
+
+		self::init();
+		$sql = "SELECT $select FROM $instance->_table_name $join WHERE $where $order_by";
+		$sth = self::$_db->prepare($sql);
+		foreach ($data as $key => $value) {
+			$sth->bindValue(":$key", $value);
+		}
+		$sth->execute();
+		self::flush();
+		if($results == "FIRST")
+		{
+			if($objects)
+			{
+				$object = $sth->fetchObject($class);
+				if($object === false)
+				{
+					return $instance;
+				}
+				else
+				{
+					return $object;
+				}
+			}
+			else
+			{
+				return $sth->fetch(PDO::FETCH_ASSOC);
+			}
+		}
+		else
+		{
+			if($objects)
+			{
+				return $sth->fetchAll(PDO::FETCH_CLASS, $class);
+			}
+			else
+			{
+				return $sth->fetchAll(PDO::FETCH_ASSOC);
+			}
+		}
+	}
+
+	public static function getAll()
+	{
+		return self::get("ALL");
+	}
+
+	public function toArray()
+	{
+		$data = get_object_vars($this);
+		$unset = Array("_table_name", "_primary_key", "_timestamps", "_soft_delete");
+		foreach($unset as $key)
+		{
+			unset($data[$key]);
+		}
+		return $data;
+	}
+
+	public function set($array)
+	{
+		$data = get_object_vars($this);
+		$unset = Array("_table_name", "_primary_key", "_timestamps", "_soft_delete");
+		foreach($unset as $key)
+		{
+			unset($data[$key]);
+		}
+		foreach($array as $key => $value)
+		{
+			if(array_key_exists($key, $data))
+			{
+				$this->{"set" . ucfirst($key)}($value);
+			}
+		}
+		return $this;
 	}
 }
 ?>

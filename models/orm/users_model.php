@@ -80,7 +80,7 @@ class users_model
 
 	public function setUser_id($value)
 	{
-		$this->user_id = $value;
+		$this->user_id = (int)$value;
 	}
 
 	public function getEntity_id()
@@ -90,7 +90,7 @@ class users_model
 
 	public function setEntity_id($value)
 	{
-		$this->entity_id = $value;
+		$this->entity_id = (int)$value;
 	}
 
 	public function getUser_name()
@@ -100,7 +100,7 @@ class users_model
 
 	public function setUser_name($value)
 	{
-		$this->user_name = $value;
+		$this->user_name = (string)$value;
 	}
 
 	public function getNickname()
@@ -110,7 +110,7 @@ class users_model
 
 	public function setNickname($value)
 	{
-		$this->nickname = $value;
+		$this->nickname = (string)$value;
 	}
 
 	public function getEmail()
@@ -120,7 +120,7 @@ class users_model
 
 	public function setEmail($value)
 	{
-		$this->email = $value;
+		$this->email = (string)$value;
 	}
 
 	public function getPassword()
@@ -130,7 +130,7 @@ class users_model
 
 	public function setPassword($value)
 	{
-		$this->password = $value;
+		$this->password = (string)$value;
 	}
 
 	public function getTheme_id()
@@ -140,7 +140,7 @@ class users_model
 
 	public function setTheme_id($value)
 	{
-		$this->theme_id = $value;
+		$this->theme_id = (int)$value;
 	}
 
 	public function getLocale()
@@ -150,7 +150,7 @@ class users_model
 
 	public function setLocale($value)
 	{
-		$this->locale = $value;
+		$this->locale = (string)$value;
 	}
 
 	public function getCreation_user()
@@ -160,7 +160,7 @@ class users_model
 
 	public function setCreation_user($value)
 	{
-		$this->creation_user = $value;
+		$this->creation_user = (int)$value;
 	}
 
 	public function getCreation_time()
@@ -170,7 +170,7 @@ class users_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = $value;
+		$this->creation_time = (string)$value;
 	}
 
 	public function getEdition_user()
@@ -180,7 +180,7 @@ class users_model
 
 	public function setEdition_user($value)
 	{
-		$this->edition_user = $value;
+		$this->edition_user = (int)$value;
 	}
 
 	public function getEdition_time()
@@ -190,7 +190,7 @@ class users_model
 
 	public function setEdition_time($value)
 	{
-		$this->edition_time = $value;
+		$this->edition_time = (string)$value;
 	}
 
 	public function getStatus()
@@ -200,7 +200,37 @@ class users_model
 
 	public function setStatus($value)
 	{
-		$this->status = $value;
+		$this->status = (int)$value;
+	}
+
+	public function user_logs()
+	{
+		user_logs::flush();
+		return user_logs::where("user_id", $this->user_id);
+	}
+
+	public function user_methods()
+	{
+		user_methods::flush();
+		return user_methods::where("user_id", $this->user_id);
+	}
+
+	public function user_modules()
+	{
+		user_modules::flush();
+		return user_modules::where("user_id", $this->user_id);
+	}
+
+	public function user_recovery()
+	{
+		user_recovery::flush();
+		return user_recovery::where("user_id", $this->user_id);
+	}
+
+	public function user_sessions()
+	{
+		user_sessions::flush();
+		return user_sessions::where("user_id", $this->user_id);
 	}
 }
 ?>

@@ -62,7 +62,7 @@ class app_modules_model
 
 	public function setModule_id($value)
 	{
-		$this->module_id = $value;
+		$this->module_id = (int)$value;
 	}
 
 	public function getModule_name()
@@ -72,7 +72,7 @@ class app_modules_model
 
 	public function setModule_name($value)
 	{
-		$this->module_name = $value;
+		$this->module_name = (string)$value;
 	}
 
 	public function getModule_url()
@@ -82,7 +82,7 @@ class app_modules_model
 
 	public function setModule_url($value)
 	{
-		$this->module_url = $value;
+		$this->module_url = (string)$value;
 	}
 
 	public function getModule_key()
@@ -92,7 +92,7 @@ class app_modules_model
 
 	public function setModule_key($value)
 	{
-		$this->module_key = $value;
+		$this->module_key = (string)$value;
 	}
 
 	public function getModule_description()
@@ -102,7 +102,7 @@ class app_modules_model
 
 	public function setModule_description($value)
 	{
-		$this->module_description = $value;
+		$this->module_description = (string)$value;
 	}
 
 	public function getDefault_order()
@@ -112,7 +112,7 @@ class app_modules_model
 
 	public function setDefault_order($value)
 	{
-		$this->default_order = $value;
+		$this->default_order = (int)$value;
 	}
 
 	public function getStatus()
@@ -122,7 +122,31 @@ class app_modules_model
 
 	public function setStatus($value)
 	{
-		$this->status = $value;
+		$this->status = (int)$value;
+	}
+
+	public function app_elements()
+	{
+		app_elements::flush();
+		return app_elements::where("module_id", $this->module_id);
+	}
+
+	public function app_methods()
+	{
+		app_methods::flush();
+		return app_methods::where("module_id", $this->module_id);
+	}
+
+	public function entity_modules()
+	{
+		entity_modules::flush();
+		return entity_modules::where("module_id", $this->module_id);
+	}
+
+	public function user_modules()
+	{
+		user_modules::flush();
+		return user_modules::where("module_id", $this->module_id);
 	}
 }
 ?>

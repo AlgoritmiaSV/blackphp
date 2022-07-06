@@ -62,7 +62,7 @@ class entity_methods_model
 
 	public function setCmethod_id($value)
 	{
-		$this->cmethod_id = $value;
+		$this->cmethod_id = (int)$value;
 	}
 
 	public function getEntity_id()
@@ -72,7 +72,7 @@ class entity_methods_model
 
 	public function setEntity_id($value)
 	{
-		$this->entity_id = $value;
+		$this->entity_id = (int)$value;
 	}
 
 	public function getMethod_id()
@@ -82,7 +82,7 @@ class entity_methods_model
 
 	public function setMethod_id($value)
 	{
-		$this->method_id = $value;
+		$this->method_id = (int)$value;
 	}
 
 	public function getMethod_order()
@@ -92,7 +92,7 @@ class entity_methods_model
 
 	public function setMethod_order($value)
 	{
-		$this->method_order = $value;
+		$this->method_order = (int)$value;
 	}
 
 	public function getCreation_time()
@@ -102,7 +102,7 @@ class entity_methods_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = $value;
+		$this->creation_time = (string)$value;
 	}
 
 	public function getEdition_time()
@@ -112,7 +112,7 @@ class entity_methods_model
 
 	public function setEdition_time($value)
 	{
-		$this->edition_time = $value;
+		$this->edition_time = (string)$value;
 	}
 
 	public function getStatus()
@@ -122,7 +122,7 @@ class entity_methods_model
 
 	public function setStatus($value)
 	{
-		$this->status = $value;
+		$this->status = (int)$value;
 	}
 }
 ?>

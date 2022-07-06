@@ -49,8 +49,7 @@ class User extends Controller
 		$data = Array();
 		if($_POST["method"] == "MyAccount")
 		{
-			$this->loadModel("entity");
-			$themes = $this->model->get_themes();
+			$themes = app_themes_model::select("theme_id AS id", "theme_name AS text")->getAll();
 			foreach($themes as $key => $theme)
 			{
 				$themes[$key]["text"] = _($theme["text"]);
@@ -87,8 +86,11 @@ class User extends Controller
 			echo json_encode($data);
 			return;
 		}
-		$this->loadModel("user");
-		$user = $this->model->get_access($_POST["nickname"], $_POST["password"], $this->entity_id);
+		$user = users_model::where("nickname", $_POST["nickname"])
+			->where("password", md5($_POST["password"]))
+			->where("entity_id", $this->entity_id)
+			->where("status", 1)
+			->get()->toArray();
 		if(isset($user["nickname"]))
 		{
 			$data["reload"] = true;
@@ -106,38 +108,45 @@ class User extends Controller
 			# Get IP Address
 			$ipv4 = $this->getRealIP();
 			# Check if exists
-			$browser = $this->model->get_browser($user_agent);
-			$browser_id = 0;
-			if(isset($browser["browser_id"]))
-			{
-				$browser_id = $browser["browser_id"];
-			}
-			else
+			$browser = browsers_model::where("user_agent", $user_agent)->get();
+			$browser_id = $browser->getBrowser_id();
+			if(empty($browser_id))
 			{
 				#Set new browser
 				$parser = new UserAgentParser();
 				$ua = $parser->parse($user_agent);
-				$data_set = Array(
+				$browser = new browsers_model();
+				$browser->set(Array(
 					"user_agent" => $user_agent,
 					"browser_name" => $ua->browser(),
 					"browser_version" => $ua->browserVersion(),
 					"platform" => $ua->platform(),
 					"creation_user" => $user["user_id"],
 					"creation_time" => $now
-				);
-				$new_browser = $this->model->set_browser($data_set);
-				$browser_id = $new_browser["id"];
+				))->save();
+				$browser_id = $browser->getBrowser_id();
 			}
+
 			#Set session
-			$data_set = Array(
+			$session = new user_sessions_model();
+			$session->set(Array(
 				"user_id" => $user["user_id"],
 				"ip_address" => $ipv4,
 				"browser_id" => $browser_id,
 				"date_time" => $now
-			);
-			$this->model->set_user_session($data_set);
+			))->save();
+
 			#Set modules
-			Session::set("modules", $this->model->get_user_entity_modules($this->entity_id, $user["user_id"]));
+			$modules = app_modules_model::select("app_modules.*", "user_modules.access_type")
+				->join("entity_modules", "module_id", "module_id")
+				->join("user_modules", "module_id", "module_id")
+				->where("entity_modules.status", 1)
+				->where("user_modules.status", 1)
+				->where("user_modules.user_id", $user["user_id"])
+				->where("entity_modules.entity_id", $this->entity_id)
+				->orderBy("module_order")
+				->getAll();
+			Session::set("modules", $modules);
 		}
 		else
 		{

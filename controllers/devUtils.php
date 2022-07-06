@@ -355,5 +355,14 @@ class devUtils extends Controller
 			$this->add_folders($directory, $array);
 		}
 	}
+
+	public function test()
+	{
+		$user = users_model::first()->toArray();
+		$modules1 = app_modules_model::select("app_modules.*", "user_modules.access_type")->join("entity_modules", "module_id", "module_id")->join("user_modules", "module_id", "module_id")->where("entity_modules.status", 1)->where("user_modules.status", 1)->where("user_modules.user_id", $user["user_id"])->where("entity_modules.entity_id", $this->entity_id)->orderBy("module_order")->getAll();
+		$this->loadModel("user");
+		$modules2 = $this->model->get_user_entity_modules($this->entity_id, $user["user_id"]);
+		echo '<pre>' . print_r($modules1, true) . print_r($modules2, true) . '</pre>';
+	}
 }
 ?>

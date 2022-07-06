@@ -50,7 +50,7 @@ class app_themes_model
 
 	public function setTheme_id($value)
 	{
-		$this->theme_id = $value;
+		$this->theme_id = (int)$value;
 	}
 
 	public function getTheme_name()
@@ -60,7 +60,7 @@ class app_themes_model
 
 	public function setTheme_name($value)
 	{
-		$this->theme_name = $value;
+		$this->theme_name = (string)$value;
 	}
 
 	public function getTheme_url()
@@ -70,7 +70,13 @@ class app_themes_model
 
 	public function setTheme_url($value)
 	{
-		$this->theme_url = $value;
+		$this->theme_url = (string)$value;
+	}
+
+	public function users()
+	{
+		users::flush();
+		return users::where("theme_id", $this->theme_id);
 	}
 }
 ?>

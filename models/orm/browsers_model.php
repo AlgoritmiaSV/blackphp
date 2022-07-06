@@ -62,7 +62,7 @@ class browsers_model
 
 	public function setBrowser_id($value)
 	{
-		$this->browser_id = $value;
+		$this->browser_id = (int)$value;
 	}
 
 	public function getUser_agent()
@@ -72,7 +72,7 @@ class browsers_model
 
 	public function setUser_agent($value)
 	{
-		$this->user_agent = $value;
+		$this->user_agent = (string)$value;
 	}
 
 	public function getBrowser_name()
@@ -82,7 +82,7 @@ class browsers_model
 
 	public function setBrowser_name($value)
 	{
-		$this->browser_name = $value;
+		$this->browser_name = (string)$value;
 	}
 
 	public function getBrowser_version()
@@ -92,7 +92,7 @@ class browsers_model
 
 	public function setBrowser_version($value)
 	{
-		$this->browser_version = $value;
+		$this->browser_version = (string)$value;
 	}
 
 	public function getPlatform()
@@ -102,7 +102,7 @@ class browsers_model
 
 	public function setPlatform($value)
 	{
-		$this->platform = $value;
+		$this->platform = (string)$value;
 	}
 
 	public function getCreation_user()
@@ -112,7 +112,7 @@ class browsers_model
 
 	public function setCreation_user($value)
 	{
-		$this->creation_user = $value;
+		$this->creation_user = (int)$value;
 	}
 
 	public function getCreation_time()
@@ -122,7 +122,13 @@ class browsers_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = $value;
+		$this->creation_time = (string)$value;
+	}
+
+	public function user_sessions()
+	{
+		user_sessions::flush();
+		return user_sessions::where("browser_id", $this->browser_id);
 	}
 }
 ?>

@@ -65,7 +65,7 @@ class app_elements_model
 
 	public function setElement_id($value)
 	{
-		$this->element_id = $value;
+		$this->element_id = (int)$value;
 	}
 
 	public function getElement_key()
@@ -75,7 +75,7 @@ class app_elements_model
 
 	public function setElement_key($value)
 	{
-		$this->element_key = $value;
+		$this->element_key = (string)$value;
 	}
 
 	public function getElement_name()
@@ -85,7 +85,7 @@ class app_elements_model
 
 	public function setElement_name($value)
 	{
-		$this->element_name = $value;
+		$this->element_name = (string)$value;
 	}
 
 	public function getElement_gender()
@@ -95,7 +95,7 @@ class app_elements_model
 
 	public function setElement_gender($value)
 	{
-		$this->element_gender = $value;
+		$this->element_gender = (string)$value;
 	}
 
 	public function getElement_number()
@@ -105,7 +105,7 @@ class app_elements_model
 
 	public function setElement_number($value)
 	{
-		$this->element_number = $value;
+		$this->element_number = (string)$value;
 	}
 
 	public function getUnique_element()
@@ -115,7 +115,7 @@ class app_elements_model
 
 	public function setUnique_element($value)
 	{
-		$this->unique_element = $value;
+		$this->unique_element = (int)$value;
 	}
 
 	public function getModule_id()
@@ -125,7 +125,7 @@ class app_elements_model
 
 	public function setModule_id($value)
 	{
-		$this->module_id = $value;
+		$this->module_id = (int)$value;
 	}
 
 	public function getMethod_name()
@@ -135,7 +135,13 @@ class app_elements_model
 
 	public function setMethod_name($value)
 	{
-		$this->method_name = $value;
+		$this->method_name = (string)$value;
+	}
+
+	public function user_logs()
+	{
+		user_logs::flush();
+		return user_logs::where("element_id", $this->element_id);
 	}
 }
 ?>

@@ -65,7 +65,7 @@ class app_methods_model
 
 	public function setMethod_id($value)
 	{
-		$this->method_id = $value;
+		$this->method_id = (int)$value;
 	}
 
 	public function getModule_id()
@@ -75,7 +75,7 @@ class app_methods_model
 
 	public function setModule_id($value)
 	{
-		$this->module_id = $value;
+		$this->module_id = (int)$value;
 	}
 
 	public function getMethod_name()
@@ -85,7 +85,7 @@ class app_methods_model
 
 	public function setMethod_name($value)
 	{
-		$this->method_name = $value;
+		$this->method_name = (string)$value;
 	}
 
 	public function getMethod_url()
@@ -95,7 +95,7 @@ class app_methods_model
 
 	public function setMethod_url($value)
 	{
-		$this->method_url = $value;
+		$this->method_url = (string)$value;
 	}
 
 	public function getMethod_icon()
@@ -105,7 +105,7 @@ class app_methods_model
 
 	public function setMethod_icon($value)
 	{
-		$this->method_icon = $value;
+		$this->method_icon = (string)$value;
 	}
 
 	public function getMethod_description()
@@ -115,7 +115,7 @@ class app_methods_model
 
 	public function setMethod_description($value)
 	{
-		$this->method_description = $value;
+		$this->method_description = (string)$value;
 	}
 
 	public function getDefault_order()
@@ -125,7 +125,7 @@ class app_methods_model
 
 	public function setDefault_order($value)
 	{
-		$this->default_order = $value;
+		$this->default_order = (int)$value;
 	}
 
 	public function getStatus()
@@ -135,7 +135,19 @@ class app_methods_model
 
 	public function setStatus($value)
 	{
-		$this->status = $value;
+		$this->status = (int)$value;
+	}
+
+	public function entity_methods()
+	{
+		entity_methods::flush();
+		return entity_methods::where("method_id", $this->method_id);
+	}
+
+	public function user_methods()
+	{
+		user_methods::flush();
+		return user_methods::where("method_id", $this->method_id);
 	}
 }
 ?>

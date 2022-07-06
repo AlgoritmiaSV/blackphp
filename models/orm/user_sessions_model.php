@@ -59,7 +59,7 @@ class user_sessions_model
 
 	public function setUsession_id($value)
 	{
-		$this->usession_id = $value;
+		$this->usession_id = (int)$value;
 	}
 
 	public function getUser_id()
@@ -69,7 +69,7 @@ class user_sessions_model
 
 	public function setUser_id($value)
 	{
-		$this->user_id = $value;
+		$this->user_id = (int)$value;
 	}
 
 	public function getBranch_id()
@@ -79,7 +79,7 @@ class user_sessions_model
 
 	public function setBranch_id($value)
 	{
-		$this->branch_id = $value;
+		$this->branch_id = (int)$value;
 	}
 
 	public function getIp_address()
@@ -89,7 +89,7 @@ class user_sessions_model
 
 	public function setIp_address($value)
 	{
-		$this->ip_address = $value;
+		$this->ip_address = (string)$value;
 	}
 
 	public function getBrowser_id()
@@ -99,7 +99,7 @@ class user_sessions_model
 
 	public function setBrowser_id($value)
 	{
-		$this->browser_id = $value;
+		$this->browser_id = (int)$value;
 	}
 
 	public function getDate_time()
@@ -109,7 +109,7 @@ class user_sessions_model
 
 	public function setDate_time($value)
 	{
-		$this->date_time = $value;
+		$this->date_time = (string)$value;
 	}
 }
 ?>

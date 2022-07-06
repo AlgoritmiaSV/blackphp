@@ -62,7 +62,7 @@ class entity_modules_model
 
 	public function setCmodule_id($value)
 	{
-		$this->cmodule_id = $value;
+		$this->cmodule_id = (int)$value;
 	}
 
 	public function getEntity_id()
@@ -72,7 +72,7 @@ class entity_modules_model
 
 	public function setEntity_id($value)
 	{
-		$this->entity_id = $value;
+		$this->entity_id = (int)$value;
 	}
 
 	public function getModule_id()
@@ -82,7 +82,7 @@ class entity_modules_model
 
 	public function setModule_id($value)
 	{
-		$this->module_id = $value;
+		$this->module_id = (int)$value;
 	}
 
 	public function getModule_order()
@@ -92,7 +92,7 @@ class entity_modules_model
 
 	public function setModule_order($value)
 	{
-		$this->module_order = $value;
+		$this->module_order = (int)$value;
 	}
 
 	public function getCreation_time()
@@ -102,7 +102,7 @@ class entity_modules_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = $value;
+		$this->creation_time = (string)$value;
 	}
 
 	public function getEdition_time()
@@ -112,7 +112,7 @@ class entity_modules_model
 
 	public function setEdition_time($value)
 	{
-		$this->edition_time = $value;
+		$this->edition_time = (string)$value;
 	}
 
 	public function getStatus()
@@ -122,7 +122,7 @@ class entity_modules_model
 
 	public function setStatus($value)
 	{
-		$this->status = $value;
+		$this->status = (int)$value;
 	}
 }
 ?>

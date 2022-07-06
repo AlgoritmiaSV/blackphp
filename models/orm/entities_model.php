@@ -45,7 +45,7 @@ class entities_model
 	/** @var string $sys_name Nombre de la distribución del sistema */
 	private $sys_name;
 
-	/** @var string $default_locale Idioma por defecto de la empresa */
+	/** @var string $default_locale Idioma por defecto de la entidad */
 	private $default_locale;
 
 	/** @var int $creation_installer ID del usuario que instaló el sistema */
@@ -89,7 +89,7 @@ class entities_model
 
 	public function setEntity_id($value)
 	{
-		$this->entity_id = $value;
+		$this->entity_id = (int)$value;
 	}
 
 	public function getEntity_name()
@@ -99,7 +99,7 @@ class entities_model
 
 	public function setEntity_name($value)
 	{
-		$this->entity_name = $value;
+		$this->entity_name = (string)$value;
 	}
 
 	public function getEntity_slogan()
@@ -109,7 +109,7 @@ class entities_model
 
 	public function setEntity_slogan($value)
 	{
-		$this->entity_slogan = $value;
+		$this->entity_slogan = (string)$value;
 	}
 
 	public function getAdmin_user()
@@ -119,7 +119,7 @@ class entities_model
 
 	public function setAdmin_user($value)
 	{
-		$this->admin_user = $value;
+		$this->admin_user = (int)$value;
 	}
 
 	public function getEntity_date()
@@ -129,7 +129,7 @@ class entities_model
 
 	public function setEntity_date($value)
 	{
-		$this->entity_date = $value;
+		$this->entity_date = (string)$value;
 	}
 
 	public function getEntity_begin()
@@ -139,7 +139,7 @@ class entities_model
 
 	public function setEntity_begin($value)
 	{
-		$this->entity_begin = $value;
+		$this->entity_begin = (string)$value;
 	}
 
 	public function getEntity_subdomain()
@@ -149,7 +149,7 @@ class entities_model
 
 	public function setEntity_subdomain($value)
 	{
-		$this->entity_subdomain = $value;
+		$this->entity_subdomain = (string)$value;
 	}
 
 	public function getSys_name()
@@ -159,7 +159,7 @@ class entities_model
 
 	public function setSys_name($value)
 	{
-		$this->sys_name = $value;
+		$this->sys_name = (string)$value;
 	}
 
 	public function getDefault_locale()
@@ -169,7 +169,7 @@ class entities_model
 
 	public function setDefault_locale($value)
 	{
-		$this->default_locale = $value;
+		$this->default_locale = (string)$value;
 	}
 
 	public function getCreation_installer()
@@ -179,7 +179,7 @@ class entities_model
 
 	public function setCreation_installer($value)
 	{
-		$this->creation_installer = $value;
+		$this->creation_installer = (int)$value;
 	}
 
 	public function getCreation_time()
@@ -189,7 +189,7 @@ class entities_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = $value;
+		$this->creation_time = (string)$value;
 	}
 
 	public function getEdition_installer()
@@ -199,7 +199,7 @@ class entities_model
 
 	public function setEdition_installer($value)
 	{
-		$this->edition_installer = $value;
+		$this->edition_installer = (int)$value;
 	}
 
 	public function getInstaller_edition_time()
@@ -209,7 +209,7 @@ class entities_model
 
 	public function setInstaller_edition_time($value)
 	{
-		$this->installer_edition_time = $value;
+		$this->installer_edition_time = (string)$value;
 	}
 
 	public function getEdition_user()
@@ -219,7 +219,7 @@ class entities_model
 
 	public function setEdition_user($value)
 	{
-		$this->edition_user = $value;
+		$this->edition_user = (int)$value;
 	}
 
 	public function getUser_edition_time()
@@ -229,7 +229,7 @@ class entities_model
 
 	public function setUser_edition_time($value)
 	{
-		$this->user_edition_time = $value;
+		$this->user_edition_time = (string)$value;
 	}
 
 	public function getStatus()
@@ -239,7 +239,25 @@ class entities_model
 
 	public function setStatus($value)
 	{
-		$this->status = $value;
+		$this->status = (int)$value;
+	}
+
+	public function entity_methods()
+	{
+		entity_methods::flush();
+		return entity_methods::where("entity_id", $this->entity_id);
+	}
+
+	public function entity_modules()
+	{
+		entity_modules::flush();
+		return entity_modules::where("entity_id", $this->entity_id);
+	}
+
+	public function users()
+	{
+		users::flush();
+		return users::where("entity_id", $this->entity_id);
 	}
 }
 ?>

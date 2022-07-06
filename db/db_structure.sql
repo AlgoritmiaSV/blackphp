@@ -167,7 +167,7 @@ CREATE TABLE `entities` (
   `entity_begin` date NOT NULL COMMENT 'Fecha de inicio de las operaciones',
   `entity_subdomain` varchar(32) DEFAULT NULL COMMENT 'Subdominio (Para funcionamiento en línea)',
   `sys_name` varchar(32) NOT NULL COMMENT 'Nombre de la distribución del sistema',
-  `default_locale` char(5) DEFAULT NULL COMMENT 'Idioma por defecto de la empresa',
+  `default_locale` char(5) DEFAULT NULL COMMENT 'Idioma por defecto de la entidad',
   `creation_installer` int(11) DEFAULT NULL COMMENT 'ID del usuario que instaló el sistema',
   `creation_time` datetime NOT NULL,
   `edition_installer` int(11) DEFAULT NULL,

@@ -53,7 +53,7 @@ class app_actions_model
 
 	public function setAction_id($value)
 	{
-		$this->action_id = $value;
+		$this->action_id = (int)$value;
 	}
 
 	public function getAction_key()
@@ -63,7 +63,7 @@ class app_actions_model
 
 	public function setAction_key($value)
 	{
-		$this->action_key = $value;
+		$this->action_key = (string)$value;
 	}
 
 	public function getInfinitive_verb()
@@ -73,7 +73,7 @@ class app_actions_model
 
 	public function setInfinitive_verb($value)
 	{
-		$this->infinitive_verb = $value;
+		$this->infinitive_verb = (string)$value;
 	}
 
 	public function getPast_verb()
@@ -83,7 +83,13 @@ class app_actions_model
 
 	public function setPast_verb($value)
 	{
-		$this->past_verb = $value;
+		$this->past_verb = (string)$value;
+	}
+
+	public function user_logs()
+	{
+		user_logs::flush();
+		return user_logs::where("action_id", $this->action_id);
 	}
 }
 ?>

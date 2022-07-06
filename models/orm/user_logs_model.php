@@ -59,7 +59,7 @@ class user_logs_model
 
 	public function setLog_id($value)
 	{
-		$this->log_id = $value;
+		$this->log_id = (int)$value;
 	}
 
 	public function getUser_id()
@@ -69,7 +69,7 @@ class user_logs_model
 
 	public function setUser_id($value)
 	{
-		$this->user_id = $value;
+		$this->user_id = (int)$value;
 	}
 
 	public function getElement_id()
@@ -79,7 +79,7 @@ class user_logs_model
 
 	public function setElement_id($value)
 	{
-		$this->element_id = $value;
+		$this->element_id = (int)$value;
 	}
 
 	public function getAction_id()
@@ -89,7 +89,7 @@ class user_logs_model
 
 	public function setAction_id($value)
 	{
-		$this->action_id = $value;
+		$this->action_id = (int)$value;
 	}
 
 	public function getDate_time()
@@ -99,7 +99,7 @@ class user_logs_model
 
 	public function setDate_time($value)
 	{
-		$this->date_time = $value;
+		$this->date_time = (string)$value;
 	}
 
 	public function getElement_link()
@@ -109,7 +109,7 @@ class user_logs_model
 
 	public function setElement_link($value)
 	{
-		$this->element_link = $value;
+		$this->element_link = (int)$value;
 	}
 }
 ?>

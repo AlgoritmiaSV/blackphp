@@ -65,7 +65,7 @@ class app_installers_model
 
 	public function setInstaller_id($value)
 	{
-		$this->installer_id = $value;
+		$this->installer_id = (int)$value;
 	}
 
 	public function getInstaller_nickname()
@@ -75,7 +75,7 @@ class app_installers_model
 
 	public function setInstaller_nickname($value)
 	{
-		$this->installer_nickname = $value;
+		$this->installer_nickname = (string)$value;
 	}
 
 	public function getInstaller_password()
@@ -85,7 +85,7 @@ class app_installers_model
 
 	public function setInstaller_password($value)
 	{
-		$this->installer_password = $value;
+		$this->installer_password = (string)$value;
 	}
 
 	public function getInstaller_name()
@@ -95,7 +95,7 @@ class app_installers_model
 
 	public function setInstaller_name($value)
 	{
-		$this->installer_name = $value;
+		$this->installer_name = (string)$value;
 	}
 
 	public function getInstaller_phone()
@@ -105,7 +105,7 @@ class app_installers_model
 
 	public function setInstaller_phone($value)
 	{
-		$this->installer_phone = $value;
+		$this->installer_phone = (string)$value;
 	}
 
 	public function getInstaller_email()
@@ -115,7 +115,7 @@ class app_installers_model
 
 	public function setInstaller_email($value)
 	{
-		$this->installer_email = $value;
+		$this->installer_email = (string)$value;
 	}
 
 	public function getCreation_time()
@@ -125,7 +125,7 @@ class app_installers_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = $value;
+		$this->creation_time = (string)$value;
 	}
 
 	public function getStatus()
@@ -135,7 +135,13 @@ class app_installers_model
 
 	public function setStatus($value)
 	{
-		$this->status = $value;
+		$this->status = (int)$value;
+	}
+
+	public function entities()
+	{
+		entities::flush();
+		return entities::where("creation_installer", $this->installer_id);
 	}
 }
 ?>

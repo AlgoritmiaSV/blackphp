@@ -68,7 +68,7 @@ class user_modules_model
 
 	public function setUmodule_id($value)
 	{
-		$this->umodule_id = $value;
+		$this->umodule_id = (int)$value;
 	}
 
 	public function getModule_id()
@@ -78,7 +78,7 @@ class user_modules_model
 
 	public function setModule_id($value)
 	{
-		$this->module_id = $value;
+		$this->module_id = (int)$value;
 	}
 
 	public function getUser_id()
@@ -88,7 +88,7 @@ class user_modules_model
 
 	public function setUser_id($value)
 	{
-		$this->user_id = $value;
+		$this->user_id = (int)$value;
 	}
 
 	public function getAccess_type()
@@ -98,7 +98,7 @@ class user_modules_model
 
 	public function setAccess_type($value)
 	{
-		$this->access_type = $value;
+		$this->access_type = (int)$value;
 	}
 
 	public function getCreation_user()
@@ -108,7 +108,7 @@ class user_modules_model
 
 	public function setCreation_user($value)
 	{
-		$this->creation_user = $value;
+		$this->creation_user = (int)$value;
 	}
 
 	public function getCreation_time()
@@ -118,7 +118,7 @@ class user_modules_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = $value;
+		$this->creation_time = (string)$value;
 	}
 
 	public function getEdition_user()
@@ -128,7 +128,7 @@ class user_modules_model
 
 	public function setEdition_user($value)
 	{
-		$this->edition_user = $value;
+		$this->edition_user = (int)$value;
 	}
 
 	public function getEdition_time()
@@ -138,7 +138,7 @@ class user_modules_model
 
 	public function setEdition_time($value)
 	{
-		$this->edition_time = $value;
+		$this->edition_time = (string)$value;
 	}
 
 	public function getStatus()
@@ -148,7 +148,7 @@ class user_modules_model
 
 	public function setStatus($value)
 	{
-		$this->status = $value;
+		$this->status = (int)$value;
 	}
 }
 ?>

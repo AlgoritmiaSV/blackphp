@@ -955,7 +955,7 @@ $( function()
 		entry.find("input").first().focus();
 		entry.find("input").val('');
 		entry.find(".date_input").each(set_date_picker);
-		//entry.find(".delete_entry_icon").click(delete_entry_click);
+		entry.find(".delete_entry_icon").click(delete_entry_click);
 		entry.find(".extra_data").text("");
 		$(".delete_entry_icon").css({
 			"visibility":"visible"
@@ -963,6 +963,37 @@ $( function()
 		build_autocomplete(entry);
 		build_selectors();
 	});
+
+	function delete_entry_click(e)
+	{
+		e.preventDefault();
+		delete_button = $(this);
+		div = $(this).closest(".form_entry");
+		$.jAlert({
+			'title': "Confirmar",
+			'content': "¿Está seguro de que desea eliminar la entrada?",
+			'theme': "red",
+			'autofocus': '.jalert_cancel',
+			'btns': [
+				{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept', 'onClick':function(){
+					// Temporary Solution:
+					// Entries
+					item_id = delete_button.closest(".form_entry").find(".item_id").val();
+					if(item_id != null && item_id != "")
+					{
+						input = $(document.createElement("input"));
+						input.val(item_id);
+						input.attr("name", "removed[]");
+						input.attr("type", "hidden");
+						delete_button.closest("form").append(input);
+						delete_button.closest(".form_entry").remove();
+					}
+				}},
+				{'text':'Cancelar', 'closeAlert':true, 'theme': 'darkgray', 'class': 'jalert_cancel'}
+			]
+		});
+	}
+	$(".delete_entry_icon").on("click", delete_entry_click);
 
 	/* Image uploader */
 	if($('.input-images').length)

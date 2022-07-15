@@ -98,7 +98,7 @@ class Controller
 			if($this->is_ip_address($_SERVER["SERVER_NAME"]))
 			{
 				# Primera entidad de la tabla
-				$entity = $this->model->get_entity();
+				$entity = entities_model::first()->toArray();
 			}
 			else
 			{
@@ -107,7 +107,7 @@ class Controller
 				$subdomain = $server_name[0];
 				if($subdomain != "installer")
 				{
-					$entity = $this->model->get_entity_by_subdomain($subdomain);
+					$entity = entities_model::where("entity_subdomain", $subdomain)->get()->toArray();
 					if(!isset($entity["entity_id"]))
 					{
 						$protocol = "http";
@@ -163,11 +163,11 @@ class Controller
 		#7 Tema por defecto
 		if(Session::get("theme_id") == null)
 		{
-			$theme = $this->model->get_first_theme();
-			Session::set("theme_id", $theme["theme_id"]);
-			Session::set("theme_url", $theme["theme_url"]);
-			$this->view->data["theme_id"] = $theme["theme_id"];
-			$this->view->data["theme_url"] = $theme["theme_url"];
+			$theme = app_themes_model::first();
+			Session::set("theme_id", $theme->getTheme_id());
+			Session::set("theme_url", $theme->getTheme_url());
+			$this->view->data["theme_id"] = $theme->getTheme_id();
+			$this->view->data["theme_url"] = $theme->getTheme_url();
 		}
 	}
 
@@ -183,7 +183,8 @@ class Controller
 	public function loadModel($name, $modelPath = 'models/', $default_model = true)
 	{
 		$path = $modelPath . $name.'_model.php';
-		if (file_exists($path)) {
+		if (file_exists($path))
+		{
 			require_once $path;
 			$modelName = $name . '_Model';
 			if($default_model)
@@ -342,21 +343,20 @@ class Controller
 		{
 			$date_time = Date("Y-m-d H:i:s");
 		}
-		$user_model = $this->loadModel("user", "models/", false);
-		$action = $user_model->get_action_id($action_key);
-		$element = $user_model->get_element_id($element_key);
-		if(!isset($action["action_id"]) || !isset($element["element_id"]))
+		$action = app_actions_model::where("action_key", $action_key)->get();
+		$element = app_elements_model::where("element_key", $element_key)->get();
+		if($action->getAction_id() == null || $element->getElement_id() == null)
 		{
 			return;
 		}
-		$data_set = Array(
+		$user_log = new user_logs_model();
+		$user_log->set(Array(
 			"user_id" => Session::get("user_id"),
-			"element_id" => $element["element_id"],
-			"action_id" => $action["action_id"],
+			"element_id" => $element->getElement_id(),
+			"action_id" => $action->getAction_id(),
 			"date_time" => $date_time,
 			"element_link" => $element_link
-		);
-		$user_model->set_log($data_set);
+		))->save();
 	}
 
 	/**

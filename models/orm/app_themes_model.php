@@ -9,18 +9,6 @@ class app_themes_model
 {
 	use ORM;
 
-	/** @var string $_table_name Nombre de la tabla */
-	private $_table_name;
-
-	/** @var string $_primary_key Llave primaria */
-	private $_primary_key;
-
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private $_timestamps;
-
-	/** @var bool $_soft_delete La tabla soporta borrado suave */
-	private $_soft_delete;
-
 	/** @var int $theme_id ID de la tabla */
 	private $theme_id;
 
@@ -30,18 +18,19 @@ class app_themes_model
 	/** @var string $theme_url Nombre de la carpeta pública */
 	private $theme_url;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Inicializa las propiedades generales de la tabla
-	 */
-	public function __construct()
-	{
-		$this->_table_name = "app_themes";
-		$this->_primary_key = "theme_id";
-		$this->_timestamps = false;
-		$this->_soft_delete = false;
-	}
+
+	/** @var string $_table_name Nombre de la tabla */
+	private static $_table_name = "app_themes";
+
+	/** @var string $_primary_key Llave primaria */
+	private static $_primary_key = "theme_id";
+
+	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+	private static $_timestamps = false;
+
+	/** @var bool $_soft_delete La tabla soporta borrado suave */
+	private static $_soft_delete = false;
+
 
 	public function getTheme_id()
 	{

@@ -64,9 +64,10 @@ trait ORM
 	public static function find($id)
 	{
 		self::init();
+		$table_name = self::$_table_name;
+		$primary_key = self::$_primary_key;
 		$class = get_called_class();
-		$instance = new $class;
-		$sql = "SELECT * FROM $instance->_table_name WHERE $instance->_primary_key = :id LIMIT 1";
+		$sql = "SELECT * FROM $table_name WHERE $primary_key = :id LIMIT 1";
 		$sth = self::$_db->prepare($sql);
 		$sth->bindValue(":id", $id);
 		$sth->execute();
@@ -86,9 +87,9 @@ trait ORM
 	{
 		self::init();
 		$now = Date("Y-m-d H:i:s");
-		if($this->_timestamps)
+		if(self::$_timestamps)
 		{
-			if(empty($this->{$this->_primary_key}))
+			if(empty($this->{self::$_primary_key}))
 			{
 				$this->setCreation_user(Session::get("user_id"));
 				$this->setCreation_time($now);
@@ -97,17 +98,19 @@ trait ORM
 			$this->setEdition_time($now);
 		}
 		$data = get_object_vars($this);
-		$unset = Array("_table_name", "_primary_key", "_timestamps", "_soft_delete");
+		/*$unset = Array("_table_name", "_primary_key", "_timestamps", "_soft_delete");
 		foreach($unset as $key)
 		{
 			unset($data[$key]);
-		}
+		}*/
 		$sth = null;
-		if(empty($this->{$this->_primary_key}))
+		$table_name = self::$_table_name;
+		$primary_key = self::$_primary_key;
+		if(empty($primary_key))
 		{
 			$fieldNames = implode(',', array_keys($data));
 			$fieldValues = ':' . implode(', :', array_keys($data));
-			$sth = self::$_db->prepare("INSERT INTO $this->_table_name ($fieldNames) VALUES ($fieldValues)");
+			$sth = self::$_db->prepare("INSERT INTO $table_name ($fieldNames) VALUES ($fieldValues)");
 		}
 		else
 		{
@@ -117,7 +120,7 @@ trait ORM
 				$fieldDetails .= "$key=:$key,";
 			}
 			$fieldDetails = rtrim($fieldDetails, ',');
-			$sth = self::$_db->prepare("UPDATE $this->_table_name SET $fieldDetails WHERE $this->_primary_key = :$this->_primary_key");
+			$sth = self::$_db->prepare("UPDATE $table_name SET $fieldDetails WHERE $primary_key = :$primary_key");
 		}
 		foreach ($data as $key => $value)
 		{
@@ -125,9 +128,9 @@ trait ORM
 		}
 		$sth->execute();
 		self::flush();
-		if(empty($this->{$this->_primary_key}))
+		if(empty($this->{$primary_key}))
 		{
-			$this->{$this->_primary_key} = self::$_db->lastInsertId();
+			$this->{$primary_key} = self::$_db->lastInsertId();
 		}
 		return $sth->rowCount();
 	}
@@ -178,9 +181,7 @@ trait ORM
 
 	public static function get($results = "FIRST")
 	{
-		$class = get_called_class();
-		$instance = new $class;
-
+		$table_name = self::$_table_name;
 		# Select
 		$objects = true;
 		$select = "*";
@@ -200,7 +201,7 @@ trait ORM
 				{
 					if(count($value) == 3)
 					{
-						$join .= "LEFT JOIN $value[0] ON $instance->_table_name.$value[1] = $value[0].$value[2] ";
+						$join .= "LEFT JOIN $value[0] ON $table_name.$value[1] = $value[0].$value[2] ";
 					}
 				}
 			}
@@ -258,13 +259,14 @@ trait ORM
 		}
 
 		self::init();
-		$sql = "SELECT $select FROM $instance->_table_name $join WHERE $where $order_by";
+		$sql = "SELECT $select FROM $table_name $join WHERE $where $order_by";
 		$sth = self::$_db->prepare($sql);
 		foreach ($data as $key => $value) {
 			$sth->bindValue(":$key", $value);
 		}
 		$sth->execute();
 		self::flush();
+		$class = get_called_class();
 		if($results == "FIRST")
 		{
 			if($objects)
@@ -272,7 +274,7 @@ trait ORM
 				$object = $sth->fetchObject($class);
 				if($object === false)
 				{
-					return $instance;
+					return new $class;
 				}
 				else
 				{
@@ -305,22 +307,12 @@ trait ORM
 	public function toArray()
 	{
 		$data = get_object_vars($this);
-		$unset = Array("_table_name", "_primary_key", "_timestamps", "_soft_delete");
-		foreach($unset as $key)
-		{
-			unset($data[$key]);
-		}
 		return $data;
 	}
 
 	public function set($array)
 	{
 		$data = get_object_vars($this);
-		$unset = Array("_table_name", "_primary_key", "_timestamps", "_soft_delete");
-		foreach($unset as $key)
-		{
-			unset($data[$key]);
-		}
 		foreach($array as $key => $value)
 		{
 			if(array_key_exists($key, $data))

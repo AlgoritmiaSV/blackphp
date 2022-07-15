@@ -9,18 +9,6 @@ class app_methods_model
 {
 	use ORM;
 
-	/** @var string $_table_name Nombre de la tabla */
-	private $_table_name;
-
-	/** @var string $_primary_key Llave primaria */
-	private $_primary_key;
-
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private $_timestamps;
-
-	/** @var bool $_soft_delete La tabla soporta borrado suave */
-	private $_soft_delete;
-
 	/** @var int $method_id ID de la tabla */
 	private $method_id;
 
@@ -45,18 +33,19 @@ class app_methods_model
 	/** @var int $status Estado 0:inactivo, 1:activo */
 	private $status;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Inicializa las propiedades generales de la tabla
-	 */
-	public function __construct()
-	{
-		$this->_table_name = "app_methods";
-		$this->_primary_key = "method_id";
-		$this->_timestamps = false;
-		$this->_soft_delete = true;
-	}
+
+	/** @var string $_table_name Nombre de la tabla */
+	private static $_table_name = "app_methods";
+
+	/** @var string $_primary_key Llave primaria */
+	private static $_primary_key = "method_id";
+
+	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+	private static $_timestamps = false;
+
+	/** @var bool $_soft_delete La tabla soporta borrado suave */
+	private static $_soft_delete = true;
+
 
 	public function getMethod_id()
 	{

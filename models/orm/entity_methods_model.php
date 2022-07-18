@@ -9,8 +9,8 @@ class entity_methods_model
 {
 	use ORM;
 
-	/** @var int $cmethod_id ID de la tabla */
-	private $cmethod_id;
+	/** @var int $emethod_id ID de la tabla */
+	private $emethod_id;
 
 	/** @var int $entity_id ID de la empresa */
 	private $entity_id;
@@ -35,7 +35,7 @@ class entity_methods_model
 	private static $_table_name = "entity_methods";
 
 	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "cmethod_id";
+	private static $_primary_key = "emethod_id";
 
 	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
 	private static $_timestamps = false;
@@ -44,14 +44,14 @@ class entity_methods_model
 	private static $_soft_delete = true;
 
 
-	public function getCmethod_id()
+	public function getEmethod_id()
 	{
-		return $this->cmethod_id;
+		return $this->emethod_id;
 	}
 
-	public function setCmethod_id($value)
+	public function setEmethod_id($value)
 	{
-		$this->cmethod_id = (int)$value;
+		$this->emethod_id = (int)$value;
 	}
 
 	public function getEntity_id()

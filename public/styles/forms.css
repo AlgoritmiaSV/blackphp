@@ -94,6 +94,11 @@ tr:hover .action_icon
 	padding: 0px;
 }
 
+.details_table td *
+{
+	vertical-align: top;
+}
+
 .details_table td:not(.select2_td):not(.radio_td) span
 {
 	padding: 5px;
@@ -114,6 +119,13 @@ tr:hover .action_icon
 {
 	background-color: transparent;
 	padding: 0px;
+}
+
+.details_table textarea
+{
+	padding: 0px;
+	background-color: transparent;
+	border: 0px;
 }
 
 .form_body

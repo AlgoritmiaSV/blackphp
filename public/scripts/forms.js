@@ -51,8 +51,8 @@ $( function()
 				}
 			}
 		});
-		$("#bill_type").change();
-		$(".entry_selector").change();
+		$("#bill_type").trigger("change");
+		$(".entry_selector").trigger("change");
 		building_entry_selector = false;
 	}
 
@@ -144,12 +144,12 @@ $( function()
 						/* Prepare */
 						var _tr = _template.clone(false);
 						_tr.find(".date_input").each(set_date_picker);
-						_tr.find("input").keypress(input_keypress);
-						_tr.find(".row_quantity, .row_price").change(function() {
+						_tr.find("input").on("keypress", input_keypress);
+						_tr.find(".row_quantity, .row_price").on("change", function() {
 							calc_row_total($(this));
 							calc_bill_total();
 						});
-						_tr.find(".delete_row_icon").click(delete_row_click);
+						_tr.find(".delete_row_icon").on("click", delete_row_click);
 						build_autocomplete(_tr);
 						/* Fill */
 						_tr.find(".row_number").val(row_count);
@@ -159,6 +159,7 @@ $( function()
 						_tr.find(".row_price").val(value.price);
 						$.each(value, function(v_index, v_value) {
 							_tr.find("input." + v_index).val(v_value);
+							_tr.find("textarea." + v_index).val(v_value);
 							_tr.find("select." + v_index).data("value", v_value);
 							_tr.find("span." + v_index).text(v_value);
 						});
@@ -519,26 +520,27 @@ $( function()
 				_tr.find(".row_count").text(tbody.find("tr").length);
 				_tr.find("input").first().focus();
 				_tr.find("input").val('');
+				_tr.find("textarea").val('');
 				_tr.find(".row_number").val(tbody.find("tr").length - 1);
 				_tr.find(".clearable").text("");
 				_tr.find(".date_input").each(set_date_picker);
-				_tr.find("input").keypress(input_keypress);
-				_tr.find(".row_quantity, .row_price").change(function() {
+				_tr.find("input").on("keypress", input_keypress);
+				_tr.find(".row_quantity, .row_price").on("change", function() {
 					calc_row_total($(this));
 					calc_bill_total();
 				});
 				_tr.find(".row_total").find("span").text("0.00");
-				_tr.find(".delete_row_icon").click(delete_row_click);
+				_tr.find(".delete_row_icon").on("click", delete_row_click);
 				$(".delete_row_icon").css({
 					"visibility":"visible"
 				});
 				_tr.find(".complete_value").text("");
-				_tr.find(".complete_value").click(complete_click);
+				_tr.find(".complete_value").on("click", complete_click);
 				_tr.find(".partial_value").show();
-				_tr.find(".partial_value").blur(partial_blur);
-				_tr.find(".partial_value").change(partial_change);
+				_tr.find(".partial_value").on("blur", partial_blur);
+				_tr.find(".partial_value").on("change", partial_change);
 				_tr.find(".row_generics").text("");
-				_tr.find(".local_code").change(search_by_code);
+				_tr.find(".local_code").on("change", search_by_code);
 				build_autocomplete(_tr);
 				build_selectors();
 			}
@@ -572,7 +574,7 @@ $( function()
 			style: "currency",
 			currency: "USD"
 		}
-		return n.toLocaleString("en-US", myObj).substr(1);
+		return n.toLocaleString("en-US", myObj).slice(1);
 	}
 
 	/* Autocomplete */
@@ -584,27 +586,33 @@ $( function()
 				select: function( event, ui ) {
 					if(ui.item.id || ui.item.local_code)
 					{
-						_tr = $(this).closest("tr");
-						_tr.find(".local_code").val(ui.item.local_code);
-						_tr.find(".measure_name").text(ui.item.measure_name);
-						_tr.find(".cost").text(ui.item.cost);
-						_tr.find(".product_id").val(ui.item.product_id);
+						var _tr = $(this).closest("tr");
+						$.each(ui.item, function(v_index, v_value) {
+							_tr.find("input." + v_index).val(v_value);
+							_tr.find("textarea." + v_index).val(v_value);
+							_tr.find("select." + v_index).data("value", v_value);
+							_tr.find("span." + v_index).text(v_value);
+						});
+						//_tr.find(".local_code").val(ui.item.local_code);
+						//_tr.find(".measure_name").text(ui.item.measure_name);
+						//_tr.find(".cost").text(ui.item.cost);
+						//_tr.find(".product_id").val(ui.item.product_id);
 						//Solución inmediata
-						_tr.find(".fitem_id").val(ui.item.fitem_id);
-						_tr.find(".pres_id").val(ui.item.pres_id);
-						_tr.find(".service_id").val(ui.item.service_id);
-						_tr.find(".combo_id").val(ui.item.combo_id);
-						_tr.find(".gproduct_id").val(ui.item.gproduct_id);
-						if(bill_type != 2)
-						{
-							_tr.find(".sale_price").val(ui.item.sale_price);
-						}
-						else
+						//_tr.find(".fitem_id").val(ui.item.fitem_id);
+						//_tr.find(".pres_id").val(ui.item.pres_id);
+						//_tr.find(".service_id").val(ui.item.service_id);
+						//_tr.find(".combo_id").val(ui.item.combo_id);
+						//_tr.find(".gproduct_id").val(ui.item.gproduct_id);
+						if(bill_type == 2)
 						{
 							_tr.find(".sale_price").val(ui.item.nvat_price);
 						}
+						//else
+						//{
+							//_tr.find(".sale_price").val(ui.item.sale_price);
+						//}
 						_tr.find(".row_available").text(ui.item.quantity);
-						row_quantity = _tr.find(".row_quantity").val();
+						var row_quantity = _tr.find(".row_quantity").val();
 						if(row_quantity == "")
 						{
 							_tr.find(".row_quantity").val(1);
@@ -918,6 +926,7 @@ $( function()
 		_tr.find(".row_count").text(tbody.find("tr").length);
 		_tr.find("input").first().focus();
 		_tr.find("input").val('');
+		_tr.find("textarea").val('');
 		_tr.find(".row_number").val(tbody.find("tr").length - 1);
 		_tr.find(".date_input").each(set_date_picker);
 		_tr.find("input").keypress(input_keypress);

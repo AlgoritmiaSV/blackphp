@@ -38,8 +38,8 @@ class Settings extends Controller
 		$this->view->standard_menu();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->loadModel("entity");
-		$module = $this->model->get_module_by_name($this->module);
-		$this->view->data["methods"] = $this->model->get_entity_methods($this->entity_id, $module["module_id"]);
+		$module = app_modules_model::where("module_url", $this->module)->get();
+		$this->view->data["methods"] = $this->model->get_entity_methods($this->entity_id, $module->getModule_id());
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
 		$this->view->render('main');
 	}

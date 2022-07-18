@@ -78,6 +78,13 @@ tr:hover .action_icon
 	outline: 0px;
 }
 
+.details_table textarea
+{
+	padding: 0px;
+	background-color: transparent;
+	border: 0px;
+}
+
 .details_table input:focus
 {
 	box-shadow: none;
@@ -92,6 +99,11 @@ tr:hover .action_icon
 .details_table td
 {
 	padding: 0px;
+}
+
+.details_table td *
+{
+	vertical-align: top;
 }
 
 .details_table td:not(.select2_td):not(.radio_td) span

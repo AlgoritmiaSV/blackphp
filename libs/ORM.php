@@ -89,12 +89,13 @@ trait ORM
 		$now = Date("Y-m-d H:i:s");
 		if(self::$_timestamps)
 		{
+			$user_id = empty(Session::get("user_id")) ? 0 : Session::get("user_id");
 			if(empty($this->{self::$_primary_key}))
 			{
-				$this->setCreation_user(Session::get("user_id"));
+				$this->setCreation_user($user_id);
 				$this->setCreation_time($now);
 			}
-			$this->setEdition_user(Session::get("user_id"));
+			$this->setEdition_user($user_id);
 			$this->setEdition_time($now);
 		}
 		$data = get_object_vars($this);
@@ -179,11 +180,10 @@ trait ORM
 		return new static();
 	}
 
-	public static function get($results = "FIRST")
+	public static function get($results = "FIRST", $objects = true)
 	{
 		$table_name = self::$_table_name;
 		# Select
-		$objects = true;
 		$select = "*";
 		if(count(self::$_select) > 0)
 		{
@@ -302,6 +302,11 @@ trait ORM
 	public static function getAll()
 	{
 		return self::get("ALL");
+	}
+
+	public static function getAllArray()
+	{
+		return self::get("ALL", false);
 	}
 
 	public function toArray()

@@ -192,14 +192,14 @@ DROP TABLE IF EXISTS `entity_methods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entity_methods` (
-  `cmethod_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `emethod_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la empresa',
   `method_id` int(11) NOT NULL COMMENT 'ID del método',
   `method_order` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Orden en el que aoparecerá el método en el menú',
   `creation_time` datetime NOT NULL,
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`cmethod_id`),
+  PRIMARY KEY (`emethod_id`),
   UNIQUE KEY `comp_method` (`entity_id`,`method_id`),
   KEY `method_id` (`method_id`),
   CONSTRAINT `cmethod_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -215,14 +215,14 @@ DROP TABLE IF EXISTS `entity_modules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entity_modules` (
-  `cmodule_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `emodule_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la empresa',
   `module_id` int(11) NOT NULL COMMENT 'ID del módulo',
   `module_order` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Ubicación del módulo en el menú',
   `creation_time` datetime NOT NULL,
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`cmodule_id`),
+  PRIMARY KEY (`emodule_id`),
   KEY `comp_id` (`entity_id`),
   KEY `module_id` (`module_id`),
   CONSTRAINT `cmodule_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,

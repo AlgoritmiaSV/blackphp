@@ -34,6 +34,15 @@ class app_actions_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = false;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+	}
 
 	public function getAction_id()
 	{
@@ -42,7 +51,7 @@ class app_actions_model
 
 	public function setAction_id($value)
 	{
-		$this->action_id = (int)$value;
+		$this->action_id = $value === null ? null : (int)$value;
 	}
 
 	public function getAction_key()
@@ -52,7 +61,7 @@ class app_actions_model
 
 	public function setAction_key($value)
 	{
-		$this->action_key = (string)$value;
+		$this->action_key = $value === null ? null : (string)$value;
 	}
 
 	public function getInfinitive_verb()
@@ -62,7 +71,7 @@ class app_actions_model
 
 	public function setInfinitive_verb($value)
 	{
-		$this->infinitive_verb = (string)$value;
+		$this->infinitive_verb = $value === null ? null : (string)$value;
 	}
 
 	public function getPast_verb()
@@ -72,7 +81,7 @@ class app_actions_model
 
 	public function setPast_verb($value)
 	{
-		$this->past_verb = (string)$value;
+		$this->past_verb = $value === null ? null : (string)$value;
 	}
 
 	public function user_logs()

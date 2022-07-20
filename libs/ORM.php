@@ -1,4 +1,14 @@
 <?php
+/**
+ * Object Resource Management
+ * 
+ * En el presente trait se establecen los princiales métodos para permitir la interación
+ * con la base de datos por parte de cada uno de los modelos.
+ * 
+ * @author Edwin Fajardo <contacto@edwinfajardo.com>
+ * @link https://www.edwinfajardo.com
+ */
+
 trait ORM
 {
 	/** @var PDO $_db Base de datos */
@@ -51,7 +61,7 @@ trait ORM
 	 */
 	public static function first()
 	{
-		return self::get("FIRST");
+		return self::get();
 	}
 
 	/**
@@ -63,16 +73,7 @@ trait ORM
 	 */
 	public static function find($id)
 	{
-		self::init();
-		$table_name = self::$_table_name;
-		$primary_key = self::$_primary_key;
-		$class = get_called_class();
-		$sql = "SELECT * FROM $table_name WHERE $primary_key = :id LIMIT 1";
-		$sth = self::$_db->prepare($sql);
-		$sth->bindValue(":id", $id);
-		$sth->execute();
-		self::flush();
-		return $sth->fetchObject($class);
+		return self::where(self::$_primary_key, $id)->get();
 	}
 
 	/**
@@ -99,15 +100,10 @@ trait ORM
 			$this->setEdition_time($now);
 		}
 		$data = get_object_vars($this);
-		/*$unset = Array("_table_name", "_primary_key", "_timestamps", "_soft_delete");
-		foreach($unset as $key)
-		{
-			unset($data[$key]);
-		}*/
 		$sth = null;
 		$table_name = self::$_table_name;
 		$primary_key = self::$_primary_key;
-		if(empty($primary_key))
+		if(empty($this->{$primary_key}))
 		{
 			$fieldNames = implode(',', array_keys($data));
 			$fieldValues = ':' . implode(', :', array_keys($data));
@@ -142,10 +138,11 @@ trait ORM
 	 * Elimina el elemento. Si la propiedad $soft_delete es verdadera, entonces actualiza el estado
 	 * $status = 0
 	 * 
-	 * @return bool Verdadero si el objeto ha sido eliminado
+	 * @return int Filas eliminadas
 	 */
 	public function delete()
 	{
+		$affected = 0;
 		if($this->soft_delete)
 		{
 			$this->setEdition_user(Session::get("user_id"));
@@ -153,33 +150,95 @@ trait ORM
 			$this->setStatus(0);
 			$affected = $this->save();
 		}
-		return $affected != 0;
+		else
+		{
+			$table_name = self::$_table_name;
+			$primary_key = self::$_primary_key;
+			$id = $this->{$primary_key};
+			self::init();
+			$sth = self::$_db->prepare("DELETE FROM $table_name WHERE $primary_key = :id");
+			$sth->bindValue(":id", $id);
+			$sth->execute();
+			self::flush();
+			return $sth->rowCount();
+		}
+		return $affected;
 	}
 
+	/**
+	 * Seleccionar
+	 * 
+	 * Recibe como parámetros, lo campos a seleccionar en la consulta. Si no se usa, por defecto
+	 * se seleccionan todos los campos (SELECT *)
+	 * 
+	 * @return object Una instancia de la misma clase
+	 */
 	public static function select()
 	{
 		self::$_select = array_merge(self::$_select, func_get_args());
 		return new static();
 	}
 
+	/**
+	 * Unir a la izquierda
+	 * 
+	 * Recibe como parámetros, los datos para unir varias tablas en la consulta con el método
+	 * LEFT JOIN
+	 * 
+	 * @return object Una instancia de la misma clase
+	 */
 	public static function join()
 	{
 		self::$_join[] = func_get_args();
 		return new static();
 	}
 
+	/**
+	 * Condiciones
+	 * 
+	 * Recibe como parámetros, las condiciones a considerar en la consulta.
+	 * Se puede llamar a este método varias veces para varias condiciones.
+	 * 
+	 * @return object Una instancia de la misma clase
+	 */
 	public static function where()
 	{
 		self::$_where[] = func_get_args();
 		return new static();
 	}
 
+	/**
+	 * Ordenar por
+	 * 
+	 * Recibe como parámetro las condiciones de ordenación a utilizarse en la consulta.
+	 * 
+	 * @return object Una instancia de la misma clase.
+	 */
 	public static function orderBy()
 	{
 		self::$_order_by[] = func_get_args();
 		return new static();
 	}
 
+	/**
+	 * Obtener
+	 * 
+	 * Realiza la consulta con los paràmetros (Considiones) previamente configurados en otros
+	 * métodos, y devuelve los resultados. Puede devolver como resultado lo siguiente:
+	 * a) Sin parámetros: Devuelve un opbjeto de la clase que lo ha llamado con el primer
+	 * resultado obtenido. En caso de no encontrar resultados, devuelve un objeto de la clase, vacío.
+	 * b) $results != FIRST: Devuelve todos los resultados encontrados en un arreglo de objetos.
+	 * Excepto cuando previamente se ha configurado select o join, en cuyo caso se devuelve un
+	 * array asociativo. Si no hay resultados, devuelve un arreglo vacío.
+	 * c) $objects = false: Devuelve un arreglo asociarivo con uno o varios resultados, dependiendo
+	 * de $results
+	 * 
+	 * @param string $results FIRST el primer resultado, u otro valor para todos los resultados.
+	 * @param boolean $objects Si es verdadero, intenta devolver objetos de la clase, en caso
+	 * contrario, devuelve un arreglo asociativo.
+	 * 
+	 * @return object|array Resultados de la consulta
+	 */
 	public static function get($results = "FIRST", $objects = true)
 	{
 		$table_name = self::$_table_name;
@@ -267,6 +326,7 @@ trait ORM
 		$sth->execute();
 		self::flush();
 		$class = get_called_class();
+
 		if($results == "FIRST")
 		{
 			if($objects)
@@ -299,22 +359,55 @@ trait ORM
 		}
 	}
 
+	/**
+	 * Obtener todo
+	 * 
+	 * Alias de get("ALL")
+	 * 
+	 * Devuelve un arreglo de objetos con cada uno de los elementos. Si se ha utilizado el método
+	 * select o join anteriormente, este método devuelve un arreglo asociativo con los resultados.
+	 * 
+	 * @return object|array Resultados
+	 */
 	public static function getAll()
 	{
 		return self::get("ALL");
 	}
 
+	/**
+	 * Obtener todo en un array
+	 * 
+	 * Alias de get("ALL", false)
+	 * 
+	 * Devuelve un arreglo asociativo con todos los resultados de la consulta
+	 * 
+	 * @return array Resultados
+	 */
 	public static function getAllArray()
 	{
 		return self::get("ALL", false);
 	}
 
+	/**
+	 * A un arrego
+	 * 
+	 * Convierte el objeto en un arreglo asociativo con cada una de las propiedades del objeto.
+	 * 
+	 * @return array Arreglo asociativo
+	 */
 	public function toArray()
 	{
 		$data = get_object_vars($this);
 		return $data;
 	}
 
+	/**
+	 * Introducir valores
+	 * 
+	 * Introduce varios valores desde un arreglo a cada una de las propiedades del objeto.
+	 * 
+	 * @return object El mismo objeto, con los valores
+	 */
 	public function set($array)
 	{
 		$data = get_object_vars($this);

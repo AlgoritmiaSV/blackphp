@@ -43,6 +43,16 @@ class app_modules_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = true;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+		$this->status = 1;
+	}
 
 	public function getModule_id()
 	{
@@ -51,7 +61,7 @@ class app_modules_model
 
 	public function setModule_id($value)
 	{
-		$this->module_id = (int)$value;
+		$this->module_id = $value === null ? null : (int)$value;
 	}
 
 	public function getModule_name()
@@ -61,7 +71,7 @@ class app_modules_model
 
 	public function setModule_name($value)
 	{
-		$this->module_name = (string)$value;
+		$this->module_name = $value === null ? null : (string)$value;
 	}
 
 	public function getModule_url()
@@ -71,7 +81,7 @@ class app_modules_model
 
 	public function setModule_url($value)
 	{
-		$this->module_url = (string)$value;
+		$this->module_url = $value === null ? null : (string)$value;
 	}
 
 	public function getModule_key()
@@ -81,7 +91,7 @@ class app_modules_model
 
 	public function setModule_key($value)
 	{
-		$this->module_key = (string)$value;
+		$this->module_key = $value === null ? null : (string)$value;
 	}
 
 	public function getModule_description()
@@ -91,7 +101,7 @@ class app_modules_model
 
 	public function setModule_description($value)
 	{
-		$this->module_description = (string)$value;
+		$this->module_description = $value === null ? null : (string)$value;
 	}
 
 	public function getDefault_order()
@@ -101,7 +111,7 @@ class app_modules_model
 
 	public function setDefault_order($value)
 	{
-		$this->default_order = (int)$value;
+		$this->default_order = $value === null ? null : (int)$value;
 	}
 
 	public function getStatus()
@@ -111,7 +121,7 @@ class app_modules_model
 
 	public function setStatus($value)
 	{
-		$this->status = (int)$value;
+		$this->status = $value === null ? null : (int)$value;
 	}
 
 	public function app_elements()

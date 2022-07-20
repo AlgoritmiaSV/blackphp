@@ -43,6 +43,17 @@ class entity_modules_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = true;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+		$this->module_order = 1;
+		$this->status = 1;
+	}
 
 	public function getEmodule_id()
 	{
@@ -51,7 +62,7 @@ class entity_modules_model
 
 	public function setEmodule_id($value)
 	{
-		$this->emodule_id = (int)$value;
+		$this->emodule_id = $value === null ? null : (int)$value;
 	}
 
 	public function getEntity_id()
@@ -61,7 +72,7 @@ class entity_modules_model
 
 	public function setEntity_id($value)
 	{
-		$this->entity_id = (int)$value;
+		$this->entity_id = $value === null ? null : (int)$value;
 	}
 
 	public function getModule_id()
@@ -71,7 +82,7 @@ class entity_modules_model
 
 	public function setModule_id($value)
 	{
-		$this->module_id = (int)$value;
+		$this->module_id = $value === null ? null : (int)$value;
 	}
 
 	public function getModule_order()
@@ -81,7 +92,7 @@ class entity_modules_model
 
 	public function setModule_order($value)
 	{
-		$this->module_order = (int)$value;
+		$this->module_order = $value === null ? null : (int)$value;
 	}
 
 	public function getCreation_time()
@@ -91,7 +102,7 @@ class entity_modules_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = (string)$value;
+		$this->creation_time = $value === null ? null : (string)$value;
 	}
 
 	public function getEdition_time()
@@ -101,7 +112,7 @@ class entity_modules_model
 
 	public function setEdition_time($value)
 	{
-		$this->edition_time = (string)$value;
+		$this->edition_time = $value === null ? null : (string)$value;
 	}
 
 	public function getStatus()
@@ -111,7 +122,7 @@ class entity_modules_model
 
 	public function setStatus($value)
 	{
-		$this->status = (int)$value;
+		$this->status = $value === null ? null : (int)$value;
 	}
 }
 ?>

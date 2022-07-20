@@ -40,6 +40,15 @@ class user_logs_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = false;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+	}
 
 	public function getLog_id()
 	{
@@ -48,7 +57,7 @@ class user_logs_model
 
 	public function setLog_id($value)
 	{
-		$this->log_id = (int)$value;
+		$this->log_id = $value === null ? null : (int)$value;
 	}
 
 	public function getUser_id()
@@ -58,7 +67,7 @@ class user_logs_model
 
 	public function setUser_id($value)
 	{
-		$this->user_id = (int)$value;
+		$this->user_id = $value === null ? null : (int)$value;
 	}
 
 	public function getElement_id()
@@ -68,7 +77,7 @@ class user_logs_model
 
 	public function setElement_id($value)
 	{
-		$this->element_id = (int)$value;
+		$this->element_id = $value === null ? null : (int)$value;
 	}
 
 	public function getAction_id()
@@ -78,7 +87,7 @@ class user_logs_model
 
 	public function setAction_id($value)
 	{
-		$this->action_id = (int)$value;
+		$this->action_id = $value === null ? null : (int)$value;
 	}
 
 	public function getDate_time()
@@ -88,7 +97,7 @@ class user_logs_model
 
 	public function setDate_time($value)
 	{
-		$this->date_time = (string)$value;
+		$this->date_time = $value === null ? null : (string)$value;
 	}
 
 	public function getElement_link()
@@ -98,7 +107,7 @@ class user_logs_model
 
 	public function setElement_link($value)
 	{
-		$this->element_link = (int)$value;
+		$this->element_link = $value === null ? null : (int)$value;
 	}
 }
 ?>

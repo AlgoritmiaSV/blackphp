@@ -49,6 +49,17 @@ class user_methods_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = true;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+		$this->access_type = 255;
+		$this->status = 1;
+	}
 
 	public function getUmethod_id()
 	{
@@ -57,7 +68,7 @@ class user_methods_model
 
 	public function setUmethod_id($value)
 	{
-		$this->umethod_id = (int)$value;
+		$this->umethod_id = $value === null ? null : (int)$value;
 	}
 
 	public function getUser_id()
@@ -67,7 +78,7 @@ class user_methods_model
 
 	public function setUser_id($value)
 	{
-		$this->user_id = (int)$value;
+		$this->user_id = $value === null ? null : (int)$value;
 	}
 
 	public function getMethod_id()
@@ -77,7 +88,7 @@ class user_methods_model
 
 	public function setMethod_id($value)
 	{
-		$this->method_id = (int)$value;
+		$this->method_id = $value === null ? null : (int)$value;
 	}
 
 	public function getAccess_type()
@@ -87,7 +98,7 @@ class user_methods_model
 
 	public function setAccess_type($value)
 	{
-		$this->access_type = (int)$value;
+		$this->access_type = $value === null ? null : (int)$value;
 	}
 
 	public function getCreation_user()
@@ -97,7 +108,7 @@ class user_methods_model
 
 	public function setCreation_user($value)
 	{
-		$this->creation_user = (int)$value;
+		$this->creation_user = $value === null ? null : (int)$value;
 	}
 
 	public function getCreation_time()
@@ -107,7 +118,7 @@ class user_methods_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = (string)$value;
+		$this->creation_time = $value === null ? null : (string)$value;
 	}
 
 	public function getEdition_user()
@@ -117,7 +128,7 @@ class user_methods_model
 
 	public function setEdition_user($value)
 	{
-		$this->edition_user = (int)$value;
+		$this->edition_user = $value === null ? null : (int)$value;
 	}
 
 	public function getEdition_time()
@@ -127,7 +138,7 @@ class user_methods_model
 
 	public function setEdition_time($value)
 	{
-		$this->edition_time = (string)$value;
+		$this->edition_time = $value === null ? null : (string)$value;
 	}
 
 	public function getStatus()
@@ -137,7 +148,7 @@ class user_methods_model
 
 	public function setStatus($value)
 	{
-		$this->status = (int)$value;
+		$this->status = $value === null ? null : (int)$value;
 	}
 }
 ?>

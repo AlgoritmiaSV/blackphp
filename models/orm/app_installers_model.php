@@ -46,6 +46,16 @@ class app_installers_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = true;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+		$this->status = 1;
+	}
 
 	public function getInstaller_id()
 	{
@@ -54,7 +64,7 @@ class app_installers_model
 
 	public function setInstaller_id($value)
 	{
-		$this->installer_id = (int)$value;
+		$this->installer_id = $value === null ? null : (int)$value;
 	}
 
 	public function getInstaller_nickname()
@@ -64,7 +74,7 @@ class app_installers_model
 
 	public function setInstaller_nickname($value)
 	{
-		$this->installer_nickname = (string)$value;
+		$this->installer_nickname = $value === null ? null : (string)$value;
 	}
 
 	public function getInstaller_password()
@@ -74,7 +84,7 @@ class app_installers_model
 
 	public function setInstaller_password($value)
 	{
-		$this->installer_password = (string)$value;
+		$this->installer_password = $value === null ? null : (string)$value;
 	}
 
 	public function getInstaller_name()
@@ -84,7 +94,7 @@ class app_installers_model
 
 	public function setInstaller_name($value)
 	{
-		$this->installer_name = (string)$value;
+		$this->installer_name = $value === null ? null : (string)$value;
 	}
 
 	public function getInstaller_phone()
@@ -94,7 +104,7 @@ class app_installers_model
 
 	public function setInstaller_phone($value)
 	{
-		$this->installer_phone = (string)$value;
+		$this->installer_phone = $value === null ? null : (string)$value;
 	}
 
 	public function getInstaller_email()
@@ -104,7 +114,7 @@ class app_installers_model
 
 	public function setInstaller_email($value)
 	{
-		$this->installer_email = (string)$value;
+		$this->installer_email = $value === null ? null : (string)$value;
 	}
 
 	public function getCreation_time()
@@ -114,7 +124,7 @@ class app_installers_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = (string)$value;
+		$this->creation_time = $value === null ? null : (string)$value;
 	}
 
 	public function getStatus()
@@ -124,7 +134,7 @@ class app_installers_model
 
 	public function setStatus($value)
 	{
-		$this->status = (int)$value;
+		$this->status = $value === null ? null : (int)$value;
 	}
 
 	public function entities()

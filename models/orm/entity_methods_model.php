@@ -43,6 +43,17 @@ class entity_methods_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = true;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+		$this->method_order = 1;
+		$this->status = 1;
+	}
 
 	public function getEmethod_id()
 	{
@@ -51,7 +62,7 @@ class entity_methods_model
 
 	public function setEmethod_id($value)
 	{
-		$this->emethod_id = (int)$value;
+		$this->emethod_id = $value === null ? null : (int)$value;
 	}
 
 	public function getEntity_id()
@@ -61,7 +72,7 @@ class entity_methods_model
 
 	public function setEntity_id($value)
 	{
-		$this->entity_id = (int)$value;
+		$this->entity_id = $value === null ? null : (int)$value;
 	}
 
 	public function getMethod_id()
@@ -71,7 +82,7 @@ class entity_methods_model
 
 	public function setMethod_id($value)
 	{
-		$this->method_id = (int)$value;
+		$this->method_id = $value === null ? null : (int)$value;
 	}
 
 	public function getMethod_order()
@@ -81,7 +92,7 @@ class entity_methods_model
 
 	public function setMethod_order($value)
 	{
-		$this->method_order = (int)$value;
+		$this->method_order = $value === null ? null : (int)$value;
 	}
 
 	public function getCreation_time()
@@ -91,7 +102,7 @@ class entity_methods_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = (string)$value;
+		$this->creation_time = $value === null ? null : (string)$value;
 	}
 
 	public function getEdition_time()
@@ -101,7 +112,7 @@ class entity_methods_model
 
 	public function setEdition_time($value)
 	{
-		$this->edition_time = (string)$value;
+		$this->edition_time = $value === null ? null : (string)$value;
 	}
 
 	public function getStatus()
@@ -111,7 +122,7 @@ class entity_methods_model
 
 	public function setStatus($value)
 	{
-		$this->status = (int)$value;
+		$this->status = $value === null ? null : (int)$value;
 	}
 }
 ?>

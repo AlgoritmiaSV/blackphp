@@ -40,6 +40,15 @@ class user_sessions_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = false;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+	}
 
 	public function getUsession_id()
 	{
@@ -48,7 +57,7 @@ class user_sessions_model
 
 	public function setUsession_id($value)
 	{
-		$this->usession_id = (int)$value;
+		$this->usession_id = $value === null ? null : (int)$value;
 	}
 
 	public function getUser_id()
@@ -58,7 +67,7 @@ class user_sessions_model
 
 	public function setUser_id($value)
 	{
-		$this->user_id = (int)$value;
+		$this->user_id = $value === null ? null : (int)$value;
 	}
 
 	public function getBranch_id()
@@ -68,7 +77,7 @@ class user_sessions_model
 
 	public function setBranch_id($value)
 	{
-		$this->branch_id = (int)$value;
+		$this->branch_id = $value === null ? null : (int)$value;
 	}
 
 	public function getIp_address()
@@ -78,7 +87,7 @@ class user_sessions_model
 
 	public function setIp_address($value)
 	{
-		$this->ip_address = (string)$value;
+		$this->ip_address = $value === null ? null : (string)$value;
 	}
 
 	public function getBrowser_id()
@@ -88,7 +97,7 @@ class user_sessions_model
 
 	public function setBrowser_id($value)
 	{
-		$this->browser_id = (int)$value;
+		$this->browser_id = $value === null ? null : (int)$value;
 	}
 
 	public function getDate_time()
@@ -98,7 +107,7 @@ class user_sessions_model
 
 	public function setDate_time($value)
 	{
-		$this->date_time = (string)$value;
+		$this->date_time = $value === null ? null : (string)$value;
 	}
 }
 ?>

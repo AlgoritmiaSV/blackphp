@@ -43,6 +43,15 @@ class browsers_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = false;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+	}
 
 	public function getBrowser_id()
 	{
@@ -51,7 +60,7 @@ class browsers_model
 
 	public function setBrowser_id($value)
 	{
-		$this->browser_id = (int)$value;
+		$this->browser_id = $value === null ? null : (int)$value;
 	}
 
 	public function getUser_agent()
@@ -61,7 +70,7 @@ class browsers_model
 
 	public function setUser_agent($value)
 	{
-		$this->user_agent = (string)$value;
+		$this->user_agent = $value === null ? null : (string)$value;
 	}
 
 	public function getBrowser_name()
@@ -71,7 +80,7 @@ class browsers_model
 
 	public function setBrowser_name($value)
 	{
-		$this->browser_name = (string)$value;
+		$this->browser_name = $value === null ? null : (string)$value;
 	}
 
 	public function getBrowser_version()
@@ -81,7 +90,7 @@ class browsers_model
 
 	public function setBrowser_version($value)
 	{
-		$this->browser_version = (string)$value;
+		$this->browser_version = $value === null ? null : (string)$value;
 	}
 
 	public function getPlatform()
@@ -91,7 +100,7 @@ class browsers_model
 
 	public function setPlatform($value)
 	{
-		$this->platform = (string)$value;
+		$this->platform = $value === null ? null : (string)$value;
 	}
 
 	public function getCreation_user()
@@ -101,7 +110,7 @@ class browsers_model
 
 	public function setCreation_user($value)
 	{
-		$this->creation_user = (int)$value;
+		$this->creation_user = $value === null ? null : (int)$value;
 	}
 
 	public function getCreation_time()
@@ -111,7 +120,7 @@ class browsers_model
 
 	public function setCreation_time($value)
 	{
-		$this->creation_time = (string)$value;
+		$this->creation_time = $value === null ? null : (string)$value;
 	}
 
 	public function user_sessions()

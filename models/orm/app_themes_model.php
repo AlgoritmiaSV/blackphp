@@ -31,6 +31,15 @@ class app_themes_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = false;
 
+	/**
+	 * Constructor de la clase
+	 * 
+	 * Se inicializan las propiedades con los valores de los campos default
+	 * de la base de datos
+	 **/
+	public function __construct()
+	{
+	}
 
 	public function getTheme_id()
 	{
@@ -39,7 +48,7 @@ class app_themes_model
 
 	public function setTheme_id($value)
 	{
-		$this->theme_id = (int)$value;
+		$this->theme_id = $value === null ? null : (int)$value;
 	}
 
 	public function getTheme_name()
@@ -49,7 +58,7 @@ class app_themes_model
 
 	public function setTheme_name($value)
 	{
-		$this->theme_name = (string)$value;
+		$this->theme_name = $value === null ? null : (string)$value;
 	}
 
 	public function getTheme_url()
@@ -59,7 +68,7 @@ class app_themes_model
 
 	public function setTheme_url($value)
 	{
-		$this->theme_url = (string)$value;
+		$this->theme_url = $value === null ? null : (string)$value;
 	}
 
 	public function users()

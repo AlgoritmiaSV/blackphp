@@ -126,26 +126,26 @@ class app_modules_model
 
 	public function app_elements()
 	{
-		app_elements::flush();
-		return app_elements::where("module_id", $this->module_id);
+		app_elements_model::flush();
+		return app_elements_model::where("module_id", $this->module_id);
 	}
 
 	public function app_methods()
 	{
-		app_methods::flush();
-		return app_methods::where("module_id", $this->module_id);
+		app_methods_model::flush();
+		return app_methods_model::where("module_id", $this->module_id);
 	}
 
 	public function entity_modules()
 	{
-		entity_modules::flush();
-		return entity_modules::where("module_id", $this->module_id);
+		entity_modules_model::flush();
+		return entity_modules_model::where("module_id", $this->module_id);
 	}
 
 	public function user_modules()
 	{
-		user_modules::flush();
-		return user_modules::where("module_id", $this->module_id);
+		user_modules_model::flush();
+		return user_modules_model::where("module_id", $this->module_id);
 	}
 }
 ?>

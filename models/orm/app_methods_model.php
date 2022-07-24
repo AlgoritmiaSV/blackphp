@@ -139,14 +139,14 @@ class app_methods_model
 
 	public function entity_methods()
 	{
-		entity_methods::flush();
-		return entity_methods::where("method_id", $this->method_id);
+		entity_methods_model::flush();
+		return entity_methods_model::where("method_id", $this->method_id);
 	}
 
 	public function user_methods()
 	{
-		user_methods::flush();
-		return user_methods::where("method_id", $this->method_id);
+		user_methods_model::flush();
+		return user_methods_model::where("method_id", $this->method_id);
 	}
 }
 ?>

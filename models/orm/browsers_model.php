@@ -125,8 +125,8 @@ class browsers_model
 
 	public function user_sessions()
 	{
-		user_sessions::flush();
-		return user_sessions::where("browser_id", $this->browser_id);
+		user_sessions_model::flush();
+		return user_sessions_model::where("browser_id", $this->browser_id);
 	}
 }
 ?>

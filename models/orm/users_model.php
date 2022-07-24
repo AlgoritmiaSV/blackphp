@@ -205,32 +205,32 @@ class users_model
 
 	public function user_logs()
 	{
-		user_logs::flush();
-		return user_logs::where("user_id", $this->user_id);
+		user_logs_model::flush();
+		return user_logs_model::where("user_id", $this->user_id);
 	}
 
 	public function user_methods()
 	{
-		user_methods::flush();
-		return user_methods::where("user_id", $this->user_id);
+		user_methods_model::flush();
+		return user_methods_model::where("user_id", $this->user_id);
 	}
 
 	public function user_modules()
 	{
-		user_modules::flush();
-		return user_modules::where("user_id", $this->user_id);
+		user_modules_model::flush();
+		return user_modules_model::where("user_id", $this->user_id);
 	}
 
 	public function user_recovery()
 	{
-		user_recovery::flush();
-		return user_recovery::where("user_id", $this->user_id);
+		user_recovery_model::flush();
+		return user_recovery_model::where("user_id", $this->user_id);
 	}
 
 	public function user_sessions()
 	{
-		user_sessions::flush();
-		return user_sessions::where("user_id", $this->user_id);
+		user_sessions_model::flush();
+		return user_sessions_model::where("user_id", $this->user_id);
 	}
 }
 ?>

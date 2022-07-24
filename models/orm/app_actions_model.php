@@ -86,8 +86,8 @@ class app_actions_model
 
 	public function user_logs()
 	{
-		user_logs::flush();
-		return user_logs::where("action_id", $this->action_id);
+		user_logs_model::flush();
+		return user_logs_model::where("action_id", $this->action_id);
 	}
 }
 ?>

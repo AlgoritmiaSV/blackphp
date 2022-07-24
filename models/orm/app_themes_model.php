@@ -73,8 +73,8 @@ class app_themes_model
 
 	public function users()
 	{
-		users::flush();
-		return users::where("theme_id", $this->theme_id);
+		users_model::flush();
+		return users_model::where("theme_id", $this->theme_id);
 	}
 }
 ?>

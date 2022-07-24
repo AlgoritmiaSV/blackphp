@@ -243,20 +243,20 @@ class entities_model
 
 	public function entity_methods()
 	{
-		entity_methods::flush();
-		return entity_methods::where("entity_id", $this->entity_id);
+		entity_methods_model::flush();
+		return entity_methods_model::where("entity_id", $this->entity_id);
 	}
 
 	public function entity_modules()
 	{
-		entity_modules::flush();
-		return entity_modules::where("entity_id", $this->entity_id);
+		entity_modules_model::flush();
+		return entity_modules_model::where("entity_id", $this->entity_id);
 	}
 
 	public function users()
 	{
-		users::flush();
-		return users::where("entity_id", $this->entity_id);
+		users_model::flush();
+		return users_model::where("entity_id", $this->entity_id);
 	}
 }
 ?>

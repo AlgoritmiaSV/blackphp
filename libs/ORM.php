@@ -203,7 +203,16 @@ trait ORM
 	 */
 	public static function where()
 	{
-		self::$_where[] = func_get_args();
+		$argc = func_num_args();
+		$argv = func_get_args();
+		if($argc == 1)
+		{
+			self::$_where[] = (string)$argv[0];
+		}
+		else
+		{
+			self::$_where[] = $argv;
+		}
 		return new static();
 	}
 
@@ -419,6 +428,34 @@ trait ORM
 			}
 		}
 		return $this;
+	}
+}
+
+/**
+ * Clase DB
+ * 
+ * Forma abstracta de usar ORM.
+ * 
+ * A diferencia de las tablas generadas en los modelos, esta clase no contiene una tabla ni propiedades
+ * asociadas.
+ */
+class DB
+{
+	use ORM;
+
+	private $_table_name = "";
+
+	public static function from($table_name)
+	{
+		if(empty(self::$_table_name))
+		{
+			self::$_table_name = $table_name;
+		}
+		else
+		{
+			self::$_table_name .= ", " . $table_name;
+		}
+		return new static();
 	}
 }
 ?>

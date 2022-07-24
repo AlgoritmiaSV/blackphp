@@ -139,8 +139,8 @@ class app_installers_model
 
 	public function entities()
 	{
-		entities::flush();
-		return entities::where("creation_installer", $this->installer_id);
+		entities_model::flush();
+		return entities_model::where("creation_installer", $this->installer_id);
 	}
 }
 ?>

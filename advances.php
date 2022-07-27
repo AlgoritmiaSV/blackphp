@@ -9,7 +9,7 @@
 # Set the initial directory of your project, related to this script location.
 $init_directory = ".";
 # Set the list of excluded folders. No textual files and folders that contains no textual files only, will be excluded automatically. Exclude folders with no written code or text, as plugins, upload files or backups.
-$excluded_folders = Array("./public/external", "./plugins", "./db", "./public/icons", "./vendor");
+$excluded_folders = Array("./public/external", "./plugins", "./db", "./public/icons", "./vendor", "./node_modules", "./models/orm");
 # Set time zone to UTC-6.
 $time_diff = 0;
 date_default_timezone_set('America/El_Salvador');
@@ -32,6 +32,7 @@ function add_folders($dir, &$array)
 $folders = Array(".");
 add_folders(".", $folders);
 $self = "./" . pathinfo($_SERVER["PHP_SELF"], PATHINFO_BASENAME);
+$app_name = empty($_SERVER["HTTP_HOST"]) ? dirname(__FILE__) : $_SERVER["HTTP_HOST"];
 $html_begin = '<!Doctype html>
 <html>
 	<head>
@@ -59,7 +60,7 @@ $html_begin = '<!Doctype html>
 	</head>
 	<body>
 		<header>
-			<h1>Advances report for ' . $_SERVER["HTTP_HOST"] . '</h1>
+			<h1>Advances report for ' . $app_name . '</h1>
 			<a href="advances.php?mode=text">Download text file</a> |
 			<a href="error_log.php">Error log</a> |
 		</header>
@@ -173,7 +174,11 @@ $html_end = '			</pre>
 		</article>
 	</body>
 </html>';
-	if(!isset($_GET["mode"]) || $_GET["mode"] != "text")
+	if ( php_sapi_name() === 'cli' )
+	{
+		echo $text;
+	}
+	elseif(!isset($_GET["mode"]) || $_GET["mode"] != "text")
 	{
 		echo $html_begin;
 		echo $text;

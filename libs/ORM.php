@@ -38,6 +38,10 @@ trait ORM
 		self::$_join = Array();
 		self::$_where = Array();
 		self::$_order_by = Array();
+		if(get_called_class() == "DB")
+		{
+			self::$_table_name = null;
+		}
 	}
 
 	/** 
@@ -120,6 +124,91 @@ trait ORM
 			$sth = self::$_db->prepare("UPDATE $table_name SET $fieldDetails WHERE $primary_key = :$primary_key");
 		}
 		foreach ($data as $key => $value)
+		{
+			$sth->bindValue(":$key", $value);
+		}
+		$sth->execute();
+		self::flush();
+		if(empty($this->{$primary_key}))
+		{
+			$this->{$primary_key} = self::$_db->lastInsertId();
+		}
+		return $sth->rowCount();
+	}
+
+	/**
+	 * Actualizar
+	 * 
+	 * Actualiza todas las filas coincidentes con las condiciones previamente establecidas
+	 * en where. Si no se han establecido condiciones, actualiza todas las filas.
+	 * 
+	 * @return void
+	 */
+	public function update($data)
+	{
+		self::init();
+		$now = Date("Y-m-d H:i:s");
+		if(self::$_timestamps)
+		{
+			$user_id = empty(Session::get("user_id")) ? 0 : Session::get("user_id");
+			$data["edition_user"] = $user_id;
+			$data["edition_time"] = $now;
+		}
+		$sth = null;
+		$table_name = self::$_table_name;
+		$fieldDetails = "";
+		foreach($data as $key => $value)
+		{
+			$fieldDetails .= "$key=:$key,";
+		}
+		$fieldDetails = rtrim($fieldDetails, ',');
+
+		# Where
+		$wheres = Array();
+		$wdata = Array();
+		$status = false;
+		foreach(self::$_where as $value)
+		{
+			if(is_array($value))
+			{
+				$var = str_replace(".", "_", $value[0]);
+				if(count($value) == 3)
+				{
+					$wdata[$var] = $value[2];
+					$wheres[] = $value[0] . " " . $value[1] . " :" . $var;
+				}
+				if(count($value) == 2)
+				{
+					$wdata[$var] = $value[1];
+					$wheres[] = $value[0] . " = :" . $var;
+				}
+				if($value[0] == "status")
+				{
+					$status = true;
+				}
+			}
+			if(is_string($value))
+			{
+				$wheres[] = $value;
+			}
+		}
+		if(self::$_soft_delete && !$status)
+		{
+			$wheres[] = "status != 0";
+		}
+		$where = implode(" AND ", $wheres);
+
+		if(empty($where))
+		{
+			$where = 1;
+		}
+
+		$sth = self::$_db->prepare("UPDATE $table_name SET $fieldDetails WHERE $where");
+		foreach ($data as $key => $value)
+		{
+			$sth->bindValue(":$key", $value);
+		}
+		foreach ($wdata as $key => $value)
 		{
 			$sth->bindValue(":$key", $value);
 		}
@@ -251,6 +340,13 @@ trait ORM
 	public static function get($results = "FIRST", $objects = true)
 	{
 		$table_name = self::$_table_name;
+		$status = false;
+		if(strpos($table_name, ",") !== false)
+		{
+			$objects = false;
+			$status = true;
+		}
+
 		# Select
 		$select = "*";
 		if(count(self::$_select) > 0)
@@ -273,6 +369,7 @@ trait ORM
 					}
 				}
 			}
+			$status = true;
 		}
 
 		# Where
@@ -293,13 +390,22 @@ trait ORM
 					$data[$var] = $value[1];
 					$wheres[] = $value[0] . " = :" . $var;
 				}
+				if($value[0] == "status")
+				{
+					$status = true;
+				}
 			}
 			if(is_string($value))
 			{
 				$wheres[] = $value;
 			}
 		}
+		if(self::$_soft_delete && !$status)
+		{
+			$wheres[] = "status != 0";
+		}
 		$where = implode(" AND ", $wheres);
+
 		if(empty($where))
 		{
 			$where = 1;
@@ -443,7 +549,9 @@ class DB
 {
 	use ORM;
 
-	private $_table_name = "";
+	private static $_table_name = "";
+
+	private static $_soft_delete = false;
 
 	public static function from($table_name)
 	{

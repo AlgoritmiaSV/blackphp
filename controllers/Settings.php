@@ -34,14 +34,22 @@ class Settings extends Controller
 	public function index()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = _("Settings");
 		$this->view->standard_menu();
 		$this->view->data["nav"] = $this->view->render("nav", true);
-		$this->loadModel("entity");
 		$module = app_modules_model::where("module_url", $this->module)->get();
-		$this->view->data["methods"] = $this->model->get_entity_methods($this->entity_id, $module->getModule_id());
+		$this->view->data["title"] = _($module->getModule_name());
+		$this->view->data["methods"] = DB::select("am.*, im.method_order")
+			->from("app_methods AS am, user_methods AS um, entity_methods AS im")
+			->where("im.entity_id", $this->entity_id)
+			->where("um.user_id", Session::get("user_id"))
+			->where("am.module_id", $module->getModule_id())
+			->where("im.method_id = am.method_id")
+			->where("um.method_id = am.method_id")
+			->where("im.status", 1)
+			->where("um.status", 1)
+			->orderBy("method_order")->getAll();
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
-		$this->view->render('main');
+		$this->view->render("main");
 	}
 
 	/**
@@ -114,7 +122,34 @@ class Settings extends Controller
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->restrict[] = "edition";
-		$this->loadModel("user");
+		$modules = DB::select("m.*, um.access_type")
+			->from("entity_modules AS cm, app_modules AS m, user_modules AS um")
+			->where("cm.entity_id", $this->entity_id)
+			->where("um.user_id", Session::get("user_id"))
+			->where("m.module_id = cm.module_id")
+			->where("um.module_id = m.module_id")
+			->where("cm.status", 1)
+			->where("um.status", 1)
+			->orderBy("module_order")->getAll();
+		$this->view->data["modules"] = "";
+		foreach($modules as $module)
+		{
+			foreach($module as $key => $item)
+			{
+				$this->view->data[$key] = $item;
+			}
+			$this->view->data["methods"] = DB::select("am.*, im.method_order")
+			->from("app_methods AS am, user_methods AS um, entity_methods AS im")
+			->where("im.entity_id", $this->entity_id)
+			->where("um.user_id", Session::get("user_id"))
+			->where("am.module_id", $module["module_id"])
+			->where("im.method_id = am.method_id")
+			->where("um.method_id = am.method_id")
+			->where("im.status", 1)
+			->where("um.status", 1)
+			->orderBy("method_order")->getAll();
+			$this->view->data["modules"] .= $this->view->render("modules", true);
+		}
 		$this->view->data["content"] = $this->view->render("settings/user_edit", true);
 		$this->view->render('main');
 	}
@@ -137,6 +172,34 @@ class Settings extends Controller
 			$this->view->restrict[] = "no_self";
 		}
 		$this->view->restrict[] = "creation";
+		$modules = DB::select("m.*, um.access_type")
+			->from("entity_modules AS cm, app_modules AS m, user_modules AS um")
+			->where("cm.entity_id", $this->entity_id)
+			->where("um.user_id", Session::get("user_id"))
+			->where("m.module_id = cm.module_id")
+			->where("um.module_id = m.module_id")
+			->where("cm.status", 1)
+			->where("um.status", 1)
+			->orderBy("module_order")->getAll();
+		$this->view->data["modules"] = "";
+		foreach($modules as $module)
+		{
+			foreach($module as $key => $item)
+			{
+				$this->view->data[$key] = $item;
+			}
+			$this->view->data["methods"] = DB::select("am.*, im.method_order")
+			->from("app_methods AS am, user_methods AS um, entity_methods AS im")
+			->where("im.entity_id", $this->entity_id)
+			->where("um.user_id", Session::get("user_id"))
+			->where("am.module_id", $module["module_id"])
+			->where("im.method_id = am.method_id")
+			->where("um.method_id = am.method_id")
+			->where("im.status", 1)
+			->where("um.status", 1)
+			->orderBy("method_order")->getAll();
+			$this->view->data["modules"] .= $this->view->render("modules", true);
+		}
 		$this->view->data["content"] = $this->view->render("settings/user_edit", true);
 		$this->view->render('main');
 	}
@@ -174,6 +237,14 @@ class Settings extends Controller
 		}
 	}
 
+	/**
+	 * Guardar usuario
+	 * 
+	 * Crea o actualiza un usuario en la base de datos, asignándole permisos a cada módulo
+	 * y a cada método seleccionado en el formulario.
+	 * 
+	 * @return void
+	 */
 	public function save_user()
 	{
 		$this->session_required("json");
@@ -183,89 +254,67 @@ class Settings extends Controller
 			echo json_encode($data);
 			return;
 		}
-		$time = Date("Y-m-d H:i:s");
-		$this->loadModel("user");
-		$user_id = 0;
-		if(!empty($_POST["user_id"]))
+
+		#Validate nickname
+		$test = users_model::where("entity_id", $this->entity_id)
+			->where("nickname", $_POST["nickname"])
+			->where("user_id", "!=", $_POST["user_id"])->get();
+		if(!empty($test->getUser_id()))
 		{
-			$data_set = Array(
-				"user_id" => $_POST["user_id"],
-				"user_name" => $_POST["user_name"],
-				"edition_user" => Session::get("user_id"),
-				"edition_time" => $time
-			);
-			if(!empty($_POST["password"]))
-			{
-				$data_set["password"] = md5($_POST["password"]);
-			}
-			$data = $this->model->update_user($data_set);
-			$user_id = $_POST["user_id"];
-		}
-		else
-		{
-			$comp_id = $this->entity_id;
-			$nickname = $this->model->get_user_by_nickname($_POST["nickname"], $comp_id);
-			if(isset($nickname["user_id"]))
-			{
-				$data["title"] = "Error";
-				$data["message"] = _("The nickname already exists!");
-				$data["theme"] = "red";
-				echo json_encode($data);
-				return;
-			}
-			$data_set = Array(
-				"user_name" => $_POST["user_name"],
-				"nickname" => $_POST["nickname"],
-				"entity_id" => $comp_id,
-				"password" => md5($_POST["password"]),
-				"creation_user" => Session::get("user_id"),
-				"creation_time" => $time,
-				"edition_user" => Session::get("user_id"),
-				"edition_time" => $time
-			);
-			$data = $this->model->set_user($data_set);
-			$user_id = $data["id"];
+			$data["title"] = "Error";
+			$data["message"] = _("The nickname already exists!");
+			$data["theme"] = "red";
+			echo json_encode($data);
+			return;
 		}
 
+		$time = Date("Y-m-d H:i:s");
+		$user_id = 0;
+		$user = users_model::find($_POST["user_id"])
+			->set(Array(
+				"user_name" => $_POST["user_name"],
+				"nickname" => $_POST["nickname"],
+				"entity_id" => $this->entity_id
+			));
+		if(!empty($_POST["password"]))
+		{
+			$user->setPassword(md5($_POST["password"]));
+		}
+		if(empty($user->getPassword()))
+		{
+			$user->setPassword("");
+		}
+		$user->save();
+
+		$user_id = $user->getUser_id();
 		if($user_id != Session::get("user_id"))
 		{
-			#Set module access
-			$data_set = Array(
-				"user_id" => $user_id,
-				"edition_user" => Session::get("user_id"),
-				"edition_time" => $time,
-				"status" => 0
-			);
-			$this->model->revoke_permissions($data_set);
+			#Module access
+			user_modules_model::where("user_id", $user_id)->update(Array("status" => 0));
 			foreach($_POST["modules"] as $module_id)
 			{
-				#$module = $this->model->get_module_by_name($module_name);
-				$access = $this->model->get_module_access($user_id, $module_id);
-				if(isset($access["user_id"]))
-				{
-					$data_set = Array(
+				user_modules_model::where("user_id", $user_id)
+					->where("module_id", $module_id)
+					->get()->set(Array(
 						"module_id" => $module_id,
 						"user_id" => $user_id,
 						"access_type" => 1,
-						"edition_user" => Session::get("user_id"),
-						"edition_time" => $time,
 						"status" => 1
-					);
-					$this->model->update_access($data_set);
-				}
-				else
-				{
-					$data_set = Array(
-						"module_id" => $module_id,
+					))->save();
+			}
+
+			#Method access
+			user_methods_model::where("user_id", $user_id)->update(Array("status" => 0));
+			foreach($_POST["methods"] as $method_id)
+			{
+				user_methods_model::where("user_id", $user_id)
+					->where("method_id", $method_id)
+					->get()->set(Array(
+						"method_id" => $method_id,
 						"user_id" => $user_id,
 						"access_type" => 1,
-						"creation_user" => Session::get("user_id"),
-						"creation_time" => $time,
-						"edition_user" => Session::get("user_id"),
-						"edition_time" => $time
-					);
-					$this->model->set_access($data_set);
-				}
+						"status" => 1
+					))->save();
 			}
 		}
 		$data["success"] = true;
@@ -281,15 +330,16 @@ class Settings extends Controller
 		$data = Array();
 		if($_POST["method"] == "Entity")
 		{
-			$this->loadModel("entity");
-			$data["update"] = $this->model->get_entity_by_id($this->entity_id);
+			$data["update"] = entities_model::find($this->entity_id)->toArray();
 		}
 		if($_POST["method"] == "EditUser")
 		{
-			$this->loadModel("user");
-			$data["update"] = $this->model->get_user($_POST["id"]);
+			$data["update"] = users_model::find($_POST["id"])->toArray();
 			$data["check"] = Array();
-			$data["check"]["modules"] = $this->model->get_all_permissions($_POST["id"]);
+			$data["check"]["modules"] = user_modules_model::select("module_id AS id")
+				->where("user_id", $_POST["id"])->getAll();
+			$data["check"]["methods"] = user_methods_model::select("method_id AS id")
+				->where("user_id", $_POST["id"])->getAll();
 		}
 		if($_POST["method"] == "Preferences")
 		{
@@ -372,8 +422,7 @@ class Settings extends Controller
 		}
 		$user = users_model::find($_POST["id"]);
 		$user->setNickname(null);
-		$user->setStatus(0);
-		$affected = $user->save();
+		$affected = $user->delete();
 		$data["deleted"] = $affected > 0;
 		echo json_encode($data);
 	}

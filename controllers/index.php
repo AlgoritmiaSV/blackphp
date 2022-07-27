@@ -33,21 +33,29 @@ class Index extends Controller
 
 	public function home_content_loader()
 	{
-		$this->loadModel("entity");
-		$company = Session::get("entity");
+		$entity = Session::get("entity");
 		$this->view->restrict[] = "standalone";
 		$this->view->data["real_date"] = date_utilities::sql_date_to_string(Date("Y-m-d"));
-		foreach($company as $key => $value)
+		foreach($entity as $key => $value)
 		{
 			$this->view->data[$key] = $value;
 		}
 		$this->view->data["branch_name"] = Session::get("branch")["branch_name"];
-		$this->view->data["comp_date"] = date_utilities::sql_date_to_string($company["comp_date"]);
-		Session::set("comp_date", $company["comp_date"]);
+		$this->view->data["entity_date"] = date_utilities::sql_date_to_string($entity["entity_date"]);
+		Session::set("entity_date", $entity["entity_date"]);
 		foreach($this->view->data["modules"] as $key => $module)
 		{
 			$this->view->data["module"] = $module["module_url"];
-			$this->view->data["methods"] = $this->model->get_entity_methods($this->entity_id, $module["module_id"]);
+			$this->view->data["methods"] = DB::select("am.*, im.method_order")
+			->from("app_methods AS am, user_methods AS um, entity_methods AS im")
+			->where("im.entity_id", $this->entity_id)
+			->where("um.user_id", Session::get("user_id"))
+			->where("am.module_id", $module["module_id"])
+			->where("im.method_id = am.method_id")
+			->where("um.method_id = am.method_id")
+			->where("im.status", 1)
+			->where("um.status", 1)
+			->orderBy("method_order")->getAll();
 			$this->view->data["modules"][$key]["module_menu"] = $this->view->render("generic_menu", true);
 		}
 		$this->view->render('home_content');

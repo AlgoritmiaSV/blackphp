@@ -34,6 +34,9 @@ class browsers_model
 	/** @var string $_table_name Nombre de la tabla */
 	private static $_table_name = "browsers";
 
+	/** @var string $_table_type Tipo de tabla */
+	private static $_table_type = "BASE_TABLE";
+
 	/** @var string $_primary_key Llave primaria */
 	private static $_primary_key = "browser_id";
 
@@ -46,11 +49,15 @@ class browsers_model
 	/**
 	 * Constructor de la clase
 	 * 
-	 * Se inicializan las propiedades con los valores de los campos default
-	 * de la base de datos
+	 * Se inicializan las propiedades de la clase.
+	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
+	 * definidos en la base de datos.
 	 **/
-	public function __construct()
+	public function __construct($default = false)
 	{
+		if($default)
+		{
+		}
 	}
 
 	public function getBrowser_id()

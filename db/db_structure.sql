@@ -132,6 +132,31 @@ CREATE TABLE `app_themes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Temporary table structure for view `available_methods`
+--
+
+DROP TABLE IF EXISTS `available_methods`;
+/*!50001 DROP VIEW IF EXISTS `available_methods`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `available_methods` (
+  `method_id` tinyint NOT NULL,
+  `module_id` tinyint NOT NULL,
+  `method_name` tinyint NOT NULL,
+  `method_url` tinyint NOT NULL,
+  `method_icon` tinyint NOT NULL,
+  `method_description` tinyint NOT NULL,
+  `default_order` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `method_order` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `label` tinyint NOT NULL,
+  `entity_id` tinyint NOT NULL,
+  `user_id` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `browsers`
 --
 
@@ -380,6 +405,25 @@ CREATE TABLE `users` (
   CONSTRAINT `user_theme` FOREIGN KEY (`theme_id`) REFERENCES `app_themes` (`theme_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Usuarios';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Final view structure for view `available_methods`
+--
+
+/*!50001 DROP TABLE IF EXISTS `available_methods`*/;
+/*!50001 DROP VIEW IF EXISTS `available_methods`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 */
+/*!50001 VIEW `available_methods` AS select `am`.`method_id` AS `method_id`,`am`.`module_id` AS `module_id`,`am`.`method_name` AS `method_name`,`am`.`method_url` AS `method_url`,`am`.`method_icon` AS `method_icon`,`am`.`method_description` AS `method_description`,`am`.`default_order` AS `default_order`,`am`.`status` AS `status`,`im`.`method_order` AS `method_order`,`am`.`method_id` AS `id`,`am`.`method_name` AS `label`,`im`.`entity_id` AS `entity_id`,`um`.`user_id` AS `user_id` from ((`app_methods` `am` join `user_methods` `um`) join `entity_methods` `im`) where `um`.`method_id` = `am`.`method_id` and `um`.`status` = 1 and `im`.`method_id` = `am`.`method_id` and `im`.`status` = 1 */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

@@ -90,6 +90,10 @@ trait ORM
 	 */
 	public function save()
 	{
+		if(self::$_table_type == "VIEW")
+		{
+			return 0;
+		}
 		self::init();
 		$now = Date("Y-m-d H:i:s");
 		if(self::$_timestamps)
@@ -146,6 +150,10 @@ trait ORM
 	 */
 	public function update($data)
 	{
+		if(self::$_table_type == "VIEW")
+		{
+			return 0;
+		}
 		self::init();
 		$now = Date("Y-m-d H:i:s");
 		if(self::$_timestamps)
@@ -231,8 +239,12 @@ trait ORM
 	 */
 	public function delete()
 	{
+		if(self::$_table_type == "VIEW")
+		{
+			return 0;
+		}
 		$affected = 0;
-		if($this->soft_delete)
+		if(self::$_soft_delete)
 		{
 			$this->setEdition_user(Session::get("user_id"));
 			$this->setEdition_time(Date("Y-m-d H:i:s"));
@@ -446,7 +458,7 @@ trait ORM
 		{
 			if($objects)
 			{
-				$object = $sth->fetchObject($class);
+				$object = $sth->fetchObject($class, Array(false));
 				if($object === false)
 				{
 					return new $class;
@@ -465,7 +477,7 @@ trait ORM
 		{
 			if($objects)
 			{
-				return $sth->fetchAll(PDO::FETCH_CLASS, $class);
+				return $sth->fetchAll(PDO::FETCH_CLASS, $class, Array(false));
 			}
 			else
 			{

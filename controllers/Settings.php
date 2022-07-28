@@ -38,16 +38,10 @@ class Settings extends Controller
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$module = app_modules_model::where("module_url", $this->module)->get();
 		$this->view->data["title"] = _($module->getModule_name());
-		$this->view->data["methods"] = DB::select("am.*, im.method_order")
-			->from("app_methods AS am, user_methods AS um, entity_methods AS im")
-			->where("im.entity_id", $this->entity_id)
-			->where("um.user_id", Session::get("user_id"))
-			->where("am.module_id", $module->getModule_id())
-			->where("im.method_id = am.method_id")
-			->where("um.method_id = am.method_id")
-			->where("im.status", 1)
-			->where("um.status", 1)
-			->orderBy("method_order")->getAll();
+		$this->view->data["methods"] = available_methods_model::where("entity_id", $this->entity_id)
+		->where("user_id", Session::get("user_id"))
+		->where("module_id", $module->getModule_id())
+		->orderBy("method_order")->getAllArray();
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
 		$this->view->render("main");
 	}
@@ -138,16 +132,10 @@ class Settings extends Controller
 			{
 				$this->view->data[$key] = $item;
 			}
-			$this->view->data["methods"] = DB::select("am.*, im.method_order")
-			->from("app_methods AS am, user_methods AS um, entity_methods AS im")
-			->where("im.entity_id", $this->entity_id)
-			->where("um.user_id", Session::get("user_id"))
-			->where("am.module_id", $module["module_id"])
-			->where("im.method_id = am.method_id")
-			->where("um.method_id = am.method_id")
-			->where("im.status", 1)
-			->where("um.status", 1)
-			->orderBy("method_order")->getAll();
+			$this->view->data["methods"] = available_methods_model::where("entity_id", $this->entity_id)
+			->where("user_id", Session::get("user_id"))
+			->where("module_id", $module["module_id"])
+			->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"] .= $this->view->render("modules", true);
 		}
 		$this->view->data["content"] = $this->view->render("settings/user_edit", true);
@@ -188,16 +176,10 @@ class Settings extends Controller
 			{
 				$this->view->data[$key] = $item;
 			}
-			$this->view->data["methods"] = DB::select("am.*, im.method_order")
-			->from("app_methods AS am, user_methods AS um, entity_methods AS im")
-			->where("im.entity_id", $this->entity_id)
-			->where("um.user_id", Session::get("user_id"))
-			->where("am.module_id", $module["module_id"])
-			->where("im.method_id = am.method_id")
-			->where("um.method_id = am.method_id")
-			->where("im.status", 1)
-			->where("um.status", 1)
-			->orderBy("method_order")->getAll();
+			$this->view->data["methods"] = available_methods_model::where("entity_id", $this->entity_id)
+			->where("user_id", Session::get("user_id"))
+			->where("module_id", $module["module_id"])
+			->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"] .= $this->view->render("modules", true);
 		}
 		$this->view->data["content"] = $this->view->render("settings/user_edit", true);

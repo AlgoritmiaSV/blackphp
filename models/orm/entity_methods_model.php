@@ -53,7 +53,7 @@ class entity_methods_model
 	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
 	 * definidos en la base de datos.
 	 **/
-	public function __construct($default = false)
+	public function __construct($default = true)
 	{
 		if($default)
 		{

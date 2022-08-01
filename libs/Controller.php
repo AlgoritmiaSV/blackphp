@@ -91,7 +91,6 @@ class Controller
 		#6 Entidad
 		$entity = Array();
 		$restrictions = Array();
-		$this->loadModel("entity");
 		if(Session::get("entity") == null)
 		{
 			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
@@ -120,7 +119,7 @@ class Controller
 				}
 			}
 			Session::set("entity", $entity);
-			$restrictions = $this->model->get_restrictions($entity["entity_id"]);
+			$restrictions = entity_options_model::where("entity_id", $entity["entity_id"])->getAllArray();
 			Session::set("restrictions", $restrictions);
 		}
 		else
@@ -154,7 +153,7 @@ class Controller
 		#Restricciones
 		foreach($restrictions as $key => $restriction)
 		{
-			if($restriction == 0)
+			if($restriction == 0 && $key != "entity_id")
 			{
 				$this->view->restrict[] = "entity:" . $key;
 			}
@@ -213,9 +212,9 @@ class Controller
 		{
 			if(!empty($module))
 			{
-				$this->loadModel("user");
-				$perms = $this->model->get_permissions(Session::get("user_id"), $module);
-				if(!isset($perms["access_type"]))
+				$module =app_modules_model::where("module_url", $module)->get();
+				$perms = user_modules_model::where("module_id", $module->getModule_id())->where("user_id", Session::get("user_id"))->get();
+				if(empty($perms->getUmodule_id()))
 				{
 					if($type == 'json')
 					{
@@ -300,11 +299,10 @@ class Controller
 	 */
 	public function user_actions($element)
 	{
-		$user_model = $this->loadModel("user", "models/", false);
 		if($element["creation_user"] != 0)
 		{
-			$creator = $user_model->get_user($element["creation_user"]);
-			$this->view->data["cr_user_name"] = $creator["user_name"];
+			$creator = users_model::find($element["creation_user"]);
+			$this->view->data["cr_user_name"] = $creator->getUser_name();
 			$this->view->data["cr_time"] = date_utilities::sql_date_to_string($element["creation_time"], true);
 		}
 		else
@@ -313,8 +311,8 @@ class Controller
 		}
 		if($element["edition_user"] != 0 && $element["edition_time"] != $element["creation_time"])
 		{
-			$editor = $user_model->get_user($element["edition_user"]);
-			$this->view->data["ed_user_name"] = $editor["user_name"];
+			$editor = users_model::find($element["edition_user"]);
+			$this->view->data["ed_user_name"] = $editor->getUser_name();
 			$this->view->data["ed_time"] = date_utilities::sql_date_to_string($element["edition_time"], true);
 		}
 		else

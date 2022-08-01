@@ -197,9 +197,8 @@ class Settings extends Controller
 	public function users_table_loader($response = "JSON")
 	{
 		$this->session_required("json");
-		$this->loadModel("user");
 		$data = Array();
-		$users = $this->model->get_all($this->entity_id);
+		$users = users_model::where("entity_id", $this->entity_id)->getAllArray();
 		$status = Array(_("Deleted"), _("Active"), _("Inactive"));
 		foreach($users as $key => $user)
 		{
@@ -325,8 +324,7 @@ class Settings extends Controller
 		}
 		if($_POST["method"] == "Preferences")
 		{
-			$this->loadModel("entity");
-			$themes = $this->model->get_themes();
+			$themes = app_themes_model::select("theme_id AS id, theme_name AS text")->getAll();
 			foreach($themes as $key => $theme)
 			{
 				$themes[$key]["text"] = _($theme["text"]);
@@ -346,16 +344,14 @@ class Settings extends Controller
 		if(!empty($_POST["entity_name"]))
 		{
 			$time = Date("Y-m-d H:i:s");
-			$data_set = Array(
-				"entity_id" => $this->entity_id,
+			$entity = entities_model::find($this->entity_id);
+			$entity->set(Array(
 				"entity_name" => $_POST["entity_name"],
 				"entity_slogan" => $_POST["entity_slogan"],
 				"edition_user" => Session::get("user_id"),
 				"user_edition_time" => $time
-			);
-			$this->loadModel("entity");
-			$data = $this->model->update_entity($data_set);
-			Session::set("entity", $this->model->get_entity_by_id($this->entity_id));
+			))->save();
+			Session::set("entity", $entity->toArray());
 			$data["success"] = true;
 			$data["title"] = _("Success");
 			$data["message"] = _("Changes have been saved");

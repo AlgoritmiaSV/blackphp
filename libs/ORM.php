@@ -17,6 +17,12 @@ trait ORM
 	/** @var string $_select Columnas que se seleccionarán en una tabla */
 	private static $_select = Array();
 
+	/** @var string $_extra_select Columnas adicionales que se seleccionarán en una tabla */
+	private static $_extra_select = "";
+
+	/** @var string $_modifier Modificador de la consulta (Ejemplo: DISTINCT) */
+	private static $_modifier = "";
+
 	/** @var array $_join Uniones (JOIN) dentro de la consulta */
 	private static $_join = Array();
 
@@ -42,6 +48,8 @@ trait ORM
 		{
 			self::$_table_name = null;
 		}
+		self::$_modifier = "";
+		self::$_extra_select = "";
 	}
 
 	/** 
@@ -281,6 +289,19 @@ trait ORM
 	}
 
 	/**
+	 * Modificador
+	 * 
+	 * Inserta un modificador en la consulta (Por ejemplo DISTINCT o SQL_CALC_FOUND_ROWS)
+	 * 
+	 * @return object Una instancia de la misma clase
+	 */
+	public static function modifier($modifier_name)
+	{
+		self::$_modifier = self::$_modifier . " " . $modifier_name;
+		return new static();
+	}
+
+	/**
 	 * Unir a la izquierda
 	 * 
 	 * Recibe como parámetros, los datos para unir varias tablas en la consulta con el método
@@ -367,6 +388,16 @@ trait ORM
 			$objects = false;
 		}
 
+		# Modifier
+		$modifier = self::$_modifier;
+
+		# Opciones adicionales
+		$extra_select = self::$_extra_select;
+		if(!empty($extra_select))
+		{
+			$objects = false;
+		}
+
 		# Join
 		$join = "";
 		if(count(self::$_join) > 0)
@@ -445,7 +476,7 @@ trait ORM
 		}
 
 		self::init();
-		$sql = "SELECT $select FROM $table_name $join WHERE $where $order_by";
+		$sql = "SELECT $modifier $select $extra_select FROM $table_name $join WHERE $where $order_by";
 		$sth = self::$_db->prepare($sql);
 		foreach ($data as $key => $value) {
 			$sth->bindValue(":$key", $value);
@@ -547,6 +578,25 @@ trait ORM
 		}
 		return $this;
 	}
+
+	/**
+	 * Agregar contador
+	 * 
+	 * Agrega un campo con el nombre especificado por parámetro, en el que se enumeran los resultados.
+	 * 
+	 * @param int $field Nombre del campo contador (Por defecto num)
+	 * 
+	 * @return object Una instancia de la misma clase
+	 */
+
+	public static function addCounter($field = "num")
+	{
+		self::init();
+		$sth = self::$_db->prepare("SET @row_number = 0");
+		$sth->execute();
+		self::$_extra_select .= ", (@row_number:=@row_number + 1) AS $field";
+		return new static();
+	}
 }
 
 /**
@@ -576,6 +626,15 @@ class DB
 			self::$_table_name .= ", " . $table_name;
 		}
 		return new static();
+	}
+
+	public static function found_rows()
+	{
+		self::init();
+		$sth = self::$_db->prepare("SELECT FOUND_ROWS() as frows");
+		$sth->execute();
+		$rows = $sth->fetch(PDO::FETCH_ASSOC);
+		return $rows["frows"];
 	}
 }
 ?>

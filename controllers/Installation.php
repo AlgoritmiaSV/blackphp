@@ -45,8 +45,7 @@ class Installation extends Controller
 		$this->view->data["nav"] = "";
 		if(Session::get("authorization_code") != null)
 		{
-			$this->loadModel("entity");
-			$modules = $this->model->get_all_modules();
+			$modules = app_modules_model::getAllArray();
 			$this->view->data["modules"] = "";
 			foreach($modules as $module)
 			{
@@ -54,7 +53,7 @@ class Installation extends Controller
 				{
 					$this->view->data[$key] = $item;
 				}
-				$this->view->data["methods"] = $this->model->get_methods_by_module($module["module_id"]);
+				$this->view->data["methods"] = app_methods_model::where("module_id", $module["module_id"])->getAllArray();
 				$this->view->data["modules"] .= $this->view->render("modules", true);
 			}
 			$this->view->data["subdomain"] = $subdomain;
@@ -99,14 +98,14 @@ class Installation extends Controller
 	public function load_form_data()
 	{
 		$data = Array();
-		$this->loadModel("entity");
-		$entity_id = $this->entity_id;
-		if($entity_id != null)
+		if($this->entity_id != null)
 		{
-			$data["update"] = $this->model->get_entity_to_update($this->entity_id);
+			$entity = entities_model::find($this->entity_id)->toArray();
+			$user = users_model::find($entity["admin_user"])->toArray();
+			$data["update"] = array_merge($entity, $user);
 			$data["check"] = Array(
-				"modules" => $this->model->get_entity_modules($this->entity_id),
-				"methods" => $this->model->get_all_entity_methods($this->entity_id)
+				"modules" => entity_modules_model::select("module_id AS id")->where("entity_id", $this->entity_id)->getAll(),
+				"methods" => entity_methods_model::select("method_id AS id")->where("entity_id", $this->entity_id)->getAll()
 			);
 		}
 		echo json_encode($data);
@@ -128,7 +127,6 @@ class Installation extends Controller
 		$data["success"] = false;
 		$now = Date("Y-m-d H:i:s");
 		$today = Date("Y-m-d");
-		$this->loadModel("entity");
 		#Check session type
 		$entity_id = $this->entity_id;
 		if($entity_id == null)
@@ -147,7 +145,7 @@ class Installation extends Controller
 					return;
 				}
 			}
-			$entity = $this->model->get_entity_by_subdomain($data["subdomain"]);
+			$entity = entities_model::where("entity_subdomain", $data["subdomain"])->get()->toArray();
 			if(isset($entity["entity_id"]) || in_array($data["subdomain"], $reserved_subdomains))
 			{
 				$data["title"] = "Error";
@@ -156,36 +154,30 @@ class Installation extends Controller
 				echo json_encode($data);
 				return;
 			}
-			#Save entity
-			$data_set = Array(
-				"entity_name" => $data["entity_name"],
-				"entity_slogan" => $data["entity_slogan"],
+		}
+
+		$entity = entities_model::find($data["entity_id"]);
+		if(empty($entity->getEntity_id()))
+		{
+			$entity->set(Array(
+				"entity_subdomain" => empty($data["subdomain"]) ? $entity->getEntity_subdomain() : $data["subdomain"],
 				"entity_date" => $today,
 				"entity_begin" => $today,
-				"entity_subdomain" => $data["subdomain"],
-				"sys_name" => $data["sys_name"],
 				"creation_installer" => Session::get("installer_id"),
 				"creation_time" => $now,
 				"edition_installer" => Session::get("installer_id"),
 				"installer_edition_time" => $now
-			);
-			$entity = $this->model->set_entity($data_set);
-			$entity_id = isset($entity["id"]) ? $entity["id"] : null;
+			));
 		}
-		else
-		{
-			#Update entity
-			$data_set = Array(
-				"entity_id" => $data["entity_id"],
-				"entity_name" => $data["entity_name"],
-				"entity_slogan" => $data["entity_slogan"],
-				"sys_name" => $data["sys_name"],
-				"edition_user" => Session::get("user_id") == null ? 0 : Session::get("user_id"),
-				"user_edition_time" => $now
-			);
-			$this->model->update_entity($data_set);
-		}
-		if(empty($entity_id))
+		$entity->set(Array(
+			"entity_name" => $data["entity_name"],
+			"entity_slogan" => $data["entity_slogan"],
+			"sys_name" => $data["sys_name"],
+			"edition_user" => Session::get("user_id") == null ? 0 : Session::get("user_id"),
+			"user_edition_time" => $now
+		));
+		$entity->save();
+		if(empty($entity->getEntity_id()))
 		{
 			$data["title"] = "Error";
 			$data["message"] = _("Failed to create the entity");
@@ -194,145 +186,88 @@ class Installation extends Controller
 			return;
 		}
 
-		#Default branch
-		$entity = $this->model->get_entity_by_id($entity_id);
-
 		#Set modules
 		$i = 0;
-		$this->model->revoke_entity_modules($entity_id);
+		entity_modules_model::where("entity_id", $entity->getEntity_id())->update(Array("status" => 0));
 		foreach($data["modules"] as $module_id)
 		{
 			$i++;
-			$module = $this->model->get_entity_module($entity_id, $module_id);
-			if(!isset($module["cmodule_id"]))
+			$module = entity_modules_model::where("module_id", $module_id)->where("entity_id", $entity->getEntity_id())->where("status", ">=", 0)->get();
+			if(empty($module->getEmodule_id()))
 			{
-				$data_set = Array(
-					"entity_id" => $entity_id,
+				$module->set(Array(
+					"entity_id" => $entity->getEntity_id(),
 					"module_id" => $module_id,
-					"module_order" => $i,
 					"creation_time" => $now,
-					"edition_time" => $now
-				);
-				$this->model->set_entity_module($data_set);
+				));
 			}
-			else
-			{
-				$data_set = Array(
-					"entity_id" => $entity_id,
-					"module_id" => $module_id,
-					"module_order" => $i,
-					"edition_time" => $now,
-					"status" => 1
-				);
-				$this->model->update_entity_module($data_set);
-			}
+			$module->set(Array(
+				"module_order" => $i,
+				"edition_time" => $now,
+				"status" => 1
+			))->save();
 		}
 
 		#Set methods
-		$this->model->revoke_entity_methods($entity_id);
+		entity_methods_model::where("entity_id", $entity->getEntity_id())->update(Array("status" => 0));
 		$i = 0;
 		foreach($data["methods"] as $method_id)
 		{
 			$i++;
-			$method = $this->model->get_entity_method($entity_id, $method_id);
-			if(!isset($method["cmet_id"]))
+			$method = entity_methods_model::where("method_id", $method_id)->where("entity_id", $entity->getEntity_id())->get();
+			if(empty($method->getEmethod_id()))
 			{
-				$data_set = Array(
-					"entity_id" => $entity_id,
+				$method->set(Array(
+					"entity_id" => $entity->getEntity_id(),
 					"method_id" => $method_id,
-					"method_order" => $i,
 					"creation_time" => $now,
-					"edition_time" => $now
-				);
-				$this->model->set_entity_method($data_set);
+				));
 			}
-			else
-			{
-				$data_set = Array(
-					"entity_id" => $entity_id,
-					"method_id" => $method_id,
-					"method_order" => $i,
-					"edition_time" => $now,
-					"status" => 1
-				);
-				$this->model->update_entity_method($data_set);
-			}
+			$method->set(Array(
+				"method_order" => $i,
+				"edition_time" => $now,
+				"status" => 1
+			))->save();
 		}
 
 		#Save default user
-		$user_model = $this->loadModel("user", "models/", false);
-		$user_id = null;
-		$data_set = Array(
-			"entity_id" => $entity_id,
+		$user = users_model::find($data["admin_user"]);
+
+		$user->set(Array(
+			"entity_id" => $entity->getEntity_id(),
 			"user_name" => $data["user_name"],
 			"nickname" => $data["nickname"],
-			"theme_id" => 1,
-			"edition_user" => 0,
-			"edition_time" => $now
-		);
-		if(!empty($data["password"]))
-		{
-			$data_set["password"] = md5($data["password"]);
-		}
-		$user_id = $data["admin_user"];
-		if($user_id == null)
-		{
-			$data_set["creation_user"] = 0;
-			$data_set["creation_time"] = $now;
-			$user = $user_model->set_user($data_set);
-			$user_id = $user["id"];
-	
-			$data_set = Array(
-				"entity_id" => $entity_id,
-				"admin_user" => $user_id
-			);
-			$this->model->update_entity($data_set);
-		}
-		else
-		{
-			#Update user
-			$data_set["user_id"] = $user_id;
-			$user_model->update_user($data_set);
-		}
+			"password" => empty($data["password"]) ? $user->getPassword() : md5($data["password"]),
+			"theme_id" => 1
+		))->save();
+		$entity->setAdmin_user($user->getUser_id());
+		$entity->save();
 
 		#Set user modules permissions
-		$data_set = Array(
-			"user_id" => $user_id,
-			"edition_user" => Session::get("user_id") == null ? 0 : Session::get("user_id"),
-			"edition_time" => $now,
-			"status" => 0
-		);
-		if($user_id != Session::get("user_id"))
+		if($user->getUser_id() != Session::get("user_id"))
 		{
-			$user_model->revoke_permissions($data_set);
+			#Set modules
+			user_modules_model::where("user_id", $user->getUser_id())->update(Array("status" => 0));
 			foreach($data["modules"] as $module_id)
 			{
-				$access = $user_model->get_module_access($user_id, $module_id);
-				if(isset($access["user_id"]))
-				{
-					$data_set = Array(
-						"module_id" => $module_id,
-						"user_id" => $user_id,
-						"access_type" => 1,
-						"edition_user" => 0,
-						"edition_time" => $now,
-						"status" => 1
-					);
-					$user_model->update_access($data_set);
-				}
-				else
-				{
-					$data_set = Array(
-						"module_id" => $module_id,
-						"user_id" => $user_id,
-						"access_type" => 1,
-						"creation_user" => 0,
-						"creation_time" => $now,
-						"edition_user" => 0,
-						"edition_time" => $now
-					);
-					$user_model->set_access($data_set);
-				}
+				$module = user_modules_model::where("module_id", $module_id)->where("user_id", $user->getUser_id())->where("status", ">=", 0)->get();
+				$module->set(Array(
+					"module_id" => $module_id,
+					"user_id" => $user->getUser_id(),
+					"status" => 1
+				))->save();
+			}
+
+			#Set methods
+			user_methods_model::where("user_id", $user->getUser_id())->update(Array("status" => 0));
+			foreach($data["methods"] as $method_id)
+			{
+				$method = user_methods_model::where("method_id", $method_id)->where("user_id", $user->getUser_id())->get();
+				$method->set(Array(
+					"user_id" => $user->getUser_id(),
+					"method_id" => $method_id,
+					"status" => 1
+				))->save();
 			}
 		}
 
@@ -405,8 +340,7 @@ class Installation extends Controller
 			echo json_encode($data);
 			return;
 		}
-		$this->loadModel("installer");
-		$installer = $this->model->get_access($data["nickname"], $data["password"]);
+		$installer = app_installers_model::where("installer_nickname", $data["nickname"])->where("installer_password", md5($data["password"]))->get()->toArray();
 		if(isset($installer["installer_id"]))
 		{
 			Session::set("authorization_code", true);

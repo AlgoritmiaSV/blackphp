@@ -39,7 +39,6 @@ class Installation extends Controller
 	 */
 	public function index($subdomain = "")
 	{
-		#$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("Installation");
 		$this->view->standard_form();
 		$this->view->data["nav"] = "";
@@ -149,7 +148,7 @@ class Installation extends Controller
 			if(isset($entity["entity_id"]) || in_array($data["subdomain"], $reserved_subdomains))
 			{
 				$data["title"] = "Error";
-				$data["message"] = _("The subdomain") . " " . $data["subdomain"] . " " . _("is no available");
+				$data["message"] = _("The subdomain") . " " . $data["subdomain"] . " " . _("is not available");
 				$data["theme"] = "red";
 				echo json_encode($data);
 				return;

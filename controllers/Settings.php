@@ -500,23 +500,19 @@ class Settings extends Controller
 	public function user_details_loader()
 	{
 		$this->session_required("internal");
-		$this->loadModel("user");
 		$id = $_POST["id"];
-		$user = $this->model->get_user($id);
+		$user = users_model::find($id)->toArray();
 		$this->view->data = array_merge($this->view->data, $user);
-		$sessions = $this->model->get_sessions_by_user(0, $id);
-		$i = 0;
+		$sessions = user_sessions_model::join("browsers", "browser_id")->where("user_sessions.user_id", $id)->orderBy("date_time", "DESC")->addCounter("item")->get(10);
 		foreach($sessions as $key => $session)
 		{
-			$sessions[$key]["item"] = ++$i;
 			$time = strtotime($session["date_time"]);
 			$sessions[$key]["session_date"] = Date("d/m/Y", $time);
 			$sessions[$key]["session_time"] = Date("h:i a", $time);
-			$purchases[$key]["amount"] = number_format($purchase["amount"], 2);
 		}
 		$this->view->data["sessions"] = $sessions;
 
-		$modules = $this->model->get_user_entity_modules($this->entity_id, $id);
+		$modules = available_modules_model::where("entity_id", $this->entity_id)->where("user_id", $id)->getAllArray();
 		$i = -1;
 		$j = 0;
 		$modules_table = Array();

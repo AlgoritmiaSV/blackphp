@@ -410,6 +410,10 @@ trait ORM
 					{
 						$join .= "LEFT JOIN $value[0] ON $table_name.$value[1] = $value[0].$value[2] ";
 					}
+					elseif(count($value) == 2)
+					{
+						$join .= "LEFT JOIN $value[0] ON $table_name.$value[1] = $value[0].$value[1] ";
+					}
 				}
 			}
 			$status = true;
@@ -475,8 +479,15 @@ trait ORM
 			$order_by .= implode(", ", $orders);
 		}
 
+		#Results
+		$limit = "";
+		if(is_numeric($results))
+		{
+			$limit = "LIMIT $results";
+		}
+
 		self::init();
-		$sql = "SELECT $modifier $select $extra_select FROM $table_name $join WHERE $where $order_by";
+		$sql = "SELECT $modifier $select $extra_select FROM $table_name $join WHERE $where $order_by $limit";
 		$sth = self::$_db->prepare($sql);
 		foreach ($data as $key => $value) {
 			$sth->bindValue(":$key", $value);

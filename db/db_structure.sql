@@ -117,6 +117,40 @@ CREATE TABLE `app_modules` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `app_options`
+--
+
+DROP TABLE IF EXISTS `app_options`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `app_options` (
+  `option_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
+  `option_key` varchar(32) NOT NULL COMMENT 'Clave de la opción',
+  `option_description` tinytext NOT NULL COMMENT 'Descripción de la opción',
+  `module_id` int(11) DEFAULT NULL COMMENT 'Módulo en el que se realiza la configuración',
+  `default_value` tinyint(4) NOT NULL COMMENT 'Valor por defecto de la opción',
+  PRIMARY KEY (`option_id`),
+  KEY `option_module` (`module_id`),
+  CONSTRAINT `option_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Opciones de la aplicación, configurables por entidad';
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `AppOptionAfterInsert` AFTER INSERT ON `app_options` FOR EACH ROW INSERT INTO entity_options SELECT NULL, entity_id, NEW.option_id, NEW.default_value, 0, NOW(), 0, NOW(), 1 FROM entities */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
 -- Table structure for table `app_themes`
 --
 
@@ -230,6 +264,21 @@ CREATE TABLE `entities` (
   CONSTRAINT `company_editor` FOREIGN KEY (`edition_installer`) REFERENCES `app_installers` (`installer_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Negocios, empresas y compañías que utilizarán el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `EntityAfterInsert` AFTER INSERT ON `entities` FOR EACH ROW INSERT INTO entity_options SELECT NULL, NEW.entity_id, option_id, default_value, 0, now(), 0, now(), 1 FROM app_options */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `entity_methods`
@@ -278,17 +327,29 @@ CREATE TABLE `entity_modules` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Temporary table structure for view `entity_options`
+-- Table structure for table `entity_options`
 --
 
 DROP TABLE IF EXISTS `entity_options`;
-/*!50001 DROP VIEW IF EXISTS `entity_options`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `entity_options` (
-  `entity_id` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `entity_options` (
+  `eoption_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
+  `entity_id` int(11) NOT NULL COMMENT 'ID de la entidad',
+  `option_id` int(11) NOT NULL COMMENT 'ID de la opción',
+  `option_value` tinyint(4) NOT NULL COMMENT 'Valor de la opción',
+  `creation_user` int(11) NOT NULL,
+  `creation_time` datetime NOT NULL,
+  `edition_user` int(11) NOT NULL,
+  `edition_time` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`eoption_id`),
+  KEY `eoption_entity` (`entity_id`),
+  KEY `eoption_option` (`option_id`),
+  CONSTRAINT `eoption_entity` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `eoption_option` FOREIGN KEY (`option_id`) REFERENCES `app_options` (`option_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Valores configurados en cada entidad';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user_logs`
@@ -475,25 +536,6 @@ CREATE TABLE `users` (
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
 /*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `entity_options`
---
-
-/*!50001 DROP TABLE IF EXISTS `entity_options`*/;
-/*!50001 DROP VIEW IF EXISTS `entity_options`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 */
-/*!50001 VIEW `entity_options` AS select `entities`.`entity_id` AS `entity_id` from `entities` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

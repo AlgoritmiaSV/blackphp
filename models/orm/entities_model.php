@@ -260,6 +260,12 @@ class entities_model
 		return entity_modules_model::where("entity_id", $this->entity_id);
 	}
 
+	public function entity_options()
+	{
+		entity_options_model::flush();
+		return entity_options_model::where("entity_id", $this->entity_id);
+	}
+
 	public function users()
 	{
 		users_model::flush();

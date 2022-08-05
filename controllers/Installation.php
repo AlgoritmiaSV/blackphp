@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Instalación
  * 
@@ -11,10 +10,8 @@
  * @author Edwin Fajardo <contacto@edwinfajardo.com>
  * @link https://www.edwinfajardo.com
  */
-
 class Installation extends Controller
 {
-
 	/**
 	 * Constructor de la clase de instalación
 	 * 

@@ -90,7 +90,7 @@ class Controller
 
 		#6 Entidad
 		$entity = Array();
-		$restrictions = Array();
+		$options = Array();
 		if(Session::get("entity") == null)
 		{
 			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
@@ -119,13 +119,13 @@ class Controller
 				}
 			}
 			Session::set("entity", $entity);
-			$restrictions = entity_options_model::where("entity_id", $entity["entity_id"])->getAllArray();
-			Session::set("restrictions", $restrictions);
+			$options = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("entity_id", $entity["entity_id"])->getAll();
+			Session::set("options", $options);
 		}
 		else
 		{
 			$entity = Session::get("entity");
-			$restrictions = Session::get("restrictions");
+			$options = Session::get("options");
 		}
 		$this->entity_id = $entity["entity_id"];
 		$this->entity_subdomain = $entity["entity_subdomain"];
@@ -151,11 +151,11 @@ class Controller
 		}
 
 		#Restricciones
-		foreach($restrictions as $key => $restriction)
+		foreach($options as $option)
 		{
-			if($restriction == 0 && $key != "entity_id")
+			if($option["option_value"] == 0)
 			{
-				$this->view->restrict[] = "entity:" . $key;
+				$this->view->restrict[] = "entity:" . $option["option_key"];
 			}
 		}
 

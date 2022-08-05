@@ -143,6 +143,12 @@ class app_modules_model
 		return app_methods_model::where("module_id", $this->module_id);
 	}
 
+	public function app_options()
+	{
+		app_options_model::flush();
+		return app_options_model::where("module_id", $this->module_id);
+	}
+
 	public function entity_modules()
 	{
 		entity_modules_model::flush();

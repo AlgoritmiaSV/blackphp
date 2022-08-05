@@ -61,7 +61,9 @@ trait ORM
 	{
 		if(self::$_db == null)
 		{
-			self::$_db = new Database(DB_TYPE, DB_HOST, DB_PORT,DB_NAME, DB_USER, DB_PASS);
+			self::$_db = new PDO(DB_TYPE.':host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME, DB_USER, DB_PASS);
+			self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
 		}
 	}
 

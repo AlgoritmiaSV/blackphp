@@ -65,6 +65,15 @@ INSERT INTO `app_modules` VALUES (1,'Settings','Settings','A','Settings',127,1);
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `app_options`
+--
+
+LOCK TABLES `app_options` WRITE;
+/*!40000 ALTER TABLE `app_options` DISABLE KEYS */;
+/*!40000 ALTER TABLE `app_options` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `app_themes`
 --
 

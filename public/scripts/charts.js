@@ -10,7 +10,7 @@ $(function() {
 	 * Crear un gráfico
 	 * 
 	 * Por el momento este método está específico para el uso en una empresa de servicio de 
-	 * agua potable. alta generalizarlo.
+	 * agua potable. Falta generalizarlo.
 	 * 
 	 * @todo Generalizar el método
 	 * 
@@ -27,12 +27,12 @@ $(function() {
 					label: 'Metros cúbicos',
 					data: element.data("data").split(","),
 					backgroundColor: [
-						'#000',
-						'#000',
-						'#000',
-						'#000',
-						'#000',
-						'#000'
+						'#666',
+						'#666',
+						'#666',
+						'#666',
+						'#666',
+						'#666'
 					]
 				}]
 			},

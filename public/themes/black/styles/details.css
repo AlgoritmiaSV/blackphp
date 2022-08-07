@@ -120,7 +120,7 @@
 
 .small_text
 {
-	font-size: smaller;
+	font-size: 7pt;
 }
 
 .small_text h3
@@ -131,4 +131,10 @@
 .small_text .show_details_table
 {
 	margin: 0px;
+}
+
+.dividing_line
+{
+	border: 1px dashed #666666;
+	margin: 20px 0px 10px 0px;
 }

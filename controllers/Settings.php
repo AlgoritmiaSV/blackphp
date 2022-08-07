@@ -116,15 +116,7 @@ class Settings extends Controller
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->restrict[] = "edition";
-		$modules = DB::select("m.*, um.access_type")
-			->from("entity_modules AS cm, app_modules AS m, user_modules AS um")
-			->where("cm.entity_id", $this->entity_id)
-			->where("um.user_id", Session::get("user_id"))
-			->where("m.module_id = cm.module_id")
-			->where("um.module_id = m.module_id")
-			->where("cm.status", 1)
-			->where("um.status", 1)
-			->orderBy("module_order")->getAll();
+		$modules = available_modules_model::where("entity_id", $this->entity_id)->where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
 		$this->view->data["modules"] = "";
 		foreach($modules as $module)
 		{
@@ -160,15 +152,7 @@ class Settings extends Controller
 			$this->view->restrict[] = "no_self";
 		}
 		$this->view->restrict[] = "creation";
-		$modules = DB::select("m.*, um.access_type")
-			->from("entity_modules AS cm, app_modules AS m, user_modules AS um")
-			->where("cm.entity_id", $this->entity_id)
-			->where("um.user_id", Session::get("user_id"))
-			->where("m.module_id = cm.module_id")
-			->where("um.module_id = m.module_id")
-			->where("cm.status", 1)
-			->where("um.status", 1)
-			->orderBy("module_order")->getAll();
+		$modules = available_modules_model::where("entity_id", $this->entity_id)->where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
 		$this->view->data["modules"] = "";
 		foreach($modules as $module)
 		{
@@ -276,6 +260,7 @@ class Settings extends Controller
 			{
 				user_modules_model::where("user_id", $user_id)
 					->where("module_id", $module_id)
+					->where("status", ">=", 0)
 					->get()->set(Array(
 						"module_id" => $module_id,
 						"user_id" => $user_id,
@@ -290,6 +275,7 @@ class Settings extends Controller
 			{
 				user_methods_model::where("user_id", $user_id)
 					->where("method_id", $method_id)
+					->where("status", ">=", 0)
 					->get()->set(Array(
 						"method_id" => $method_id,
 						"user_id" => $user_id,
@@ -306,6 +292,13 @@ class Settings extends Controller
 		echo json_encode($data);
 	}
 
+	/**
+	 * Carga de datos de formulario.
+	 * 
+	 * Imprime, en formato JSON, los datos iniciales para la carga de formularios.
+	 * 
+	 * @return void
+	 */
 	public function load_form_data()
 	{
 		$data = Array();
@@ -463,6 +456,13 @@ class Settings extends Controller
 		}
 	}
 
+	/**
+	 * Guardar preferencias
+	 * 
+	 * Guarda las preferencias del usuario con los datros recibidos del formulario de preferencias.
+	 * 
+	 * @return void
+	 */
 	public function save_preferences()
 	{
 		$this->session_required("json");

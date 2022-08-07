@@ -39,6 +39,9 @@ class available_modules_model
 	/** @var int $user_id ID de la tabla */
 	private $user_id;
 
+	/** @var int $module_order Ubicación del módulo en el menú */
+	private $module_order;
+
 
 	/** @var string $_table_name Nombre de la tabla */
 	private static $_table_name = "available_modules";
@@ -69,6 +72,7 @@ class available_modules_model
 			$this->module_id = 0;
 			$this->status = 1;
 			$this->user_id = 0;
+			$this->module_order = 1;
 		}
 	}
 
@@ -170,6 +174,16 @@ class available_modules_model
 	public function setUser_id($value)
 	{
 		$this->user_id = $value === null ? null : (int)$value;
+	}
+
+	public function getModule_order()
+	{
+		return $this->module_order;
+	}
+
+	public function setModule_order($value)
+	{
+		$this->module_order = $value === null ? null : (int)$value;
 	}
 }
 ?>

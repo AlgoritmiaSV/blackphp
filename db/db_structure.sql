@@ -208,7 +208,8 @@ SET character_set_client = utf8;
   `status` tinyint NOT NULL,
   `access_type` tinyint NOT NULL,
   `entity_id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL
+  `user_id` tinyint NOT NULL,
+  `module_order` tinyint NOT NULL
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -393,6 +394,7 @@ CREATE TABLE `user_methods` (
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`umethod_id`),
+  UNIQUE KEY `unique_user_method` (`user_id`,`method_id`),
   KEY `umethod_method` (`method_id`),
   KEY `umethod_user` (`user_id`),
   CONSTRAINT `umethod_method` FOREIGN KEY (`method_id`) REFERENCES `app_methods` (`method_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -418,7 +420,7 @@ CREATE TABLE `user_modules` (
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`umodule_id`),
-  UNIQUE KEY `unique_access` (`umodule_id`,`module_id`),
+  UNIQUE KEY `unique_user_module` (`module_id`,`user_id`),
   KEY `module_id` (`module_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `umodule_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -535,7 +537,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
-/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` */;
+/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

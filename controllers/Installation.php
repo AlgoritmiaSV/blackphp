@@ -15,7 +15,9 @@ class Installation extends Controller
 	/**
 	 * Constructor de la clase de instalación
 	 * 
-	 * Establece el nombre de la clase/módulo en la propiedad module
+	 * Inicializa la propiedad module con el nombde de la clase.
+	 * 
+	 * @return void
 	 */
 	public function __construct()
 	{
@@ -75,7 +77,7 @@ class Installation extends Controller
 	 * 
 	 * Alias de index()
 	 * 
-	 * @param string $subdomain El subdominio que se aplicará a la entidad.
+	 * @param string $subdomain El subdominio con el que se registrará la entidad
 	 * 
 	 * @return void
 	 */
@@ -210,7 +212,7 @@ class Installation extends Controller
 		foreach($data["methods"] as $method_id)
 		{
 			$i++;
-			$method = entity_methods_model::where("method_id", $method_id)->where("entity_id", $entity->getEntity_id())->get();
+			$method = entity_methods_model::where("method_id", $method_id)->where("entity_id", $entity->getEntity_id())->where("status", ">=", 0)->get();
 			if(empty($method->getEmethod_id()))
 			{
 				$method->set(Array(
@@ -258,7 +260,7 @@ class Installation extends Controller
 			user_methods_model::where("user_id", $user->getUser_id())->update(Array("status" => 0));
 			foreach($data["methods"] as $method_id)
 			{
-				$method = user_methods_model::where("method_id", $method_id)->where("user_id", $user->getUser_id())->get();
+				$method = user_methods_model::where("method_id", $method_id)->where("user_id", $user->getUser_id())->where("status", ">=", 0)->get();
 				$method->set(Array(
 					"user_id" => $user->getUser_id(),
 					"method_id" => $method_id,
@@ -268,7 +270,7 @@ class Installation extends Controller
 		}
 
 		#Logo
-		if(!empty($_FILES["images"]["name"]))
+		if(!empty($_FILES["images"]["name"][0]))
 		{
 			$extension = strtolower(pathinfo($_FILES["images"]["name"][0], PATHINFO_EXTENSION));
 			$dir = "entities/" . $data["subdomain"] . "/";

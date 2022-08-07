@@ -1,4 +1,3 @@
--- Nahutech Local Test
 -- 2022-08-04
 CREATE TABLE `app_options` ( `option_id` INT NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria' , `option_key` VARCHAR(32) NOT NULL COMMENT 'Clave de la opción' , `option_description` TINYTEXT NOT NULL COMMENT 'Descripción de la opción' , `module_id` INT NULL COMMENT 'Módulo en el que aplica la opción' , PRIMARY KEY (`option_id`)) ENGINE = InnoDB COMMENT = 'Opciones de la aplicación, configurables por entidad';
 DROP VIEW `entity_options`;
@@ -14,4 +13,12 @@ CREATE TRIGGER `EntityAfterInsert` AFTER INSERT ON `entities` FOR EACH ROW INSER
 DELIMITER ;
 ALTER TABLE `entity_options` ADD CONSTRAINT `eoption_entity` FOREIGN KEY (`entity_id`) REFERENCES `entities`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `entity_options` ADD CONSTRAINT `eoption_option` FOREIGN KEY (`option_id`) REFERENCES `app_options`(`option_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+-- 2022-08-06
+ALTER ALGORITHM = UNDEFINED VIEW `available_modules` AS select `m`.*,`um`.`access_type`,`em`.`entity_id`,`u`.`user_id`,`em`.`module_order` from `entity_modules` `em` join `app_modules` `m` join `user_modules` `um` join `users` `u` where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` AND `u`.`user_id` = `um`.`user_id`;
+ALTER TABLE `user_modules` DROP INDEX `unique_access`;
+DELETE FROM `user_modules` WHERE `umodule_id` IN(SELECT DISTINCT `t1`.`umodule_id` FROM `user_modules` AS `t1`, `user_modules` AS `t2` WHERE `t1`.`module_id` = `t2`.`module_id` AND `t1`.`user_id` = `t2`.`user_id` AND `t1`.`umodule_id` > `t2`.`umodule_id`);
+ALTER TABLE `user_modules` ADD UNIQUE `unique_user_module` (`module_id`, `user_id`);
+DELETE FROM `user_methods` WHERE `umethod_id` IN(SELECT DISTINCT `t1`.`umethod_id` FROM `user_methods` AS `t1`, `user_methods` AS `t2` WHERE `t1`.`method_id` = `t2`.`method_id` AND `t1`.`user_id` = `t2`.`user_id` AND `t1`.`umethod_id` > `t2`.`umethod_id`);
+ALTER TABLE `user_methods` ADD UNIQUE `unique_user_method` (`user_id`, `method_id`);
+-- Nahutech Local Test
 -- Teleinf Local test

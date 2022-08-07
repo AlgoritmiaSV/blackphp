@@ -170,14 +170,14 @@ $( function()
 						}
 						calc_row_total(_tr);
 						container.append(_tr);
-						_tr.find("input").first().focus();
+						_tr.find("input").first().trigger("focus");
 						/* Partial values */
 						_tr.find(".complete_value").text(value.product_name);
-						_tr.find(".complete_value").click(complete_click);
+						_tr.find(".complete_value").on("click", complete_click);
 						_tr.find(".complete_value").css("display", "inline-block");
 						_tr.find(".partial_value").hide();
-						_tr.find(".partial_value").blur(partial_blur);
-						_tr.find(".partial_value").change(partial_change);
+						_tr.find(".partial_value").on("blur", partial_blur);
+						_tr.find(".partial_value").on("change", partial_change);
 						/* Generics */
 						_tr.find(".row_generics").text("");
 					});
@@ -190,7 +190,7 @@ $( function()
 					calc_bill_total();
 				}
 			});
-			$(".current").change(calculate_consumption);
+			$(".current").on("change", calculate_consumption);
 			$(".current").trigger("change");
 		}
 		if(json.presentations)
@@ -518,7 +518,7 @@ $( function()
 				tbody.append(_tr);
 				/* Prepare row */
 				_tr.find(".row_count").text(tbody.find("tr").length);
-				_tr.find("input").first().focus();
+				_tr.find("input").first().trigger("focus");
 				_tr.find("input").val('');
 				_tr.find("textarea").val('');
 				_tr.find(".row_number").val(tbody.find("tr").length - 1);
@@ -593,24 +593,10 @@ $( function()
 							_tr.find("select." + v_index).data("value", v_value);
 							_tr.find("span." + v_index).text(v_value);
 						});
-						//_tr.find(".local_code").val(ui.item.local_code);
-						//_tr.find(".measure_name").text(ui.item.measure_name);
-						//_tr.find(".cost").text(ui.item.cost);
-						//_tr.find(".product_id").val(ui.item.product_id);
-						//Solución inmediata
-						//_tr.find(".fitem_id").val(ui.item.fitem_id);
-						//_tr.find(".pres_id").val(ui.item.pres_id);
-						//_tr.find(".service_id").val(ui.item.service_id);
-						//_tr.find(".combo_id").val(ui.item.combo_id);
-						//_tr.find(".gproduct_id").val(ui.item.gproduct_id);
 						if(bill_type == 2)
 						{
 							_tr.find(".sale_price").val(ui.item.nvat_price);
 						}
-						//else
-						//{
-							//_tr.find(".sale_price").val(ui.item.sale_price);
-						//}
 						_tr.find(".row_available").text(ui.item.quantity);
 						var row_quantity = _tr.find(".row_quantity").val();
 						if(row_quantity == "")
@@ -677,7 +663,6 @@ $( function()
 	}
 
 	/* Bill type */
-	//$("#vat_total, #subtotal_div").hide();
 	$("#bill_type").on("change", function()
 	{
 		var type_id = $(this).val();

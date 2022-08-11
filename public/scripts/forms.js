@@ -581,8 +581,13 @@ $( function()
 	function build_autocomplete(element = $("body"))
 	{
 		element.find(".list_input").each(function() {
+			var labeled_source = json[$(this).data("source")].map(function (item) {
+				if(item.label == null)
+					item.label = item.text; 
+				return item;
+			});
 			$(this).autocomplete({
-				source: json[$(this).data("source")],
+				source: labeled_source,
 				select: function( event, ui ) {
 					if(ui.item.id || ui.item.local_code)
 					{
@@ -1197,9 +1202,9 @@ $( function()
 	/** Calculate consumption */
 	calculate_consumption = function() {
 		tr = $(this).closest("tr");
-		previous_value = parseInt(tr.find(".previous").text());
-		current_value = parseInt($(this).val());
-		consumption_span = tr.find(".consumption");
+		var previous_value = parseInt(tr.find(".previous").text());
+		var current_value = parseInt($(this).val());
+		var consumption_span = tr.find(".consumption");
 		if(isNaN(previous_value) || isNaN(current_value))
 		{
 			return false;

@@ -366,7 +366,9 @@ trait ORM
 	 * c) $objects = false: Devuelve un arreglo asociarivo con uno o varios resultados, dependiendo
 	 * de $results
 	 * 
-	 * @param string $results FIRST el primer resultado, u otro valor para todos los resultados.
+	 * @param string|int $results Cantidad de resultados a devolver. Por defecto FIRST, devuelve el 
+	 * primer resultado encontrado, ALL devuelve todos los resultados, y si es un número, devuelve ese
+	 * número de resultados. Por ejemplo ->get(10) es equivalente de LIMIT 10
 	 * @param boolean $objects Si es verdadero, intenta devolver objetos de la clase, en caso
 	 * contrario, devuelve un arreglo asociativo.
 	 * 
@@ -419,6 +421,7 @@ trait ORM
 				}
 			}
 			$status = true;
+			$objects = false;
 		}
 
 		# Where
@@ -429,6 +432,13 @@ trait ORM
 			if(is_array($value))
 			{
 				$var = str_replace(".", "_", $value[0]);
+				$number = 1;
+				$initial_var = $var;
+				while(array_key_exists($var, $data))
+				{
+					$var = $initial_var . $number;
+					$number++;
+				}
 				if(count($value) == 3)
 				{
 					$data[$var] = $value[2];
@@ -609,6 +619,75 @@ trait ORM
 		$sth->execute();
 		self::$_extra_select .= ", (@row_number:=@row_number + 1) AS $field";
 		return new static();
+	}
+
+	/**
+	 * Contar
+	 * 
+	 * Devuelve un número entero que representa el total de los resultados obtenidos en la consulta.
+	 * 
+	 * @return int El número de resultados
+	 */
+	public static function count()
+	{
+		self::$_select = Array("COUNT(*) AS total");
+		$result = self::get();
+		return $result["total"];
+	}
+
+	/**
+	 * Listar
+	 * 
+	 * Devuelve un arreglo asociativo con cada elemento de la forma {id:"id", text:"text"}, donde id
+	 * es la llave primaria de la tabla, y text es un campo texto especificado por parámetro.
+	 * Esta forma permite utilizar los datos en listas desplegables y autocompletado.
+	 * 
+	 * Este método recibe parámetros de forma dinámica de la manera siguiente:
+	 * 1) Si no recibe parámetros list() tomará como id la llave primaria y como text el primer campo
+	 * que incluya _name en el nombre, o en su defecto, el siguiente campo de la tabla.
+	 * 2) Si recibe un parámetro, tomará como id la llave primarioa, y como text el campo especificado
+	 * por parámetro.
+	 * 3) Si recibe dos parámetros, el primero será el campo que swe devolverá como id, y el
+	 * segundo se devolverá como text
+	 */
+	public static function list()
+	{
+		$argv = func_get_args();
+		$argc = func_num_args();
+		if($argc == 0)
+		{
+			$id = self::$_primary_key;
+			$class = get_called_class();
+			$vars = get_object_vars(new $class);
+			$text = "";
+			foreach(array_keys($vars) AS $key)
+			{
+				if($key == $id)
+				{
+					continue;
+				}
+				if($text == "" || strpos($key, "_name") !== false)
+				{
+					$text = $key;
+				}
+			}
+		}
+		elseif($argc == 1)
+		{
+			$id = self::$_primary_key;
+			$text = $argv[0];
+		}
+		else
+		{
+			$id = $argv[0];
+			$text = $argv[1];
+		}
+		return self::select("$id AS id, $text AS text")->getAll();
+	}
+
+	public function is_null($property)
+	{
+		return is_null($this->{$property});
 	}
 }
 

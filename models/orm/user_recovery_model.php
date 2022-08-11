@@ -41,7 +41,7 @@ class user_recovery_model
 	private static $_table_name = "user_recovery";
 
 	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE_TABLE";
+	private static $_table_type = "BASE TABLE";
 
 	/** @var string $_primary_key Llave primaria */
 	private static $_primary_key = "urecovery_id";

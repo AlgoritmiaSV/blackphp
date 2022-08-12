@@ -20,5 +20,7 @@ DELETE FROM `user_modules` WHERE `umodule_id` IN(SELECT DISTINCT `t1`.`umodule_i
 ALTER TABLE `user_modules` ADD UNIQUE `unique_user_module` (`module_id`, `user_id`);
 DELETE FROM `user_methods` WHERE `umethod_id` IN(SELECT DISTINCT `t1`.`umethod_id` FROM `user_methods` AS `t1`, `user_methods` AS `t2` WHERE `t1`.`method_id` = `t2`.`method_id` AND `t1`.`user_id` = `t2`.`user_id` AND `t1`.`umethod_id` > `t2`.`umethod_id`);
 ALTER TABLE `user_methods` ADD UNIQUE `unique_user_method` (`user_id`, `method_id`);
+-- 2022-08-11
+ALTER TABLE `app_options` ADD UNIQUE `unique_key_module` (`option_key`, `module_id`);
 -- Nahutech Local Test
 -- Teleinf Local test

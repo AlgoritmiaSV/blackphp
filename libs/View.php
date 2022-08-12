@@ -7,7 +7,7 @@
  * 
  * Para crear las vistas, se hace uso de plantillas previamente escritas en HTML. En el documento HTML
  * se hace una búsqueda de los patrones siguientes:
- * 1) {{ variable }}: Una variable entre llaves dobles es sustituida por un velor del arreglo $data 
+ * 1) {{ variable }}: Una variable entre llaves dobles es sustituida por un valor del arreglo $data 
  * con la clave especificada.
  * 2) [[ variable ]]: Una variable entre corchetes dobles es sustituída por un array asociativo de 
  * datos, cuya clave está definida por cada {{ clave }} entre corchetes contenida entre [[ variable ]] y [[/ variable ]]

@@ -377,6 +377,7 @@ trait ORM
 	public static function get($results = "FIRST", $objects = true)
 	{
 		$table_name = self::$_table_name;
+		$prefix = "";
 		$status = false;
 		if(strpos($table_name, ",") !== false)
 		{
@@ -420,8 +421,8 @@ trait ORM
 					}
 				}
 			}
-			$status = true;
 			$objects = false;
+			$prefix = $table_name . ".";
 		}
 
 		# Where
@@ -449,19 +450,19 @@ trait ORM
 					$data[$var] = $value[1];
 					$wheres[] = $value[0] . " = :" . $var;
 				}
-				if($value[0] == "status")
+				if($value[0] == "status" || $value[0] == $prefix . "status")
 				{
 					$status = true;
 				}
 			}
-			if(is_string($value))
+			elseif(is_string($value))
 			{
 				$wheres[] = $value;
 			}
 		}
 		if(self::$_soft_delete && !$status)
 		{
-			$wheres[] = "status != 0";
+			$wheres[] = $prefix . "status != 0";
 		}
 		$where = implode(" AND ", $wheres);
 

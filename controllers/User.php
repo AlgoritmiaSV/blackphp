@@ -137,16 +137,7 @@ class User extends Controller
 			))->save();
 
 			#Set modules
-			$modules = app_modules_model::select("app_modules.*", "user_modules.access_type")
-				->join("entity_modules", "module_id", "module_id")
-				->join("user_modules", "module_id", "module_id")
-				->where("entity_modules.status", 1)
-				->where("user_modules.status", 1)
-				->where("user_modules.user_id", $user["user_id"])
-				->where("entity_modules.entity_id", $this->entity_id)
-				->orderBy("module_order")
-				->getAll();
-			Session::set("modules", $modules);
+			Session::set("modules", available_modules_model::where("user_id", $user["user_id"])->orderBy("module_order")->getAllArray());
 		}
 		else
 		{

@@ -38,8 +38,7 @@ class Settings extends Controller
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$module = app_modules_model::where("module_url", $this->module)->get();
 		$this->view->data["title"] = _($module->getModule_name());
-		$this->view->data["methods"] = available_methods_model::where("entity_id", $this->entity_id)
-		->where("user_id", Session::get("user_id"))
+		$this->view->data["methods"] = available_methods_model::where("user_id", Session::get("user_id"))
 		->where("module_id", $module->getModule_id())
 		->orderBy("method_order")->getAllArray();
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
@@ -116,7 +115,7 @@ class Settings extends Controller
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->restrict[] = "edition";
-		$modules = available_modules_model::where("entity_id", $this->entity_id)->where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
+		$modules = available_modules_model::where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
 		$this->view->data["modules"] = "";
 		foreach($modules as $module)
 		{
@@ -124,8 +123,7 @@ class Settings extends Controller
 			{
 				$this->view->data[$key] = $item;
 			}
-			$this->view->data["methods"] = available_methods_model::where("entity_id", $this->entity_id)
-			->where("user_id", Session::get("user_id"))
+			$this->view->data["methods"] = available_methods_model::where("user_id", Session::get("user_id"))
 			->where("module_id", $module["module_id"])
 			->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"] .= $this->view->render("modules", true);
@@ -152,7 +150,7 @@ class Settings extends Controller
 			$this->view->restrict[] = "no_self";
 		}
 		$this->view->restrict[] = "creation";
-		$modules = available_modules_model::where("entity_id", $this->entity_id)->where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
+		$modules = available_modules_model::where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
 		$this->view->data["modules"] = "";
 		foreach($modules as $module)
 		{
@@ -160,8 +158,7 @@ class Settings extends Controller
 			{
 				$this->view->data[$key] = $item;
 			}
-			$this->view->data["methods"] = available_methods_model::where("entity_id", $this->entity_id)
-			->where("user_id", Session::get("user_id"))
+			$this->view->data["methods"] = available_methods_model::where("user_id", Session::get("user_id"))
 			->where("module_id", $module["module_id"])
 			->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"] .= $this->view->render("modules", true);
@@ -182,7 +179,7 @@ class Settings extends Controller
 	{
 		$this->session_required("json");
 		$data = Array();
-		$users = users_model::where("entity_id", $this->entity_id)->getAllArray();
+		$users = users_model::getAllArray();
 		$status = Array(_("Deleted"), _("Active"), _("Inactive"));
 		foreach($users as $key => $user)
 		{
@@ -221,8 +218,7 @@ class Settings extends Controller
 		}
 
 		#Validate nickname
-		$test = users_model::where("entity_id", $this->entity_id)
-			->where("nickname", $_POST["nickname"])
+		$test = users_model::where("nickname", $_POST["nickname"])
 			->where("user_id", "!=", $_POST["user_id"])->get();
 		if(!empty($test->getUser_id()))
 		{
@@ -512,7 +508,7 @@ class Settings extends Controller
 		}
 		$this->view->data["sessions"] = $sessions;
 
-		$modules = available_modules_model::where("entity_id", $this->entity_id)->where("user_id", $id)->getAllArray();
+		$modules = available_modules_model::where("user_id", $id)->getAllArray();
 		$i = -1;
 		$j = 0;
 		$modules_table = Array();

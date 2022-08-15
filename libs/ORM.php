@@ -158,7 +158,7 @@ trait ORM
 	 * 
 	 * @return void
 	 */
-	public function update($data)
+	public static function update($data)
 	{
 		if(self::$_table_type == "VIEW")
 		{
@@ -183,36 +183,50 @@ trait ORM
 
 		# Where
 		$wheres = Array();
-		$wdata = Array();
-		$status = false;
+		$prefix = "";
 		foreach(self::$_where as $value)
 		{
 			if(is_array($value))
 			{
 				$var = str_replace(".", "_", $value[0]);
+				$number = 1;
+				$initial_var = $var;
+				while(array_key_exists($var, $data))
+				{
+					$var = $initial_var . $number;
+					$number++;
+				}
 				if(count($value) == 3)
 				{
-					$wdata[$var] = $value[2];
+					$data[$var] = $value[2];
 					$wheres[] = $value[0] . " " . $value[1] . " :" . $var;
 				}
 				if(count($value) == 2)
 				{
-					$wdata[$var] = $value[1];
+					$data[$var] = $value[1];
 					$wheres[] = $value[0] . " = :" . $var;
 				}
-				if($value[0] == "status")
+				if($value[0] == "status" || $value[0] == $prefix . "status")
 				{
 					$status = true;
 				}
+				if($value[0] == "entity_id" || $value[0] == $prefix . "entity_id")
+				{
+					$entity = true;
+				}
 			}
-			if(is_string($value))
+			elseif(is_string($value))
 			{
 				$wheres[] = $value;
 			}
 		}
 		if(self::$_soft_delete && !$status)
 		{
-			$wheres[] = "status != 0";
+			$wheres[] = $prefix . "status != 0";
+		}
+		if(property_exists(new static(), "entity_id") && !$entity && Session::get("entity") != null)
+		{
+			$wheres[] = $prefix . "entity_id = " . Session::get("entity")["entity_id"];
 		}
 		$where = implode(" AND ", $wheres);
 
@@ -221,21 +235,14 @@ trait ORM
 			$where = 1;
 		}
 
-		$sth = self::$_db->prepare("UPDATE $table_name SET $fieldDetails WHERE $where");
+		$sql = "UPDATE $table_name SET $fieldDetails WHERE $where";
+		$sth = self::$_db->prepare($sql);
 		foreach ($data as $key => $value)
-		{
-			$sth->bindValue(":$key", $value);
-		}
-		foreach ($wdata as $key => $value)
 		{
 			$sth->bindValue(":$key", $value);
 		}
 		$sth->execute();
 		self::flush();
-		if(empty($this->{$primary_key}))
-		{
-			$this->{$primary_key} = self::$_db->lastInsertId();
-		}
 		return $sth->rowCount();
 	}
 
@@ -256,8 +263,11 @@ trait ORM
 		$affected = 0;
 		if(self::$_soft_delete)
 		{
-			$this->setEdition_user(Session::get("user_id"));
-			$this->setEdition_time(Date("Y-m-d H:i:s"));
+			if(self::$_timestamps)
+			{
+				$this->setEdition_user(Session::get("user_id"));
+				$this->setEdition_time(Date("Y-m-d H:i:s"));
+			}
 			$this->setStatus(0);
 			$affected = $this->save();
 		}
@@ -379,6 +389,7 @@ trait ORM
 		$table_name = self::$_table_name;
 		$prefix = "";
 		$status = false;
+		$entity = false;
 		if(strpos($table_name, ",") !== false)
 		{
 			$objects = false;
@@ -454,6 +465,10 @@ trait ORM
 				{
 					$status = true;
 				}
+				if($value[0] == "entity_id" || $value[0] == $prefix . "entity_id")
+				{
+					$entity = true;
+				}
 			}
 			elseif(is_string($value))
 			{
@@ -463,6 +478,10 @@ trait ORM
 		if(self::$_soft_delete && !$status)
 		{
 			$wheres[] = $prefix . "status != 0";
+		}
+		if(property_exists(new static(), "entity_id") && !$entity && Session::get("entity") != null)
+		{
+			$wheres[] = $prefix . "entity_id = " . Session::get("entity")["entity_id"];
 		}
 		$where = implode(" AND ", $wheres);
 

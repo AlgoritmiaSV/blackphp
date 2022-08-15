@@ -86,11 +86,7 @@ class User extends Controller
 			echo json_encode($data);
 			return;
 		}
-		$user = users_model::where("nickname", $_POST["nickname"])
-			->where("password", md5($_POST["password"]))
-			->where("entity_id", $this->entity_id)
-			->where("status", 1)
-			->get()->toArray();
+		$user = users_model::where("nickname", $_POST["nickname"])->where("password", md5($_POST["password"]))->get()->toArray();
 		if(isset($user["nickname"]))
 		{
 			$data["reload"] = true;

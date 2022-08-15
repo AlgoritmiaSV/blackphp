@@ -102,8 +102,8 @@ class Installation extends Controller
 			$user = users_model::find($entity["admin_user"])->toArray();
 			$data["update"] = array_merge($entity, $user);
 			$data["check"] = Array(
-				"modules" => entity_modules_model::select("module_id AS id")->where("entity_id", $this->entity_id)->getAll(),
-				"methods" => entity_methods_model::select("method_id AS id")->where("entity_id", $this->entity_id)->getAll()
+				"modules" => entity_modules_model::select("module_id AS id")->getAll(),
+				"methods" => entity_methods_model::select("method_id AS id")->getAll()
 			);
 		}
 		echo json_encode($data);

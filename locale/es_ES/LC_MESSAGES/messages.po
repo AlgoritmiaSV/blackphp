@@ -17,29 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Log in"
-msgstr "Iniciar sesi&oacute;n"
+msgid "About BlackPHP"
+msgstr "Acerca de BlackPHP"
 
-msgid "User"
-msgstr "Usuario"
+msgid "Active"
+msgstr "Activo"
 
-msgid "Password"
-msgstr "Contrase&ntilde;a"
+msgid "Admin user"
+msgstr "Usuario administrador"
 
-msgid "Loggin in"
-msgstr "Iniciando sesi&oacute;n"
+msgid "Allows to set and modify optional system parameters in the company"
+msgstr "Permite establecer y modificar parámetros opcionales del sistema en la empresa"
 
-msgid "Success"
-msgstr "Éxito"
+msgid "Allows you to configure the general information of the business/company"
+msgstr "Permite configurar la información general del negocio/empresa"
 
-msgid "The framework to maximize productivity!"
-msgstr "¡El framework para maximizar la productividad!"
-
-msgid "Provided to"
-msgstr "Proporcionado a"
-
-msgid "Home"
-msgstr "Inicio"
+msgid "Allows you to manage users and permissions for each user"
+msgstr "Permite gestionar usuarios y los permisos para cada usuario"
 
 msgid "Bad request."
 msgstr "Solicitud incorrecta."
@@ -47,78 +41,26 @@ msgstr "Solicitud incorrecta."
 msgid "Bad user or password."
 msgstr "Usuario o contraseña incorrectos."
 
-msgid "Server date"
-msgstr "Fecha del servidor"
+msgid "Black - Lateral menu"
+msgstr "Negro - Menú lateral"
 
-################################ Module names
-msgid "Settings"
-msgstr "Configuraciones"
+msgid "Blue - Lateral menu"
+msgstr "Azul - Menú lateral"
 
-################################ Method names
-msgid "Entity"
-msgstr "Entidad"
+msgid "Blue - Top menu"
+msgstr "Azul - Menú superior"
 
-msgid "Users"
-msgstr "Usuarios"
+msgid "Branch details"
+msgstr "Detalle de sucursal"
 
-msgid "Preferences"
-msgstr "Preferencias"
+msgid "Browser"
+msgstr "Navegador"
 
-msgid "About BlackPHP"
-msgstr "Acerca de BlackPHP"
+msgid "Cancel"
+msgstr "Cancelar"
 
-################################ Method descriptions
-msgid "Allows you to configure the general information of the business/company"
-msgstr "Permite configurar la información general del negocio/empresa"
-
-msgid "Allows you to manage users and permissions for each user"
-msgstr "Permite gestionar usuarios y los permisos para cada usuario"
-
-msgid "Allows to set and modify optional system parameters in the company"
-msgstr "Permite establecer y modificar parámetros opcionales del sistema en la empresa"
-
-msgid "Shows system information: Version, contact and technical support"
-msgstr "Muestra la información del sistema: Versión, contacto y soporte técnico"
-
-################################ Installation
-msgid "Installation"
-msgstr "Instalación"
-
-msgid "You are creating a new company account in BlackPHP. For this action you need to have an account as an installer"
-msgstr "Estás creando una nueva cuenta de empresa en BlackPHP. Para esta acción necesitas tener una cuenta como instalador"
-
-msgid "No subdomain chosen"
-msgstr "No se eligió un subdominio"
-
-msgid "The subdomain"
-msgstr "El subdominio"
-
-msgid "is not available"
-msgstr "no está disponible"
-
-msgid "Failed to create the entity"
-msgstr "No se ha podido crear la entidad"
-
-msgid "Installation completed successfully"
-msgstr "La instalación se completó con éxito"
-
-msgid "Enter your installer user and password"
-msgstr "Introduzca su usuario y contraseña de instalador"
-
-msgid "Start"
-msgstr "Iniciar"
-
-msgid "Welcome to BlackPHP!"
-msgstr "¡Bienvenido a BlackPHP!"
-
-msgid "It's time to start"
-msgstr "¡Es hora de iniciar!"
-
-msgid "To get started, paste the config file into the program's installation folder"
-msgstr "Para comenzar, pegue el archivo de configuración en la carpeta de instalación del programa"
-
-msgid "If you don't have a configuration file, request one now!"
-msgstr "Si no tiene un archivo de configuración, ¡solicite uno ahora!"
+msgid "Changes have been saved"
+msgstr "Los cambios se han guardado"
 
 msgid "Click here"
 msgstr "Clic aquí"
@@ -126,192 +68,260 @@ msgstr "Clic aquí"
 msgid "Company data"
 msgstr "Datos de la empresa"
 
-msgid "You do not have permissions to perform this operation"
-msgstr "No tiene permisos para realizar esta operación"
-
-msgid "Not authorized"
-msgstr "No autorizado"
-
-msgid "You are not logged in"
-msgstr "No ha iniciado sesión"
-
-################################ Users
-msgid "New user"
-msgstr "Nuevo usuario"
-
-msgid "Edit user"
-msgstr "Editar usuario"
-
-msgid "Deleted"
-msgstr "Eliminado"
-
-msgid "Active"
-msgstr "Activo"
-
-msgid "Inactive"
-msgstr "Inactivo"
-
-msgid "Export to Excel"
-msgstr "Exportar a Excel"
-
-msgid "The nickname already exists!"
-msgstr "¡El nombre de usuario ya existe!"
-
-msgid "Changes have been saved"
-msgstr "Los cambios se han guardado"
-
-msgid "Sales room"
-msgstr "Sala de ventas"
-
-msgid "Warehouse"
-msgstr "Bodega"
-
-msgid "Sala de ventas y bodega"
-msgstr "Sales room and warehouse"
-
-msgid "Branch details"
-msgstr "Detalle de sucursal"
-
-msgid "User details"
-msgstr "Detalle de usuario"
-
-msgid "Continue"
-msgstr "Continuar"
-
-msgid "Cancel"
-msgstr "Cancelar"
-
-msgid "Saving"
-msgstr "Failed to save"
-
-msgid "System"
-msgstr "Sistema"
-
-msgid "Distribution name"
-msgstr "Nombre de la distribución"
-
-msgid "Modules"
-msgstr "Módulos"
-
-msgid "Entity data"
-msgstr "Datos de la entidad"
-
-msgid "Entity name"
-msgstr "Nombre de la entidad"
-
-msgid "Slogan"
-msgstr "Eslogan"
-
-msgid "Entity logo"
-msgstr "Logotipo de la entidad"
-
-msgid "Admin user"
-msgstr "Usuario administrador"
+msgid "Complete name"
+msgstr "Nombre completo"
 
 msgid "Confirm password"
 msgstr "Confirmar contraseña"
 
-msgid "Complete name"
-msgstr "Nombre completo"
-
-msgid "Other settings"
-msgstr "Otras configuraciones"
-
-msgid "There is no more settings to do"
-msgstr "No hay más configuraciones que realizar"
-
-msgid "System information"
-msgstr "Información del sistema"
-
-msgid "Version"
-msgstr "Versión"
-
-msgid "Distribution"
-msgstr "Distribución"
-
-msgid "Last update"
-msgstr "Última actualización"
-
 msgid "Contact and technical support"
 msgstr "Contacto y soporte técnico"
 
-msgid "member of"
-msgstr "miembro de"
-
-msgid "Website"
-msgstr "Sitio web"
-
-msgid "Print"
-msgstr "Imprimir"
-
-msgid "User preferences"
-msgstr "Preferencias del usuario"
-
-msgid "Display theme"
-msgstr "Tema de visualización"
-
-msgid "Select"
-msgstr "Seleccionar"
-
-msgid "Nickname"
-msgstr "Usuario"
-
-msgid "Permissions"
-msgstr "Permisos"
-
-msgid "Last sessions"
-msgstr "Últimas sesiones"
+msgid "Continue"
+msgstr "Continuar"
 
 msgid "Date"
 msgstr "Fecha"
 
-msgid "Hour"
-msgstr "Hora"
-
-msgid "Browser"
-msgstr "Navegador"
+msgid "Delete"
+msgstr "Eliminar"
 
 msgid "Delete user"
 msgstr "Eliminar usuario"
 
+msgid "Deleted"
+msgstr "Eliminado"
+
+msgid "Display theme"
+msgstr "Tema de visualización"
+
+msgid "Distribution"
+msgstr "Distribución"
+
+msgid "Distribution name"
+msgstr "Nombre de la distribución"
+
 msgid "Edit"
 msgstr "Editar"
 
-msgid "To keep the old password, leave the fields empty"
-msgstr "Para conservar la contrase&ntilde;a anterior, deje los campos vac&iacute;os"
+msgid "Edit user"
+msgstr "Editar usuario"
 
-msgid "Give access to"
-msgstr "Dar acceso a"
+msgid "English"
+msgstr "Inglés"
 
-msgid "Delete"
-msgstr "Eliminar"
+msgid "Enter your installer user and password"
+msgstr "Introduzca su usuario y contraseña de instalador"
 
-msgid "Type a word for search"
-msgstr "Escriba una palabra para buscar"
+msgid "Entity"
+msgstr "Entidad"
 
-msgid "Status"
-msgstr "Estado"
+msgid "Entity data"
+msgstr "Datos de la entidad"
 
-msgid "Loading"
-msgstr "Cargando"
+msgid "Entity logo"
+msgstr "Logotipo de la entidad"
+
+msgid "Entity name"
+msgstr "Nombre de la entidad"
 
 msgid "Error!"
 msgstr "¡Error!"
 
+msgid "Export to Excel"
+msgstr "Exportar a Excel"
+
+msgid "Failed to create the entity"
+msgstr "No se ha podido crear la entidad"
+
 msgid "Failed to load page"
 msgstr "Error al cargar la página"
+
+msgid "Give access to"
+msgstr "Dar acceso a"
+
+msgid "Go back"
+msgstr "Regresar"
+
+msgid "Green - Lateral menu"
+msgstr "Verde-  Menú lateral"
+
+msgid "Home"
+msgstr "Inicio"
+
+msgid "Hour"
+msgstr "Hora"
+
+msgid "If you don't have a configuration file, request one now!"
+msgstr "Si no tiene un archivo de configuración, ¡solicite uno ahora!"
 
 msgid "In construction"
 msgstr "En construcción"
 
-msgid "This method will be available very soon"
-msgstr "Muy pronto estará disponible este método"
+msgid "Inactive"
+msgstr "Inactivo"
+
+msgid "Installation"
+msgstr "Instalación"
+
+msgid "Installation completed successfully"
+msgstr "La instalación se completó con éxito"
+
+msgid "is not available"
+msgstr "no está disponible"
+
+msgid "It's time to start"
+msgstr "¡Es hora de iniciar!"
+
+msgid "Last sessions"
+msgstr "Últimas sesiones"
+
+msgid "Last update"
+msgstr "Última actualización"
+
+msgid "Loading"
+msgstr "Cargando"
+
+msgid "Log in"
+msgstr "Iniciar sesi&oacute;n"
+
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+msgid "Loggin in"
+msgstr "Iniciando sesi&oacute;n"
+
+msgid "member of"
+msgstr "miembro de"
+
+msgid "Modules"
+msgstr "Módulos"
+
+msgid "My account"
+msgstr "Mi cuenta"
+
+msgid "New user"
+msgstr "Nuevo usuario"
+
+msgid "Nickname"
+msgstr "Usuario"
+
+msgid "No subdomain chosen"
+msgstr "No se eligió un subdominio"
+
+msgid "Not authorized"
+msgstr "No autorizado"
+
+msgid "Other settings"
+msgstr "Otras configuraciones"
+
+msgid "Password"
+msgstr "Contrase&ntilde;a"
+
+msgid "Permissions"
+msgstr "Permisos"
+
+msgid "Phone"
+msgstr "Teléfono"
+
+msgid "Preferences"
+msgstr "Preferencias"
+
+msgid "Print"
+msgstr "Imprimir"
+
+msgid "Provided to"
+msgstr "Proporcionado a"
+
+msgid "Sala de ventas y bodega"
+msgstr "Sales room and warehouse"
+
+msgid "Sales room"
+msgstr "Sala de ventas"
+
+msgid "Saving"
+msgstr "Failed to save"
+
+msgid "Select"
+msgstr "Seleccionar"
+
+msgid "Server date"
+msgstr "Fecha del servidor"
+
+msgid "Settings"
+msgstr "Configuraciones"
+
+msgid "Shows system information: Version, contact and technical support"
+msgstr "Muestra la información del sistema: Versión, contacto y soporte técnico"
+
+msgid "Slogan"
+msgstr "Eslogan"
+
+msgid "Spanish"
+msgstr "Español"
+
+msgid "Start"
+msgstr "Iniciar"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Success"
+msgstr "Éxito"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "System information"
+msgstr "Información del sistema"
+
+msgid "Technical support"
+msgstr "Soporte técnico"
 
 msgid "Thanks for waiting!"
 msgstr "¡Gracias por esperar!"
 
-msgid "Go back"
-msgstr "Regresar"
+msgid "The framework to maximize productivity!"
+msgstr "¡El framework para maximizar la productividad!"
+
+msgid "The nickname already exists!"
+msgstr "¡El nombre de usuario ya existe!"
+
+msgid "The subdomain"
+msgstr "El subdominio"
+
+msgid "There is no more settings to do"
+msgstr "No hay más configuraciones que realizar"
+
+msgid "This method will be available very soon"
+msgstr "Muy pronto estará disponible este método"
+
+msgid "To get started, paste the config file into the program's installation folder"
+msgstr "Para comenzar, pegue el archivo de configuración en la carpeta de instalación del programa"
+
+msgid "To keep the old password, leave the fields empty"
+msgstr "Para conservar la contrase&ntilde;a anterior, deje los campos vac&iacute;os"
+
+msgid "Type a word for search"
+msgstr "Escriba una palabra para buscar"
+
+msgid "User"
+msgstr "Usuario"
+
+msgid "User details"
+msgstr "Detalle de usuario"
+
+msgid "User preferences"
+msgstr "Preferencias del usuario"
+
+msgid "Users"
+msgstr "Usuarios"
+
+msgid "Version"
+msgstr "Versión"
+
+msgid "Warehouse"
+msgstr "Bodega"
 
 msgid "We are sorry! We could not find the requested method"
 msgstr "¡Lo sentimos! No pudimos encontrar el método solicitado"
@@ -319,38 +329,20 @@ msgstr "¡Lo sentimos! No pudimos encontrar el método solicitado"
 msgid "We are sorry! You do not have permissions to access this method"
 msgstr "¡Lo sentimos! No tiene permisos para acceder a este método"
 
-msgid "Technical support"
-msgstr "Soporte técnico"
+msgid "Website"
+msgstr "Sitio web"
 
-msgid "My account"
-msgstr "Mi cuenta"
+msgid "Welcome to BlackPHP!"
+msgstr "¡Bienvenido a BlackPHP!"
 
-msgid "Log out"
-msgstr "Cerrar sesión"
+msgid "You are creating a new company account in BlackPHP. For this action you need to have an account as an installer"
+msgstr "Estás creando una nueva cuenta de empresa en BlackPHP. Para esta acción necesitas tener una cuenta como instalador"
 
-msgid "Phone"
-msgstr "Teléfono"
+msgid "You are not logged in"
+msgstr "No ha iniciado sesión"
 
-################################ Themes
-msgid "Blue - Lateral menu"
-msgstr "Azul - Menú lateral"
-
-msgid "Black - Lateral menu"
-msgstr "Negro - Menú lateral"
-
-msgid "Green - Lateral menu"
-msgstr "Verde-  Menú lateral"
-
-msgid "Blue - Top menu"
-msgstr "Azul - Menú superior"
-
-################################ Settings
-
-msgid "English"
-msgstr "Inglés"
-
-msgid "Spanish"
-msgstr "Español"
+msgid "You do not have permissions to perform this operation"
+msgstr "No tiene permisos para realizar esta operación"
 
 msgctxt "time"
 msgid "on"

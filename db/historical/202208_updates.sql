@@ -22,7 +22,10 @@ DELETE FROM `user_methods` WHERE `umethod_id` IN(SELECT DISTINCT `t1`.`umethod_i
 ALTER TABLE `user_methods` ADD UNIQUE `unique_user_method` (`user_id`, `method_id`);
 -- 2022-08-11
 ALTER TABLE `app_options` ADD UNIQUE `unique_key_module` (`option_key`, `module_id`);
--- Nahutech Local Test
 -- 2022-08-17
 ALTER TABLE `app_options` ADD `option_type` TINYINT NOT NULL DEFAULT '1' COMMENT 'Tipo de variable: 1: Booleana; 2: Valor' AFTER `option_id`;
+-- 2022-08-18
+ALTER TABLE `app_options` CHANGE `default_value` `default_value` VARCHAR(255) NOT NULL COMMENT 'Valor por defecto de la opción';
+ALTER TABLE `entity_options` CHANGE `option_value` `option_value` VARCHAR(255) NOT NULL COMMENT 'Valor de la opción';
+-- Nahutech Local Test
 -- Teleinf Local test

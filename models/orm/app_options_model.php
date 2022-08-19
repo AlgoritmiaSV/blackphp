@@ -24,7 +24,7 @@ class app_options_model
 	/** @var int $module_id Módulo en el que se realiza la configuración */
 	private $module_id;
 
-	/** @var int $default_value Valor por defecto de la opción */
+	/** @var string $default_value Valor por defecto de la opción */
 	private $default_value;
 
 
@@ -115,7 +115,7 @@ class app_options_model
 
 	public function setDefault_value($value)
 	{
-		$this->default_value = $value === null ? null : (int)$value;
+		$this->default_value = $value === null ? null : (string)$value;
 	}
 
 	public function entity_options()

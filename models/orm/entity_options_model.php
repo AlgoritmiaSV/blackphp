@@ -18,7 +18,7 @@ class entity_options_model
 	/** @var int $option_id ID de la opción */
 	private $option_id;
 
-	/** @var int $option_value Valor de la opción */
+	/** @var string $option_value Valor de la opción */
 	private $option_value;
 
 	/** @var int $creation_user - */
@@ -104,7 +104,7 @@ class entity_options_model
 
 	public function setOption_value($value)
 	{
-		$this->option_value = $value === null ? null : (int)$value;
+		$this->option_value = $value === null ? null : (string)$value;
 	}
 
 	public function getCreation_user()

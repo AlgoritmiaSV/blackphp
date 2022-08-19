@@ -157,7 +157,7 @@ tr:hover .action_icon
 	resize: none;
 }
 
-.form_entry:not(.cell) label:not(.radio_container):not(.cbox_container):not(.switch)
+.form_entry:not(.cell) label:not(.radio_container):not(.cbox_container):not(.switch):not(.description_label)
 {
 	display: inline-block;
 	width: 160px;
@@ -321,6 +321,15 @@ tr:hover .action_icon
 	padding: 0px !important;
 }
 
+.description_label
+{
+	display: inline-block;
+	width: calc(100% - 160px);
+	vertical-align: top;
+	padding: 2px 0px;
+	border-bottom: 1px dashed #cccccc;
+}
+
 @media screen and (max-width: 799px)
 {
 	.form_entry label
@@ -379,5 +388,11 @@ tr:hover .action_icon
 	.details_table tbody td .complete_value
 	{
 		width: calc(100% - 105px);
+	}
+	
+	.description_label
+	{
+		display: block;
+		width: auto;
 	}
 }

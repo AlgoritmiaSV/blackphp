@@ -6,9 +6,9 @@
 .drop:hover .drop-label { color: rgba(0, 0, 0, 0.125); }
 #image-preview, .image-preview { background-color: #000; }
 .drop {
-  width: 120px;
+/*  width: 120px;
   height: 160px;
-  position: relative;
+  position: relative;*/
   overflow: hidden;
   cursor: pointer;
   margin: 0;

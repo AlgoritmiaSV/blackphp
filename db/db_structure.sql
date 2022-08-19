@@ -125,6 +125,7 @@ DROP TABLE IF EXISTS `app_options`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `app_options` (
   `option_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
+  `option_type` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Tipo de variable: 1: Booleana; 2: Valor',
   `option_key` varchar(32) NOT NULL COMMENT 'Clave de la opción',
   `option_description` tinytext NOT NULL COMMENT 'Descripción de la opción',
   `module_id` int(11) DEFAULT NULL COMMENT 'Módulo en el que se realiza la configuración',

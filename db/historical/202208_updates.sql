@@ -23,4 +23,6 @@ ALTER TABLE `user_methods` ADD UNIQUE `unique_user_method` (`user_id`, `method_i
 -- 2022-08-11
 ALTER TABLE `app_options` ADD UNIQUE `unique_key_module` (`option_key`, `module_id`);
 -- Nahutech Local Test
+-- 2022-08-17
+ALTER TABLE `app_options` ADD `option_type` TINYINT NOT NULL DEFAULT '1' COMMENT 'Tipo de variable: 1: Booleana; 2: Valor' AFTER `option_id`;
 -- Teleinf Local test

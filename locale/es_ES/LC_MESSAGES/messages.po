@@ -351,3 +351,7 @@ msgstr "Inglés"
 
 msgid "Spanish"
 msgstr "Español"
+
+msgctxt "time"
+msgid "on"
+msgstr "el"

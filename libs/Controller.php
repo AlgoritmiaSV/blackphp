@@ -119,7 +119,7 @@ class Controller
 				}
 			}
 			Session::set("entity", $entity);
-			$options = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("entity_id", $entity["entity_id"])->getAll();
+			$options = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("entity_id", $entity["entity_id"])->where("option_type", 1)->getAll();
 			Session::set("options", $options);
 		}
 		else

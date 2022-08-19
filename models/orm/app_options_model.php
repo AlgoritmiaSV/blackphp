@@ -12,6 +12,9 @@ class app_options_model
 	/** @var int $option_id Llave primaria */
 	private $option_id;
 
+	/** @var int $option_type Tipo de variable: 1: Booleana; 2: Valor */
+	private $option_type;
+
 	/** @var string $option_key Clave de la opción */
 	private $option_key;
 
@@ -51,6 +54,7 @@ class app_options_model
 	{
 		if($default)
 		{
+			$this->option_type = 1;
 		}
 	}
 
@@ -62,6 +66,16 @@ class app_options_model
 	public function setOption_id($value)
 	{
 		$this->option_id = $value === null ? null : (int)$value;
+	}
+
+	public function getOption_type()
+	{
+		return $this->option_type;
+	}
+
+	public function setOption_type($value)
+	{
+		$this->option_type = $value === null ? null : (int)$value;
 	}
 
 	public function getOption_key()

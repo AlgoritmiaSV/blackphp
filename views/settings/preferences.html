@@ -1,16 +1,16 @@
 <div class="content_viewer">
-	<div class="form_content medium_form">
+	<div class="form_content">
 		<form action="save_preferences" data-reset="{{ module }}/">
 			<div class="form_title">
-				_(User preferences)
+				_(Preferences)
 				<a class="close_form" href="#"><img src="public/images/close.png"></a>
 			</div>
-			<div class="form_body">
-				<div class="form_entry">
-					<label>_(Display theme):</label>
-					<select class="data_selector update_input" name="theme_id" data-source="themes" data-search="none" data-placeholder="_(Select)">
-					</select>
-				</div>
+			<div id="tabs">
+				[[ config_modules ]]
+				<h3>_({{ module_name }})</h3>
+				<div class="form_body">
+					{{ preferences }}
+				</div>[[/ config_modules ]]
 			</div>
 			<div class="form_foot">
 				<button class="blue_button" type="submit">_(Save)</button>

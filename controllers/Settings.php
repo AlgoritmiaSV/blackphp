@@ -76,6 +76,21 @@ class Settings extends Controller
 		$this->view->data["title"] = _("Preferences");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["config_modules"] = Array();
+		foreach($this->view->data["modules"] as $key => $module)
+		{
+			$switches = entity_options_model::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 1)->getAllArray();
+			$fields = entity_options_model::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 2)->getAllArray();
+			if(count($switches) > 0 || count($fields) > 0)
+			{
+				$this->view->data["switches"] = $switches;
+				$this->view->data["fields"] = $fields;
+				$this->view->data["config_modules"][] = Array(
+					"module_name" => $module["module_name"],
+					"preferences" => $this->view->render("settings/preference_item", true)
+				);
+			}
+		}
 		$this->view->data["content"] = $this->view->render("settings/preferences", true);
 		$this->view->render('main');
 	}
@@ -313,15 +328,12 @@ class Settings extends Controller
 		}
 		if($_POST["method"] == "Preferences")
 		{
-			$themes = app_themes_model::select("theme_id AS id, theme_name AS text")->getAll();
-			foreach($themes as $key => $theme)
+			$options = entity_options_model::join("app_options", "option_id")->getAll();
+			$data["update"] = Array();
+			foreach($options as $option)
 			{
-				$themes[$key]["text"] = _($theme["text"]);
+				$data["update"][$option["option_key"]] = $option["option_value"];
 			}
-			$data["themes"] = $themes;
-			$data["update"] = Array(
-				"theme_id" => Session::get("theme_id")
-			);
 		}
 		echo json_encode($data);
 	}
@@ -464,20 +476,19 @@ class Settings extends Controller
 		$this->session_required("json");
 		$data = $_POST;
 		$data["success"] = false;
-		if($data["theme_id"] != Session::get("theme_id"))
+		entity_options_model::where("option_id IN (SELECT option_id FROM app_options WHERE option_type = 1)")->update(Array("option_value" => 0));
+		foreach($_POST as $key => $value)
 		{
-			$user = users_model::find(Session::get("user_id"));
-			$user->setTheme_id($data["theme_id"]);
-			$user->save();
-			$theme = app_themes_model::find($data["theme_id"]);
-			Session::set("theme_id", $theme->getTheme_id());
-			Session::set("theme_url", $theme->getTheme_url());
-			$data["reload_after"] = true;
+			$option = app_options_model::where("option_key", $key)->get();
+			$entity_option = $option->entity_options()->get();
+			$entity_option->setOption_value($value);
+			$entity_option->save();
 		}
 		$data["success"] = true;
 		$data["title"] = _("Success");
 		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
+		$data["no_reset"] = true;
 		echo json_encode($data);
 	}
 

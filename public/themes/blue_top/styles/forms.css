@@ -157,7 +157,7 @@ tr:hover .action_icon
 	resize: none;
 }
 
-.form_entry:not(.cell) label:not(.radio_container):not(.cbox_container)
+.form_entry:not(.cell) label:not(.radio_container):not(.cbox_container):not(.switch)
 {
 	display: inline-block;
 	width: 160px;

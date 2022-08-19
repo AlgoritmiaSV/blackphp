@@ -80,7 +80,7 @@ class View
 				$text = "";
 				$array_key = "[[ $key ]]";
 				$begin = strpos($template, $array_key);
-				if($begin == false)
+				if($begin === false)
 				{
 					continue;
 				}

@@ -1,0 +1,22 @@
+# PACK OF ENGLISH LANGUAGE FOR MIMAKIT
+# Copyright (C)2022 Red Teleinformática
+# This file is distributed under the same license as the PACKAGE MimaKit.
+# Edwin Fajardo <contacto@edwinfajardo.com>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BlackPHP 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-17 22:53-0600\n"
+"PO-Revision-Date: 2022-08-17 22:53+UTC-6\n"
+"Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
+"Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "time"
+msgid "on"
+msgstr "on"

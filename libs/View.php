@@ -236,7 +236,7 @@ class View
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
 			'node_modules/select2/dist/js/select2.min.js',
-			'node_modules/jquery-image-reader/jquery.imagereader.min.js',
+			'external/js/jquery.imagereader.js',
 			'external/js/image-uploader.js',
 			'scripts/bpscript.min.js'
 		));

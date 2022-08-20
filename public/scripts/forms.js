@@ -287,6 +287,21 @@ $( function()
 			action_module = $(this).data("module");
 		}
 		var ajax_options = {
+			'xhr': function() {
+				var xhr = new window.XMLHttpRequest();
+				xhr.upload.addEventListener("progress", function(evt) {
+					if (evt.lengthComputable) {
+						var percentComplete = ((evt.loaded / evt.total) * 100);
+						$(".progress-bar").width(percentComplete + '%');
+						$(".progress-bar").html(percentComplete+'%');
+					}
+				}, false);
+				return xhr;
+			},
+			'beforeSend': function(){
+				$(".progress-bar").width('0%');
+				$(".progress-bar").html('0%');
+			},
 			'method': "POST",
 			'url': action_module + "/" + action + "/",
 			'data': form_data,
@@ -942,32 +957,38 @@ $( function()
 	});
 
 	$(".add_entry_button").on("click", function() {
-		container = $($(this).data("container"));
-		last_entry = container.find(".form_entry").last();
+		var container = $($(this).data("container"));
+		var last_entry = container.find(".form_entry").last();
 		last_entry.find(".data_selector").each(function() {
+			$(this).data("value", $(this).val());
 			$(this).select2("destroy");
 		});
-		entry = last_entry.clone();
+		var entry = last_entry.clone();
 		container.append(entry);
+
 		/* Prepare entry */
 		entry.find(".entry_count").text(container.find(".form_entry").length);
-		entry.find("input").first().focus();
-		entry.find("input").val('');
+		entry.find("input").first().trigger("focus");
+		entry.find("input, select, textarea").val('');
 		entry.find(".date_input").each(set_date_picker);
-		entry.find(".delete_entry_icon").click(delete_entry_click);
+		entry.find(".delete_entry_icon").on("click", delete_entry_click);
 		entry.find(".extra_data").text("");
 		$(".delete_entry_icon").css({
 			"visibility":"visible"
 		});
 		build_autocomplete(entry);
 		build_selectors();
+		entry.find(".image-upload").each(function()
+		{
+			$(this).imageReader();
+		});
+		entry.find(".image-preview").html('');
 	});
 
 	function delete_entry_click(e)
 	{
 		e.preventDefault();
 		delete_button = $(this);
-		div = $(this).closest(".form_entry");
 		$.jAlert({
 			'title': "Confirmar",
 			'content': "¿Está seguro de que desea eliminar la entrada?",
@@ -975,18 +996,7 @@ $( function()
 			'autofocus': '.jalert_cancel',
 			'btns': [
 				{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept', 'onClick':function(){
-					// Temporary Solution:
-					// Entries
-					item_id = delete_button.closest(".form_entry").find(".item_id").val();
-					if(item_id != null && item_id != "")
-					{
-						input = $(document.createElement("input"));
-						input.val(item_id);
-						input.attr("name", "removed[]");
-						input.attr("type", "hidden");
-						delete_button.closest("form").append(input);
-						delete_button.closest(".form_entry").remove();
-					}
+					delete_button.closest(".form_entry").remove();
 				}},
 				{'text':'Cancelar', 'closeAlert':true, 'theme': 'darkgray', 'class': 'jalert_cancel'}
 			]
@@ -1143,10 +1153,10 @@ $( function()
 			$(this).show();
 		}
 	}
-	if($(".image-upload").length > 0)
+	$(".image-upload").each(function()
 	{
-		$('#photo').imageReader();
-	}
+		$(this).imageReader();
+	});
 
 	/* Search by local_code and barcode */
 	function search_by_code()

@@ -138,3 +138,21 @@
 	border: 1px dashed #666666;
 	margin: 20px 0px 10px 0px;
 }
+
+.document_container
+{
+	border: 1px solid #d9d9d9;
+	margin: 10px 0px;
+	page-break-inside: avoid;
+}
+
+.document_name
+{
+	padding: 10px 5px;
+	color: #666666;
+}
+
+.document_container img
+{
+	max-width: 100%;
+}

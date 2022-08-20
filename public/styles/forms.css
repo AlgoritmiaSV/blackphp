@@ -157,7 +157,7 @@ tr:hover .action_icon
 	resize: none;
 }
 
-.form_entry:not(.cell) label:not(.radio_container):not(.cbox_container):not(.switch):not(.description_label)
+.form_entry:not(.cell) label:not(.radio_container):not(.cbox_container):not(.switch):not(.description_label):not(.drop-label)
 {
 	display: inline-block;
 	width: 160px;
@@ -342,6 +342,11 @@ tr:hover .action_icon
 	vertical-align: top;
 	padding: 2px 0px;
 	border-bottom: 1px dashed #cccccc;
+}
+
+.document_td
+{
+	width: 300px;
 }
 
 @media screen and (max-width: 799px)

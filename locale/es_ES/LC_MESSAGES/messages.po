@@ -20,6 +20,7 @@ msgstr ""
 msgid "About BlackPHP"
 msgstr "Acerca de BlackPHP"
 
+# Not required
 msgid "Active"
 msgstr "Activo"
 
@@ -35,11 +36,11 @@ msgstr "Permite configurar la información general del negocio/empresa"
 msgid "Allows you to manage users and permissions for each user"
 msgstr "Permite gestionar usuarios y los permisos para cada usuario"
 
-msgid "Bad request."
-msgstr "Solicitud incorrecta."
+msgid "Bad request"
+msgstr "Solicitud incorrecta"
 
-msgid "Bad user or password."
-msgstr "Usuario o contraseña incorrectos."
+msgid "Bad user or password"
+msgstr "Usuario o contraseña incorrectos"
 
 msgid "Black - Lateral menu"
 msgstr "Negro - Menú lateral"
@@ -49,9 +50,6 @@ msgstr "Azul - Menú lateral"
 
 msgid "Blue - Top menu"
 msgstr "Azul - Menú superior"
-
-msgid "Branch details"
-msgstr "Detalle de sucursal"
 
 msgid "Browser"
 msgstr "Navegador"
@@ -64,9 +62,6 @@ msgstr "Los cambios se han guardado"
 
 msgid "Click here"
 msgstr "Clic aquí"
-
-msgid "Company data"
-msgstr "Datos de la empresa"
 
 msgid "Complete name"
 msgstr "Nombre completo"
@@ -88,9 +83,6 @@ msgstr "Eliminar"
 
 msgid "Delete user"
 msgstr "Eliminar usuario"
-
-msgid "Deleted"
-msgstr "Eliminado"
 
 msgid "Display theme"
 msgstr "Tema de visualización"
@@ -137,6 +129,9 @@ msgstr "No se ha podido crear la entidad"
 msgid "Failed to load page"
 msgstr "Error al cargar la página"
 
+msgid "Failed to save"
+msgstr "Error al guardar"
+
 msgid "Give access to"
 msgstr "Dar acceso a"
 
@@ -144,7 +139,7 @@ msgid "Go back"
 msgstr "Regresar"
 
 msgid "Green - Lateral menu"
-msgstr "Verde-  Menú lateral"
+msgstr "Verde- Menú lateral"
 
 msgid "Home"
 msgstr "Inicio"
@@ -170,8 +165,11 @@ msgstr "La instalación se completó con éxito"
 msgid "is not available"
 msgstr "no está disponible"
 
-msgid "It's time to start"
+msgid "It's time to start!"
 msgstr "¡Es hora de iniciar!"
+
+msgid "Language"
+msgstr "Idioma"
 
 msgid "Last sessions"
 msgstr "Últimas sesiones"
@@ -183,13 +181,13 @@ msgid "Loading"
 msgstr "Cargando"
 
 msgid "Log in"
-msgstr "Iniciar sesi&oacute;n"
+msgstr "Iniciar sesión"
 
 msgid "Log out"
 msgstr "Cerrar sesión"
 
-msgid "Loggin in"
-msgstr "Iniciando sesi&oacute;n"
+msgid "Logging in"
+msgstr "Iniciando sesión"
 
 msgid "member of"
 msgstr "miembro de"
@@ -208,9 +206,6 @@ msgstr "Usuario"
 
 msgid "No subdomain chosen"
 msgstr "No se eligió un subdominio"
-
-msgid "Not authorized"
-msgstr "No autorizado"
 
 msgid "Other settings"
 msgstr "Otras configuraciones"
@@ -233,14 +228,11 @@ msgstr "Imprimir"
 msgid "Provided to"
 msgstr "Proporcionado a"
 
-msgid "Sala de ventas y bodega"
-msgstr "Sales room and warehouse"
-
-msgid "Sales room"
-msgstr "Sala de ventas"
+msgid "Save"
+msgstr "Guardar"
 
 msgid "Saving"
-msgstr "Failed to save"
+msgstr "Guardando"
 
 msgid "Select"
 msgstr "Seleccionar"
@@ -278,8 +270,8 @@ msgstr "Información del sistema"
 msgid "Technical support"
 msgstr "Soporte técnico"
 
-msgid "Thanks for waiting!"
-msgstr "¡Gracias por esperar!"
+msgid "Thanks for waiting"
+msgstr "Gracias por esperar"
 
 msgid "The framework to maximize productivity!"
 msgstr "¡El framework para maximizar la productividad!"
@@ -290,11 +282,8 @@ msgstr "¡El nombre de usuario ya existe!"
 msgid "The subdomain"
 msgstr "El subdominio"
 
-msgid "There is no more settings to do"
+msgid "There are no more settings to do"
 msgstr "No hay más configuraciones que realizar"
-
-msgid "This method will be available very soon"
-msgstr "Muy pronto estará disponible este método"
 
 msgid "To get started, paste the config file into the program's installation folder"
 msgstr "Para comenzar, pegue el archivo de configuración en la carpeta de instalación del programa"
@@ -311,17 +300,11 @@ msgstr "Usuario"
 msgid "User details"
 msgstr "Detalle de usuario"
 
-msgid "User preferences"
-msgstr "Preferencias del usuario"
-
 msgid "Users"
 msgstr "Usuarios"
 
 msgid "Version"
 msgstr "Versión"
-
-msgid "Warehouse"
-msgstr "Bodega"
 
 msgid "We are sorry! We could not find the requested method"
 msgstr "¡Lo sentimos! No pudimos encontrar el método solicitado"
@@ -335,15 +318,20 @@ msgstr "Sitio web"
 msgid "Welcome to BlackPHP!"
 msgstr "¡Bienvenido a BlackPHP!"
 
+msgid "White - Without lateral menu"
+msgstr "Blanco - Sin menú lateral"
+
 msgid "You are creating a new company account in BlackPHP. For this action you need to have an account as an installer"
 msgstr "Estás creando una nueva cuenta de empresa en BlackPHP. Para esta acción necesitas tener una cuenta como instalador"
-
-msgid "You are not logged in"
-msgstr "No ha iniciado sesión"
-
-msgid "You do not have permissions to perform this operation"
-msgstr "No tiene permisos para realizar esta operación"
 
 msgctxt "time"
 msgid "on"
 msgstr "el"
+
+# 103 messages translated.
+
+#msgid "Created by"
+#msgstr ""
+
+#msgid "Last edition by"
+#msgstr ""

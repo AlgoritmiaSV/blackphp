@@ -17,6 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+# Not required
 msgctxt "time"
 msgid "on"
 msgstr "on"
+
+# 1 messages translated.

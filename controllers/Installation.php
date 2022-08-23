@@ -15,7 +15,7 @@ class Installation extends Controller
 	/**
 	 * Constructor de la clase de instalación
 	 * 
-	 * Inicializa la propiedad module con el nombde de la clase.
+	 * Inicializa la propiedad module con el nombre de la clase.
 	 * 
 	 * @return void
 	 */
@@ -147,7 +147,8 @@ class Installation extends Controller
 			if(isset($entity["entity_id"]) || in_array($data["subdomain"], $reserved_subdomains))
 			{
 				$data["title"] = "Error";
-				$data["message"] = _("The subdomain") . " " . $data["subdomain"] . " " . _("is not available");
+				$data["message"] = _("The subdomain") . " " . $data["subdomain"] . " " 
+				. _("is not available");
 				$data["theme"] = "red";
 				echo json_encode($data);
 				return;

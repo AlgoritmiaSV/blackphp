@@ -1,83 +1,85 @@
-<div class="form_content">
-	<form action="save_installation" data-reset="{{ module }}/">
-		<div class="form_title">
-			_(System)
-		</div>
-		<div class="form_body">
-			<input type="hidden" name="entity_id" class="update_input">
-			<input type="hidden" name="subdomain" value="{{ subdomain }}">
-			<div class="form_entry">
-				<label>_(Distribution name):</label>
-				<input name="sys_name" maxlength="64" class="update_input" value="ERP">
+<div class="content_viewer">
+	<div class="form_content">
+		<form action="save_installation" data-reset="{{ module }}/">
+			<div class="form_title">
+				_(System)
 			</div>
-			<div>
-				<label>_(Modules):</label>
-				{{ modules }}
+			<div class="form_body">
+				<input type="hidden" name="entity_id" class="update_input">
+				<input type="hidden" name="subdomain" value="{{ subdomain }}">
+				<div class="form_entry">
+					<label>_(Distribution name):</label>
+					<input name="sys_name" maxlength="64" class="update_input" value="ERP">
+				</div>
+				<div>
+					<label>_(Modules):</label>
+					{{ modules }}
+				</div>
 			</div>
-		</div>
-		<div class="form_title">
-			_(Entity data)
-		</div>
-		<div class="form_body">
-			<div class="form_entry">
-				<label>_(Entity name):</label>
-				<input name="entity_name" maxlength="64" class="update_input" required>
+			<div class="form_title">
+				_(Entity data)
 			</div>
-			<div class="form_entry">
-				<label>_(Slogan):</label>
-				<input name="entity_slogan" maxlength="64" class="update_input">
+			<div class="form_body">
+				<div class="form_entry">
+					<label>_(Entity name):</label>
+					<input name="entity_name" maxlength="64" class="update_input" required>
+				</div>
+				<div class="form_entry">
+					<label>_(Slogan):</label>
+					<input name="entity_slogan" maxlength="64" class="update_input">
+				</div>
 			</div>
-		</div>
-		<p>_(Entity logo):</p>
-		<div class="input-images"></div>
-		<div class="form_title">
-			_(Admin user)
-		</div>
-		<div class="form_body">
-			<input type="hidden" name="admin_user" class="update_input">
-			<div class="form_entry">
-				<label>_(Complete name):</label>
-				<input name="user_name" maxlength="64" class="update_input" required>
+			<p>_(Entity logo):</p>
+			<div class="input-images"></div>
+			<div class="form_title">
+				_(Admin user)
 			</div>
-			<div class="form_entry">
-				<label>_(User):</label>
-				<input name="nickname" maxlength="32" class="update_input" required>
+			<div class="form_body">
+				<input type="hidden" name="admin_user" class="update_input">
+				<div class="form_entry">
+					<label>_(Complete name):</label>
+					<input name="user_name" maxlength="64" class="update_input" required>
+				</div>
+				<div class="form_entry">
+					<label>_(User):</label>
+					<input name="nickname" maxlength="32" class="update_input" required>
+				</div>
+				<div class="form_entry">
+					<label>_(Password):</label>
+					<input name="password" type="password" maxlength="256">
+				</div>
+				<div class="form_entry">
+					<label>_(Confirm password):</label>
+					<input name="confirm_password" type="password" maxlength="256">
+				</div>
 			</div>
-			<div class="form_entry">
-				<label>_(Password):</label>
-				<input name="password" type="password" maxlength="256">
+			<div class="form_title">
+				_(Other settings)
 			</div>
-			<div class="form_entry">
-				<label>_(Confirm password):</label>
-				<input name="confirm_password" type="password" maxlength="256">
+			<div class="form_body">
+				<p>_(There are no more settings to do).</p>
 			</div>
+			<div class="form_foot">
+				<button class="blue_button" type="submit">_(Save)</button>
+				<!-- inside_installation -->
+				<button class="grey_button cancel_button" type="reset">_(Cancel)</button>
+				<!-- /inside_installation -->
+				<!-- outside_installation -->
+				<button class="grey_button" type="button" id="u_close">_(Cancel)</button>
+				<!-- /outside_installation -->
+			</div>
+		</form>
+		<div class="sending">
+			<img src="public/images/loading.gif" class="small_icon">
+			<span>_(Saving)...</span>
 		</div>
-		<div class="form_title">
-			_(Other settings)
+		<div class="error">
+			<img src="public/images/error.png" class="small_icon">
+			<span>_(Failed to save)</span>
 		</div>
-		<div class="form_body">
-			<p>_(There is no more settings to do).</p>
+		<div class="success">
+			<img src="public/images/success.png" class="small_icon">
+			<span>_(Success)</span>
 		</div>
-		<div class="form_foot">
-			<button class="blue_button" type="submit">_(Save)</button>
-			<!-- inside_installation -->
-			<button class="grey_button cancel_button" type="reset">_(Cancel)</button>
-			<!-- /inside_installation -->
-			<!-- outside_installation -->
-			<button class="grey_button" type="button" id="u_close">_(Cancel)</button>
-			<!-- /outside_installation -->
-		</div>
-	</form>
-	<div class="sending">
-		<img src="public/images/loading.gif" class="small_icon">
-		<span>_(Saving)...</span>
-	</div>
-	<div class="error">
-		<img src="public/images/error.png" class="small_icon">
-		<span>_(Failed to save)</span>
-	</div>
-	<div class="success">
-		<img src="public/images/success.png" class="small_icon">
-		<span>_(Success)</span>
 	</div>
 </div>

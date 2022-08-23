@@ -20,7 +20,6 @@ msgstr ""
 msgid "About BlackPHP"
 msgstr "Acerca de BlackPHP"
 
-# Not required
 msgid "Active"
 msgstr "Activo"
 
@@ -75,6 +74,9 @@ msgstr "Contacto y soporte técnico"
 msgid "Continue"
 msgstr "Continuar"
 
+msgid "Created by"
+msgstr "Creado por"
+
 msgid "Date"
 msgstr "Fecha"
 
@@ -83,6 +85,9 @@ msgstr "Eliminar"
 
 msgid "Delete user"
 msgstr "Eliminar usuario"
+
+msgid "Deleted"
+msgstr "Eliminado"
 
 msgid "Display theme"
 msgstr "Tema de visualización"
@@ -170,6 +175,9 @@ msgstr "¡Es hora de iniciar!"
 
 msgid "Language"
 msgstr "Idioma"
+
+msgid "Last edition by"
+msgstr "Editado por última vez por"
 
 msgid "Last sessions"
 msgstr "Últimas sesiones"
@@ -285,6 +293,9 @@ msgstr "El subdominio"
 msgid "There are no more settings to do"
 msgstr "No hay más configuraciones que realizar"
 
+msgid "This method will be available very soon"
+msgstr "Este método estará disponible muy pronto"
+
 msgid "To get started, paste the config file into the program's installation folder"
 msgstr "Para comenzar, pegue el archivo de configuración en la carpeta de instalación del programa"
 
@@ -328,10 +339,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 103 messages translated.
-
-#msgid "Created by"
-#msgstr ""
-
-#msgid "Last edition by"
-#msgstr ""
+# 107 messages translated.

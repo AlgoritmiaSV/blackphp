@@ -1,13 +1,13 @@
 <div class="list_options">
 	<div class="action_icons">
 		<a href="/{{ module }}/NewUser/">
-			<img src="public/images/add.png" alt="_(New user)" title="_(New user)">
+			<img src="public/images/add.png" alt="_(New user)">
 		</a>
 		<a href="/{{ module }}/users_table_loader/Excel/">
-			<img src="public/images/excel.png" alt="_(Export to Excel)" title="_(Export to Excel)">
+			<img src="public/images/excel.png" alt="_(Export to Excel)">
 		</a>
 		<a href="#" class="print_button" data-print=".data_viewer">
-			<img src="public/images/printer.png" alt="_(Print)" title="_(Print)">
+			<img src="public/images/printer.png" alt="_(Print)">
 		</a>
 	</div>
 	<div class="action_filter">
@@ -45,53 +45,5 @@
 			_(Error!)<br>
 			_(Failed to load page).
 		</span>
-	</div>
-</div>
-<div id="add_user_dialog" class="dialog" title="_(New user)" data-reload="true">
-	<div class="entry_info"></div>
-	<form action="save_user" data-close_dialog="add_user_dialog">
-		<div class="form_entry">
-			<label>_(Complete name):</label>
-			<input type="text" name="user_name" maxlength="64" required>
-		</div>
-		<div class="form_entry">
-			<label>_(User):</label>
-			<input type="text" name="nickname" maxlength="32" required>
-		</div>
-		<div class="form_entry">
-			<label>_(Password):</label>
-			<input type="password" name="password" maxlength="32" class="equal_value" required>
-		</div>
-		<div class="form_entry">
-			<label>_(Confirm password):</label>
-			<input type="password" name="confirm_password" maxlength="32" class="equal_value" required>
-		</div>
-		<div>
-			<p>_(Give access to):</p>
-			[[ modules ]]
-			<div class="checkbox_container">
-				<label>_({{ module_name }})
-					<input type="checkbox" name="modules[]" value="{{ module_url }}" class="update_check" data-source="modules">
-					<span class="checkmark"></span>
-				</label>
-			</div>[[/ modules ]]
-		</div>
-		<div class="hidden_entry">
-			<label>&nbsp;</label>
-			<button id="user_submit" type="submit">_(Save)</button>
-			<button type="reset">_(Cancel)</button>
-		</div>
-	</form>
-	<div class="sending">
-		<img src="public/images/loading.gif" class="small_icon">
-		<span>_(Saving)...</span>
-	</div>
-	<div class="error">
-		<img src="public/images/error.png" class="small_icon">
-		<span>_(Failed to save)</span>
-	</div>
-	<div class="success">
-		<img src="public/images/success.png" class="small_icon">
-		<span>_(Success)</span>
 	</div>
 </div>

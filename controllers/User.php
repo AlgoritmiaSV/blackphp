@@ -98,6 +98,12 @@ class User extends Controller
 			{
 				Session::set("lang", explode("_", $user["locale"])[0]);
 			}
+			if(!empty($user["theme_id"]))
+			{
+				$theme = app_themes_model::find($user["theme_id"]);
+				Session::set("theme_id", $theme->getTheme_id());
+				Session::set("theme_url", $theme->getTheme_url());
+			}
 			$now = Date("Y-m-d H:i:s");
 			# Get user agent
 			$user_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -105,13 +111,11 @@ class User extends Controller
 			$ipv4 = $this->getRealIP();
 			# Check if exists
 			$browser = browsers_model::where("user_agent", $user_agent)->get();
-			$browser_id = $browser->getBrowser_id();
-			if(empty($browser_id))
+			if($browser->is_null("browser_id"))
 			{
 				#Set new browser
 				$parser = new UserAgentParser();
 				$ua = $parser->parse($user_agent);
-				$browser = new browsers_model();
 				$browser->set(Array(
 					"user_agent" => $user_agent,
 					"browser_name" => $ua->browser(),
@@ -120,7 +124,6 @@ class User extends Controller
 					"creation_user" => $user["user_id"],
 					"creation_time" => $now
 				))->save();
-				$browser_id = $browser->getBrowser_id();
 			}
 
 			#Set session
@@ -128,7 +131,7 @@ class User extends Controller
 			$session->set(Array(
 				"user_id" => $user["user_id"],
 				"ip_address" => $ipv4,
-				"browser_id" => $browser_id,
+				"browser_id" => $browser->getBrowser_id(),
 				"date_time" => $now
 			))->save();
 

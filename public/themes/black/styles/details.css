@@ -156,3 +156,8 @@
 {
 	max-width: 100%;
 }
+
+.details_foot button:not(.delete_button)
+{
+	margin-left: 7px;
+}

@@ -338,7 +338,7 @@ tr:hover .action_icon
 .description_label
 {
 	display: inline-block;
-	width: calc(100% - 160px);
+	width: calc(100% - 190px);
 	vertical-align: top;
 	padding: 2px 0px;
 	border-bottom: 1px dashed #cccccc;
@@ -347,6 +347,11 @@ tr:hover .action_icon
 .document_td
 {
 	width: 300px;
+}
+
+.form_foot button:not(.delete_button)
+{
+	margin-left: 7px;
 }
 
 @media screen and (max-width: 799px)

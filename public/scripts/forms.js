@@ -272,7 +272,6 @@ $( function()
 			$(this).data("value", $(this).val());
 			$(this).val($.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate")));
 		});
-		//form_data = $.parseJSON(JSON.stringify($(this).serializeArray()));
 		var form_data = new FormData(this);
 		first_input = $(this).find("input").first();
 		div_sending = $(this).siblings(".sending");
@@ -606,7 +605,11 @@ $( function()
 				select: function( event, ui ) {
 					if(ui.item.id || ui.item.local_code)
 					{
-						var _tr = $(this).closest("tr");
+						var _tr = $(this).closest(".autocomplete_container");
+						if(_tr.length == 0)
+						{
+							_tr = $(this).closest("tr");
+						}
 						$.each(ui.item, function(v_index, v_value) {
 							_tr.find("input." + v_index).val(v_value);
 							_tr.find("textarea." + v_index).val(v_value);

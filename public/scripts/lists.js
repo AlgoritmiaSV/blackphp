@@ -88,6 +88,75 @@ $( function()
 			$("div.loading_data").hide();
 		});
 	}
+
+	/* Data tables */
+	$(".data_table").each(function() {
+		load_data_table($(this).attr("id"));
+	});
+
+	function load_data_table(table_id)
+	{
+		var _table = $("#" + table_id);
+		var _template = _table.find(".template").clone().removeClass("template").prop("outerHTML");
+		$.ajax({
+			method: "POST",
+			url: url.module + "/" + table_id + "_loader/",
+			data: url,
+			dataType: "json"
+		})
+		.done(function(data) {
+			if(data.content != null)
+			{
+				$.each(data.content, function(index, value) {
+					var tr = _template;
+					$.each(value, function(e_index, e_value) {
+						tr = tr.replace(new RegExp("{{" + e_index + "}}", 'g'), e_value);
+					});
+					$("#" + table_id + " tbody").append(tr);
+				});
+				$("#" + table_id + " tbody tr").on("click", function(e) {
+					if($(this).data("href"))
+					{
+						location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
+					}
+				});
+				if(data.foot)
+				{
+					$.each(data.foot, function(index, value) {
+						tr = $("#" + table_id + " tfoot").html();
+						tr = tr.replace(new RegExp("{{" + index + "}}", 'g'), value);
+						$("#" + table_id + " tfoot").html(tr);
+					});
+				}
+			}
+			_table.find("tr.template").remove();
+			_table.DataTable({
+				responsive: true,
+				paging: false,
+				fixedHeader: {
+					header: true,
+					footer: true
+				},
+				language: {
+					url: '/Resources/datatables_language/' + $("html").attr("lang")
+				}
+			});
+			/* Fill content outside table after load */
+			if(data.load_after)
+			{
+				$.each(data.load_after, function(index, value) {
+					$("." + index).text(value);
+				});
+			}
+		})
+		.fail(function() {
+			$("div.loading_error").show();
+		})
+		.always(function() {
+			$("div.loading_data").hide();
+		});
+	}
+
 	/* Content loader */
 	$(".content_loader").each(function() {
 		load_content($(this).attr("id"));
@@ -175,7 +244,7 @@ $( function()
 
 	$(".data_search").on("keyup", function() {
 		var string_value = $(this).val();
-		$(".data_viewer tbody tr").not(".template").each(function() {
+		$(".data_viewer tbody tr, .data_table tbody tr").not(".template").each(function() {
 			found = false;
 			$(this).find("td").each(function() {
 				if($(this).text().toUpperCase().indexOf(string_value.toUpperCase()) >= 0)

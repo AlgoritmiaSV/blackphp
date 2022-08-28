@@ -2,6 +2,10 @@
   "dependencies": {
     "chart.js": "^3.8.0",
     "chartjs-plugin-datalabels": "^2.0.0",
+    "datatables.net": "^1.12.1",
+    "datatables.net-dt": "^1.12.1",
+    "datatables.net-responsive": "^2.3.0",
+    "datatables.net-responsive-dt": "^2.3.0",
     "floatthead": "^2.2.4",
     "jAlert": "^4.9.1",
     "jquery": "^3.6.0",

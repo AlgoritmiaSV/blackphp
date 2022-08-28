@@ -20,6 +20,12 @@ msgstr ""
 msgid "About BlackPHP"
 msgstr "Acerca de BlackPHP"
 
+msgid "activate to sort column ascending"
+msgstr "ordenar la columna de forma ascendente"
+
+msgid "activate to sort column descending"
+msgstr "ordenar la columna de forma descendente"
+
 msgid "Active"
 msgstr "Activo"
 
@@ -137,6 +143,12 @@ msgstr "Error al cargar la página"
 msgid "Failed to save"
 msgstr "Error al guardar"
 
+msgid "filtered from _MAX_ total entries"
+msgstr "filtrados de _MAX_ entradas totales"
+
+msgid "First"
+msgstr "Primera"
+
 msgid "Give access to"
 msgstr "Dar acceso a"
 
@@ -176,6 +188,9 @@ msgstr "¡Es hora de iniciar!"
 msgid "Language"
 msgstr "Idioma"
 
+msgid "Last"
+msgstr "Última"
+
 msgid "Last edition by"
 msgstr "Editado por última vez por"
 
@@ -209,11 +224,23 @@ msgstr "Mi cuenta"
 msgid "New user"
 msgstr "Nuevo usuario"
 
+msgid "Next"
+msgstr "Siguiente"
+
 msgid "Nickname"
 msgstr "Usuario"
 
+msgid "No data available in table"
+msgstr "No hay datos en la tabla"
+
+msgid "No matching records found"
+msgstr "No se encontraron resultados"
+
 msgid "No subdomain chosen"
 msgstr "No se eligió un subdominio"
+
+msgid "Not authorized"
+msgstr "No autorizado"
 
 msgid "Other settings"
 msgstr "Otras configuraciones"
@@ -230,6 +257,9 @@ msgstr "Teléfono"
 msgid "Preferences"
 msgstr "Preferencias"
 
+msgid "Previous"
+msgstr "Anterior"
+
 msgid "Print"
 msgstr "Imprimir"
 
@@ -242,6 +272,9 @@ msgstr "Guardar"
 msgid "Saving"
 msgstr "Guardando"
 
+msgid "Search"
+msgstr "Buscar"
+
 msgid "Select"
 msgstr "Seleccionar"
 
@@ -250,6 +283,15 @@ msgstr "Fecha del servidor"
 
 msgid "Settings"
 msgstr "Configuraciones"
+
+msgid "Show _MENU_ entries"
+msgstr "Mostrando _MENU_ resultados"
+
+msgid "Showing 0 to 0 of 0 entries"
+msgstr "Mostrando del 0 al 0 de 0 resultados"
+
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr "Mostrando del _START_ al _END_ de _TOTAL_ resultados"
 
 msgid "Shows system information: Version, contact and technical support"
 msgstr "Muestra la información del sistema: Versión, contacto y soporte técnico"
@@ -339,4 +381,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 107 messages translated.
+# 121 messages translated.

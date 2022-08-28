@@ -12,6 +12,11 @@
 	min-width: 800px;
 }
 
+.data_table
+{
+	width: calc(100% - 10px) !important;
+}
+
 .data_viewer, .data_viewer td, .data_viewer th
 {
 	border: 1px solid #666666;
@@ -80,7 +85,7 @@
 	padding: 7px;
 }
 
-.data_viewer tbody tr
+.data_viewer tbody tr, .data_table tbody tr
 {
 	cursor: pointer;
 }

@@ -92,6 +92,7 @@ $( function()
 	/* Data tables */
 	$(".data_table").each(function() {
 		load_data_table($(this).attr("id"));
+		$(".content_viewer").css("overflow", "hidden");
 	});
 
 	function load_data_table(table_id)
@@ -130,16 +131,18 @@ $( function()
 				}
 			}
 			_table.find("tr.template").remove();
-			_table.DataTable({
+			var dtable = _table.DataTable({
 				responsive: true,
 				paging: false,
 				fixedHeader: {
 					header: true,
 					footer: true
 				},
+				scrollY: $(".content_viewer").height() - 65,
 				language: {
 					url: '/Resources/datatables_language/' + $("html").attr("lang")
-				}
+				},
+				dom: 'lrtip'
 			});
 			/* Fill content outside table after load */
 			if(data.load_after)
@@ -148,6 +151,11 @@ $( function()
 					$("." + index).text(value);
 				});
 			}
+			/* Data serach */
+			$(".data_search").on("keyup", function()
+			{
+				dtable.search($(this).val()).draw();
+			});
 		})
 		.fail(function() {
 			$("div.loading_error").show();
@@ -242,26 +250,29 @@ $( function()
 		});
 	}
 
-	$(".data_search").on("keyup", function() {
-		var string_value = $(this).val();
-		$(".data_viewer tbody tr, .data_table tbody tr").not(".template").each(function() {
-			found = false;
-			$(this).find("td").each(function() {
-				if($(this).text().toUpperCase().indexOf(string_value.toUpperCase()) >= 0)
+	if($(".data_viewer").length)
+	{
+		$(".data_search").on("keyup", function() {
+			var string_value = $(this).val();
+			$(".data_viewer tbody tr").not(".template").each(function() {
+				found = false;
+				$(this).find("td").each(function() {
+					if($(this).text().toUpperCase().indexOf(string_value.toUpperCase()) >= 0)
+					{
+						found = true;
+					}
+				});
+				if(found)
 				{
-					found = true;
+					$(this).show();
+				}
+				else
+				{
+					$(this).hide();
 				}
 			});
-			if(found)
-			{
-				$(this).show();
-			}
-			else
-			{
-				$(this).hide();
-			}
 		});
-	});
+	}
 
 	/* Filter loader */
 	//filter_content = [];

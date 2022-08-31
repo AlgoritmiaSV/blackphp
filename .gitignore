@@ -1,5 +1,6 @@
 app_info.json
 blackphp_info.json
+.vscode
 entities/
 vendor/
 node_modules/

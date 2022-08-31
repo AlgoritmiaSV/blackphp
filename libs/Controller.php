@@ -119,7 +119,7 @@ class Controller
 				}
 			}
 			Session::set("entity", $entity);
-			$options = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("entity_id", $entity["entity_id"])->where("option_type", 1)->getAll();
+			$options = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
 			Session::set("options", $options);
 		}
 		else
@@ -131,6 +131,17 @@ class Controller
 		$this->entity_subdomain = $entity["entity_subdomain"];
 		$this->entity_name = $entity["entity_name"];
 		$this->view->data["modules"] = Session::get("modules");
+
+		#Currencies
+		if(!empty($entity["country_iso"]))
+		{
+			if(Session::get("currency_symbol") == null)
+			{
+				$currency = app_currencies_model::join("app_countries", "currency_iso")->where("country_iso", $entity["country_iso"])->get();
+				Session::set("currency_symbol", $currency["symbol"]);
+			}
+			$this->view->data["currency_symbol"] = Session::get("currency_symbol");
+		}
 
 		#Directorio y logo
 		if(!empty($entity["entity_subdomain"]))

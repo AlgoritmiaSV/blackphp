@@ -39,10 +39,10 @@
 
 .menu_item img
 {
-	width: 60px;
+	width: 40px;
 	position: absolute;
-	top: 5px;
-	left: 20px;
+	top: 15px;
+	left: 30px;
 }
 
 .menu_item span

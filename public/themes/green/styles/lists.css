@@ -95,6 +95,13 @@
 	background-color: #99ccff;
 }
 
+.currency_symbol
+{
+	float: left;
+	width: fit-content;
+	padding: 0px 5px 0px 0px;
+}
+
 @media screen and (max-width: 799px)
 {
 	.action_icons

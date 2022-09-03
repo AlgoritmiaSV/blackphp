@@ -327,7 +327,7 @@
 .info_table td
 {
 	padding: 10px;
-	border: 1px solid #999999;
+	border: 0px;
 }
 
 .institution_header > div

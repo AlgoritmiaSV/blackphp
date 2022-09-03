@@ -189,6 +189,12 @@ trait ORM
 			if(is_array($value))
 			{
 				$var = str_replace(".", "_", $value[0]);
+				$var = preg_replace( '/[^a-z0-9]/i', '', $var);
+				if($var == "" || is_numeric($var[0]))
+				{
+					$var = "v" . $var;
+				}
+				$var = substr($var, 0, 32);
 				$number = 1;
 				$initial_var = $var;
 				while(array_key_exists($var, $data))
@@ -444,6 +450,12 @@ trait ORM
 			if(is_array($value))
 			{
 				$var = str_replace(".", "_", $value[0]);
+				$var = preg_replace( '/[^a-z0-9]/i', '', $var);
+				if($var == "" || is_numeric($var[0]))
+				{
+					$var = "v" . $var;
+				}
+				$var = substr($var, 0, 32);
 				$number = 1;
 				$initial_var = $var;
 				while(array_key_exists($var, $data))

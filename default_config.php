@@ -4,7 +4,7 @@
  * 
  * Definición de constantes a utilizar en la base de datos por defecto.
  * 
- * Date-time: 2017-09-21 00:00
+ * Incorporado el: 2017-09-21 00:00
  * @author Edwin Fajardo <contacto@edwinfajardo.com>
  */
 

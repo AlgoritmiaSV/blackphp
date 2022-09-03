@@ -102,6 +102,10 @@
 	padding: 0px 5px 0px 0px;
 }
 
+.data_table tbody tr:hover {
+	color: #009900;
+}
+
 @media screen and (max-width: 799px)
 {
 	.action_icons

@@ -220,26 +220,6 @@ $(function() {
 		{
 			location.href = "/";
 		}
-		if ((event.key =='V' || event.key =='v') && event.altKey)
-		{
-			location.href = "/Ventas/";
-		}
-		if ((event.key =='C' || event.key =='c') && event.altKey)
-		{
-			location.href = "/Compras/";
-		}
-		if ((event.key =='T' || event.key =='t') && event.altKey)
-		{
-			location.href = "/Catalogo/";
-		}
-		if ((event.key =='R' || event.key =='r') && event.altKey)
-		{
-			location.href = "/Reportes/";
-		}
-		if ((event.key =='A' || event.key =='a') && event.altKey)
-		{
-			location.href = "/Ajustes/";
-		}
 	});
 	$(document).tooltip();
 

@@ -1,6 +1,6 @@
-# PACK OF ENGLISH LANGUAGE FOR MIMAKIT
+# PACK OF ENGLISH LANGUAGE FOR BLACKPHP
 # Copyright (C)2022 Red Teleinformática
-# This file is distributed under the same license as the PACKAGE MimaKit.
+# This file is distributed under the same license as the PACKAGE BlackPHP.
 # Edwin Fajardo <contacto@edwinfajardo.com>, 2022.
 #
 #, fuzzy

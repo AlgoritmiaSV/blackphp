@@ -370,6 +370,7 @@ class Installation extends Controller
 		$this->view->data["title"] = _("Start");
 		$this->view->standard_error();
 		$this->view->data["nav"] = "";
+		$this->view->data["welcome"] = sprintf(_("Welcome to %s!"), $this->system_name);
 		$this->view->data["content"] = $this->view->render("installation/install_missing_conf", true);
 		$this->view->render('main');
 	}

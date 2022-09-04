@@ -30,6 +30,21 @@ class Controller
 		#1 Creación de la vista
 		$this->view = new View();
 		$this->view->data["base_href"] = "/";
+		$system = Session::get("system");
+		if(empty($system))
+		{
+			if(file_exists("app_info.json"))
+			{
+				$system = json_decode(file_get_contents("app_info.json") ,true);
+			}
+			else
+			{
+				$system = Array("system_name" => "BlackPHP");
+			}
+			Session::set("system", $system);
+		}
+		$this->view->data["system_name"] = $system["system_name"];
+		$this->system_name = $system["system_name"];
 
 		#2 Zona horaria por defecto
 		date_default_timezone_set('America/El_Salvador');
@@ -274,6 +289,7 @@ class Controller
 				'styles/login.css'
 				));
 			$this->view->data["nav"] = "";
+			$this->view->data["about"] = sprintf(_("About %s"), $this->system_name);
 			$this->view->data["content"] = $this->view->render("login", true);
 			$this->view->render('main');
 		}

@@ -409,7 +409,7 @@ class Settings extends Controller
 	public function About()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = _("About BlackPHP");
+		$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
 		$this->view->standard_details();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->data["content_id"] = "info_details";
@@ -449,7 +449,7 @@ class Settings extends Controller
 		}
 		if($mode == "standalone")
 		{
-			$this->view->data["title"] = _("About BlackPHP");
+			$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
 			$this->view->standard_details();
 			$this->view->add("styles", "css", Array(
 				'styles/standalone.css'

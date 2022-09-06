@@ -1044,38 +1044,54 @@ $( function()
 	/**
 	 * Selection of entries
 	 */
-	 $(".entry_selector").on("change", function(e) {
-		value = $(e.target).val();
-		$(".hidden_entry").hide();
-		$(".hidden_entry").find("input").each(function() {
+	$(".entry_selector").on("change", function(e) {
+		var value = $(e.target).val();
+		var hidden_entries = $(".hidden_entry");
+		var visible_entries = $(".entry_type_" + value);
+		if($(this).data("target") != null)
+		{
+			var target = $($(this).data("target"));
+			hidden_entries = target.find(".hidden_entry");
+			visible_entries = target.find(".entry_type_" + value);
+		}
+		hidden_entries.hide();
+		hidden_entries.find("input").each(function() {
 			if(!building_entry_selector)
 			{
 				$(this).val("");
 			}
 			$(this).removeAttr("required");
 		});
-		$(".hidden_entry").find("select").each(function() {
+		hidden_entries.find("select").each(function() {
 			if(!building_entry_selector)
 			{
 				$(this).val("");
 			}
 			$(this).removeAttr("required");
 		});
-		$(".entry_type_" + value).show();
-		$(".entry_type_" + value).find("input").each(function() {
+		visible_entries.show();
+		$(visible_entries).find("input").each(function() {
 			if($(this).data("required") != null)
 			{
 				$(this).attr("required", true);
 			}
 		});
-		$(".entry_type_" + value).find("select").each(function() {
+		$(visible_entries).find("select").each(function() {
 			if($(this).data("required") != null)
 			{
 				$(this).attr("required", true);
 			}
 		});
 	});
-	$(".entry_type_" + $(".entry_selector").data("default")).show();
+	$(".entry_selector").each(function() {
+		var default_entries = $(".entry_type_" + $(this).data("default"));
+		if($(this).data("target") != null)
+		{
+			var target = $($(this).data("target"));
+			default_entries = target.find(".entry_type_" + $(this).data("default"));
+		}
+		default_entries.show();
+	});
 
 	//Textarea
 	$('textarea').each(function () {

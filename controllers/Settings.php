@@ -249,8 +249,7 @@ class Settings extends Controller
 		$user = users_model::find($_POST["user_id"])
 			->set(Array(
 				"user_name" => $_POST["user_name"],
-				"nickname" => $_POST["nickname"],
-				"entity_id" => $this->entity_id
+				"nickname" => $_POST["nickname"]
 			));
 		if(!empty($_POST["password"]))
 		{

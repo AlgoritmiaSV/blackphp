@@ -117,6 +117,10 @@ trait ORM
 			$this->setEdition_user($user_id);
 			$this->setEdition_time($now);
 		}
+		if(property_exists($this, "entity_id") && is_null($this->entity_id))
+		{
+			$this->entity_id = Session::get("entity")["entity_id"];
+		}
 		$data = get_object_vars($this);
 		$sth = null;
 		$table_name = self::$_table_name;
@@ -677,7 +681,7 @@ trait ORM
 	 * Este método recibe parámetros de forma dinámica de la manera siguiente:
 	 * 1) Si no recibe parámetros list() tomará como id la llave primaria y como text el primer campo
 	 * que incluya _name en el nombre, o en su defecto, el siguiente campo de la tabla.
-	 * 2) Si recibe un parámetro, tomará como id la llave primarioa, y como text el campo especificado
+	 * 2) Si recibe un parámetro, tomará como id la llave primaria, y como text el campo especificado
 	 * por parámetro.
 	 * 3) Si recibe dos parámetros, el primero será el campo que swe devolverá como id, y el
 	 * segundo se devolverá como text

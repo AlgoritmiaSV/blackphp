@@ -1,8 +1,12 @@
-/*
-#	Functions for dialogs
-#	By: Edwin Fajardo
-#	Date-time: 2020-04-12 23:20
-*/
+/**
+ * Configuración de cuadros de diálogo de JQuery UI
+ * 
+ * Incorporado el 2020-04-12 23:20
+ * 
+ * @author Edwin Fajardo
+ * @copyright 2022 Red Teleinformática
+ * @see https://www.edwinfajardo.com
+ */
 
 $(function ()
 {
@@ -57,17 +61,22 @@ $(function ()
 	});
 
 	$(".dialog").each(function() {
-		var accept = $(this).data("accept") || "Agregar";
 		options = {
 			buttons:
-			{
-				[accept]: function(evt) {
-					$(this).find("form").trigger("submit");
+			[
+				{
+					text: $(this).data("accept") || "Accept",
+					click: function(evt) {
+						$(this).find("form").trigger("submit");
+					}
 				},
-				"Cerrar": function() {
-					$(this).dialog("close");
+				{
+					text: $(this).data("close") || "Close",
+					click: function() {
+						$(this).dialog("close");
+					}
 				}
-			}
+			]
 		};
 		$(this).dialog(options);
 		if($(this).data("reload"))

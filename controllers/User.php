@@ -49,7 +49,7 @@ class User extends Controller
 		$data = Array();
 		if($_POST["method"] == "MyAccount")
 		{
-			$themes = app_themes_model::select("theme_id AS id", "theme_name AS text")->getAll();
+			$themes = app_themes_model::list();
 			foreach($themes as $key => $theme)
 			{
 				$themes[$key]["text"] = _($theme["text"]);

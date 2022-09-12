@@ -19,6 +19,13 @@
 #app_logo
 {
 	text-decoration: none;
+	display: inline-block;
+	border-radius: 5px;
+	overflow: hidden;
+	width: 40px;
+	height: 40px;
+	vertical-align: bottom;
+	margin: 1px;
 }
 
 #app_logo img

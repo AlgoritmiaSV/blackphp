@@ -134,7 +134,12 @@ class Controller
 				}
 			}
 			Session::set("entity", $entity);
-			$options = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
+			$option_list = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
+			$options = Array();
+			foreach($option_list as $item)
+			{
+				$options[$item["option_key"]] = $item["option_value"];
+			}
 			Session::set("options", $options);
 		}
 		else
@@ -177,11 +182,11 @@ class Controller
 		}
 
 		#Restricciones
-		foreach($options as $option)
+		foreach($options as $key => $value)
 		{
-			if($option["option_value"] == 0)
+			if($value == 0)
 			{
-				$this->view->restrict[] = "entity:" . $option["option_key"];
+				$this->view->restrict[] = "entity:" . $key;
 			}
 		}
 

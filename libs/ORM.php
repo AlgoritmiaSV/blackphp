@@ -82,12 +82,27 @@ trait ORM
 	 * Encontrar por su llave primaria
 	 * 
 	 * Obtiene un registro de la tabla indicada por su llave primaria.
+	 * @param mixed $id El identificador (Llave primaria) del registro.
 	 * 
 	 * @return object Objeto de la clase que llamó al método
 	 */
 	public static function find($id)
 	{
 		return self::where(self::$_primary_key, $id)->get();
+	}
+
+	/**
+	 * Encontrar por
+	 * 
+	 * Obtiene un registro de la tabla indicada por un campo específico.
+	 * @param string $field El nombre del campo a considerar
+	 * @param mixed $value El valor del campo a considerar
+	 * 
+	 * @return object Objeto de la clase que llamó al método
+	 */
+	public static function findBy($field, $value)
+	{
+		return self::where($field, $value)->get();
 	}
 
 	/**

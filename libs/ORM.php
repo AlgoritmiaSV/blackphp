@@ -83,11 +83,16 @@ trait ORM
 	 * 
 	 * Obtiene un registro de la tabla indicada por su llave primaria.
 	 * @param mixed $id El identificador (Llave primaria) del registro.
+	 * @param bool $deleted Obtener un registro aún si ya ha sido eliminado (status = 0)
 	 * 
 	 * @return object Objeto de la clase que llamó al método
 	 */
-	public static function find($id)
+	public static function find($id, $deleted = false)
 	{
+		if($deleted && property_exists(new static(), "status"))
+		{
+			self::where("status", ">=", 0);
+		}
 		return self::where(self::$_primary_key, $id)->get();
 	}
 
@@ -97,11 +102,16 @@ trait ORM
 	 * Obtiene un registro de la tabla indicada por un campo específico.
 	 * @param string $field El nombre del campo a considerar
 	 * @param mixed $value El valor del campo a considerar
+	 * @param bool $deleted Obtener un registro aún si ya ha sido eliminado (status = 0)
 	 * 
 	 * @return object Objeto de la clase que llamó al método
 	 */
-	public static function findBy($field, $value)
+	public static function findBy($field, $value, $deleted = false)
 	{
+		if($deleted && property_exists(new static(), "status"))
+		{
+			self::where("status", ">=", 0);
+		}
 		return self::where($field, $value)->get();
 	}
 

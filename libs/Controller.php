@@ -210,7 +210,7 @@ class Controller
 	 * 
 	 * @return object|void Un objeto de tipo Model, o void
 	 */
-	public function loadModel($name, $modelPath = 'models/', $default_model = true)
+	protected function loadModel($name, $modelPath = 'models/', $default_model = true)
 	{
 		$path = $modelPath . $name.'_model.php';
 		if (file_exists($path))
@@ -237,7 +237,7 @@ class Controller
 	 * @param string $type Tipo de respuesta esperada (html, internal o JSON)
 	 * @param string $module el módulo al que el usuario intenta acceder
 	 */
-	public function session_required($type = 'html', $module = "")
+	protected function session_required($type = 'html', $module = "")
 	{
 		if(Session::get("user_id") != null)
 		{
@@ -308,7 +308,7 @@ class Controller
 	 * 
 	 * @return string IP del cliente
 	 */
-	public function getRealIP()
+	protected function getRealIP()
 	{
 		if (!empty($_SERVER['HTTP_CLIENT_IP']))
 			return $_SERVER['HTTP_CLIENT_IP'];
@@ -329,8 +329,12 @@ class Controller
 	 * 
 	 * @return void Realiza los cambios directamente en la vista
 	 */
-	public function user_actions($element)
+	protected function user_actions($element)
 	{
+		if(is_object($element))
+		{
+			$element = get_object_vars($element);
+		}
 		if($element["creation_user"] != 0)
 		{
 			$creator = users_model::find($element["creation_user"]);
@@ -367,7 +371,7 @@ class Controller
 	 * 
 	 * @return void No se devuelven valores
 	 */
-	public function set_user_log($action_key, $element_key, $element_link = 0, $date_time = "")
+	protected function set_user_log($action_key, $element_key, $element_link = 0, $date_time = "")
 	{
 		if(empty($date_time))
 		{
@@ -397,7 +401,7 @@ class Controller
 	 * 
 	 * @return boolean Verdadero si es una IP, falso en caso contrario.
 	 */
-	public function is_ip_address($str)
+	protected function is_ip_address($str)
 	{
 		$octets = explode(".", $str);
 		if(count($octets) != 4)
@@ -417,6 +421,25 @@ class Controller
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Imprimir un array en formato JSON
+	 * 
+	 * Convierte todos los valores nulos a cadenas vacías, y luego, imprime el resultado en formato
+	 * JSON
+	 * @param array $data Arreglo de datos a imprimir
+	 * 
+	 * @return void
+	 */
+	protected function json($data)
+	{
+		array_walk_recursive($data, function(&$item)
+		{
+			$item = $item === null ? "" : $item;
+		});
+		header('Content-type: application/json');
+		echo json_encode($data);
 	}
 }
 ?>

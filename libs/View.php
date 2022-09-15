@@ -209,6 +209,8 @@ class View
 			'node_modules/select2/dist/js/select2.min.js',
 			'node_modules/print-this/printThis.js',
 			'node_modules/floatthead/dist/jquery.floatThead.min.js',
+			'node_modules/html2canvas/dist/html2canvas.min.js',
+			'node_modules/jspdf/dist/jspdf.umd.min.js',
 			'external/js/jquery.jqpagination.min.js',
 			'scripts/bpscript.min.js'
 		));
@@ -272,6 +274,8 @@ class View
 			'node_modules/jAlert/dist/jAlert.min.js',
 			'node_modules/select2/dist/js/select2.min.js',
 			'node_modules/print-this/printThis.js',
+			'node_modules/html2canvas/dist/html2canvas.min.js',
+			'node_modules/jspdf/dist/jspdf.umd.min.js',
 			'scripts/bpscript.min.js'
 		));
 	}

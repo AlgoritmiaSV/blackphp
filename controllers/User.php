@@ -64,7 +64,7 @@ class User extends Controller
 				"locale" => Session::get("locale")
 			);
 		}
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	/**
@@ -83,7 +83,7 @@ class User extends Controller
 			$data["title"] = "Error";
 			$data["message"] = _("Bad request");
 			$data["theme"] = "red";
-			echo json_encode($data);
+			$this->json($data);
 			return;
 		}
 		$user = users_model::where("nickname", $_POST["nickname"])->where("password", md5($_POST["password"]))->get()->toArray();
@@ -144,7 +144,7 @@ class User extends Controller
 			$data["message"] = _("Bad user or password");
 			$data["theme"] = "red";
 		}
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	/**
@@ -159,7 +159,7 @@ class User extends Controller
 	{
 		$data = Array("session" => false);
 		Session::destroy();
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	/**
@@ -211,7 +211,7 @@ class User extends Controller
 		$data["title"] = _("Success");
 		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
-		echo json_encode($data);
+		$this->json($data);
 	}
 }
 ?>

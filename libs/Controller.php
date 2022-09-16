@@ -249,14 +249,13 @@ class Controller
 				{
 					if($type == 'json')
 					{
-						$data = Array(
+						$this->json(Array(
 							"success" => false,
 							"error" => true,
 							"message" => _("You do not have permissions to perform this operation"),
 							"title" => "Error",
 							"theme" => "red"
-						);
-						echo json_encode($data);
+						));
 					}
 					else
 					{
@@ -273,14 +272,13 @@ class Controller
 		}
 		if($type == 'json')
 		{
-			$data = Array(
+			$this->json(Array(
 				"success" => false,
 				"error" => true,
 				"message" => _("You are not logged in"),
 				"title" => "Error",
 				"theme" => "red"
-			);
-			echo json_encode($data);
+			));
 		}
 		elseif($type == 'internal')
 		{
@@ -377,9 +375,9 @@ class Controller
 		{
 			$date_time = Date("Y-m-d H:i:s");
 		}
-		$action = app_actions_model::where("action_key", $action_key)->get();
-		$element = app_elements_model::where("element_key", $element_key)->get();
-		if($action->getAction_id() == null || $element->getElement_id() == null)
+		$action = app_actions_model::findBy("action_key", $action_key);
+		$element = app_elements_model::findBy("element_key", $element_key);
+		if($action->is_null("action_id") || $element->is_null("element_id"))
 		{
 			return;
 		}

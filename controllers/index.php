@@ -28,7 +28,7 @@ class Index extends Controller
 		$data = Array(
 			"alive" => true
 		);
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	public function home_content_loader()
@@ -57,7 +57,7 @@ class Index extends Controller
 	public function branch_filter_loader()
 	{
 		$data = Array();
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	public function age_calculation($date)
@@ -67,7 +67,7 @@ class Index extends Controller
 		{
 			$data["age"] = date_utilities::sql_date_to_age($date);
 		}
-		echo json_encode($data);
+		$this->json($data);
 	}
 }
 ?>

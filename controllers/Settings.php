@@ -210,7 +210,7 @@ class Settings extends Controller
 		}
 		else
 		{
-			echo json_encode($data);
+			$this->json($data);
 		}
 	}
 
@@ -228,7 +228,7 @@ class Settings extends Controller
 		$data = Array("success" => false);
 		if(empty($_POST["user_name"]))
 		{
-			echo json_encode($data);
+			$this->json($data);
 			return;
 		}
 
@@ -240,7 +240,7 @@ class Settings extends Controller
 			$data["title"] = "Error";
 			$data["message"] = _("The nickname already exists!");
 			$data["theme"] = "red";
-			echo json_encode($data);
+			$this->json($data);
 			return;
 		}
 
@@ -299,7 +299,7 @@ class Settings extends Controller
 		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
 		$data["reload_after"] = true;
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	/**
@@ -334,7 +334,7 @@ class Settings extends Controller
 				$data["update"][$option["option_key"]] = $option["option_value"];
 			}
 		}
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	public function save_entity()
@@ -386,7 +386,7 @@ class Settings extends Controller
 				move_uploaded_file($_FILES["images"]["tmp_name"][0], $file);
 			}
 		}
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	public function delete_user()
@@ -395,14 +395,14 @@ class Settings extends Controller
 		$data = Array("deleted" => false);
 		if(empty($_POST["id"]))
 		{
-			echo json_encode($data);
+			$this->json($data);
 			return;
 		}
 		$user = users_model::find($_POST["id"]);
 		$user->setNickname(null);
 		$affected = $user->delete();
 		$data["deleted"] = $affected > 0;
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	public function About()
@@ -488,7 +488,7 @@ class Settings extends Controller
 		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
 		$data["no_reset"] = true;
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	public function UserDetails()

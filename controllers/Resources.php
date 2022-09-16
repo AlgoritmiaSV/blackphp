@@ -25,20 +25,19 @@ class Resources extends Controller
 
 	public function keep_alive()
 	{
-		$data = Array(
+		$this->json(Array(
 			"alive" => true
-		);
-		echo json_encode($data);
+		));
 	}
 
 	public function age_calculation($date)
 	{
-		$data = Array();
+		$data = Array("age" => 0);
 		if(!empty($date))
 		{
 			$data["age"] = date_utilities::sql_date_to_age($date);
 		}
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	/**
@@ -74,7 +73,7 @@ class Resources extends Controller
 				"sortDescending" => ": " . _("activate to sort column descending")
 			)
 		);
-		echo json_encode($data);
+		$this->json($data);
 	}
 }
 ?>

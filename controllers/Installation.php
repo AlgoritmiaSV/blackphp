@@ -106,7 +106,7 @@ class Installation extends Controller
 				"methods" => entity_methods_model::select("method_id AS id")->getAll()
 			);
 		}
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	/**
@@ -139,7 +139,7 @@ class Installation extends Controller
 					$data["title"] = "Error";
 					$data["message"] = _("No subdomain chosen");
 					$data["theme"] = "red";
-					echo json_encode($data);
+					$this->json($data);
 					return;
 				}
 			}
@@ -150,7 +150,7 @@ class Installation extends Controller
 				$data["message"] = _("The subdomain") . " " . $data["subdomain"] . " " 
 				. _("is not available");
 				$data["theme"] = "red";
-				echo json_encode($data);
+				$this->json($data);
 				return;
 			}
 		}
@@ -181,7 +181,7 @@ class Installation extends Controller
 			$data["title"] = "Error";
 			$data["message"] = _("Failed to create the entity");
 			$data["theme"] = "red";
-			echo json_encode($data);
+			$this->json($data);
 			return;
 		}
 
@@ -315,8 +315,7 @@ class Installation extends Controller
 		}
 		#Close installer session
 		Session::destroy();
-		header('Content-type: application/json');
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	/**
@@ -336,7 +335,7 @@ class Installation extends Controller
 			$data["title"] = "Error";
 			$data["message"] = _("Enter your installer user and password");
 			$data["theme"] = "red";
-			echo json_encode($data);
+			$this->json($data);
 			return;
 		}
 		$installer = app_installers_model::where("installer_nickname", $data["nickname"])->where("installer_password", md5($data["password"]))->get()->toArray();
@@ -353,8 +352,7 @@ class Installation extends Controller
 			$data["theme"] = "red";
 			$data["no_reset"] = true;
 		}
-		header('Content-type: application/json');
-		echo json_encode($data);
+		$this->json($data);
 	}
 
 	/**

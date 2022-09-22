@@ -1124,7 +1124,7 @@ $( function()
 		age_span = $(this).next("span");
 		$.ajax({
 			method: "GET",
-			url: "index/age_calculation/" + date,
+			url: "Resources/age_calculation/" + date,
 			dataType: "json"
 		})
 		.done(function(age_data) {
@@ -1225,7 +1225,7 @@ $( function()
 		.fail(function() {
 		})
 		.always(function() {
-		});	
+		});
 	});
 
 	/** Calculate consumption */

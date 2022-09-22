@@ -704,17 +704,25 @@ trait ORM
 	 * Esta forma permite utilizar los datos en listas desplegables y autocompletado.
 	 * 
 	 * Este método recibe parámetros de forma dinámica de la manera siguiente:
+	 * Si el último parámetro es booleano, entonces, si es verdadero, se incluyen, además de id y text,
+	 * todas las columnas de la consulta.
 	 * 1) Si no recibe parámetros list() tomará como id la llave primaria y como text el primer campo
 	 * que incluya _name en el nombre, o en su defecto, el siguiente campo de la tabla.
 	 * 2) Si recibe un parámetro, tomará como id la llave primaria, y como text el campo especificado
 	 * por parámetro.
-	 * 3) Si recibe dos parámetros, el primero será el campo que swe devolverá como id, y el
+	 * 3) Si recibe dos parámetros, el primero será el campo que se devolverá como id, y el
 	 * segundo se devolverá como text
 	 */
 	public static function list()
 	{
 		$argv = func_get_args();
 		$argc = func_num_args();
+		$select = "";
+		if($argc > 0 && is_bool($argv[$argc - 1]) && $argv[$argc - 1])
+		{
+			$argc--;
+			$select = "*, ";
+		}
 		if($argc == 0)
 		{
 			$id = self::$_primary_key;
@@ -743,7 +751,7 @@ trait ORM
 			$id = $argv[0];
 			$text = $argv[1];
 		}
-		return self::select("$id AS id, $text AS text")->getAll();
+		return self::select($select . "$id AS id, $text AS text")->getAll();
 	}
 
 	public function is_null($property)

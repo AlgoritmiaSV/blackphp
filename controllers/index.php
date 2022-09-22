@@ -23,14 +23,6 @@ class Index extends Controller
 		$this->view->render('main');
 	}
 
-	public function keep_alive()
-	{
-		$data = Array(
-			"alive" => true
-		);
-		$this->json($data);
-	}
-
 	public function home_content_loader()
 	{
 		$entity = Session::get("entity");
@@ -57,16 +49,6 @@ class Index extends Controller
 	public function branch_filter_loader()
 	{
 		$data = Array();
-		$this->json($data);
-	}
-
-	public function age_calculation($date)
-	{
-		$data = Array();
-		if(!empty($date))
-		{
-			$data["age"] = date_utilities::sql_date_to_age($date);
-		}
 		$this->json($data);
 	}
 }

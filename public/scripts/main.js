@@ -150,7 +150,7 @@ $(function() {
 	{
 		$.ajax({
 			method: "POST",
-			url: "index/keep_alive/",
+			url: "Resources/keep_alive/",
 			data: url,
 			dataType: "json"
 		})

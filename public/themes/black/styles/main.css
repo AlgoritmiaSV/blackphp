@@ -88,7 +88,7 @@
 	vertical-align: top;
 	position: relative;
 	overflow: hidden;
-	width: calc(100% - 100px);
+	width: calc(100% - 170px);
 }
 
 #main_footer
@@ -118,7 +118,7 @@
 	display: table-cell;
 	vertical-align: top;
 	background-color: #666666;
-	width: 80px;
+	width: 150px;
 	font-size: 9pt;
 }
 
@@ -436,7 +436,7 @@
 .small_button
 {
 	display: inline-block;
-	font-size: 10pt;
+	font-size: 9pt;
 	text-decoration: none;
 	background-color: #828282;
 	border-radius: 3px;
@@ -448,7 +448,7 @@
 {
 	display: inline-block;
 	vertical-align: top;
-	padding: 4px 0px;
+	padding: 6px 0px;
 }
 
 .small_icon

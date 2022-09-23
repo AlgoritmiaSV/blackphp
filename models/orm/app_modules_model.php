@@ -18,6 +18,9 @@ class app_modules_model
 	/** @var string $module_url URL del módulo */
 	private $module_url;
 
+	/** @var string $module_icon Ícono del módulo en el menú */
+	private $module_icon;
+
 	/** @var string $module_key Tecla de acceso rápido */
 	private $module_key;
 
@@ -89,6 +92,16 @@ class app_modules_model
 	public function setModule_url($value)
 	{
 		$this->module_url = $value === null ? null : (string)$value;
+	}
+
+	public function getModule_icon()
+	{
+		return $this->module_icon;
+	}
+
+	public function setModule_icon($value)
+	{
+		$this->module_icon = $value === null ? null : (string)$value;
 	}
 
 	public function getModule_key()

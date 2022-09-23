@@ -125,11 +125,16 @@
 #main_nav a
 {
 	display: block;
-	padding: 14px 10px;
+	padding: 14px 7px;
 	background-color: #7e7f88;
 	margin-bottom: 2px;
 	color: #ffffff;
 	text-decoration: none;
+}
+
+#main_nav a img, .blue_button img, .grey_button img, .red_button img
+{
+	filter: invert(1);
 }
 
 #main_nav a:hover
@@ -159,6 +164,8 @@
 {
 	vertical-align: top;
 	padding: 10px;
+	text-align: center;
+	width: calc(100% - 120px);
 }
 
 #user_link
@@ -460,6 +467,12 @@
 {
 	display: table;
 	width: 100%;
+}
+
+.x-small_icon
+{
+	width: 16px;
+	vertical-align: bottom;
 }
 
 /* Tags */

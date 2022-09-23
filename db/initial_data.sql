@@ -60,7 +60,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `app_modules` WRITE;
 /*!40000 ALTER TABLE `app_modules` DISABLE KEYS */;
-INSERT INTO `app_modules` VALUES (1,'Settings','Settings','A','Settings',127,1);
+INSERT INTO `app_modules` VALUES (1,'Settings','Settings','settings','A','Settings',127,1);
 /*!40000 ALTER TABLE `app_modules` ENABLE KEYS */;
 UNLOCK TABLES;
 

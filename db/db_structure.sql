@@ -108,6 +108,7 @@ CREATE TABLE `app_modules` (
   `module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `module_name` varchar(32) NOT NULL COMMENT 'Nombre del módulo',
   `module_url` varchar(32) NOT NULL COMMENT 'URL del módulo',
+  `module_icon` varchar(32) NOT NULL COMMENT 'Ícono del módulo en el menú',
   `module_key` char(1) NOT NULL COMMENT 'Tecla de acceso rápido',
   `module_description` tinytext NOT NULL COMMENT 'Descripción del módulo',
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
@@ -203,6 +204,7 @@ SET character_set_client = utf8;
  1 AS `module_id`,
   1 AS `module_name`,
   1 AS `module_url`,
+  1 AS `module_icon`,
   1 AS `module_key`,
   1 AS `module_description`,
   1 AS `default_order`,
@@ -535,7 +537,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
-/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` */;
+/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

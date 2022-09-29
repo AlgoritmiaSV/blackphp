@@ -1,0 +1,101 @@
+/*
+Estilos de tarjetas
+*/
+.card_container
+{
+	position: relative;
+	margin: 10px auto;
+	width: 500px;
+	height: 300px;
+	border: 1px solid #999999;
+}
+
+.card_header
+{
+	background-color: #7accff;
+	overflow: visible;
+	height: 80px;
+	position: relative;
+}
+
+.card_header img {
+	max-height: 120px;
+	position: absolute;
+	right: 20px;
+	top: 150px;
+}
+
+.entity_name {
+	display: block;
+	position: absolute;
+	top: 20px;
+	text-align: center;
+	width: 100%;
+	right: 0px;
+	font-size: 15pt;
+}
+
+.card_title {
+	display: block;
+	width: 100%;
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	text-align: center;
+	font-size: 13pt;
+}
+
+.card_photo {
+	position: absolute;
+	top: 100px;
+	max-width: 150px;
+	left: 20px;
+}
+
+.card_photo img {
+	width: 100%;
+}
+
+.card_data {
+	width: 60%;
+	position: absolute;
+	top: 80px;
+	right: 15px;
+}
+
+.card_item {
+	margin: 5px 0px;
+}
+
+.card_label {
+	font-size: 9pt;
+}
+
+.card_field {
+	font-weight: bold;
+	font-weight: 12pt;
+}
+
+.card_number
+{
+	display: inline-block;
+	position: absolute;
+	right: 30px;
+	bottom: 10px;
+	font-weight: bold;
+}
+
+@media print
+{
+	.card_container
+	{
+		margin: 0px auto;
+		border: 0px;
+	}
+}
+
+@page
+{
+	size: 3.375in 2.125in;
+	margin: 0px;
+}

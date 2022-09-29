@@ -463,7 +463,14 @@ trait ORM
 					}
 					elseif(count($value) == 2)
 					{
-						$join .= "LEFT JOIN $value[0] ON $table_name.$value[1] = $value[0].$value[1] ";
+						if(strpos($value[1], ".") !== false)
+						{
+							$join .= "LEFT JOIN $value[0] ON $value[1] ";
+						}
+						else
+						{
+							$join .= "LEFT JOIN $value[0] ON $table_name.$value[1] = $value[0].$value[1] ";
+						}
 					}
 				}
 			}

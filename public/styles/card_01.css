@@ -47,9 +47,11 @@ Estilos de tarjetas
 
 .card_photo {
 	position: absolute;
-	top: 100px;
-	max-width: 150px;
+	top: 90px;
+	width: 150px;
 	left: 20px;
+	height: 180px;
+	overflow: hidden;
 }
 
 .card_photo img {

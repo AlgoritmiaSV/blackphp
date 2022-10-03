@@ -697,7 +697,7 @@ $( function()
 		{
 			$("#vat_total, #subtotal_div").hide();
 		}
-		if(type_id == 3)
+		/*if(type_id == 3)
 		{
 			$("#bill_number").val(json.ticket);
 			$("#bill_number").attr("type", "number");
@@ -706,7 +706,9 @@ $( function()
 		{
 			$("#bill_number").val('');
 			$("#bill_number").attr("type", "text");
-		}
+		}*/
+		var object_data = $(this).select2("data")[0];
+		$("#bill_number").val(object_data.next);
 		if(type_id == "")
 		{
 			JSON.ticket++;

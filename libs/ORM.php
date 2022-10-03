@@ -32,6 +32,9 @@ trait ORM
 	/** @var array $_order_by Criterios de ordenamiento de los resultados */
 	private static $_order_by = Array();
 
+	/** @var array $_group_by Criterios de agrupación de los resultados */
+	private static $_group_by = Array();
+
 	/**
 	 * Limpieza de flujo
 	 * 
@@ -399,6 +402,19 @@ trait ORM
 	}
 
 	/**
+	 * Agrupar por
+	 * 
+	 * Recibe como parámetro las condiciones de agrupación a utilizarse en la consulta.
+	 * 
+	 * @return object Una instancia de la misma clase.
+	 */
+	public static function groupBy()
+	{
+		self::$_group_by[] = func_get_args();
+		return new static();
+	}
+
+	/**
 	 * Obtener
 	 * 
 	 * Realiza la consulta con los paràmetros (Considiones) previamente configurados en otros
@@ -559,6 +575,22 @@ trait ORM
 			$order_by .= implode(", ", $orders);
 		}
 
+		# Group By
+		$group_by = "";
+		if(count(self::$_group_by) > 0)
+		{
+			$group_by .= "GROUP BY ";
+			$groups = Array();
+			foreach(self::$_group_by as $value)
+			{
+				if(is_array($value))
+				{
+					$groups[] = implode(", ", $value);
+				}
+			}
+			$group_by .= implode(", ", $groups);
+		}
+
 		#Results
 		$limit = "";
 		if(is_numeric($results))
@@ -567,7 +599,7 @@ trait ORM
 		}
 
 		self::init();
-		$sql = "SELECT $modifier $select $extra_select FROM $table_name $join WHERE $where $order_by $limit";
+		$sql = "SELECT $modifier $select $extra_select FROM $table_name $join WHERE $where $order_by $group_by $limit";
 		$sth = self::$_db->prepare($sql);
 		foreach ($data as $key => $value) {
 			$sth->bindValue(":$key", $value);

@@ -1,3 +1,5 @@
+-- Actualizaciones de base de datos en el mes de julio de 2022
+-- Por: Edwin Fajardo
 -- 2022-07-17
 ALTER TABLE `entity_methods` CHANGE `cmethod_id` `emethod_id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla';
 ALTER TABLE `entity_modules` CHANGE `cmodule_id` `emodule_id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla';

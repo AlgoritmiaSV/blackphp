@@ -1,3 +1,5 @@
+-- Actualizaciones de base de datos en el mes de septiembre de 2022
+-- Por: Edwin Fajardo
 -- 2022-09-22
 ALTER TABLE `app_modules` ADD `module_icon` VARCHAR(32) NOT NULL COMMENT 'Ícono del módulo en el menú' AFTER `module_url`;
 UPDATE `app_modules` SET `module_icon` = LOWER(`module_url`);

@@ -1,3 +1,5 @@
+-- Actualizaciones de base de datos en el mes de mayo de 2022
+-- Por: Edwin Fajardo
 UPDATE `app_modules` SET `module_name` = 'Settings', `module_url` = 'Settings', `module_html` = 'Settings', `module_description` = 'Settings' WHERE `app_modules`.`module_id` = 1;
 UPDATE `app_methods` SET `method_name` = 'Entity', `method_url` = 'Entity', `method_description` = 'Allows you to configure the general information of the business/company' WHERE `app_methods`.`method_id` = 1;
 UPDATE `app_methods` SET `method_name` = 'Users', `method_url` = 'Users', `method_description` = 'Allows you to manage users and permissions for each user' WHERE `app_methods`.`method_id` = 2;

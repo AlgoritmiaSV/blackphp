@@ -1,3 +1,5 @@
+-- Actualizaciones de base de datos en el mes de abril de 2022
+-- Por: Edwin Fajardo
 -- 2022-04-16
 ALTER TABLE `app_modules` ADD `default_order` TINYINT NOT NULL COMMENT 'Orden por defecto' AFTER `module_description`;
 ALTER TABLE `app_methods` ADD `default_order` TINYINT NOT NULL COMMENT 'Orden por defecto' AFTER `method_description`;

@@ -1,3 +1,5 @@
+-- Actualizaciones de base de datos en el mes de junio de 2022
+-- Por: Edwin Fajardo
 -- 2022-06-10
 INSERT INTO `app_themes` (`theme_id`, `theme_name`, `theme_url`) VALUES (NULL, 'White - Lateral menu', 'white');
 UPDATE `app_themes` SET `theme_name` = 'White - Without lateral menu' WHERE `app_themes`.`theme_id` = 5;

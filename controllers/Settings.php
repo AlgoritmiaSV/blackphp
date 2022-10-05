@@ -36,7 +36,7 @@ class Settings extends Controller
 		$this->session_required("html", $this->module);
 		$this->view->standard_menu();
 		$this->view->data["nav"] = $this->view->render("nav", true);
-		$module = app_modules_model::where("module_url", $this->module)->get();
+		$module = app_modules_model::findBy("module_url", $this->module);
 		$this->view->data["title"] = _($module->getModule_name());
 		$this->view->data["methods"] = available_methods_model::where("user_id", Session::get("user_id"))
 		->where("module_id", $module->getModule_id())

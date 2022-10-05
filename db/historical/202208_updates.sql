@@ -1,3 +1,5 @@
+-- Actualizaciones de base de datos en el mes de agosto de 2022
+-- Por: Edwin Fajardo
 -- 2022-08-04
 CREATE TABLE `app_options` ( `option_id` INT NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria' , `option_key` VARCHAR(32) NOT NULL COMMENT 'Clave de la opción' , `option_description` TINYTEXT NOT NULL COMMENT 'Descripción de la opción' , `module_id` INT NULL COMMENT 'Módulo en el que aplica la opción' , PRIMARY KEY (`option_id`)) ENGINE = InnoDB COMMENT = 'Opciones de la aplicación, configurables por entidad';
 DROP VIEW `entity_options`;

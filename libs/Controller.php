@@ -243,7 +243,7 @@ class Controller
 		{
 			if(!empty($module))
 			{
-				$module =app_modules_model::where("module_url", $module)->get();
+				$module = app_modules_model::findBy("module_url", $module);
 				$perms = user_modules_model::where("module_id", $module->getModule_id())->where("user_id", Session::get("user_id"))->get();
 				if(empty($perms->getUmodule_id()))
 				{

@@ -43,7 +43,7 @@ class Installation extends Controller
 		$this->view->data["nav"] = "";
 		if(Session::get("authorization_code") != null)
 		{
-			$modules = app_modules_model::getAllArray();
+			$modules = app_modules_model::orderBy("default_order")->getAllArray();
 			$this->view->data["modules"] = "";
 			foreach($modules as $module)
 			{
@@ -51,7 +51,7 @@ class Installation extends Controller
 				{
 					$this->view->data[$key] = $item;
 				}
-				$this->view->data["methods"] = app_methods_model::where("module_id", $module["module_id"])->getAllArray();
+				$this->view->data["methods"] = app_methods_model::where("module_id", $module["module_id"])->orderBy("default_order")->getAllArray();
 				$this->view->data["modules"] .= $this->view->render("modules", true);
 			}
 			$this->view->data["subdomain"] = $subdomain;
@@ -147,8 +147,7 @@ class Installation extends Controller
 			if(isset($entity["entity_id"]) || in_array($data["subdomain"], $reserved_subdomains))
 			{
 				$data["title"] = "Error";
-				$data["message"] = _("The subdomain") . " " . $data["subdomain"] . " " 
-				. _("is not available");
+				$data["message"] = sprintf(_("The subdomain %s is not available"), $data["subdomain"]);
 				$data["theme"] = "red";
 				$this->json($data);
 				return;

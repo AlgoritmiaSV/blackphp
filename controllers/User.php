@@ -111,7 +111,7 @@ class User extends Controller
 			$ipv4 = $this->getRealIP();
 			# Check if exists
 			$browser = browsers_model::where("user_agent", $user_agent)->get();
-			if($browser->is_null("browser_id"))
+			if(!$browser->exists())
 			{
 				#Set new browser
 				$parser = new UserAgentParser();

@@ -294,7 +294,7 @@ trait ORM
 	 */
 	public function delete()
 	{
-		if(self::$_table_type == "VIEW")
+		if(self::$_table_type == "VIEW" || !$this->exists())
 		{
 			return 0;
 		}
@@ -313,10 +313,9 @@ trait ORM
 		{
 			$table_name = self::$_table_name;
 			$primary_key = self::$_primary_key;
-			$id = $this->{$primary_key};
 			self::init();
 			$sth = self::$_db->prepare("DELETE FROM $table_name WHERE $primary_key = :id");
-			$sth->bindValue(":id", $id);
+			$sth->bindValue(":id", $this->{$primary_key});
 			$sth->execute();
 			self::flush();
 			return $sth->rowCount();
@@ -793,9 +792,28 @@ trait ORM
 		return self::select($select . "$id AS id, $text AS text")->getAll();
 	}
 
+	/**
+	 * Es nulo
+	 * 
+	 * Devuelve verdadero si la propiedad consultada es nula
+	 * 
+	 * @return boolean Estado nulo de la propiedad
+	 */
 	public function is_null($property)
 	{
 		return is_null($this->{$property});
+	}
+
+	/**
+	 * Existe
+	 * 
+	 * Devuelve verdadero si la llave primaria tiene asignado un valor no nulo
+	 * 
+	 * @return boolean Estado de llave primaria
+	 */
+	public function exists()
+	{
+		return !empty($this->{self::$_primary_key});
 	}
 }
 

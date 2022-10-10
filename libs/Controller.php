@@ -377,7 +377,7 @@ class Controller
 		}
 		$action = app_actions_model::findBy("action_key", $action_key);
 		$element = app_elements_model::findBy("element_key", $element_key);
-		if($action->is_null("action_id") || $element->is_null("element_id"))
+		if(!$action->exists() || !$element->exists())
 		{
 			return;
 		}

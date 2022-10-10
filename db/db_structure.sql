@@ -1,8 +1,8 @@
--- MySQL dump 10.19  Distrib 10.3.36-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.15-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: blackphp
 -- ------------------------------------------------------
--- Server version	10.3.36-MariaDB-0+deb10u1
+-- Server version	10.5.15-MariaDB-0+deb11u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -176,20 +176,21 @@ DROP TABLE IF EXISTS `available_methods`;
 /*!50001 DROP VIEW IF EXISTS `available_methods`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `available_methods` AS SELECT
- 1 AS `method_id`,
-  1 AS `module_id`,
-  1 AS `method_name`,
-  1 AS `method_url`,
-  1 AS `method_icon`,
-  1 AS `method_description`,
-  1 AS `default_order`,
-  1 AS `status`,
-  1 AS `method_order`,
-  1 AS `id`,
-  1 AS `label`,
-  1 AS `entity_id`,
-  1 AS `user_id` */;
+/*!50001 CREATE TABLE `available_methods` (
+  `method_id` tinyint NOT NULL,
+  `module_id` tinyint NOT NULL,
+  `method_name` tinyint NOT NULL,
+  `method_url` tinyint NOT NULL,
+  `method_icon` tinyint NOT NULL,
+  `method_description` tinyint NOT NULL,
+  `default_order` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `method_order` tinyint NOT NULL,
+  `id` tinyint NOT NULL,
+  `label` tinyint NOT NULL,
+  `entity_id` tinyint NOT NULL,
+  `user_id` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -200,19 +201,20 @@ DROP TABLE IF EXISTS `available_modules`;
 /*!50001 DROP VIEW IF EXISTS `available_modules`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `available_modules` AS SELECT
- 1 AS `module_id`,
-  1 AS `module_name`,
-  1 AS `module_url`,
-  1 AS `module_icon`,
-  1 AS `module_key`,
-  1 AS `module_description`,
-  1 AS `default_order`,
-  1 AS `status`,
-  1 AS `access_type`,
-  1 AS `entity_id`,
-  1 AS `user_id`,
-  1 AS `module_order` */;
+/*!50001 CREATE TABLE `available_modules` (
+  `module_id` tinyint NOT NULL,
+  `module_name` tinyint NOT NULL,
+  `module_url` tinyint NOT NULL,
+  `module_icon` tinyint NOT NULL,
+  `module_key` tinyint NOT NULL,
+  `module_description` tinyint NOT NULL,
+  `default_order` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `access_type` tinyint NOT NULL,
+  `entity_id` tinyint NOT NULL,
+  `user_id` tinyint NOT NULL,
+  `module_order` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -510,6 +512,7 @@ CREATE TABLE `users` (
 -- Final view structure for view `available_methods`
 --
 
+/*!50001 DROP TABLE IF EXISTS `available_methods`*/;
 /*!50001 DROP VIEW IF EXISTS `available_methods`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -528,6 +531,7 @@ CREATE TABLE `users` (
 -- Final view structure for view `available_modules`
 --
 
+/*!50001 DROP TABLE IF EXISTS `available_modules`*/;
 /*!50001 DROP VIEW IF EXISTS `available_modules`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -537,7 +541,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
-/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` */;
+/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` order by `em`.`module_order` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

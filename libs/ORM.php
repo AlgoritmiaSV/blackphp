@@ -677,8 +677,7 @@ trait ORM
 	 */
 	public function toArray()
 	{
-		$data = get_object_vars($this);
-		return $data;
+		return get_object_vars($this);
 	}
 
 	/**
@@ -776,6 +775,10 @@ trait ORM
 				if($text == "" || strpos($key, "_name") !== false)
 				{
 					$text = $key;
+				}
+				if(strpos($key, "_name") !== false)
+				{
+					break;
 				}
 			}
 		}

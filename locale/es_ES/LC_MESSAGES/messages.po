@@ -92,9 +92,6 @@ msgstr "Fecha"
 msgid "Delete"
 msgstr "Eliminar"
 
-msgid "Delete user"
-msgstr "Eliminar usuario"
-
 msgid "Deleted"
 msgstr "Eliminado"
 
@@ -381,4 +378,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 121 messages translated.
+# 120 messages translated.

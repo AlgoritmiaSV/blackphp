@@ -331,7 +331,7 @@ class Controller
 	{
 		if(is_object($element))
 		{
-			$element = get_object_vars($element);
+			$element = $element->toArray();
 		}
 		if($element["creation_user"] != 0)
 		{

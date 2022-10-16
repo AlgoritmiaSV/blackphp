@@ -775,7 +775,7 @@ $( function()
 					'autofocus': '.jalert_accept',
 					'btns': [
 						{'text': deletion_data.accept || 'OK', 'closeAlert':true, 'theme': 'blue', 'class': 'jalert_accept', 'onClick': function() {
-							location.href = deletion_next;
+							window.open(deletion_next, "_top");
 						}}]
 				});
 			}

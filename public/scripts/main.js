@@ -4,7 +4,7 @@
 	Date-Time: 2019-06-21 22:36
 */
 $(function() {
-	var content_height = $(window).height() - $("#main_header").outerHeight() - $("#main_footer").outerHeight();
+	content_height = $(window).height() - $("#main_header").outerHeight() - $("#main_footer").outerHeight();
 	if($(".list_options").length)
 	{
 		content_height -= $(".list_options").outerHeight();
@@ -176,7 +176,7 @@ $(function() {
 	setInterval(keep_alive, 30000);
 
 	$(".link_button").on("click", function() {
-		location.href = $(this).data("href");
+		window.open($(this).data("href"), "_top");
 	});
 
 	/* Date Picker */

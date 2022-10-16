@@ -8,3 +8,25 @@
 	margin: 0px !important;
 	box-shadow: none !important;
 }
+
+.details_body
+{
+	padding: 0px 0px 105px 0px;
+}
+
+.details_users
+{
+	width: calc(100% - 10px);
+	position: fixed;
+	background-color: #ffffff;
+	bottom: 45px;
+}
+
+.details_foot
+{
+	position: fixed;
+	bottom: 0px;
+	border-radius: 3px;
+	background-color: #ffffff;
+	width: calc(100% - 10px);
+}

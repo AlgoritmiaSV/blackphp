@@ -81,6 +81,20 @@ $( function()
 					{
 						location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
 					}
+					if($(this).data("alert"))
+					{
+						$.jAlert({
+							'title': $(this).data("title") || false,
+							'theme': $(this).data("theme") || "blue",
+							'iframe': $(this).data("alert"),
+							'size': {
+								"height": content_height + "px",
+								"width": "100%"
+							},
+							'iframeHeight': (content_height - 41) + "px",
+							'noPadContent':true
+						});
+					}
 				});
 				if(data.foot)
 				{
@@ -166,6 +180,20 @@ $( function()
 					{
 						location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
 					}
+					if($(this).data("alert"))
+					{
+						$.jAlert({
+							'title': $(this).data("title") || false,
+							'theme': $(this).data("theme") || "blue",
+							'iframe': $(this).data("alert"),
+							'size': {
+								"height": content_height + "px",
+								"width": "100%"
+							},
+							'iframeHeight': (content_height - 41) + "px",
+							'noPadContent':true
+						});
+					}
 				});
 				if(data.foot)
 				{
@@ -244,7 +272,7 @@ $( function()
 				history.back();
 			});
 			$(".link_button").on("click", function() {
-				location.href = $(this).data("href");
+				window.open($(this).data("href"), "_top");
 			});
 			_div.find(".print_button").on("click", function() {
 				print_header = null;

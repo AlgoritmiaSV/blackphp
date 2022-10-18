@@ -1,22 +1,24 @@
 {{ print_header }}
 <div class="details_content">
+	<!-- embedded -->
 	<div class="details_title no_print">
 		_(User details)
 		<a class="close_details" href="#"><img src="public/images/close.png"></a>
 	</div>
+	<!-- /embedded -->
 	<div class="details_body">
-		<table class="show_details_table">
+		<div class="center">
+			<div class="user_photo_container">
+				<img class="user_photo" src="{{ user_photo }}" alt="Foto">
+			</div>
+		</div>
+		<table class="data_sheet_table">
 			<tr>
-				<td rowspan="2">
-					<div class="user_photo_container">
-						<img class="user_photo" src="{{ user_photo }}" alt="Foto">
-					</div>
-				</td>
-				<td>_(Nickname)</td>
+				<td class="data_sheet_field">_(Nickname)</td>
 				<td>{{ nickname }}</td>
 			</tr>
 			<tr>
-				<td>_(Complete name):</td>
+				<td class="data_sheet_field">_(Complete name):</td>
 				<td>{{ user_name }}</td>
 			</tr>
 		</table>

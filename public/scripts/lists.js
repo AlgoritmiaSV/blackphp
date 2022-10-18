@@ -485,8 +485,11 @@ $( function()
 		{
 			print_footer = $(".print_footer").html();
 		}
-		
-		var css = 'public/styles/print_list.css?r=' + rand;
+		var css = "";
+		if($(this).data("print") == ".data_viewer" || $(this).data("print") == ".data_table")
+		{
+			css = 'public/styles/print_list.css?r=' + rand;
+		}
 		if($($(this).data("print")).data("css") !== undefined)
 		{
 			css = $($(this).data("print")).data("css");

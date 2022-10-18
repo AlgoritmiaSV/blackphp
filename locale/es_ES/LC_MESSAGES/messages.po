@@ -29,9 +29,6 @@ msgstr "ordenar la columna de forma ascendente"
 msgid "activate to sort column descending"
 msgstr "ordenar la columna de forma descendente"
 
-msgid "Active"
-msgstr "Activo"
-
 msgid "Admin user"
 msgstr "Usuario administrador"
 
@@ -91,9 +88,6 @@ msgstr "Fecha"
 
 msgid "Delete"
 msgstr "Eliminar"
-
-msgid "Deleted"
-msgstr "Eliminado"
 
 msgid "Display theme"
 msgstr "Tema de visualización"
@@ -170,9 +164,6 @@ msgstr "Si no tiene un archivo de configuración, ¡solicite uno ahora!"
 msgid "In construction"
 msgstr "En construcción"
 
-msgid "Inactive"
-msgstr "Inactivo"
-
 msgid "Installation"
 msgstr "Instalación"
 
@@ -190,6 +181,9 @@ msgstr "Última"
 
 msgid "Last edition by"
 msgstr "Editado por última vez por"
+
+msgid "Last login"
+msgstr "Último acceso"
 
 msgid "Last sessions"
 msgstr "Últimas sesiones"
@@ -302,9 +296,6 @@ msgstr "Español"
 msgid "Start"
 msgstr "Iniciar"
 
-msgid "Status"
-msgstr "Estado"
-
 msgid "Success"
 msgstr "Éxito"
 
@@ -378,4 +369,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 120 messages translated.
+# 117 messages translated.

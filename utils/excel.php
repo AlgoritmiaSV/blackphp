@@ -18,6 +18,7 @@ class excel
 		{
 			$sheet->setCellValueByColumnAndRow(1, 1, $data["title"]);
 			$sheet->getStyle("A1")->getFont()->setSize(16);
+			$sheet->getRowDimension('1')->setRowHeight(20);
 			$sheet->mergeCells("A1:" . chr(64 + count($headers)) . "1");
 			$sheet->getStyle('A1')
 			->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -29,20 +30,34 @@ class excel
 		}
 		$sheet->getStyle("A3:" . chr(64 + count($headers)) . "3")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('d9d9d9');
 
+		$maxWidth = Array();
 		for ($i = 0, $l = sizeof($content); $i < $l; $i++)
 		{
 			$j = 0;
 			foreach ($fields as $k)
 			{
 				$v = empty($content[$i][$k]) ? "" : $content[$i][$k];
+				if(strlen($v) > 100)
+				{
+					$maxWidth[$j] = 50;
+				}
 				$sheet->setCellValueByColumnAndRow($j + 1, $i + 4, $v);
 				$j++;
 			}
 		}
 
+		$sheet->calculateColumnWidths();
 		foreach (range(65, 64 + count($fields)) as $ascii)
 		{
-			$spreadsheet->getActiveSheet()->getColumnDimension(chr($ascii))->setAutoSize(true);
+			$dimension = $sheet->getColumnDimension(chr($ascii));
+			if(isset($maxWidth[$ascii - 65]))
+			{
+				$dimension->setWidth($maxWidth[$ascii - 65]);
+			}
+			else
+			{
+				$dimension->setAutoSize(true);
+			}
 		}
 		$writer = new Xlsx($spreadsheet);
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

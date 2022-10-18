@@ -85,7 +85,7 @@
 .details_users
 {
 	font-style: italic;
-	color: #cccc99;
+	color: #ffffff;
 	padding: 10px 5px;
 	border-top: 3px solid #a9a9a9;
 }
@@ -164,20 +164,20 @@
 
 .data_sheet_table
 {
-	border: 2px solid #ffffff;
+	border: 2px solid #666666;
 	width: 100%;
 	border-collapse: collapse;
 }
 
 .data_sheet_table tbody tr:nth-child(odd)
 {
-	background-color: #ededed;
+	background-color: #494949;
 }
 
 .data_sheet_table td
 {
 	padding: 10px 5px;
-	border: 2px solid #ffffff;
+	border: 2px solid #666666;
 }
 
 .data_sheet_field

@@ -867,7 +867,7 @@ input:checked + .slider:before
 		display: inline-block;
 	}
 
-	.pc_block, .pc_inline
+	.pc_block, .pc_inline, .pc_cell
 	{
 		display: none;
 	}

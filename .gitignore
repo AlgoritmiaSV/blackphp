@@ -4,3 +4,4 @@ blackphp_info.json
 entities/
 vendor/
 node_modules/
+config.php

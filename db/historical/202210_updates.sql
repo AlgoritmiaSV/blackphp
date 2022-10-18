@@ -19,5 +19,16 @@ WHERE m.module_id = em.module_id
 	AND u.entity_id = em.entity_id
 	AND u.user_id = um.user_id
 ORDER BY module_order;
+-- 2022-10-17
+CREATE VIEW user_data AS
+SELECT u.*,
+	ls.last_login
+FROM users AS u
+LEFT JOIN (
+	SELECT user_id,
+		MAX(date_time) AS last_login
+	FROM user_sessions
+	GROUP BY user_id) AS ls ON ls.user_id = u.user_id
+WHERE u.status = 1;
 -- Nahutech
 -- Teleinf

@@ -182,11 +182,30 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
+	/**
+	 * Acerca de
+	 * 
+	 * Muestra información acerca del sistema.
+	 * 
+	 * @return void
+	 */
+	public function About()
+	{
+		$this->session_required("html", $this->module);
+		$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
+		$this->view->standard_details();
+		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["content_id"] = "info_details";
+		$this->view->data["content"] = $this->view->render("content_loader", true);
+		$this->view->render('main');
+	}
+
 	################################ LISTAS Y FORMULARIOS
 	/**
 	 * Cargar tabla de usuarios
 	 * 
 	 * Devuelve, en formato JSON o en un archivo Excel, la lista de usuarios.
+	 * @param string $response El modo de respuiesta (JSON o Excel)
 	 * 
 	 * @return void
 	 */
@@ -194,18 +213,22 @@ class Settings extends Controller
 	{
 		$this->session_required("json");
 		$data = Array();
-		$users = users_model::getAllArray();
-		$status = Array(_("Deleted"), _("Active"), _("Inactive"));
+		$users = user_data_model::getAllArray();
 		foreach($users as $key => $user)
 		{
-			$users[$key]["status"] = $status[$users[$key]["status"]];
+			$users[$key]["last_login"] = "";
+			if(!empty($user["last_login"]))
+			{
+				$last_login = new DateTime($user["last_login"]);
+				$users[$key]["last_login"] = $last_login->format("d/m/Y h:ia");
+			}
 		}
 		$data["content"] = $users;
 		if($response == "Excel")
 		{
 			$data["title"] = _("Users");
-			$data["headers"] = Array(_("User"), _("Complete name"), _("Status"));
-			$data["fields"] = Array("nickname", "user_name", "status");
+			$data["headers"] = Array(_("User"), _("Complete name"), _("Last login"));
+			$data["fields"] = Array("nickname", "user_name", "last_login");
 			excel::create_from_table($data, "Users_" . Date("YmdHis") . ".xlsx");
 		}
 		else
@@ -244,7 +267,6 @@ class Settings extends Controller
 			return;
 		}
 
-		$time = Date("Y-m-d H:i:s");
 		$user_id = 0;
 		$user = users_model::find($_POST["user_id"])
 			->set(Array(
@@ -405,17 +427,6 @@ class Settings extends Controller
 		$this->json($data);
 	}
 
-	public function About()
-	{
-		$this->session_required("html", $this->module);
-		$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
-		$this->view->standard_details();
-		$this->view->data["nav"] = $this->view->render("nav", true);
-		$this->view->data["content_id"] = "info_details";
-		$this->view->data["content"] = $this->view->render("content_loader", true);
-		$this->view->render('main');
-	}
-
 	public function info_details_loader($mode = "embedded")
 	{
 		$info = Array();
@@ -503,13 +514,29 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
-	public function user_details_loader()
+	/**
+	 * Carga de detalles del usuario
+	 * 
+	 * Muestra una hoja con los detalles del usuario. Este método puede ser invocado por a través
+	 * de UserDetails (embedded) y directamente para ser mostrado en un jAlert (standalone); por
+	 * ejemplo, para el usuario con ID 1, se podría visitar:
+	 * - Settings/UserDetails/1/ (embedded)
+	 * - Settings/user_details_loader/1/standalone/ (standalone)
+	 * @param int $user_id ID del usuario
+	 * @param string $mode Modo en que se mostrará la vista
+	 * 
+	 * @return void
+	 */
+	public function user_details_loader($user_id = "", $mode = "embedded")
 	{
 		$this->session_required("internal");
-		$id = $_POST["id"];
-		$user = users_model::find($id)->toArray();
+		if(empty($user_id))
+		{
+			$user_id = $_POST["id"];
+		}
+		$user = users_model::find($user_id)->toArray();
 		$this->view->data = array_merge($this->view->data, $user);
-		$sessions = user_sessions_model::join("browsers", "browser_id")->where("user_sessions.user_id", $id)->orderBy("date_time", "DESC")->addCounter("item")->get(10);
+		$sessions = user_sessions_model::join("browsers", "browser_id")->where("user_sessions.user_id", $user_id)->orderBy("date_time", "DESC")->addCounter("item")->get(10);
 		foreach($sessions as $key => $session)
 		{
 			$time = strtotime($session["date_time"]);
@@ -518,7 +545,7 @@ class Settings extends Controller
 		}
 		$this->view->data["sessions"] = $sessions;
 
-		$modules = available_modules_model::where("user_id", $id)->getAllArray();
+		$modules = available_modules_model::where("user_id", $user_id)->getAllArray();
 		$i = -1;
 		$j = 0;
 		$modules_table = Array();
@@ -540,6 +567,7 @@ class Settings extends Controller
 			$j++;
 		}
 		$this->view->data["user_modules"] = $modules_table;
+		
 		#User photo
 		$photo = glob("entities/" . $this->entity_id . "/users/profile_" . $user["user_id"] . ".*");
 		if(count($photo) > 0)
@@ -551,13 +579,27 @@ class Settings extends Controller
 			$this->view->data["user_photo"] = "public/images/user.png";
 		}
 		$this->user_actions($user);
-		if($id == Session::get("user_id"))
+		if($user_id == Session::get("user_id"))
 		{
 			$this->view->restrict[] = "no_self";
 		}
 		$this->view->data["print_title"] = _("User details");
 		$this->view->data["print_header"] = $this->view->render("print_header", true);
-		$this->view->render("settings/user_details");
+		if($mode == "standalone")
+		{
+			$this->view->data["title"] = _("User details");
+			$this->view->standard_details();
+			$this->view->add("styles", "css", Array(
+				'styles/standalone.css'
+			));
+			$this->view->restrict[] = "embedded";
+			$this->view->data["content"] = $this->view->render('settings/user_details', true);
+			$this->view->render('clean_main');
+		}
+		else
+		{
+			$this->view->render("settings/user_details");
+		}
 	}
 }
 ?>

@@ -357,6 +357,32 @@ CREATE TABLE `entity_options` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Temporary table structure for view `user_data`
+--
+
+DROP TABLE IF EXISTS `user_data`;
+/*!50001 DROP VIEW IF EXISTS `user_data`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `user_data` (
+  `user_id` tinyint NOT NULL,
+  `entity_id` tinyint NOT NULL,
+  `user_name` tinyint NOT NULL,
+  `nickname` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `password` tinyint NOT NULL,
+  `theme_id` tinyint NOT NULL,
+  `locale` tinyint NOT NULL,
+  `creation_user` tinyint NOT NULL,
+  `creation_time` tinyint NOT NULL,
+  `edition_user` tinyint NOT NULL,
+  `edition_time` tinyint NOT NULL,
+  `status` tinyint NOT NULL,
+  `last_login` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `user_logs`
 --
 
@@ -542,6 +568,25 @@ CREATE TABLE `users` (
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
 /*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` order by `em`.`module_order` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `user_data`
+--
+
+/*!50001 DROP TABLE IF EXISTS `user_data`*/;
+/*!50001 DROP VIEW IF EXISTS `user_data`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 */
+/*!50001 VIEW `user_data` AS select `u`.`user_id` AS `user_id`,`u`.`entity_id` AS `entity_id`,`u`.`user_name` AS `user_name`,`u`.`nickname` AS `nickname`,`u`.`email` AS `email`,`u`.`password` AS `password`,`u`.`theme_id` AS `theme_id`,`u`.`locale` AS `locale`,`u`.`creation_user` AS `creation_user`,`u`.`creation_time` AS `creation_time`,`u`.`edition_user` AS `edition_user`,`u`.`edition_time` AS `edition_time`,`u`.`status` AS `status`,`ls`.`last_login` AS `last_login` from (`blackphp`.`users` `u` left join (select `blackphp`.`user_sessions`.`user_id` AS `user_id`,max(`blackphp`.`user_sessions`.`date_time`) AS `last_login` from `blackphp`.`user_sessions` group by `blackphp`.`user_sessions`.`user_id`) `ls` on(`ls`.`user_id` = `u`.`user_id`)) where `u`.`status` = 1 */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

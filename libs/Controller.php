@@ -162,6 +162,10 @@ class Controller
 			}
 			$this->view->data["currency_symbol"] = Session::get("currency_symbol");
 		}
+		else
+		{
+			$this->view->data["currency_symbol"] = "$";
+		}
 
 		#Directorio y logo
 		if(!empty($entity["entity_subdomain"]))

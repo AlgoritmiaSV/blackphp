@@ -227,6 +227,9 @@ msgstr "No hay datos en la tabla"
 msgid "No matching records found"
 msgstr "No se encontraron resultados"
 
+msgid "No records found!"
+msgstr "¡No se encontraron registros!"
+
 msgid "No subdomain chosen"
 msgstr "No se eligió un subdominio"
 
@@ -369,4 +372,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 117 messages translated.
+# 118 messages translated.

@@ -67,8 +67,13 @@ $( function()
 			dataType: "json"
 		})
 		.done(function(data) {
+			var empty_table = true;
 			if(data.content != null)
 			{
+				if(data.content.length > 0)
+				{
+					empty_table = false;
+				}
 				$.each(data.content, function(index, value) {
 					var tr = _template;
 					$.each(value, function(e_index, e_value) {
@@ -127,12 +132,27 @@ $( function()
 				});
 			}
 			_table.show();
+			if(empty_table)
+			{
+				$(".empty_table_message").show();
+			}
 			if(!_table.data("type"))
 			{
 				_table.floatThead({
 					'scrollContainer': true
 				});
 			}
+
+			/** Relleno con celdas vacías */
+			var void_tr = _template.replaceAll(/\{\{[A-Za-z0-9_]+\}\}/g, "");
+			void_tr = $(void_tr);
+			void_tr.find("td").html("&nbsp;");
+			void_tr.addClass("void_tr");
+			while(_table.outerHeight() + 45 < content_height)
+			{
+				$("#" + table_id + " tbody").append(void_tr.clone());
+			}
+
 			/* Fill content outside table after load */
 			if(data.load_after)
 			{

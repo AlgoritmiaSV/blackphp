@@ -32,3 +32,5 @@ LEFT JOIN (
 WHERE u.status = 1;
 -- Nahutech
 -- Teleinf
+-- 2022-10-18
+-- *.alejandrorodriguez.live

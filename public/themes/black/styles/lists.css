@@ -105,6 +105,22 @@
 	color: #ffff99;
 }
 
+.void_tr {
+	background-color: transparent !important;
+	cursor: auto !important;
+}
+
+.empty_table_message
+{
+	display: none;
+	position: absolute;
+	top: 200px;
+	width: 100%;
+	text-align: center;
+	color: #999999;
+	font-size: 30pt;
+}
+
 @media screen and (max-width: 799px)
 {
 	.action_icons

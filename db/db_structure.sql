@@ -524,7 +524,7 @@ CREATE TABLE `users` (
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `comp_nickname` (`entity_id`,`nickname`),
   UNIQUE KEY `comp_email` (`entity_id`,`email`),

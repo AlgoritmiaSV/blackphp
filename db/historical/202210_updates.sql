@@ -30,7 +30,9 @@ LEFT JOIN (
 	FROM user_sessions
 	GROUP BY user_id) AS ls ON ls.user_id = u.user_id
 WHERE u.status = 1;
--- Nahutech
--- Teleinf
 -- 2022-10-18
 -- *.alejandrorodriguez.live
+-- 2022-10-19
+ALTER TABLE `users` CHANGE `status` `status` TINYINT NULL DEFAULT '1';
+-- Nahutech
+-- Teleinf

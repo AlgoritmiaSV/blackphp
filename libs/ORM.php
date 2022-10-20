@@ -36,6 +36,18 @@ trait ORM
 	private static $_group_by = Array();
 
 	/**
+	 * @var int|bool $_offset Punto de partida para muestra de resultados
+	 * Puede tomar un número entero mayor que cero o false si no está definido.
+	 */
+	private static $_offset = false;
+
+	/**
+	 * @var int|bool $_limit Número máximo de resultados en una consulta.
+	 * Puede tomar un número entero mayor que cero o false si no está definido.
+	 */
+	private static $_limit = false;
+
+	/**
 	 * Limpieza de flujo
 	 * 
 	 * Limpia todas las propiedades estáticas de la clase, para que se pueda realizar otra
@@ -53,6 +65,8 @@ trait ORM
 		}
 		self::$_modifier = "";
 		self::$_extra_select = "";
+		self::$_offset = false;
+		self::$_limit = false;
 	}
 
 	/** 
@@ -287,8 +301,15 @@ trait ORM
 	/**
 	 * Borrar
 	 * 
-	 * Elimina el elemento. Si la propiedad $soft_delete es verdadera, entonces actualiza el estado
-	 * $status = 0
+	 * Elimina el elemento. Si la propiedad $soft_delete es verdadera, entonces actualiza el estado.
+	 * 
+	 * En el caso de un borrado suave, para que las llaves únicas (UNIQUE KEY) no tengan conflicto
+	 * con los campos eliminados, se recomientda permitir valores nulos en el estado de las tablas
+	 * que contengan llaves únicas.
+	 * Por ejemplo: Se desea eliminar el registro de usuario con user_name = juan; pero user_name es
+	 * una llave única; entonces al cambiar el estado del registro a cero, la llave única no
+	 * permitirá crear un nuevo registro con user_name = juan. Para resolver esto, si el campo
+	 * status admite valores nulos, el estado se cambia a NULL en vez de cero.
 	 * 
 	 * @return int Filas eliminadas
 	 */
@@ -306,7 +327,7 @@ trait ORM
 				$this->setEdition_user(Session::get("user_id"));
 				$this->setEdition_time(Date("Y-m-d H:i:s"));
 			}
-			$this->setStatus(0);
+			$this->setStatus(self::$_deleted_status);
 			$affected = $this->save();
 		}
 		else
@@ -414,6 +435,37 @@ trait ORM
 	}
 
 	/**
+	 * Límites
+	 * 
+	 * Establece el punto de partida y el número máximo de filas a mostrar en una consulta.
+	 * @param int $offset_or_limit El punto de partida (offset) si el segundo parámetro tiene un
+	 * valor entero; o límite, si el segundo parámetro es falso
+	 * @param int $limit El número máximo de resultados. Si es falso, se toma este valor del primer
+	 * parámetro.
+	 * 
+	 * Ejemplos:
+	 * - ->limit(10) Devuelve los primeros diez reaultados de la consulta
+	 * - ->limit(5, 10) Devuelve diez resultados de la consulta, partiendo del quinto en adelante.
+	 * 
+	 * @return object Una instancia de la misma clase.
+	 */
+
+	public static function limit($offset_or_limit, $limit = false)
+	{
+		if($limit === false)
+		{
+			self::$_offset = false;
+			self::$_limit = intval($offset_or_limit);
+		}
+		else
+		{
+			self::$_offset = intval($offset_or_limit);
+			self::$_limit = intval($limit);
+		}
+		return new static();
+	}
+
+	/**
 	 * Obtener
 	 * 
 	 * Realiza la consulta con los paràmetros (Considiones) previamente configurados en otros
@@ -431,6 +483,13 @@ trait ORM
 	 * número de resultados. Por ejemplo ->get(10) es equivalente de LIMIT 10
 	 * @param boolean $objects Si es verdadero, intenta devolver objetos de la clase, en caso
 	 * contrario, devuelve un arreglo asociativo.
+	 * 
+	 * Resolución de conflictos entre limit() y get():
+	 * 
+	 * Un valor numérico en get() sobreescribe el existente en limit(). Ejemplos:
+	 * - limit(10)->get(20) mostrará veinte resultados, equivalente a get(20), o limit(20)->getAll()
+	 * - limit(5,10)->get(20) mostrará veinte resultados partiendo de la quinta fila, equivalente a
+	 * limit(5,20)->getAll()
 	 * 
 	 * @return object|array Resultados de la consulta
 	 */
@@ -590,11 +649,20 @@ trait ORM
 			$group_by .= implode(", ", $groups);
 		}
 
-		#Results
+		# Punto de partida y límite
 		$limit = "";
 		if(is_numeric($results))
 		{
-			$limit = "LIMIT $results";
+			self::$_limit = $results;
+		}
+		if(self::$_limit !== false)
+		{
+			$limit = "LIMIT ";
+			if(self::$_offset !== false)
+			{
+				$limit .= (self::$_offset . ",");
+			}
+			$limit .= self::$_limit;
 		}
 
 		self::init();
@@ -818,6 +886,22 @@ trait ORM
 	{
 		return !empty($this->{self::$_primary_key});
 	}
+
+	/**
+	 * Filas encontradas
+	 * 
+	 * Devuelve el número de filas encontradas cuando se usa SQL_CALC_FOUND_ROWS
+	 * 
+	 * @return int Total de filas encontradas
+	 */
+	public static function found_rows()
+	{
+		self::init();
+		$sth = self::$_db->prepare("SELECT FOUND_ROWS() as frows");
+		$sth->execute();
+		$rows = $sth->fetch(PDO::FETCH_ASSOC);
+		return $rows["frows"];
+	}
 }
 
 /**
@@ -847,15 +931,6 @@ class DB
 			self::$_table_name .= ", " . $table_name;
 		}
 		return new static();
-	}
-
-	public static function found_rows()
-	{
-		self::init();
-		$sth = self::$_db->prepare("SELECT FOUND_ROWS() as frows");
-		$sth->execute();
-		$rows = $sth->fetch(PDO::FETCH_ASSOC);
-		return $rows["frows"];
 	}
 }
 ?>

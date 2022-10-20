@@ -37,19 +37,19 @@
 		<p>_(Last sessions):</p>
 		<table class="show_details_table">
 			<thead>
-				<th>No.</th>
+				<th class="pc_cell">No.</th>
 				<th>_(Date)</th>
 				<th>_(Hour)</th>
-				<th>IP</th>
+				<th class="pc_cell">IP</th>
 				<th>_(Browser)</th>
 			</thead>
 			<tbody>
 				[[ sessions ]]
 				<tr>
-					<td class="right">{{ item }}</td>
+					<td class="right pc_cell">{{ item }}</td>
 					<td>{{ session_date }}</td>
 					<td>{{ session_time }}</td>
-					<td>{{ ip_address }}</td>
+					<td class="pc_cell">{{ ip_address }}</td>
 					<td>{{ browser_name }}, {{ platform }}</td>
 				</tr>[[/ sessions ]]
 			</tbody>

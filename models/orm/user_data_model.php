@@ -67,6 +67,9 @@ class user_data_model
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
 	private static $_soft_delete = true;
 
+	/** @var int|null $_deleted_status Valor a asignar en caso de borrado suave. */
+	private static $_deleted_status = null;
+
 	/**
 	 * Constructor de la clase
 	 * 

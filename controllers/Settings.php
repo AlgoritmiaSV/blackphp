@@ -421,7 +421,6 @@ class Settings extends Controller
 			return;
 		}
 		$user = users_model::find($_POST["id"]);
-		$user->setNickname(null);
 		$affected = $user->delete();
 		$data["deleted"] = $affected > 0;
 		$this->json($data);

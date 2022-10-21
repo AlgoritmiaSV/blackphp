@@ -48,6 +48,11 @@ trait ORM
 	private static $_limit = false;
 
 	/**
+	 * @var bool $_ommit_status Determina si se debe evaluar el campo status a la hora de la consulta.
+	 */
+	private static $_ommit_status = false;
+
+	/**
 	 * Limpieza de flujo
 	 * 
 	 * Limpia todas las propiedades estáticas de la clase, para que se pueda realizar otra
@@ -67,6 +72,7 @@ trait ORM
 		self::$_extra_select = "";
 		self::$_offset = false;
 		self::$_limit = false;
+		self::$_ommit_status = false;
 	}
 
 	/** 
@@ -108,7 +114,7 @@ trait ORM
 	{
 		if($deleted && property_exists(new static(), "status"))
 		{
-			self::where("status", ">=", 0);
+			self::$_ommit_status = true;
 		}
 		return self::where(self::$_primary_key, $id)->get();
 	}
@@ -127,7 +133,7 @@ trait ORM
 	{
 		if($deleted && property_exists(new static(), "status"))
 		{
-			self::where("status", ">=", 0);
+			self::$_ommit_status = false;
 		}
 		return self::where($field, $value)->get();
 	}
@@ -260,7 +266,7 @@ trait ORM
 				}
 				if($value[0] == "status" || $value[0] == $prefix . "status")
 				{
-					$status = true;
+					self::$_ommit_status = true;
 				}
 				if($value[0] == "entity_id" || $value[0] == $prefix . "entity_id")
 				{
@@ -272,7 +278,7 @@ trait ORM
 				$wheres[] = $value;
 			}
 		}
-		if(self::$_soft_delete && !$status)
+		if(self::$_soft_delete && !self::$_ommit_status)
 		{
 			$wheres[] = $prefix . "status != 0";
 		}
@@ -497,12 +503,11 @@ trait ORM
 	{
 		$table_name = self::$_table_name;
 		$prefix = "";
-		$status = false;
 		$entity = false;
 		if(strpos($table_name, ",") !== false)
 		{
 			$objects = false;
-			$status = true;
+			self::$_ommit_status = true;
 		}
 
 		# Select
@@ -585,7 +590,7 @@ trait ORM
 				}
 				if($value[0] == "status" || $value[0] == $prefix . "status")
 				{
-					$status = true;
+					self::$_ommit_status = true;
 				}
 				if($value[0] == "entity_id" || $value[0] == $prefix . "entity_id")
 				{
@@ -597,7 +602,7 @@ trait ORM
 				$wheres[] = $value;
 			}
 		}
-		if(self::$_soft_delete && !$status)
+		if(self::$_soft_delete && !self::$_ommit_status)
 		{
 			$wheres[] = $prefix . "status != 0";
 		}

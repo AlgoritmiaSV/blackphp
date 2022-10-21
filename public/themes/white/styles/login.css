@@ -33,6 +33,21 @@
 	text-decoration: underline;
 }
 
+@media screen and (max-width: 799px)
+{
+	.credits {
+		text-align: center;
+		position: fixed;
+		bottom: 40px;
+		width: 100%;
+	}
+
+	.provider_company
+	{
+		display: none;
+	}
+}
+
 @media screen and (min-width: 800px)
 {
 	.form_main_content

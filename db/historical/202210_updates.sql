@@ -30,9 +30,12 @@ LEFT JOIN (
 	FROM user_sessions
 	GROUP BY user_id) AS ls ON ls.user_id = u.user_id
 WHERE u.status = 1;
--- 2022-10-18
--- *.alejandrorodriguez.live
 -- 2022-10-19
 ALTER TABLE `users` CHANGE `status` `status` TINYINT NULL DEFAULT '1';
+-- 2022-10-20
+UPDATE `users` SET `status` = NULL WHERE `status` = 0;
+ALTER TABLE `users` DROP INDEX `comp_nickname`, ADD UNIQUE `entity_nickname` (`entity_id`, `nickname`, `status`) USING BTREE;
+ALTER TABLE `users` DROP INDEX `comp_email`, ADD UNIQUE `entity_email` (`entity_id`, `email`, `status`) USING BTREE;
+-- *.alejandrorodriguez.live
 -- Nahutech
 -- Teleinf

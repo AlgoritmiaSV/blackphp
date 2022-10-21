@@ -897,6 +897,7 @@ input:checked + .slider:before
 	#main_footer
 	{
 		padding: 0px;
+		text-align: center;
 	}
 
 	#main_content

@@ -841,6 +841,11 @@ input:checked + .slider:before
 
 @media screen and (max-width: 799px)
 {
+	#main_footer
+	{
+		text-align: center;
+	}
+
 	#menu_button
 	{
 		vertical-align: top;

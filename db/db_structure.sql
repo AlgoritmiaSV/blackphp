@@ -526,8 +526,8 @@ CREATE TABLE `users` (
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `comp_nickname` (`entity_id`,`nickname`),
-  UNIQUE KEY `comp_email` (`entity_id`,`email`),
+  UNIQUE KEY `entity_nickname` (`entity_id`,`nickname`,`status`) USING BTREE,
+  UNIQUE KEY `entity_email` (`entity_id`,`email`,`status`) USING BTREE,
   KEY `theme_id` (`theme_id`),
   CONSTRAINT `user_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_theme` FOREIGN KEY (`theme_id`) REFERENCES `app_themes` (`theme_id`) ON DELETE SET NULL ON UPDATE CASCADE

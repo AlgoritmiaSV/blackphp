@@ -156,12 +156,13 @@ $( function()
 						_tr.find(".row_count").text(++row_count);
 						_tr.find(".row_available").text(value.available);
 						_tr.find(".row_quantity").val(value.quantity);
-						_tr.find(".row_price").val(value.price);
+						//_tr.find(".row_price").val(value.price);
 						$.each(value, function(v_index, v_value) {
 							_tr.find("input." + v_index).val(v_value);
 							_tr.find("textarea." + v_index).val(v_value);
 							_tr.find("select." + v_index).data("value", v_value);
 							_tr.find("span." + v_index).text(v_value);
+							_tr.find("div." + v_index).text(v_value);
 						});
 					
 						if(value.pres_id)
@@ -172,9 +173,9 @@ $( function()
 						container.append(_tr);
 						_tr.find("input").first().trigger("focus");
 						/* Partial values */
-						_tr.find(".complete_value").text(value.product_name);
+						//_tr.find(".complete_value").text(value.element_name);
 						_tr.find(".complete_value").on("click", complete_click);
-						_tr.find(".complete_value").css("display", "inline-block");
+						_tr.find(".complete_value").css("display", "block");
 						_tr.find(".partial_value").hide();
 						_tr.find(".partial_value").on("blur", partial_blur);
 						_tr.find(".partial_value").on("change", partial_change);

@@ -359,6 +359,13 @@ class Settings extends Controller
 		$this->json($data);
 	}
 
+	/**
+	 * Guardar entidad
+	 * 
+	 * Guarda cambios realizados en los datos de la entidad.
+	 * 
+	 * @return void
+	 */
 	public function save_entity()
 	{
 		$this->session_required("json");
@@ -411,6 +418,13 @@ class Settings extends Controller
 		$this->json($data);
 	}
 
+	/**
+	 * Eliminar usuario
+	 * 
+	 * Elimina un usuario e imprime la respuesta en formato JSON.
+	 * 
+	 * @return void
+	 */
 	public function delete_user()
 	{
 		$this->session_required("json");
@@ -426,6 +440,14 @@ class Settings extends Controller
 		$this->json($data);
 	}
 
+	/**
+	 * Carga de información del sistema
+	 * 
+	 * Imprime, en formato HTML, la información del sistema: datos de la última actualización e 
+	 * información de contacto.
+	 * 
+	 * @return void
+	 */
 	public function info_details_loader($mode = "embedded")
 	{
 		$info = Array();
@@ -493,6 +515,15 @@ class Settings extends Controller
 			$entity_option->setOption_value($value);
 			$entity_option->save();
 		}
+
+		$option_list = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
+		$options = Array();
+		foreach($option_list as $item)
+		{
+			$options[$item["option_key"]] = $item["option_value"];
+		}
+		Session::set("options", $options);
+
 		$data["success"] = true;
 		$data["title"] = _("Success");
 		$data["message"] = _("Changes have been saved");

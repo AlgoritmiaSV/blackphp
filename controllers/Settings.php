@@ -200,6 +200,26 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
+	/**
+	 * Detalles de usuario
+	 * 
+	 * Muestra una hoja con los datos del usuario y las últimas sesiones abiertas.
+	 * @param int $user_id ID del usuario a consultar
+	 * 
+	 * @return void
+	 */
+	public function UserDetails($user_id)
+	{
+		$this->session_required("html", $this->module);
+		$this->view->data["title"] = _("User details");
+		$this->view->standard_details();
+		$this->view->data["system_short_date"] = Date("d/m/Y");
+		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["content_id"] = "user_details";
+		$this->view->data["content"] = $this->view->render("content_loader", true);
+		$this->view->render('main');
+	}
+
 	################################ LISTAS Y FORMULARIOS
 	/**
 	 * Cargar tabla de usuarios
@@ -532,18 +552,6 @@ class Settings extends Controller
 		$this->json($data);
 	}
 
-	public function UserDetails()
-	{
-		$this->session_required("html", $this->module);
-		$this->view->data["title"] = _("User details");
-		$this->view->standard_details();
-		$this->view->data["system_short_date"] = Date("d/m/Y");
-		$this->view->data["nav"] = $this->view->render("nav", true);
-		$this->view->data["content_id"] = "user_details";
-		$this->view->data["content"] = $this->view->render("content_loader", true);
-		$this->view->render('main');
-	}
-
 	/**
 	 * Carga de detalles del usuario
 	 * 
@@ -599,7 +607,7 @@ class Settings extends Controller
 		$this->view->data["user_modules"] = $modules_table;
 		
 		#User photo
-		$photo = glob("entities/" . $this->entity_id . "/users/profile_" . $user["user_id"] . ".*");
+		$photo = glob("entities/" . $this->entity_subdomain . "/users/profile_" . $user["user_id"] . ".*");
 		if(count($photo) > 0)
 		{
 			$this->view->data["user_photo"] = $photo[0];

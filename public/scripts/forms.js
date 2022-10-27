@@ -722,6 +722,7 @@ $( function()
 		$(".content_viewer").css("visibility", "hidden");
 		$(".classifier_button").show();
 		$(".print_button").hide();
+		$(".data_search").hide();
 	});
 
 	/* Calculate change */
@@ -1150,7 +1151,7 @@ $( function()
 		if($(this).val().length > 0)
 		{
 			$(this).siblings(".complete_value").text($(this).val());
-			$(this).siblings(".complete_value").css("display", "inline-block");
+			$(this).siblings(".complete_value").css("display", "block");
 			$(this).hide();
 		}
 	}

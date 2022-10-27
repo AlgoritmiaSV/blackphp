@@ -217,7 +217,7 @@
 			return $decryption;
 		}
 
-		public static function format($number, $format = "")
+		public static function format(&$number, $format = "")
 		{
 			$formats = Array(
 				"dui" => Array(
@@ -268,12 +268,14 @@
 					$str .= $digit;
 				}
 			}
-			return $str;
+			$number = $str;
+			return $number;
 		}
 
-		public static function unformat($number)
+		public static function unformat(&$number)
 		{
-			return str_replace("-", "", $number);
+			$number = str_replace("-", "", $number);
+			return $number;
 		}
 	}
 ?>

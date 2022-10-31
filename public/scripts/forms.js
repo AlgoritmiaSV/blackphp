@@ -69,8 +69,11 @@ $( function()
 		if(json.update)
 		{
 			$(".update_input").each(function() {
-				$(this).val(json.update[$(this).attr("name")]);
-				$(this).data("value", json.update[$(this).attr("name")]);
+				if(json.update[$(this).attr("name")])
+				{
+					$(this).val(json.update[$(this).attr("name")]);
+					$(this).data("value", json.update[$(this).attr("name")]);
+				}
 				if($(this).data("cat_source") != null)
 				{
 					$(this).data("default_value", json.update[$(this).attr("name")]);
@@ -194,6 +197,10 @@ $( function()
 			$(".current").on("change", calculate_consumption);
 			$(".current").trigger("change");
 		}
+		/**
+		 * Presentaciones
+		 * @deprecated Obsoleto: Se eliminará en la próxima versión
+		 */
 		if(json.presentations)
 		{
 			trs = $("#pres_container tr");
@@ -643,6 +650,56 @@ $( function()
 					if (!ui.item) {
 						$(this).val('');
 						$(this).trigger("change");
+					}
+				},
+				autoFocus: true
+			});
+			$(this).on("click", function() {
+				$(this).trigger("select");
+			});
+		});
+		element.find(".data_completion").each(function() {
+			if(!$(this).data("source"))
+			{
+				return;
+			}
+			var labeled_source = json[$(this).data("source")].map(function (item) {
+				if(item.label == null)
+					item.label = item.text; 
+				return item;
+			});
+			$(this).autocomplete({
+				source: labeled_source,
+				select: function( event, ui ) {
+					var completion_id = $(this).data("id");
+					if(ui.item.id)
+					{
+						$(".data_completion").each(function() {
+							if($(this).data("id") == completion_id && $(this).data("field") && ui.item[$(this).data("field")])
+							{
+								$(this).val(ui.item[$(this).data("field")]);
+							}
+						});
+					}
+					else
+					{
+						$(".data_completion").each(function() {
+							if($(this).data("id") == completion_id && $(this).data("field"))
+							{
+								$(this).val('');
+							}
+						});
+					}
+				},
+				change: function(event, ui) {
+					if (!ui.item) {
+						var completion_id = $(this).data("id");
+						$(".data_completion").each(function() {
+							if($(this).data("id") == completion_id && $(this).data("field"))
+							{
+								$(this).val('');
+							}
+						});
 					}
 				},
 				autoFocus: true

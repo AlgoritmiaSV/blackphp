@@ -14,3 +14,12 @@
 	font-size: 9pt;
 	padding: 10px;
 }
+
+@media screen {
+	.ticket_area
+	{
+		max-width: 350px;
+		margin: 0px auto;
+		border: 2px dashed #999999;
+	}
+}

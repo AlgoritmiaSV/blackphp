@@ -1317,4 +1317,18 @@ $( function()
 			consumption_span.text(consumption);
 		}
 	};
+
+	/**
+	 * Cálculo de intervalo de fechas y muestra de resultado en días.
+	 */
+	$(".interval_start, .interval_end").on("change", function() {
+		var start = $(".interval_start").datepicker("getDate");
+		var end = $(".interval_end").datepicker("getDate");
+		var days = "";
+		if(start <= end)
+		{
+			days = (end - start) / 86400000 + 1;
+		}
+		$(".interval_count").text(days);
+	});
 });

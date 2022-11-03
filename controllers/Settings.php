@@ -222,6 +222,41 @@ class Settings extends Controller
 
 	################################ LISTAS Y FORMULARIOS
 	/**
+	 * Carga de datos de formulario.
+	 * 
+	 * Imprime, en formato JSON, los datos iniciales para la carga de formularios.
+	 * 
+	 * @return void
+	 */
+	public function load_form_data()
+	{
+		$data = Array();
+		if($_POST["method"] == "Entity")
+		{
+			$data["update"] = entities_model::find($this->entity_id)->toArray();
+		}
+		if($_POST["method"] == "EditUser")
+		{
+			$data["update"] = users_model::find($_POST["id"])->toArray();
+			$data["check"] = Array();
+			$data["check"]["modules"] = user_modules_model::select("module_id AS id")
+				->where("user_id", $_POST["id"])->getAll();
+			$data["check"]["methods"] = user_methods_model::select("method_id AS id")
+				->where("user_id", $_POST["id"])->getAll();
+		}
+		if($_POST["method"] == "Preferences")
+		{
+			$options = entity_options_model::join("app_options", "option_id")->getAll();
+			$data["update"] = Array();
+			foreach($options as $option)
+			{
+				$data["update"][$option["option_key"]] = $option["option_value"];
+			}
+		}
+		$this->json($data);
+	}
+
+	/**
 	 * Cargar tabla de usuarios
 	 * 
 	 * Devuelve, en formato JSON o en un archivo Excel, la lista de usuarios.
@@ -255,6 +290,246 @@ class Settings extends Controller
 		{
 			$this->json($data);
 		}
+	}
+
+	/**
+	 * Carga de información del sistema
+	 * 
+	 * Imprime, en formato HTML, la información del sistema: datos de la última actualización e 
+	 * información de contacto.
+	 * 
+	 * @return void
+	 */
+	public function info_details_loader($mode = "embedded")
+	{
+		$info = Array();
+		if(file_exists("app_info.json"))
+		{
+			$info = json_decode(file_get_contents("app_info.json"), true);
+			$info["last_update_ago"] = date_utilities::sql_date_to_ago($info["last_update"]);
+			$info["last_update"] = date_utilities::sql_date_to_string($info["last_update"], true);
+		}
+		else
+		{
+			$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($_SERVER["DOCUMENT_ROOT"]), RecursiveIteratorIterator::SELF_FIRST);
+			$last_modified = 0;
+			foreach($files as $file_object)
+			{
+				$modified = $file_object->getMTime();
+				if($modified > $last_modified)
+				{
+					$last_modified = $modified;
+				}
+			}
+			$info["last_update"] = date_utilities::sql_date_to_string(Date("Y-m-d H:i:s", $last_modified), true);
+			$info["last_update_ago"] = date_utilities::sql_date_to_ago(Date("Y-m-d H:i:s", $last_modified));
+			$info["version"] = "1.0";
+			$info["number"] = "0";
+		}
+		foreach($info as $key => $item)
+		{
+			$this->view->data[$key] = $item;
+		}
+		if($mode == "standalone")
+		{
+			$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
+			$this->view->standard_details();
+			$this->view->add("styles", "css", Array(
+				'styles/standalone.css'
+			));
+			$this->view->restrict[] = "embedded";
+			$this->view->data["content"] = $this->view->render('settings/info_details', true);
+			$this->view->render('clean_main');
+		}
+		else
+		{
+			$this->view->render('settings/info_details');
+		}
+	}
+
+	/**
+	 * Carga de detalles del usuario
+	 * 
+	 * Muestra una hoja con los detalles del usuario. Este método puede ser invocado por a través
+	 * de UserDetails (embedded) y directamente para ser mostrado en un jAlert (standalone); por
+	 * ejemplo, para el usuario con ID 1, se podría visitar:
+	 * - Settings/UserDetails/1/ (embedded)
+	 * - Settings/user_details_loader/1/standalone/ (standalone)
+	 * @param int $user_id ID del usuario
+	 * @param string $mode Modo en que se mostrará la vista
+	 * 
+	 * @return void
+	 */
+	public function user_details_loader($user_id = "", $mode = "embedded")
+	{
+		$this->session_required("internal");
+		if(empty($user_id))
+		{
+			$user_id = $_POST["id"];
+		}
+		$user = users_model::find($user_id)->toArray();
+		$this->view->data = array_merge($this->view->data, $user);
+		$sessions = user_sessions_model::join("browsers", "browser_id")->where("user_sessions.user_id", $user_id)->orderBy("date_time", "DESC")->addCounter("item")->get(10);
+		foreach($sessions as $key => $session)
+		{
+			$time = strtotime($session["date_time"]);
+			$sessions[$key]["session_date"] = Date("d/m/Y", $time);
+			$sessions[$key]["session_time"] = Date("h:i a", $time);
+		}
+		$this->view->data["sessions"] = $sessions;
+
+		$modules = available_modules_model::where("user_id", $user_id)->getAllArray();
+		$i = -1;
+		$j = 0;
+		$modules_table = Array();
+		foreach($modules as $k => $module)
+		{
+			if($k % 4 == 0)
+			{
+				$i++;
+				$modules_table[$i] = Array();
+				$j = 0;
+			}
+			$modules_table[$i]["module_" . $j] = $module["module_name"];
+			$j++;
+			$k++;
+		}
+		while($j % 4 != 0)
+		{
+			$modules_table[$i]["module_" . $j] = "";
+			$j++;
+		}
+		$this->view->data["user_modules"] = $modules_table;
+		
+		#User photo
+		$photo = glob("entities/" . $this->entity_subdomain . "/users/profile_" . $user["user_id"] . ".*");
+		if(count($photo) > 0)
+		{
+			$this->view->data["user_photo"] = $photo[0];
+		}
+		else
+		{
+			$this->view->data["user_photo"] = "public/images/user.png";
+		}
+		$this->user_actions($user);
+		if($user_id == Session::get("user_id"))
+		{
+			$this->view->restrict[] = "no_self";
+		}
+		$this->view->data["print_title"] = _("User details");
+		$this->view->data["print_header"] = $this->view->render("print_header", true);
+		if($mode == "standalone")
+		{
+			$this->view->data["title"] = _("User details");
+			$this->view->standard_details();
+			$this->view->add("styles", "css", Array(
+				'styles/standalone.css'
+			));
+			$this->view->restrict[] = "embedded";
+			$this->view->data["content"] = $this->view->render('settings/user_details', true);
+			$this->view->render('clean_main');
+		}
+		else
+		{
+			$this->view->render("settings/user_details");
+		}
+	}
+
+	################################ GUARDADO DE DATOS
+	/**
+	 * Guardar preferencias
+	 * 
+	 * Guarda las preferencias del usuario con los datros recibidos del formulario de preferencias.
+	 * 
+	 * @return void
+	 */
+	public function save_preferences()
+	{
+		$this->session_required("json");
+		$data = $_POST;
+		$data["success"] = false;
+		entity_options_model::where("option_id IN (SELECT option_id FROM app_options WHERE option_type = 1)")->update(Array("option_value" => 0));
+		foreach($_POST as $key => $value)
+		{
+			$option = app_options_model::where("option_key", $key)->get();
+			$entity_option = $option->entity_options()->get();
+			$entity_option->setOption_value($value);
+			$entity_option->save();
+		}
+
+		$option_list = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
+		$options = Array();
+		foreach($option_list as $item)
+		{
+			$options[$item["option_key"]] = $item["option_value"];
+		}
+		Session::set("options", $options);
+
+		$data["success"] = true;
+		$data["title"] = _("Success");
+		$data["message"] = _("Changes have been saved");
+		$data["theme"] = "green";
+		$data["no_reset"] = true;
+		$this->json($data);
+	}
+
+	/**
+	 * Guardar entidad
+	 * 
+	 * Guarda cambios realizados en los datos de la entidad.
+	 * 
+	 * @return void
+	 */
+	public function save_entity()
+	{
+		$this->session_required("json");
+		$data = Array("success" => false);
+		if(!empty($_POST["entity_name"]))
+		{
+			$time = Date("Y-m-d H:i:s");
+			$entity = entities_model::find($this->entity_id);
+			$entity->set(Array(
+				"entity_name" => $_POST["entity_name"],
+				"entity_slogan" => $_POST["entity_slogan"],
+				"edition_user" => Session::get("user_id"),
+				"user_edition_time" => $time
+			))->save();
+			Session::set("entity", $entity->toArray());
+			$data["success"] = true;
+			$data["title"] = _("Success");
+			$data["message"] = _("Changes have been saved");
+			$data["theme"] = "green";
+			$data["no_reset"] = true;
+
+			#Save image
+			if(!empty($_FILES["images"]["name"][0]))
+			{
+				$extension = strtolower(pathinfo($_FILES["images"]["name"][0], PATHINFO_EXTENSION));
+				if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
+				{
+					$dir = "entities/local/";
+				}
+				else
+				{
+					$dir = "entities/" . $this->entity_subdomain . "/";
+				}
+				$file = $dir . "logo." . $extension;
+				$generic_file = glob($dir . "logo.*");
+				if(!is_dir($dir))
+				{
+					mkdir($dir, 0755, true);
+				}
+				else
+				{
+					foreach($generic_file as $previous)
+					{
+						unlink($previous);
+					}
+				}
+				move_uploaded_file($_FILES["images"]["tmp_name"][0], $file);
+			}
+		}
+		$this->json($data);
 	}
 
 	/**
@@ -345,100 +620,6 @@ class Settings extends Controller
 	}
 
 	/**
-	 * Carga de datos de formulario.
-	 * 
-	 * Imprime, en formato JSON, los datos iniciales para la carga de formularios.
-	 * 
-	 * @return void
-	 */
-	public function load_form_data()
-	{
-		$data = Array();
-		if($_POST["method"] == "Entity")
-		{
-			$data["update"] = entities_model::find($this->entity_id)->toArray();
-		}
-		if($_POST["method"] == "EditUser")
-		{
-			$data["update"] = users_model::find($_POST["id"])->toArray();
-			$data["check"] = Array();
-			$data["check"]["modules"] = user_modules_model::select("module_id AS id")
-				->where("user_id", $_POST["id"])->getAll();
-			$data["check"]["methods"] = user_methods_model::select("method_id AS id")
-				->where("user_id", $_POST["id"])->getAll();
-		}
-		if($_POST["method"] == "Preferences")
-		{
-			$options = entity_options_model::join("app_options", "option_id")->getAll();
-			$data["update"] = Array();
-			foreach($options as $option)
-			{
-				$data["update"][$option["option_key"]] = $option["option_value"];
-			}
-		}
-		$this->json($data);
-	}
-
-	/**
-	 * Guardar entidad
-	 * 
-	 * Guarda cambios realizados en los datos de la entidad.
-	 * 
-	 * @return void
-	 */
-	public function save_entity()
-	{
-		$this->session_required("json");
-		$data = Array("success" => false);
-		if(!empty($_POST["entity_name"]))
-		{
-			$time = Date("Y-m-d H:i:s");
-			$entity = entities_model::find($this->entity_id);
-			$entity->set(Array(
-				"entity_name" => $_POST["entity_name"],
-				"entity_slogan" => $_POST["entity_slogan"],
-				"edition_user" => Session::get("user_id"),
-				"user_edition_time" => $time
-			))->save();
-			Session::set("entity", $entity->toArray());
-			$data["success"] = true;
-			$data["title"] = _("Success");
-			$data["message"] = _("Changes have been saved");
-			$data["theme"] = "green";
-			$data["no_reset"] = true;
-
-			#Save image
-			if(!empty($_FILES["images"]["name"][0]))
-			{
-				$extension = strtolower(pathinfo($_FILES["images"]["name"][0], PATHINFO_EXTENSION));
-				if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
-				{
-					$dir = "entities/local/";
-				}
-				else
-				{
-					$dir = "entities/" . $this->entity_subdomain . "/";
-				}
-				$file = $dir . "logo." . $extension;
-				$generic_file = glob($dir . "logo.*");
-				if(!is_dir($dir))
-				{
-					mkdir($dir, 0755, true);
-				}
-				else
-				{
-					foreach($generic_file as $previous)
-					{
-						unlink($previous);
-					}
-				}
-				move_uploaded_file($_FILES["images"]["tmp_name"][0], $file);
-			}
-		}
-		$this->json($data);
-	}
-
-	/**
 	 * Eliminar usuario
 	 * 
 	 * Elimina un usuario e imprime la respuesta en formato JSON.
@@ -458,186 +639,6 @@ class Settings extends Controller
 		$affected = $user->delete();
 		$data["deleted"] = $affected > 0;
 		$this->json($data);
-	}
-
-	/**
-	 * Carga de información del sistema
-	 * 
-	 * Imprime, en formato HTML, la información del sistema: datos de la última actualización e 
-	 * información de contacto.
-	 * 
-	 * @return void
-	 */
-	public function info_details_loader($mode = "embedded")
-	{
-		$info = Array();
-		if(file_exists("app_info.json"))
-		{
-			$info = json_decode(file_get_contents("app_info.json"), true);
-			$info["last_update_ago"] = date_utilities::sql_date_to_ago($info["last_update"]);
-			$info["last_update"] = date_utilities::sql_date_to_string($info["last_update"], true);
-		}
-		else
-		{
-			$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($_SERVER["DOCUMENT_ROOT"]), RecursiveIteratorIterator::SELF_FIRST);
-			$last_modified = 0;
-			foreach($files as $file_object)
-			{
-				$modified = $file_object->getMTime();
-				if($modified > $last_modified)
-				{
-					$last_modified = $modified;
-				}
-			}
-			$info["last_update"] = date_utilities::sql_date_to_string(Date("Y-m-d H:i:s", $last_modified), true);
-			$info["last_update_ago"] = date_utilities::sql_date_to_ago(Date("Y-m-d H:i:s", $last_modified));
-			$info["version"] = "1.0";
-			$info["number"] = "0";
-		}
-		foreach($info as $key => $item)
-		{
-			$this->view->data[$key] = $item;
-		}
-		if($mode == "standalone")
-		{
-			$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
-			$this->view->standard_details();
-			$this->view->add("styles", "css", Array(
-				'styles/standalone.css'
-			));
-			$this->view->restrict[] = "embedded";
-			$this->view->data["content"] = $this->view->render('settings/info_details', true);
-			$this->view->render('clean_main');
-		}
-		else
-		{
-			$this->view->render('settings/info_details');
-		}
-	}
-
-	/**
-	 * Guardar preferencias
-	 * 
-	 * Guarda las preferencias del usuario con los datros recibidos del formulario de preferencias.
-	 * 
-	 * @return void
-	 */
-	public function save_preferences()
-	{
-		$this->session_required("json");
-		$data = $_POST;
-		$data["success"] = false;
-		entity_options_model::where("option_id IN (SELECT option_id FROM app_options WHERE option_type = 1)")->update(Array("option_value" => 0));
-		foreach($_POST as $key => $value)
-		{
-			$option = app_options_model::where("option_key", $key)->get();
-			$entity_option = $option->entity_options()->get();
-			$entity_option->setOption_value($value);
-			$entity_option->save();
-		}
-
-		$option_list = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
-		$options = Array();
-		foreach($option_list as $item)
-		{
-			$options[$item["option_key"]] = $item["option_value"];
-		}
-		Session::set("options", $options);
-
-		$data["success"] = true;
-		$data["title"] = _("Success");
-		$data["message"] = _("Changes have been saved");
-		$data["theme"] = "green";
-		$data["no_reset"] = true;
-		$this->json($data);
-	}
-
-	/**
-	 * Carga de detalles del usuario
-	 * 
-	 * Muestra una hoja con los detalles del usuario. Este método puede ser invocado por a través
-	 * de UserDetails (embedded) y directamente para ser mostrado en un jAlert (standalone); por
-	 * ejemplo, para el usuario con ID 1, se podría visitar:
-	 * - Settings/UserDetails/1/ (embedded)
-	 * - Settings/user_details_loader/1/standalone/ (standalone)
-	 * @param int $user_id ID del usuario
-	 * @param string $mode Modo en que se mostrará la vista
-	 * 
-	 * @return void
-	 */
-	public function user_details_loader($user_id = "", $mode = "embedded")
-	{
-		$this->session_required("internal");
-		if(empty($user_id))
-		{
-			$user_id = $_POST["id"];
-		}
-		$user = users_model::find($user_id)->toArray();
-		$this->view->data = array_merge($this->view->data, $user);
-		$sessions = user_sessions_model::join("browsers", "browser_id")->where("user_sessions.user_id", $user_id)->orderBy("date_time", "DESC")->addCounter("item")->get(10);
-		foreach($sessions as $key => $session)
-		{
-			$time = strtotime($session["date_time"]);
-			$sessions[$key]["session_date"] = Date("d/m/Y", $time);
-			$sessions[$key]["session_time"] = Date("h:i a", $time);
-		}
-		$this->view->data["sessions"] = $sessions;
-
-		$modules = available_modules_model::where("user_id", $user_id)->getAllArray();
-		$i = -1;
-		$j = 0;
-		$modules_table = Array();
-		foreach($modules as $k => $module)
-		{
-			if($k % 4 == 0)
-			{
-				$i++;
-				$modules_table[$i] = Array();
-				$j = 0;
-			}
-			$modules_table[$i]["module_" . $j] = $module["module_name"];
-			$j++;
-			$k++;
-		}
-		while($j % 4 != 0)
-		{
-			$modules_table[$i]["module_" . $j] = "";
-			$j++;
-		}
-		$this->view->data["user_modules"] = $modules_table;
-		
-		#User photo
-		$photo = glob("entities/" . $this->entity_subdomain . "/users/profile_" . $user["user_id"] . ".*");
-		if(count($photo) > 0)
-		{
-			$this->view->data["user_photo"] = $photo[0];
-		}
-		else
-		{
-			$this->view->data["user_photo"] = "public/images/user.png";
-		}
-		$this->user_actions($user);
-		if($user_id == Session::get("user_id"))
-		{
-			$this->view->restrict[] = "no_self";
-		}
-		$this->view->data["print_title"] = _("User details");
-		$this->view->data["print_header"] = $this->view->render("print_header", true);
-		if($mode == "standalone")
-		{
-			$this->view->data["title"] = _("User details");
-			$this->view->standard_details();
-			$this->view->add("styles", "css", Array(
-				'styles/standalone.css'
-			));
-			$this->view->restrict[] = "embedded";
-			$this->view->data["content"] = $this->view->render('settings/user_details', true);
-			$this->view->render('clean_main');
-		}
-		else
-		{
-			$this->view->render("settings/user_details");
-		}
 	}
 }
 ?>

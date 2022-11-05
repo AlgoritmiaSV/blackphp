@@ -69,12 +69,7 @@ class View
 
 		foreach ($this->data as $key => $value)
 		{
-			if(!is_array($value))
-			{
-				$tagToReplace = "{{ $key }}";
-				$template = str_replace($tagToReplace, $value, $template);
-			}
-			else
+			if(is_array($value))
 			{
 				$first = true;
 				$text = "";
@@ -98,6 +93,15 @@ class View
 					$text .= $line;
 				}
 				$template = preg_replace("/\[\[ $key \]\].*\[\[\/ $key \]\]/", $text, $template);
+			}
+		}
+
+		foreach ($this->data as $key => $value)
+		{
+			if(!is_array($value))
+			{
+				$tagToReplace = "{{ $key }}";
+				$template = str_replace($tagToReplace, $value, $template);
 			}
 		}
 

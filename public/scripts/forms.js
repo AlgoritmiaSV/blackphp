@@ -65,6 +65,73 @@ $( function()
 	})
 	.done(function(json_data) {
 		json = json_data;
+		
+		/* Items */
+		if(json.items)
+		{
+			$(".items_container").each(function()
+			{
+				var container = $(this);
+				if(json.items[container.data("source")] && json.items[container.data("source")].length > 0)
+				{
+					var _template = container.find("tr").first().clone(true);
+					container.find("tr:first").first().remove();
+					row_count = 0;
+					$.each(json.items[container.data("source")], function(index, value) {
+						/* Prepare */
+						var _tr = _template.clone(false);
+						_tr.find(".date_input").each(set_date_picker);
+						_tr.find("input").on("keypress", input_keypress);
+						_tr.find(".row_quantity, .row_price").on("change", function() {
+							calc_row_total($(this));
+							calc_bill_total();
+						});
+						_tr.find(".delete_row_icon").on("click", delete_row_click);
+						build_autocomplete(_tr);
+						/* Fill */
+						_tr.find(".row_number").val(row_count);
+						_tr.find(".row_count").text(++row_count);
+						_tr.find(".row_available").text(value.available);
+						_tr.find(".row_quantity").val(value.quantity);
+						//_tr.find(".row_price").val(value.price);
+						$.each(value, function(v_index, v_value) {
+							_tr.find("input." + v_index).val(v_value);
+							_tr.find("textarea." + v_index).val(v_value);
+							_tr.find("select." + v_index).data("value", v_value);
+							_tr.find("span." + v_index).text(v_value);
+							_tr.find("div." + v_index).text(v_value);
+						});
+					
+						if(value.pres_id)
+						{
+							_tr.find(".pres_id").val(value.pres_id);
+						}
+						calc_row_total(_tr);
+						container.append(_tr);
+						_tr.find("input").first().trigger("focus");
+						/* Partial values */
+						//_tr.find(".complete_value").text(value.element_name);
+						_tr.find(".complete_value").on("click", complete_click);
+						_tr.find(".complete_value").css("display", "block");
+						_tr.find(".partial_value").hide();
+						_tr.find(".partial_value").on("blur", partial_blur);
+						_tr.find(".partial_value").on("change", partial_change);
+						/* Generics */
+						_tr.find(".row_generics").text("");
+					});
+					if(row_count > 1)
+					{
+						$(".delete_row_icon").css({
+							"visibility":"visible"
+						});
+					}
+					calc_bill_total();
+				}
+			});
+			$(".current").on("change", calculate_consumption);
+			$(".current").trigger("change");
+		}
+
 		/* inputs */
 		if(json.update)
 		{
@@ -132,71 +199,6 @@ $( function()
 			});
 		}
 
-		/* Items */
-		if(json.items)
-		{
-			$(".items_container").each(function()
-			{
-				var container = $(this);
-				if(json.items[container.data("source")] && json.items[container.data("source")].length > 0)
-				{
-					var _template = container.find("tr").first().clone(true);
-					container.find("tr:first").first().remove();
-					row_count = 0;
-					$.each(json.items[container.data("source")], function(index, value) {
-						/* Prepare */
-						var _tr = _template.clone(false);
-						_tr.find(".date_input").each(set_date_picker);
-						_tr.find("input").on("keypress", input_keypress);
-						_tr.find(".row_quantity, .row_price").on("change", function() {
-							calc_row_total($(this));
-							calc_bill_total();
-						});
-						_tr.find(".delete_row_icon").on("click", delete_row_click);
-						build_autocomplete(_tr);
-						/* Fill */
-						_tr.find(".row_number").val(row_count);
-						_tr.find(".row_count").text(++row_count);
-						_tr.find(".row_available").text(value.available);
-						_tr.find(".row_quantity").val(value.quantity);
-						//_tr.find(".row_price").val(value.price);
-						$.each(value, function(v_index, v_value) {
-							_tr.find("input." + v_index).val(v_value);
-							_tr.find("textarea." + v_index).val(v_value);
-							_tr.find("select." + v_index).data("value", v_value);
-							_tr.find("span." + v_index).text(v_value);
-							_tr.find("div." + v_index).text(v_value);
-						});
-					
-						if(value.pres_id)
-						{
-							_tr.find(".pres_id").val(value.pres_id);
-						}
-						calc_row_total(_tr);
-						container.append(_tr);
-						_tr.find("input").first().trigger("focus");
-						/* Partial values */
-						//_tr.find(".complete_value").text(value.element_name);
-						_tr.find(".complete_value").on("click", complete_click);
-						_tr.find(".complete_value").css("display", "block");
-						_tr.find(".partial_value").hide();
-						_tr.find(".partial_value").on("blur", partial_blur);
-						_tr.find(".partial_value").on("change", partial_change);
-						/* Generics */
-						_tr.find(".row_generics").text("");
-					});
-					if(row_count > 1)
-					{
-						$(".delete_row_icon").css({
-							"visibility":"visible"
-						});
-					}
-					calc_bill_total();
-				}
-			});
-			$(".current").on("change", calculate_consumption);
-			$(".current").trigger("change");
-		}
 		/**
 		 * Presentaciones
 		 * @deprecated Obsoleto: Se eliminará en la próxima versión
@@ -1319,7 +1321,10 @@ $( function()
 	};
 
 	/**
-	 * Cálculo de intervalo de fechas y muestra de resultado en días.
+	 * Cálculo de intervalo de fechas
+	 * 
+	 * Obtiene la diferencia entre dos fechas desde dos imputs de clase intelval_start e
+	 * interval_end, respectivamente, y muestra de resultado en días.
 	 */
 	$(".interval_start, .interval_end").on("change", function() {
 		var start = $(".interval_start").datepicker("getDate");

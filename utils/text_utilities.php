@@ -251,7 +251,14 @@
 			}
 			if(strlen($number) != $formats[$format]["size"])
 			{
-				return $number;
+				if($format == "nrc")
+				{
+					$formats[$format]["format"] = (strlen($number) - 1) . "-1";
+				}
+				else
+				{
+					return $number;
+				}
 			}
 			$digits = str_split($formats[$format]["format"]);
 			$offset = 0;

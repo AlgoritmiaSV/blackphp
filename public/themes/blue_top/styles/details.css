@@ -257,3 +257,13 @@
 {
 	width: 25%;
 }
+
+.writable_table td
+{
+	padding: 10px 1px;
+}
+
+.void_content
+{
+	height: 699px;
+}

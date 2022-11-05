@@ -37,9 +37,9 @@
 {
 	.credits {
 		text-align: center;
-		position: fixed;
+		position: absolute;
 		bottom: 40px;
-		width: 100%;
+		width: -webkit-fill-available;
 	}
 
 	.provider_company

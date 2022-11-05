@@ -269,5 +269,28 @@ class date_utilities
 		}
 		return $string;
 	}
+
+	/**
+	 * Formato de fecha
+	 * 
+	 * Crea un objeto de la clase DateTime y devuelve la fecha en el formato solicitado.
+	 * @param string $date La fecha a aplicar formato
+	 * @param string $format El formato solicitado
+	 * 
+	 * @return string La fecha en el formato solicitado
+	 */
+	public static function format(&$date, $format)
+	{
+		if(empty($date) || $date == "0000-00-00")
+		{
+			$date = "";
+		}
+		else
+		{
+			$date_time = date_create($date);
+			$date = date_format($date_time, $format);
+		}
+		return $date;
+	}
 }
 ?>

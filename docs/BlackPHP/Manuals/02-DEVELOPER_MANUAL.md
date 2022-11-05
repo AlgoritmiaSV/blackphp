@@ -23,13 +23,17 @@ Generalidades
 
 Base de datos
 -------------
-La base de datos de **BlackPHP** comprende básicamente dos partes: Un conjunto de tablas de uso del sistema (todas las que inician con app_), y las tablas para el almacenamiento de datos de los negocios durante el uso.
+La base de datos de **BlackPHP** comprende básicamente dos partes: Un conjunto de tablas de uso del sistema (todas aquellas cuyos nombres inician con app_), y las tablas para el almacenamiento de datos de los negocios durante el uso.
 
 Scripts en el directorio raíz
 -----------------------------
 *Script utilitarios para el desarrollador*
 
 **advances.php**: Al ejecutar este archivo, obtiene estadísticas de desarrollo del sistema, esto incluye: nombre de los ficheros, fecha de última actualización, líneas escritas y peso del archivo. Asimismo presenta estadísticas generales de todo el sistema clasificadas por tipo de archivo.
+Este archivo puede lamarse de tres formas:
+- /advances.php, la forma estándar, muestra el resultado en formato HTML.
+- /advances.php?mode=text, modo texto
+Se aconseja no incluir este archivo en las versiones de prodicción del sistema.
 
 **error_log.php**: Con este fichero podrá obtener de manera sencilla una impresión del fichero error_log ubicado en el directorio raíz, cuando ocurra algun error durante la ejecución del sistema. (Sólo para implementaciones en línea con cPanel).
 

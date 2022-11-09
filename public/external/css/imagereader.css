@@ -4,7 +4,7 @@
 .drop .drop-label { color: rgba(0, 0, 0, 0.0875); }
 .drop:hover:after { border-color: rgba(0, 0, 0, 0.125); }
 .drop:hover .drop-label { color: rgba(0, 0, 0, 0.125); }
-#image-preview, .image-preview { background-color: #000; }
+#image-preview, .image-preview { background-color: inherit; }
 .drop {
 /*  width: 120px;
   height: 160px;

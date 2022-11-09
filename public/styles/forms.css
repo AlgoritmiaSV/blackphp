@@ -354,6 +354,22 @@ tr:hover .action_icon
 	margin-left: 7px;
 }
 
+.logo_preview_container
+{
+	position: relative;
+	width: 200px;
+	margin: 0px auto;
+	overflow: hidden;
+}
+
+.photo_preview_container
+{
+	position: relative;
+	width: 150px;
+	height: 200px;
+	overflow: hidden;
+}
+
 @media screen and (max-width: 799px)
 {
 	.form_entry label

@@ -267,3 +267,18 @@
 {
 	height: 699px;
 }
+
+.writable_td_number
+{
+	width: 50px;
+}
+
+.writable_td_text
+{
+	width: 100px;
+}
+
+.no_break
+{
+	page-break-inside: avoid;
+}

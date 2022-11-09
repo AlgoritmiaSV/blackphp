@@ -34,6 +34,11 @@
 		background-color:#ffffff;
 	}
 
+	h3
+	{
+		margin: 5px;
+	}
+
 	article
 	{
 		padding: 0px;
@@ -85,6 +90,12 @@
 		box-shadow: none;
 		border-radius: 0px;
 		transition: none;
+	}
+
+	.details_body
+	{
+		margin: 0px;
+		padding: 0px;
 	}
 }
 

@@ -17,7 +17,17 @@
 				</div>
 			</div>
 			<p>_(Entity logo):</p>
-			<div class="input-images"></div>
+			<div class="logo_preview_container">
+				<div class="drop">
+					<div class="uploader">
+						<label class="drop-label">Logo</label>
+						<input type="file" class="image-upload" name="logo" accept="image/*">
+					</div>
+					<div class="image-preview">
+						<img src="{{ entity_logo }}" alt="Logo">
+					</div>
+				</div>
+			</div>
 			<div class="form_foot">
 				<button class="blue_button" type="submit">
 					<img src="public/images/outline/save.png" class="x-small_icon">

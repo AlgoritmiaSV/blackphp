@@ -7,12 +7,25 @@
 			</div>
 			<div class="form_body">
 				<div class="form_entry">
+					<label>_(User):</label>
+					<input name="nickname" class="update_input" disabled>
+				</div>
+				<div class="form_entry">
+					<label>_(My name):</label>
+					<input name="user_name" class="update_input" required>
+				</div>
+				<div class="form_entry">
+					<label>_(Password):</label>
+					<a class="small_button open_dialog_button" href="#" data-dialog="change_password_dialog">
+						<img src="public/images/padlock.png" class="small_icon">
+						<span>_(Change password)</span>
+					</a>
+				</div>
+				<div class="form_entry">
 					<label>_(Display theme):</label>
 					<select class="data_selector update_input" name="theme_id" data-source="themes" data-search="none" data-placeholder="_(Select)">
 					</select>
 				</div>
-			</div>
-			<div class="form_body">
 				<div class="form_entry">
 					<label>_(Language):</label>
 					<select class="data_selector update_input" name="locale" data-source="locales" data-search="none" data-placeholder="_(Select)">
@@ -42,5 +55,39 @@
 			<img src="public/images/success.png" class="small_icon">
 			<span>_(Success)</span>
 		</div>
+	</div>
+</div>
+<div id="change_password_dialog" class="dialog" title="_(Change password)" data-accept="_(Accept)" data-close="_(Close)">
+	<div class="entry_info"></div>
+	<form action="change_password" data-close_dialog="change_password_dialog">
+		<div class="form_entry">
+			<label>_(Current password):</label>
+			<input type="password" name="current_password" maxlength="32" required>
+		</div>
+		<div class="form_entry">
+			<label>_(New password):</label>
+			<input type="password" name="new_password" minlength="6" maxlength="32" required>
+		</div>
+		<div class="form_entry">
+			<label>_(Confirm new password):</label>
+			<input type="password" name="confirm_password" minlength="6" maxlength="32" required>
+		</div>
+		<div class="hidden_entry">
+			<label>&nbsp;</label>
+			<button id="password_submit" type="submit">_(Save)</button>
+			<button type="reset">_(Cancel)</button>
+		</div>
+	</form>
+	<div class="sending">
+		<img src="public/images/loading.gif" class="small_icon">
+		<span>_(Saving)...</span>
+	</div>
+	<div class="error">
+		<img src="public/images/error.png" class="small_icon">
+		<span>_(Failed to save)</span>
+	</div>
+	<div class="success">
+		<img src="public/images/success.png" class="small_icon">
+		<span>_(Success)</span>
 	</div>
 </div>

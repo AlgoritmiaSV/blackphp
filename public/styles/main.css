@@ -288,7 +288,7 @@
 	padding: 20px;
 }
 
-.company_logo
+.company_logo, .entity_logo
 {
 	max-width: 200px;
 	max-height: 150px;
@@ -356,12 +356,6 @@
 {
 	padding: 20px;
 	vertical-align: middle;
-}
-
-.institution_logo
-{
-	max-width: 300px;
-	max-height: 180px;
 }
 
 .justify

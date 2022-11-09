@@ -23,6 +23,9 @@ msgstr "Acerca de %s"
 msgid "About BlackPHP"
 msgstr "Acerca de BlackPHP"
 
+msgid "Accept"
+msgstr "Aceptar"
+
 msgid "activate to sort column ascending"
 msgstr "ordenar la columna de forma ascendente"
 
@@ -62,14 +65,23 @@ msgstr "Navegador"
 msgid "Cancel"
 msgstr "Cancelar"
 
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
 msgid "Changes have been saved"
 msgstr "Los cambios se han guardado"
 
 msgid "Click here"
 msgstr "Clic aquí"
 
+msgid "Close"
+msgstr "Cerrar"
+
 msgid "Complete name"
 msgstr "Nombre completo"
+
+msgid "Confirm new password"
+msgstr "Confirmar nueva contraseña"
 
 msgid "Confirm password"
 msgstr "Confirmar contraseña"
@@ -82,6 +94,9 @@ msgstr "Continuar"
 
 msgid "Created by"
 msgstr "Creado por"
+
+msgid "Current password"
+msgstr "Contraseña actual"
 
 msgid "Date"
 msgstr "Fecha"
@@ -164,6 +179,9 @@ msgstr "Si no tiene un archivo de configuración, ¡solicite uno ahora!"
 msgid "In construction"
 msgstr "En construcción"
 
+msgid "Incorrect password"
+msgstr "Contraseña incorrecta"
+
 msgid "Installation"
 msgstr "Instalación"
 
@@ -212,6 +230,12 @@ msgstr "Módulos"
 msgid "My account"
 msgstr "Mi cuenta"
 
+msgid "My name"
+msgstr "Mi nombre"
+
+msgid "New password"
+msgstr "Nueva contraseña"
+
 msgid "New user"
 msgstr "Nuevo usuario"
 
@@ -241,6 +265,9 @@ msgstr "Otras configuraciones"
 
 msgid "Password"
 msgstr "Contrase&ntilde;a"
+
+msgid "Passwords do not match"
+msgstr "Las contraseñas no coinciden"
 
 msgid "Permissions"
 msgstr "Permisos"
@@ -372,4 +399,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 118 messages translated.
+# 127 messages translated.

@@ -502,9 +502,9 @@ class Settings extends Controller
 			$data["no_reset"] = true;
 
 			#Save image
-			if(!empty($_FILES["images"]["name"][0]))
+			if(!empty($_FILES["logo"]["name"]))
 			{
-				$extension = strtolower(pathinfo($_FILES["images"]["name"][0], PATHINFO_EXTENSION));
+				$extension = strtolower(pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION));
 				if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
 				{
 					$dir = "entities/local/";
@@ -526,7 +526,7 @@ class Settings extends Controller
 						unlink($previous);
 					}
 				}
-				move_uploaded_file($_FILES["images"]["tmp_name"][0], $file);
+				move_uploaded_file($_FILES["logo"]["tmp_name"], $file);
 			}
 		}
 		$this->json($data);

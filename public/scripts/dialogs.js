@@ -67,7 +67,7 @@ $(function ()
 				{
 					text: $(this).data("accept") || "Accept",
 					click: function(evt) {
-						$(this).find("form").trigger("submit");
+						$(this).find('button[type="submit"]').trigger("click");
 					}
 				},
 				{

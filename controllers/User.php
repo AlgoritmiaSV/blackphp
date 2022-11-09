@@ -59,9 +59,12 @@ class User extends Controller
 				Array("id" => "en_US", "text" => _("English")),
 				Array("id" => "es_ES", "text" => _("Spanish"))
 			);
+			$user = users_model::find(Session::get("user_id"));
 			$data["update"] = Array(
 				"theme_id" => Session::get("theme_id"),
-				"locale" => Session::get("locale")
+				"locale" => Session::get("locale"),
+				"user_name" => $user->getUser_name(),
+				"nickname" => $user->getNickname()
 			);
 		}
 		$this->json($data);
@@ -205,6 +208,50 @@ class User extends Controller
 			Session::set("locale", $data["locale"]);
 			Session::set("lang", explode("_", $data["locale"])[0]);
 		}
+		if($data["user_name"] != Session::get("user_name"))
+		{
+			$user->setUser_name($data["user_name"]);
+			Session::set("user_name", $data["user_name"]);
+		}
+		$user->save();
+		$data["reload_after"] = true;
+		$data["success"] = true;
+		$data["title"] = _("Success");
+		$data["message"] = _("Changes have been saved");
+		$data["theme"] = "green";
+		$this->json($data);
+	}
+
+	/**
+	 * Cambiar contraseña
+	 * 
+	 * Cambia la contraseña del usuario
+	 * 
+	 * @return void
+	 */
+	public function change_password()
+	{
+		$this->session_required("json");
+		$data = $_POST;
+		$data["success"] = false;
+		$user = users_model::find(Session::get("user_id"));
+		if(md5($data["current_password"]) != $user->getPassword())
+		{
+			$data["title"] = "Error";
+			$data["message"] = _("Incorrect password");
+			$data["theme"] = "red";
+			$this->json($data);
+			return;
+		}
+		if($data["new_password"] != $data["confirm_password"])
+		{
+			$data["title"] = "Error";
+			$data["message"] = _("Passwords do not match");
+			$data["theme"] = "red";
+			$this->json($data);
+			return;
+		}
+		$user->setPassword(md5($data["new_password"]));
 		$user->save();
 		$data["reload_after"] = true;
 		$data["success"] = true;

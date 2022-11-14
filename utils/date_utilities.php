@@ -221,17 +221,18 @@ class date_utilities
 	 * considera necesario.
 	 * 
 	 * @param string $time_string La fecha inicial (Por ejemplo, la fecha de nacimiento)
+	 * @param boolean $text La salida debe ser exclusivamente en texto
 	 * 
 	 * @return string La edad
 	 */
-	public static function sql_date_to_age($time_string)
+	public static function sql_date_to_age($time_string, $text = false)
 	{
 		$time = new DateTime($time_string);
 		$ago = $time->diff(new DateTime());
 		$string = "";
 		if($ago->y > 0)
 		{
-			$string = $ago->y . " año";
+			$string = ($text ? text_utilities::number_to_text($ago->y) : $ago->y) . " año";
 			if($ago->y != 1)
 			{
 				$string .= "s";

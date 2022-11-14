@@ -121,7 +121,7 @@ class Controller
 				$subdomain = $server_name[0];
 				if($subdomain != "installer")
 				{
-					$entity = entities_model::where("entity_subdomain", $subdomain)->get()->toArray();
+					$entity = entities_model::findBy("entity_subdomain", $subdomain)->toArray();
 					if(!isset($entity["entity_id"]))
 					{
 						$protocol = "http";
@@ -142,7 +142,7 @@ class Controller
 			}
 			else
 			{
-				$this->view->data["currency_symbol"] = "$";
+				$entity["currency_symbol"] = "$";
 			}
 
 			# Municipio y departamento

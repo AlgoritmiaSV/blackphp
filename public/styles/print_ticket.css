@@ -15,6 +15,11 @@
 	padding: 10px;
 }
 
+.ticket_area table
+{
+	font-size: 9pt;
+}
+
 @media screen {
 	.ticket_area
 	{

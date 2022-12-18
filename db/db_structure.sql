@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.5.15-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.18-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: blackphp
 -- ------------------------------------------------------
--- Server version	10.5.15-MariaDB-0+deb11u1
+-- Server version	10.5.18-MariaDB-0+deb11u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +29,7 @@ CREATE TABLE `app_actions` (
   `past_verb` varchar(16) NOT NULL COMMENT 'Verbo en pasado',
   PRIMARY KEY (`action_id`),
   UNIQUE KEY `action_key` (`action_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Acciones a realizar sobre los diferentes elementos';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Acciones a realizar sobre los diferentes elementos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +52,7 @@ CREATE TABLE `app_elements` (
   UNIQUE KEY `element_key` (`element_key`),
   KEY `element_method` (`module_id`),
   CONSTRAINT `element_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Elementos de la aplicación para actividad del usuario';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Elementos de la aplicación para actividad del usuario';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `app_installers` (
   `creation_time` datetime NOT NULL COMMENT 'Hora y fecha de creación',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Eliminado, inactivo, activo',
   PRIMARY KEY (`installer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Instaladores del sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Instaladores del sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `app_methods` (
   PRIMARY KEY (`method_id`),
   KEY `module_id` (`module_id`),
   CONSTRAINT `method_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Todos los métodos disponibles en el sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Todos los métodos disponibles en el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +114,7 @@ CREATE TABLE `app_modules` (
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo',
   PRIMARY KEY (`module_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Todos los módulos disponibles en el sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Todos los módulos disponibles en el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ CREATE TABLE `app_options` (
   UNIQUE KEY `unique_key_module` (`option_key`,`module_id`),
   KEY `option_module` (`module_id`),
   CONSTRAINT `option_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Opciones de la aplicación, configurables por entidad';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Opciones de la aplicación, configurables por entidad';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -165,7 +165,7 @@ CREATE TABLE `app_themes` (
   `theme_name` varchar(32) NOT NULL COMMENT 'Nombre del tema',
   `theme_url` varchar(16) NOT NULL COMMENT 'Nombre de la carpeta pública',
   PRIMARY KEY (`theme_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Temas (estilos) del sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Temas (estilos) del sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,21 +176,20 @@ DROP TABLE IF EXISTS `available_methods`;
 /*!50001 DROP VIEW IF EXISTS `available_methods`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `available_methods` (
-  `method_id` tinyint NOT NULL,
-  `module_id` tinyint NOT NULL,
-  `method_name` tinyint NOT NULL,
-  `method_url` tinyint NOT NULL,
-  `method_icon` tinyint NOT NULL,
-  `method_description` tinyint NOT NULL,
-  `default_order` tinyint NOT NULL,
-  `status` tinyint NOT NULL,
-  `method_order` tinyint NOT NULL,
-  `id` tinyint NOT NULL,
-  `label` tinyint NOT NULL,
-  `entity_id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `available_methods` AS SELECT
+ 1 AS `method_id`,
+  1 AS `module_id`,
+  1 AS `method_name`,
+  1 AS `method_url`,
+  1 AS `method_icon`,
+  1 AS `method_description`,
+  1 AS `default_order`,
+  1 AS `status`,
+  1 AS `method_order`,
+  1 AS `id`,
+  1 AS `label`,
+  1 AS `entity_id`,
+  1 AS `user_id` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -201,20 +200,19 @@ DROP TABLE IF EXISTS `available_modules`;
 /*!50001 DROP VIEW IF EXISTS `available_modules`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `available_modules` (
-  `module_id` tinyint NOT NULL,
-  `module_name` tinyint NOT NULL,
-  `module_url` tinyint NOT NULL,
-  `module_icon` tinyint NOT NULL,
-  `module_key` tinyint NOT NULL,
-  `module_description` tinyint NOT NULL,
-  `default_order` tinyint NOT NULL,
-  `status` tinyint NOT NULL,
-  `access_type` tinyint NOT NULL,
-  `entity_id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL,
-  `module_order` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `available_modules` AS SELECT
+ 1 AS `module_id`,
+  1 AS `module_name`,
+  1 AS `module_url`,
+  1 AS `module_icon`,
+  1 AS `module_key`,
+  1 AS `module_description`,
+  1 AS `default_order`,
+  1 AS `status`,
+  1 AS `access_type`,
+  1 AS `entity_id`,
+  1 AS `user_id`,
+  1 AS `module_order` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -234,7 +232,7 @@ CREATE TABLE `browsers` (
   `creation_time` datetime NOT NULL COMMENT 'Hora y fecha de registro',
   PRIMARY KEY (`browser_id`),
   UNIQUE KEY `user_agent` (`user_agent`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Navegadores con los que se ha accedido';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Navegadores con los que se ha accedido';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,7 +265,7 @@ CREATE TABLE `entities` (
   KEY `company_editor` (`edition_installer`),
   CONSTRAINT `company_creator` FOREIGN KEY (`creation_installer`) REFERENCES `app_installers` (`installer_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `company_editor` FOREIGN KEY (`edition_installer`) REFERENCES `app_installers` (`installer_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Negocios, empresas y compañías que utilizarán el sistema';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Negocios, empresas y compañías que utilizarán el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -305,7 +303,7 @@ CREATE TABLE `entity_methods` (
   KEY `method_id` (`method_id`),
   CONSTRAINT `cmethod_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cmethod_method` FOREIGN KEY (`method_id`) REFERENCES `app_methods` (`method_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Métodos habilitados para cada empresa';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Métodos habilitados para cada empresa';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -328,7 +326,7 @@ CREATE TABLE `entity_modules` (
   KEY `module_id` (`module_id`),
   CONSTRAINT `cmodule_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cmodule_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Módulos habilitados para cada empresa';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Módulos habilitados para cada empresa';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +351,7 @@ CREATE TABLE `entity_options` (
   KEY `eoption_option` (`option_id`),
   CONSTRAINT `eoption_entity` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `eoption_option` FOREIGN KEY (`option_id`) REFERENCES `app_options` (`option_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Valores configurados en cada entidad';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Valores configurados en cada entidad';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,22 +362,21 @@ DROP TABLE IF EXISTS `user_data`;
 /*!50001 DROP VIEW IF EXISTS `user_data`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `user_data` (
-  `user_id` tinyint NOT NULL,
-  `entity_id` tinyint NOT NULL,
-  `user_name` tinyint NOT NULL,
-  `nickname` tinyint NOT NULL,
-  `email` tinyint NOT NULL,
-  `password` tinyint NOT NULL,
-  `theme_id` tinyint NOT NULL,
-  `locale` tinyint NOT NULL,
-  `creation_user` tinyint NOT NULL,
-  `creation_time` tinyint NOT NULL,
-  `edition_user` tinyint NOT NULL,
-  `edition_time` tinyint NOT NULL,
-  `status` tinyint NOT NULL,
-  `last_login` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `user_data` AS SELECT
+ 1 AS `user_id`,
+  1 AS `entity_id`,
+  1 AS `user_name`,
+  1 AS `nickname`,
+  1 AS `email`,
+  1 AS `password`,
+  1 AS `theme_id`,
+  1 AS `locale`,
+  1 AS `creation_user`,
+  1 AS `creation_time`,
+  1 AS `edition_user`,
+  1 AS `edition_time`,
+  1 AS `status`,
+  1 AS `last_login` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -403,7 +400,7 @@ CREATE TABLE `user_logs` (
   CONSTRAINT `log_action` FOREIGN KEY (`action_id`) REFERENCES `app_actions` (`action_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `log_element` FOREIGN KEY (`element_id`) REFERENCES `app_elements` (`element_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `log_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Registro de actividades del usuario';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Registro de actividades del usuario';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -429,7 +426,7 @@ CREATE TABLE `user_methods` (
   KEY `umethod_user` (`user_id`),
   CONSTRAINT `umethod_method` FOREIGN KEY (`method_id`) REFERENCES `app_methods` (`method_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `umethod_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Acceso de los usuarios a los métodos de la aplicación';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Acceso de los usuarios a los métodos de la aplicación';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -455,7 +452,7 @@ CREATE TABLE `user_modules` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `umodule_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `umodule_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Acceso a los usaurios por módulo';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Acceso a los usaurios por módulo';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -478,7 +475,7 @@ CREATE TABLE `user_recovery` (
   PRIMARY KEY (`urecovery_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `urecovery_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Recuperación de cuentas de usuario';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Recuperación de cuentas de usuario';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -501,7 +498,7 @@ CREATE TABLE `user_sessions` (
   KEY `usession_branch` (`branch_id`),
   CONSTRAINT `usession_browser` FOREIGN KEY (`browser_id`) REFERENCES `browsers` (`browser_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `usession_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Registro de sesiones del usuario';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Registro de sesiones del usuario';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -531,14 +528,13 @@ CREATE TABLE `users` (
   KEY `theme_id` (`theme_id`),
   CONSTRAINT `user_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_theme` FOREIGN KEY (`theme_id`) REFERENCES `app_themes` (`theme_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Usuarios';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Usuarios';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Final view structure for view `available_methods`
 --
 
-/*!50001 DROP TABLE IF EXISTS `available_methods`*/;
 /*!50001 DROP VIEW IF EXISTS `available_methods`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -557,7 +553,6 @@ CREATE TABLE `users` (
 -- Final view structure for view `available_modules`
 --
 
-/*!50001 DROP TABLE IF EXISTS `available_modules`*/;
 /*!50001 DROP VIEW IF EXISTS `available_modules`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -576,7 +571,6 @@ CREATE TABLE `users` (
 -- Final view structure for view `user_data`
 --
 
-/*!50001 DROP TABLE IF EXISTS `user_data`*/;
 /*!50001 DROP VIEW IF EXISTS `user_data`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;

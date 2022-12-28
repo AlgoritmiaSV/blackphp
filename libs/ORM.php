@@ -212,10 +212,12 @@ trait ORM
 	 */
 	public static function update($data)
 	{
+		# Las vistas no se actualizan
 		if(self::$_table_type == "VIEW")
 		{
 			return 0;
 		}
+
 		self::init();
 		$now = Date("Y-m-d H:i:s");
 		if(self::$_timestamps)
@@ -518,10 +520,10 @@ trait ORM
 			$objects = false;
 		}
 
-		# Modifier
+		# Modificador (DISTINCT, SQL_CALC_FOUND_ROWS...)
 		$modifier = self::$_modifier;
 
-		# Opciones adicionales
+		# Opciones adicionales (Contar líneas...)
 		$extra_select = self::$_extra_select;
 		if(!empty($extra_select))
 		{

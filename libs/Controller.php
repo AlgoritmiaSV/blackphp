@@ -182,7 +182,12 @@ class Controller
 			$this->store_dir = "entities/local/";
 		}
 		$this->view->data["entity_dir"] = $this->store_dir;
-		$this->view->data["entity_logo"] = glob($this->store_dir . "logo.*")[0];
+		$logo = glob($this->store_dir . "logo.*")[0];
+		if(empty($logo))
+		{
+			$logo = "public/images/default_image.png";
+		}
+		$this->view->data["entity_logo"] = $logo . "?t=" . filemtime($logo);
 
 		# Entity vars are always available in the views
 		foreach($entity as $key => $item)
@@ -212,6 +217,9 @@ class Controller
 
 	/**
 	 * Cargar el modelo
+	 * 
+	 * Método para cargar modelos de forma manual. En este momento, este método no se está utilizando,
+	 * y se eliminará en versiones posteriores.
 	 * 
 	 * @param string $name Nombre del modelo
 	 * @param string $path Ruta donde se encuentra el modelo, por defecto models/

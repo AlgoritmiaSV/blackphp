@@ -909,6 +909,31 @@ trait ORM
 		$rows = $sth->fetch(PDO::FETCH_ASSOC);
 		return $rows["frows"];
 	}
+
+	/**
+	 * Siguiente número
+	 * 
+	 * Generador de siguiente número de un campo tomando en cuenta el último número generado en ese campo.
+	 * Si la tabla contiene el campo entity_id, se tomará el último número generado por la entidad.
+	 * Si la table contiene el campo _year, se tomará el último número generado en ese año.
+	 * 
+	 * @param string $field Campo a considerar
+	 * @param array $conditions Arreglo asociativo conteniendo las condiciones (clave => valor) a
+	 * considerar (Por ejemplo: Año, sucursal, etc)
+	 * 
+	 * @return int El siguiente número generado
+	 */
+	public static function next($field, $conditions = Array())
+	{
+		$last_model = self::orderBy($field, "DESC");
+		foreach($conditions as $key => $value)
+		{
+			$last_model->where($key, $value);
+		}
+		$last = $last_model->first();
+		$next = $last->is_null($field) ? 1 : $last->{"get" . ucfirst($field)}() + 1;
+		return $next;
+	}
 }
 
 /**

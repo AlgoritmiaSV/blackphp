@@ -55,7 +55,7 @@ trait ORM
 	/**
 	 * Limpieza de flujo
 	 * 
-	 * Limpia todas las propiedades estáticas de la clase, para que se pueda realizar otra
+	 * Limpia todas las propiedades estáticas de la consulta, para que se pueda realizar otra
 	 * consulta.
 	 */
 	public static function flush()
@@ -601,6 +601,10 @@ trait ORM
 			}
 			elseif(is_string($value))
 			{
+				if($value == "ISNULL(" . $prefix . "status)")
+				{
+					self::$_ommit_status = true;
+				}
 				$wheres[] = $value;
 			}
 		}
@@ -933,6 +937,63 @@ trait ORM
 		$last = $last_model->first();
 		$next = $last->is_null($field) ? 1 : $last->{"get" . ucfirst($field)}() + 1;
 		return $next;
+	}
+
+	/**
+	 * Lista de elementos eliminados
+	 * 
+	 * Devuelve una lista de los elementos eliminados de la clase, evaluando el estado eliminado (NULL o cero, según corresponda).
+	 * 
+	 * @return array La lista de datos
+	*/
+	public static function list_deleted($from = "", $to = "")
+	{
+		if(!self::$_soft_delete)
+		{
+			return Array();
+		}
+		$id = self::$_primary_key;
+		$class = get_called_class();
+		$vars = get_object_vars(new $class);
+		$text = "";
+		foreach(array_keys($vars) AS $key)
+		{
+			if($key == $id)
+			{
+				continue;
+			}
+			if($text == "" || strpos($key, "_name") !== false)
+			{
+				$text = $key;
+			}
+			if(strpos($key, "_name") !== false)
+			{
+				break;
+			}
+		}
+		$table_name = self::$_table_name;
+		$query = self::select("$table_name.$id AS element_id, $table_name.$text AS element_name");
+		if(self::$_timestamps)
+		{
+			$query->select("$table_name.creation_user, $table_name.creation_time, $table_name.edition_user, $table_name.edition_time, creator.user_name AS creator_name, editor.user_name AS editor_name")->join("users AS creator", "$table_name.creation_user = creator.user_id")->join("users AS editor", "$table_name.edition_user = editor.user_id");
+		}
+		if(self::$_deleted_status === 0)
+		{
+			$query->where("$table_name.status", 0);
+		}
+		else
+		{
+			$query->where("ISNULL($table_name.status)");
+		}
+		if(!empty($from))
+		{
+			$query->where("$table_name.edition_time", ">=", $from . " 00:00:00");
+		}
+		if(!empty($to))
+		{
+			$query->where("$table_name.edition_time", "<=", $to . " 23:59:59");
+		}
+		return $query->getAll();
 	}
 }
 

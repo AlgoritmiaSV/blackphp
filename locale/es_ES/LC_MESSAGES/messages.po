@@ -92,6 +92,9 @@ msgstr "Contacto y soporte técnico"
 msgid "Continue"
 msgstr "Continuar"
 
+msgid "Created at"
+msgstr "Creado el"
+
 msgid "Created by"
 msgstr "Creado por"
 
@@ -103,6 +106,18 @@ msgstr "Fecha"
 
 msgid "Delete"
 msgstr "Eliminar"
+
+msgid "Deleted at"
+msgstr "Eliminado el"
+
+msgid "Deleted by"
+msgstr "Eliminado por"
+
+msgid "Deleted elements"
+msgstr "Elementos eliminados"
+
+msgid "Deleted users"
+msgstr "Usuarios eliminados"
 
 msgid "Display theme"
 msgstr "Tema de visualización"
@@ -118,6 +133,9 @@ msgstr "Editar"
 
 msgid "Edit user"
 msgstr "Editar usuario"
+
+msgid "Element"
+msgstr "Elemento"
 
 msgid "English"
 msgstr "Inglés"
@@ -362,6 +380,9 @@ msgstr "Para comenzar, pegue el archivo de configuración en la carpeta de insta
 msgid "To keep the old password, leave the fields empty"
 msgstr "Para conservar la contrase&ntilde;a anterior, deje los campos vac&iacute;os"
 
+msgid "Trash"
+msgstr "Papelera"
+
 msgid "Type a word for search"
 msgstr "Escriba una palabra para buscar"
 
@@ -370,6 +391,12 @@ msgstr "Usuario"
 
 msgid "User details"
 msgstr "Detalle de usuario"
+
+msgid "User ID"
+msgstr "ID Usuario"
+
+msgid "User name"
+msgstr "Nombre de usuario"
 
 msgid "Users"
 msgstr "Usuarios"
@@ -399,4 +426,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 127 messages translated.
+# 136 messages translated.

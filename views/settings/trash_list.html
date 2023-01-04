@@ -1,0 +1,54 @@
+<div class="list_options">
+	<div class="action_icons">
+		<a href="/{{ module }}/NewUser/">
+			<img src="public/images/add.png" alt="_(New user)">
+		</a>
+		<a href="#" class="download_link" data-url="/{{ module }}/users_table_loader/Excel/">
+			<img src="public/images/excel.png" alt="_(Export to Excel)">
+		</a>
+		<a href="#" class="print_button" data-print=".data_viewer">
+			<img src="public/images/printer.png" alt="_(Print)">
+		</a>
+	</div>
+	<div class="action_filter">
+		<input class="data_search" type="text" placeholder="_(Type a word for search)">
+	</div>
+</div>
+{{ print_header }}
+<div class="content_viewer">
+	<table class="data_viewer" data-source="content" id="trash_table">
+		<thead>
+			<tr>
+				<th>_(Element)</th>
+				<th class="pc_cell">_(Created by)</th>
+				<th class="pc_cell">_(Created at)</th>
+				<th class="pc_cell">_(Deleted by)</th>
+				<th>_(Deleted at)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="template" data-id="{{element_id}}" data-alert="{{ module }}/user_details_loader/{{element_id}}/standalone/" data-title="_(User details)">
+				<td>{{element_name}}</td>
+				<td class="pc_cell">{{creator_name}}</td>
+				<td class="pc_cell">{{creation_time}}</td>
+				<td class="pc_cell">{{editor_name}}</td>
+				<td>{{edition_time}}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+
+		</tfoot>
+	</table>
+	<div class="loading_data">
+		<img src="public/images/loading.gif" class="medium_icon">
+		<span>_(Loading)...</span>
+	</div>
+	<div class="loading_error">
+		<img src="public/images/error.png" class="medium_icon">
+		<span>
+			_(Error!)<br>
+			_(Failed to load page).
+		</span>
+	</div>
+	<div class="empty_table_message">_(No records found!)</div>
+</div>

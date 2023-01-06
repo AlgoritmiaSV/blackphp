@@ -1,14 +1,22 @@
 <div class="list_options">
 	<div class="action_icons">
-		<a href="/{{ module }}/NewUser/">
-			<img src="public/images/add.png" alt="_(New user)">
-		</a>
-		<a href="#" class="download_link" data-url="/{{ module }}/users_table_loader/Excel/">
+		<a href="#" class="download_link" data-url="/{{ module }}/trash_table_loader/Excel/">
 			<img src="public/images/excel.png" alt="_(Export to Excel)">
 		</a>
 		<a href="#" class="print_button" data-print=".data_viewer">
 			<img src="public/images/printer.png" alt="_(Print)">
 		</a>
+	</div>
+	<div class="action_filter">
+		<select id="trash_filter" class="data_filter" data-source="categories" data-search="none" data-default="none" data-placeholder="_(Select)" data-identifier="type"></select>
+	</div>
+	<div class="action_filter">
+		<span>_(From):</span>
+		<input type="text" class="date_input data_filter" data-identifier="from" value="{{ from }}">
+	</div>
+	<div class="action_filter">
+		<span>_(to):</span>
+		<input type="text" class="date_input data_filter" data-identifier="to" value="{{ to }}">
 	</div>
 	<div class="action_filter">
 		<input class="data_search" type="text" placeholder="_(Type a word for search)">
@@ -19,7 +27,7 @@
 	<table class="data_viewer" data-source="content" id="trash_table">
 		<thead>
 			<tr>
-				<th>_(Element)</th>
+				<th>_(Description)</th>
 				<th class="pc_cell">_(Created by)</th>
 				<th class="pc_cell">_(Created at)</th>
 				<th class="pc_cell">_(Deleted by)</th>
@@ -27,8 +35,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="template" data-id="{{element_id}}" data-alert="{{ module }}/user_details_loader/{{element_id}}/standalone/" data-title="_(User details)">
-				<td>{{element_name}}</td>
+			<tr class="template">
+				<td>{{description}}</td>
 				<td class="pc_cell">{{creator_name}}</td>
 				<td class="pc_cell">{{creation_time}}</td>
 				<td class="pc_cell">{{editor_name}}</td>

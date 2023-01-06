@@ -392,9 +392,8 @@ class Controller
 		{
 			$date_time = Date("Y-m-d H:i:s");
 		}
-		$action = app_actions_model::findBy("action_key", $action_key);
 		$element = app_elements_model::findBy("element_key", $element_key);
-		if(!$action->exists() || !$element->exists())
+		if(!$element->exists())
 		{
 			return;
 		}
@@ -402,7 +401,7 @@ class Controller
 		$user_log->set(Array(
 			"user_id" => Session::get("user_id"),
 			"element_id" => $element->getElement_id(),
-			"action_id" => $action->getAction_id(),
+			"action_id" => $action_key,
 			"date_time" => $date_time,
 			"element_link" => $element_link
 		))->save();

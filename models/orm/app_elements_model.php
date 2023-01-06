@@ -18,11 +18,11 @@ class app_elements_model
 	/** @var string $element_name Nombre del elemento */
 	private $element_name;
 
+	/** @var string $singular_name Nombre singular del elemento */
+	private $singular_name;
+
 	/** @var string $element_gender M: Masculino, F: Femenino */
 	private $element_gender;
-
-	/** @var string $element_number S: Singular, P: Plural */
-	private $element_number;
 
 	/** @var int $unique_element Es un elemento único */
 	private $unique_element;
@@ -32,6 +32,12 @@ class app_elements_model
 
 	/** @var string $method_name Nombre del método para ver detalle */
 	private $method_name;
+
+	/** @var int $deletable El elemento se puede eliminar */
+	private $deletable;
+
+	/** @var string $table_name Nombre de la tabla */
+	private $table_name;
 
 
 	/** @var string $_table_name Nombre de la tabla */
@@ -97,6 +103,16 @@ class app_elements_model
 		$this->element_name = $value === null ? null : (string)$value;
 	}
 
+	public function getSingular_name()
+	{
+		return $this->singular_name;
+	}
+
+	public function setSingular_name($value)
+	{
+		$this->singular_name = $value === null ? null : (string)$value;
+	}
+
 	public function getElement_gender()
 	{
 		return $this->element_gender;
@@ -105,16 +121,6 @@ class app_elements_model
 	public function setElement_gender($value)
 	{
 		$this->element_gender = $value === null ? null : (string)$value;
-	}
-
-	public function getElement_number()
-	{
-		return $this->element_number;
-	}
-
-	public function setElement_number($value)
-	{
-		$this->element_number = $value === null ? null : (string)$value;
 	}
 
 	public function getUnique_element()
@@ -145,6 +151,26 @@ class app_elements_model
 	public function setMethod_name($value)
 	{
 		$this->method_name = $value === null ? null : (string)$value;
+	}
+
+	public function getDeletable()
+	{
+		return $this->deletable;
+	}
+
+	public function setDeletable($value)
+	{
+		$this->deletable = $value === null ? null : (int)$value;
+	}
+
+	public function getTable_name()
+	{
+		return $this->table_name;
+	}
+
+	public function setTable_name($value)
+	{
+		$this->table_name = $value === null ? null : (string)$value;
 	}
 
 	public function user_logs()

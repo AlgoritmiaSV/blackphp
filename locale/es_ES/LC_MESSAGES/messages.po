@@ -107,6 +107,9 @@ msgstr "Fecha"
 msgid "Delete"
 msgstr "Eliminar"
 
+msgid "Deleted %s"
+msgstr "%s eliminados"
+
 msgid "Deleted at"
 msgstr "Eliminado el"
 
@@ -116,8 +119,8 @@ msgstr "Eliminado por"
 msgid "Deleted elements"
 msgstr "Elementos eliminados"
 
-msgid "Deleted users"
-msgstr "Usuarios eliminados"
+msgid "Description"
+msgstr "Descripción"
 
 msgid "Display theme"
 msgstr "Tema de visualización"
@@ -134,8 +137,8 @@ msgstr "Editar"
 msgid "Edit user"
 msgstr "Editar usuario"
 
-msgid "Element"
-msgstr "Elemento"
+msgid "Element ID"
+msgstr "ID Elemento"
 
 msgid "English"
 msgstr "Inglés"
@@ -148,6 +151,9 @@ msgstr "Entidad"
 
 msgid "Entity data"
 msgstr "Datos de la entidad"
+
+msgid "entity data"
+msgstr "datos de la entidad"
 
 msgid "Entity logo"
 msgstr "Logotipo de la entidad"
@@ -175,6 +181,9 @@ msgstr "filtrados de _MAX_ entradas totales"
 
 msgid "First"
 msgstr "Primera"
+
+msgid "From"
+msgstr "Del"
 
 msgid "Give access to"
 msgstr "Dar acceso a"
@@ -293,8 +302,14 @@ msgstr "Permisos"
 msgid "Phone"
 msgstr "Teléfono"
 
+msgid "Please, select an element type from the list"
+msgstr "Por favor, seleccione un tipo de elemento de la lista"
+
 msgid "Preferences"
 msgstr "Preferencias"
+
+msgid "preferences"
+msgstr "preferencias"
 
 msgid "Previous"
 msgstr "Anterior"
@@ -374,11 +389,17 @@ msgstr "No hay más configuraciones que realizar"
 msgid "This method will be available very soon"
 msgstr "Este método estará disponible muy pronto"
 
+msgid "to"
+msgstr "al"
+
 msgid "To get started, paste the config file into the program's installation folder"
 msgstr "Para comenzar, pegue el archivo de configuración en la carpeta de instalación del programa"
 
 msgid "To keep the old password, leave the fields empty"
 msgstr "Para conservar la contrase&ntilde;a anterior, deje los campos vac&iacute;os"
+
+msgid "Tools"
+msgstr "Herramientas"
 
 msgid "Trash"
 msgstr "Papelera"
@@ -389,14 +410,11 @@ msgstr "Escriba una palabra para buscar"
 msgid "User"
 msgstr "Usuario"
 
+msgid "user"
+msgstr "usuario"
+
 msgid "User details"
 msgstr "Detalle de usuario"
-
-msgid "User ID"
-msgstr "ID Usuario"
-
-msgid "User name"
-msgstr "Nombre de usuario"
 
 msgid "Users"
 msgstr "Usuarios"
@@ -426,4 +444,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 136 messages translated.
+# 142 messages translated.

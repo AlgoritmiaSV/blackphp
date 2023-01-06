@@ -16,23 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `app_actions`
---
-
-DROP TABLE IF EXISTS `app_actions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `app_actions` (
-  `action_id` tinyint(4) NOT NULL AUTO_INCREMENT COMMENT 'ID del registro',
-  `action_key` varchar(16) NOT NULL COMMENT 'Clave de la acción',
-  `infinitive_verb` varchar(16) NOT NULL COMMENT 'Verbo en infinitivo',
-  `past_verb` varchar(16) NOT NULL COMMENT 'Verbo en pasado',
-  PRIMARY KEY (`action_id`),
-  UNIQUE KEY `action_key` (`action_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Acciones a realizar sobre los diferentes elementos';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `app_elements`
 --
 
@@ -43,11 +26,13 @@ CREATE TABLE `app_elements` (
   `element_id` smallint(6) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `element_key` varchar(16) NOT NULL COMMENT 'Clave del elemento',
   `element_name` varchar(32) NOT NULL COMMENT 'Nombre del elemento',
+  `singular_name` varchar(32) NOT NULL COMMENT 'Nombre singular del elemento',
   `element_gender` char(1) NOT NULL COMMENT 'M: Masculino, F: Femenino',
-  `element_number` char(1) NOT NULL COMMENT 'S: Singular, P: Plural',
   `unique_element` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'Es un elemento único',
   `module_id` int(11) NOT NULL COMMENT 'ID del módulo',
   `method_name` varchar(32) NOT NULL COMMENT 'Nombre del método para ver detalle',
+  `deletable` tinyint(4) NOT NULL COMMENT 'El elemento se puede eliminar',
+  `table_name` varchar(64) NOT NULL COMMENT 'Nombre de la tabla',
   PRIMARY KEY (`element_id`),
   UNIQUE KEY `element_key` (`element_key`),
   KEY `element_method` (`module_id`),
@@ -397,7 +382,6 @@ CREATE TABLE `user_logs` (
   KEY `log_user` (`user_id`),
   KEY `log_element` (`element_id`),
   KEY `log_action` (`action_id`),
-  CONSTRAINT `log_action` FOREIGN KEY (`action_id`) REFERENCES `app_actions` (`action_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `log_element` FOREIGN KEY (`element_id`) REFERENCES `app_elements` (`element_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `log_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Registro de actividades del usuario';

@@ -220,25 +220,6 @@ class Settings extends Controller
 		$this->view->render('main');
 	}
 
-	/**
-	 * Papelera
-	 * 
-	 * Muestra una lista de los elementos eliminados del sistema, que
-	 * se pueden filtrar por tipo de elemento y rango de fechas.
-	 * 
-	 * @return void
-	 */
-	public function Trash()
-	{
-		$this->session_required("html", $this->module);
-		$this->view->data["title"] = _("Trash");
-		$this->view->standard_list();
-		$this->view->data["nav"] = $this->view->render("nav", true);
-		$this->view->data["print_title"] = _("Trash");
-		$this->view->data["print_header"] = $this->view->render("print_header", true);
-		$this->view->data["content"] = $this->view->render("settings/trash_list", true);
-		$this->view->render('main');
-	}
 	################################ LISTAS Y FORMULARIOS
 	/**
 	 * Carga de datos de formulario.
@@ -451,33 +432,6 @@ class Settings extends Controller
 		else
 		{
 			$this->view->render("settings/user_details");
-		}
-	}
-
-	/**
-	 * Cargar tabla de usuarios
-	 * 
-	 * Devuelve, en formato JSON o en un archivo Excel, la lista de usuarios.
-	 * @param string $response El modo de respuiesta (JSON o Excel)
-	 * 
-	 * @return void
-	 */
-	public function trash_table_loader($response = "JSON")
-	{
-		$this->session_required("json");
-		$data = Array();
-		$users = users_model::list_deleted();
-		$data["content"] = $users;
-		if($response == "Excel")
-		{
-			$data["title"] = _("Deleted users");
-			$data["headers"] = Array(_("User ID"), _("User name"), _("Created by"), _("Created at"), _("Deleted by"), _("Deleted at"));
-			$data["fields"] = Array("element_id", "element_name", "creator_name", "creation_time", "editor_name", "edition_time");
-			excel::create_from_table($data, "DeletedUsers_" . Date("YmdHis") . ".xlsx");
-		}
-		else
-		{
-			$this->json($data);
 		}
 	}
 

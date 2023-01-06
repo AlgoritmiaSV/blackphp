@@ -133,7 +133,7 @@ trait ORM
 	{
 		if($deleted && property_exists(new static(), "status"))
 		{
-			self::$_ommit_status = false;
+			self::$_ommit_status = true;
 		}
 		return self::where($field, $value)->get();
 	}
@@ -972,10 +972,10 @@ trait ORM
 			}
 		}
 		$table_name = self::$_table_name;
-		$query = self::select("$table_name.$id AS element_id, $table_name.$text AS element_name");
+		$query = self::select("$table_name.*, $table_name.$id AS element_id, $table_name.$text AS description");
 		if(self::$_timestamps)
 		{
-			$query->select("$table_name.creation_user, $table_name.creation_time, $table_name.edition_user, $table_name.edition_time, creator.user_name AS creator_name, editor.user_name AS editor_name")->join("users AS creator", "$table_name.creation_user = creator.user_id")->join("users AS editor", "$table_name.edition_user = editor.user_id");
+			$query->select("creator.user_name AS creator_name, editor.user_name AS editor_name")->join("users AS creator", "$table_name.creation_user = creator.user_id")->join("users AS editor", "$table_name.edition_user = editor.user_id");
 		}
 		if(self::$_deleted_status === 0)
 		{
@@ -985,15 +985,31 @@ trait ORM
 		{
 			$query->where("ISNULL($table_name.status)");
 		}
-		if(!empty($from))
+		if(self::$_timestamps && !empty($from))
 		{
 			$query->where("$table_name.edition_time", ">=", $from . " 00:00:00");
 		}
-		if(!empty($to))
+		if(self::$_timestamps && !empty($to))
 		{
 			$query->where("$table_name.edition_time", "<=", $to . " 23:59:59");
 		}
 		return $query->getAll();
+	}
+
+	/**
+	 * Obtener ID
+	 * 
+	 * Retorna el valor de la llave primaria del objeto.
+	 * 
+	 * @return int ID del objeto
+	 */
+	public function _getId()
+	{
+		if(empty(self::$_primary_key))
+		{
+			return 0;
+		}
+		return $this->{self::$_primary_key};
 	}
 }
 

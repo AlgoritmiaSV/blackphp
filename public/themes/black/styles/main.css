@@ -870,6 +870,11 @@ input:checked + .slider:before
 		text-align: center;
 	}
 
+	.small_button
+	{
+		margin: 5px 0px;
+	}
+
 	#main_nav
 	{
 		display: none;

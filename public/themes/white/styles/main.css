@@ -871,6 +871,11 @@ input:checked + .slider:before
 		display: none;
 	}
 
+	.small_button
+	{
+		margin: 5px 0px;
+	}
+
 	.table, .cell:not(.pc_cell)
 	{
 		display: block;

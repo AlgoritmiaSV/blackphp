@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `app_elements`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `app_elements` (
   `element_id` smallint(6) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
-  `element_key` varchar(16) NOT NULL COMMENT 'Clave del elemento',
+  `element_key` varchar(32) NOT NULL COMMENT 'Clave del elemento',
   `element_name` varchar(32) NOT NULL COMMENT 'Nombre del elemento',
   `singular_name` varchar(32) NOT NULL COMMENT 'Nombre singular del elemento',
   `element_gender` char(1) NOT NULL COMMENT 'M: Masculino, F: Femenino',

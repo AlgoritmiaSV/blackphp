@@ -106,6 +106,9 @@ class Tools extends Controller
 			$element["text"] = _($element["text"]);
 		}
 		unset($element);
+		usort($elements, function($a, $b) {
+			return strcmp($a["text"], $b["text"]);
+		});
 		$this->json(Array(
 			"results" => $elements
 		));

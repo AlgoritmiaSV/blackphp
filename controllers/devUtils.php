@@ -355,5 +355,11 @@ class devUtils extends Controller
 			$this->add_folders($directory, $array);
 		}
 	}
+
+	public function app_info()
+	{
+		$system = file_get_contents("app_info.json");
+		echo "<pre>$system</pre>";
+	}
 }
 ?>

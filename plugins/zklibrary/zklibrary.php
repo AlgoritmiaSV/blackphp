@@ -49,6 +49,11 @@ define('LEVEL_ENROLLER', 2);       // 0000 0010
 define('LEVEL_MANAGER', 12);      // 0000 1100
 define('LEVEL_SUPERMANAGER', 14); // 0000 1110
 
+# En Windows, la constante MSG_EOR no está disponible
+if(!defined('MSG_EOR'))
+{
+	define('MSG_EOR', 0);
+}
 
 class ZKLibrary {
 	public $ip = null;

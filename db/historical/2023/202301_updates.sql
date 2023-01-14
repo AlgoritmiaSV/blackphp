@@ -20,7 +20,7 @@ UPDATE `app_elements` SET `element_name` = 'Entity data', `singular_name` = 'ent
 UPDATE `app_elements` SET `element_key` = 'users', `element_name` = 'Users', `singular_name` = 'user', `method_name` = 'UserDetails', `deletable` = '1', `table_name` = 'users' WHERE `app_elements`.`element_id` = 2;
 UPDATE `app_elements` SET `element_name` = 'Preferences', `singular_name` = 'preferences', `method_name` = 'Preferences', `table_name` = 'entity_options' WHERE `app_elements`.`element_id` = 3;
 TRUNCATE TABLE `user_logs`;
--- inabve
 -- 2023-01-08
 ALTER TABLE `app_elements` CHANGE `element_key` `element_key` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Clave del elemento';
 -- Teleinf
+-- inabve

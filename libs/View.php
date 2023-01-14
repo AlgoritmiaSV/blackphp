@@ -284,6 +284,34 @@ class View
 		));
 	}
 
+	public function standard_details_charts()
+	{
+		$this->add("styles", "css", Array(
+			'node_modules/jquery-ui-dist/jquery-ui.min.css',
+			'node_modules/jAlert/dist/jAlert.css',
+			'external/css/select2.css',
+			'styles/main.css',
+			'styles/loading.css',
+			'styles/forms.css',
+			'styles/dialogs.css',
+			'styles/print_area.css',
+			'styles/details.css',
+			"styles/currencies.css"
+		));
+		$this->add("scripts", "js", Array(
+			'node_modules/jquery/dist/jquery.min.js',
+			'node_modules/jquery-ui-dist/jquery-ui.min.js',
+			'node_modules/jAlert/dist/jAlert.min.js',
+			'node_modules/select2/dist/js/select2.min.js',
+			'node_modules/print-this/printThis.js',
+			'node_modules/html2canvas/dist/html2canvas.min.js',
+			'node_modules/jspdf/dist/jspdf.umd.min.js',
+			'node_modules/chart.js/dist/chart.min.js',
+			'node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js',
+			'scripts/charts.js',
+			'scripts/bpscript.min.js'
+		));
+	}
 	/**
 	 * Menú estándar
 	 * 

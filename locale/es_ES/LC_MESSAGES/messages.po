@@ -44,6 +44,15 @@ msgstr "Permite configurar la información general del negocio/empresa"
 msgid "Allows you to manage users and permissions for each user"
 msgstr "Permite gestionar usuarios y los permisos para cada usuario"
 
+msgid "April"
+msgstr "abril"
+
+msgid "at"
+msgstr "a las"
+
+msgid "August"
+msgstr "agosto"
+
 msgid "Bad request"
 msgstr "Solicitud incorrecta"
 
@@ -103,6 +112,12 @@ msgstr "Contraseña actual"
 
 msgid "Date"
 msgstr "Fecha"
+
+msgid "day"
+msgstr "día"
+
+msgid "December"
+msgstr "diciembre"
 
 msgid "Delete"
 msgstr "Eliminar"
@@ -176,11 +191,17 @@ msgstr "Error al cargar la página"
 msgid "Failed to save"
 msgstr "Error al guardar"
 
+msgid "February"
+msgstr "febrero"
+
 msgid "filtered from _MAX_ total entries"
 msgstr "filtrados de _MAX_ entradas totales"
 
 msgid "First"
 msgstr "Primera"
+
+msgid "Friday"
+msgstr "Viernes"
 
 msgid "From"
 msgstr "Del"
@@ -200,6 +221,9 @@ msgstr "Inicio"
 msgid "Hour"
 msgstr "Hora"
 
+msgid "hour"
+msgstr "hora"
+
 msgid "If you don't have a configuration file, request one now!"
 msgstr "Si no tiene un archivo de configuración, ¡solicite uno ahora!"
 
@@ -217,6 +241,15 @@ msgstr "La instalación se completó con éxito"
 
 msgid "It's time to start!"
 msgstr "¡Es hora de iniciar!"
+
+msgid "January"
+msgstr "enero"
+
+msgid "July"
+msgstr "julio"
+
+msgid "June"
+msgstr "junio"
 
 msgid "Language"
 msgstr "Idioma"
@@ -248,11 +281,26 @@ msgstr "Cerrar sesión"
 msgid "Logging in"
 msgstr "Iniciando sesión"
 
+msgid "March"
+msgstr "marzo"
+
+msgid "May"
+msgstr "mayo"
+
 msgid "member of"
 msgstr "miembro de"
 
+msgid "minute"
+msgstr "minuto"
+
 msgid "Modules"
 msgstr "Módulos"
+
+msgid "Monday"
+msgstr "Lunes"
+
+msgid "month"
+msgstr "mes"
 
 msgid "My account"
 msgstr "Mi cuenta"
@@ -287,6 +335,12 @@ msgstr "No se eligió un subdominio"
 msgid "Not authorized"
 msgstr "No autorizado"
 
+msgid "November"
+msgstr "noviembre"
+
+msgid "October"
+msgstr "octubre"
+
 msgid "Other settings"
 msgstr "Otras configuraciones"
 
@@ -320,6 +374,9 @@ msgstr "Imprimir"
 msgid "Provided to"
 msgstr "Proporcionado a"
 
+msgid "Saturday"
+msgstr "Sábado"
+
 msgid "Save"
 msgstr "Guardar"
 
@@ -329,8 +386,14 @@ msgstr "Guardando"
 msgid "Search"
 msgstr "Buscar"
 
+msgid "second"
+msgstr "segundo"
+
 msgid "Select"
 msgstr "Seleccionar"
+
+msgid "September"
+msgstr "septiembre"
 
 msgid "Server date"
 msgstr "Fecha del servidor"
@@ -362,11 +425,17 @@ msgstr "Iniciar"
 msgid "Success"
 msgstr "Éxito"
 
+msgid "Sunday"
+msgstr "domingo"
+
 msgid "System"
 msgstr "Sistema"
 
 msgid "System information"
 msgstr "Información del sistema"
+
+msgid "System under maintenance"
+msgstr "Sistema en mantenimiento"
 
 msgid "Technical support"
 msgstr "Soporte técnico"
@@ -389,6 +458,9 @@ msgstr "No hay más configuraciones que realizar"
 msgid "This method will be available very soon"
 msgstr "Este método estará disponible muy pronto"
 
+msgid "Thursday"
+msgstr "Jueves"
+
 msgid "to"
 msgstr "al"
 
@@ -403,6 +475,9 @@ msgstr "Herramientas"
 
 msgid "Trash"
 msgstr "Papelera"
+
+msgid "Tuesday"
+msgstr "Martes"
 
 msgid "Type a word for search"
 msgstr "Escriba una palabra para buscar"
@@ -422,6 +497,9 @@ msgstr "Usuarios"
 msgid "Version"
 msgstr "Versión"
 
+msgid "We are sorry! The system is under maintenance"
+msgstr "¡Lo sentimos! El sistema está en mantenimiento"
+
 msgid "We are sorry! We could not find the requested method"
 msgstr "¡Lo sentimos! No pudimos encontrar el método solicitado"
 
@@ -431,17 +509,29 @@ msgstr "¡Lo sentimos! No tiene permisos para acceder a este método"
 msgid "Website"
 msgstr "Sitio web"
 
+msgid "Wednesday"
+msgstr "Miércoles"
+
 msgid "Welcome to %s!"
 msgstr "¡Bienvenido a %s!"
 
 msgid "White - Without lateral menu"
 msgstr "Blanco - Sin menú lateral"
 
+msgid "year"
+msgstr "año"
+
 msgid "You are creating a new company account in BlackPHP. For this action you need to have an account as an installer"
 msgstr "Estás creando una nueva cuenta de empresa en BlackPHP. Para esta acción necesitas tener una cuenta como instalador"
+
+msgid "You are not logged in"
+msgstr "No ha iniciado sesión"
+
+msgid "You do not have permissions to perform this operation"
+msgstr "No tiene permisos para realizar esta operación"
 
 msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 142 messages translated.
+# 172 messages translated.

@@ -103,6 +103,12 @@ class Controller
 			$this->view->restrict = array("user");
 		}
 
+		# Sistema en mantenimiento
+		if(defined('SYSTEM_STATUS') && SYSTEM_STATUS == 'MAINTENANCE')
+		{
+			$this->maintenance();
+		}
+		
 		#6 Entidad
 		$entity = Array();
 		$options = Array();
@@ -243,6 +249,39 @@ class Controller
 				return new $modelName();
 			}
 		}
+	}
+
+	/**
+	 * Sistema en mantenimiento
+	 * 
+	 * Muestra un aviso de sistema en mantenimiento, en caso de que la constante
+	 * SYSTEM_STATUS esté configurada como MAINTENANCE.
+	 */
+	protected function maintenance($type = 'html')
+	{
+		if($type == 'json')
+		{
+			$this->json(Array(
+				"success" => false,
+				"error" => true,
+				"message" => _("System under maintenance"),
+				"title" => "Error",
+				"theme" => "red"
+			));
+		}
+		elseif($type == 'internal')
+		{
+			$this->view->render('maintenance');
+		}
+		else
+		{
+			$this->view->data["title"] = _("System under maintenance");
+			$this->view->standard_error();
+			$this->view->data["nav"] = "";
+			$this->view->data["content"] = $this->view->render("maintenance", true);
+			$this->view->render('clean_main');
+		}
+		exit();
 	}
 
 	/**

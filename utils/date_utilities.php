@@ -12,8 +12,36 @@
  */
 class date_utilities
 {
-	/** @var array<int,string> $months Nombre de los meses en español. */
-	public static $months = Array("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
+	/** @var array<int,string> $months Nombre de los meses.
+	 * 
+	 * Se incluyen en esta documentación para que el script reconozca que son palabras que se deben traducir.
+	 * _("January"),
+	 * _("February"),
+	 * _("March"),
+	 * _("April"),
+	 * _("May"),
+	 * _("June"),
+	 * _("July"),
+	 * _("August"),
+	 * _("September"),
+	 * _("October"),
+	 * _("November"),
+	 * _("December")
+	*/
+	public static $months = Array(
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December"
+	);
 	
 	/**
 	 * Fecha del formato ISO a texto
@@ -33,7 +61,7 @@ class date_utilities
 		$string = self::date_to_string($time, $dayname);
 		if($hour)
 		{
-			$string .= " a las " . self::hour($sql_date);
+			$string .= " " . _("at") . " " . self::hour($sql_date);
 		}
 		return $string;
 	}
@@ -51,13 +79,28 @@ class date_utilities
 	public static function date_to_string($time, $dayname = false)
 	{
 		$time_data = Array(Date("Y", $time), Date("n", $time) - 1, Date("d", $time), Date("w", $time));
-		$days = Array("Domingo", "Lunes", "Martes", "Mi&eacute;rcoles", "Jueves", "Viernes", "S&aacute;bado");
+		$days = Array(
+			_("Sunday"),
+			_("Monday"),
+			_("Tuesday"),
+			_("Wednesday"),
+			_("Thursday"),
+			_("Friday"),
+			_("Saturday")
+		);
 		$date = "";
 		if($dayname)
 		{
-			$date = $days[$time_data[3]] . ', ';
+			$date = _($days[$time_data[3]]) . ', ';
 		}
-		$date .= $time_data[2] . ' de ' . self::$months[$time_data[1]] . ' de ' . $time_data[0];
+		if(Session::get("lang") == "es")
+		{
+			$date .= $time_data[2] . ' de ' . self::$months[$time_data[1]] . ' de ' . $time_data[0];
+		}
+		else
+		{
+			$date .= self::$months[$time_data[1]] . ' ' . $time_data[2] . ', ' . $time_data[0];
+		}
 		return $date;
 	}
 	
@@ -147,7 +190,7 @@ class date_utilities
 		$string = "";
 		if($ago->y > 0)
 		{
-			$string = $ago->y . " año";
+			$string = $ago->y . " " . _("year");
 			if($ago->y != 1)
 			{
 				$string .= "s";
@@ -159,7 +202,7 @@ class date_utilities
 			{
 				$string .= ", ";
 			}
-			$string .= $ago->m . " mes";
+			$string .= $ago->m . " " . _("month");
 			if($ago->m != 1)
 			{
 				$string .= "es";
@@ -171,7 +214,7 @@ class date_utilities
 			{
 				$string .= ", ";
 			}
-			$string .= $ago->d . " día";
+			$string .= $ago->d . " " . _("day");
 			if($ago->d != 1)
 			{
 				$string .= "s";
@@ -183,7 +226,7 @@ class date_utilities
 			{
 				$string .= ", ";
 			}
-			$string .= $ago->h . " hora";
+			$string .= $ago->h . " " . _("hour");
 			if($ago->h != 1)
 			{
 				$string .= "s";
@@ -195,7 +238,7 @@ class date_utilities
 			{
 				$string .= ", ";
 			}
-			$string .= $ago->i . " minuto";
+			$string .= $ago->i . " " . _("minute");
 			if($ago->i != 1)
 			{
 				$string .= "s";
@@ -205,7 +248,7 @@ class date_utilities
 		{
 			$string .= " y ";
 		}
-		$string .= $ago->s . " segundo";
+		$string .= $ago->s . " " . _("second");
 		if($ago->s != 1)
 		{
 			$string .= "s";

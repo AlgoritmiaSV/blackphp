@@ -75,5 +75,17 @@ class Resources extends Controller
 		);
 		$this->json($data);
 	}
+
+	public function manifest()
+	{
+		$manifest = json_decode(file_get_contents("public/manifest.json"), true);
+		$entity = Session::get("entity");
+		if(!empty($entity["app_name"]))
+		{
+			$manifest["name"] = $entity["app_name"];
+			$manifest["short_name"] = $entity["app_name"];
+		}
+		$this->json($manifest);
+	}
 }
 ?>

@@ -170,7 +170,6 @@ class Installation extends Controller
 		$entity->set(Array(
 			"entity_name" => $data["entity_name"],
 			"entity_slogan" => $data["entity_slogan"],
-			"sys_name" => $data["sys_name"],
 			"edition_user" => Session::get("user_id") == null ? 0 : Session::get("user_id"),
 			"user_edition_time" => $now
 		));

@@ -30,8 +30,8 @@ class entities_model
 	/** @var string $entity_subdomain Subdominio (Para funcionamiento en línea) */
 	private $entity_subdomain;
 
-	/** @var string $sys_name Nombre de la distribución del sistema */
-	private $sys_name;
+	/** @var string $app_name Nombre de la App para instalación como PWA */
+	private $app_name;
 
 	/** @var string $default_locale Idioma por defecto de la entidad */
 	private $default_locale;
@@ -87,6 +87,7 @@ class entities_model
 	{
 		if($default)
 		{
+			$this->app_name = 'BlackPHP';
 			$this->status = 1;
 		}
 	}
@@ -161,14 +162,14 @@ class entities_model
 		$this->entity_subdomain = $value === null ? null : (string)$value;
 	}
 
-	public function getSys_name()
+	public function getApp_name()
 	{
-		return $this->sys_name;
+		return $this->app_name;
 	}
 
-	public function setSys_name($value)
+	public function setApp_name($value)
 	{
-		$this->sys_name = $value === null ? null : (string)$value;
+		$this->app_name = $value === null ? null : (string)$value;
 	}
 
 	public function getDefault_locale()

@@ -22,5 +22,8 @@ UPDATE `app_elements` SET `element_name` = 'Preferences', `singular_name` = 'pre
 TRUNCATE TABLE `user_logs`;
 -- 2023-01-08
 ALTER TABLE `app_elements` CHANGE `element_key` `element_key` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Clave del elemento';
--- Teleinf
--- inabve
+-- inabve:blackphp
+-- 2023-01-14
+ALTER TABLE `entities` DROP `sys_name`;
+ALTER TABLE `entities` ADD `app_name` VARCHAR(32) NOT NULL DEFAULT 'BlackPHP' COMMENT 'Nombre de la App para instalación como PWA' AFTER `entity_subdomain`;
+-- teleinf:blackphp

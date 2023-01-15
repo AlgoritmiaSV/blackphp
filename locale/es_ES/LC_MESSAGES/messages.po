@@ -44,6 +44,9 @@ msgstr "Permite configurar la información general del negocio/empresa"
 msgid "Allows you to manage users and permissions for each user"
 msgstr "Permite gestionar usuarios y los permisos para cada usuario"
 
+msgid "App name"
+msgstr "Nombre de la aplicación"
+
 msgid "April"
 msgstr "abril"
 
@@ -139,12 +142,6 @@ msgstr "Descripción"
 
 msgid "Display theme"
 msgstr "Tema de visualización"
-
-msgid "Distribution"
-msgstr "Distribución"
-
-msgid "Distribution name"
-msgstr "Nombre de la distribución"
 
 msgid "Edit"
 msgstr "Editar"
@@ -534,4 +531,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 172 messages translated.
+# 171 messages translated.

@@ -322,12 +322,13 @@ $( function()
 		.done(function(json) {
 			if(json.message)
 			{
-				$.jAlert({
+				Swal.fire({
 					'title': json.title,
-					'content': json.message,
-					'theme': json.theme,
-					'autofocus': '.jalert_accept',
-					'onClose': function() {
+					'html': json.message,
+					//'theme': json.theme,
+					//'autofocus': '.jalert_accept',
+					'icon': json.theme == "green" ? "success" : (json.theme == "red" ? "error" : "info"),
+					'didDestroy': function() {
 						first_input.focus();
 						if(json.reload_after)
 						{
@@ -345,8 +346,7 @@ $( function()
 							location.href = json.redirect_after;
 						}
 					},
-					'btns': [
-						{'text':json.accept||'Accept', 'closeAlert':true, 'theme': json.theme, 'class': 'jalert_accept'}]
+					'confirmButtonText': json.accept||'Accept'
 				});
 			}
 			if(json.success || json.saved)

@@ -215,6 +215,7 @@ class View
 			'node_modules/floatthead/dist/jquery.floatThead.min.js',
 			'node_modules/html2canvas/dist/html2canvas.min.js',
 			'node_modules/jspdf/dist/jspdf.umd.min.js',
+			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'external/js/jquery.jqpagination.min.js',
 			'scripts/bpscript.min.js'
 		));
@@ -246,6 +247,7 @@ class View
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
 			'node_modules/select2/dist/js/select2.min.js',
+			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'external/js/jquery.imagereader.js',
 			'external/js/image-uploader.js',
 			'scripts/bpscript.min.js'
@@ -280,6 +282,7 @@ class View
 			'node_modules/print-this/printThis.js',
 			'node_modules/html2canvas/dist/html2canvas.min.js',
 			'node_modules/jspdf/dist/jspdf.umd.min.js',
+			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'scripts/bpscript.min.js'
 		));
 	}
@@ -308,6 +311,7 @@ class View
 			'node_modules/jspdf/dist/jspdf.umd.min.js',
 			'node_modules/chart.js/dist/chart.min.js',
 			'node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js',
+			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'scripts/charts.js',
 			'scripts/bpscript.min.js'
 		));

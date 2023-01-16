@@ -129,7 +129,7 @@
 	}
 
 	/* Tags */
-	button
+	button:not(.swal2-confirm)
 	{
 		width:93%;
 	}

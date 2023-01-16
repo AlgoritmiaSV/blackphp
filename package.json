@@ -14,6 +14,7 @@
     "jquery-ui-dist": "^1.13.1",
     "jspdf": "^2.5.1",
     "print-this": "^1.16.0",
-    "select2": "^4.1.0-rc.0"
+    "select2": "^4.1.0-rc.0",
+    "sweetalert2": "^11.4.8"
   }
 }

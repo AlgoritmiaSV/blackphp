@@ -124,6 +124,11 @@
 
 @media screen and (max-width: 799px)
 {
+	.action_filter
+	{
+		display: none;
+	}
+
 	.action_icons
 	{
 		position: relative;
@@ -134,5 +139,10 @@
 	{
 		width: -webkit-fill-available;
 		margin: 5px 0px;
+	}
+
+	.list_options form
+	{
+		display: block;
 	}
 }

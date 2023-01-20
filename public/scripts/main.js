@@ -9,7 +9,7 @@ $(function() {
 	{
 		content_height -= $(".list_options").outerHeight();
 	}
-	if($("#main_nav").length && $("#main_nav").css("width") == $("#main_nav").parent().css("width"))
+	if($("#main_nav").length && $("#main_nav").css("width") == $("#main_nav").parent().css("width") && screen.width >= 800)
 	{
 		content_height -= $("#main_nav").outerHeight();
 	}

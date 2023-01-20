@@ -844,6 +844,11 @@ input:checked + .slider:before
 		width: auto;
 	}
 
+	.action_filter > span:not(.select2)
+	{
+		width: 120px;
+	}
+
 	.table, .cell:not(.pc_cell)
 	{
 		display: block;
@@ -878,7 +883,9 @@ input:checked + .slider:before
 	#main_nav
 	{
 		display: none;
-		width: auto;
+		width: 100%;
+		position: absolute;
+		z-index: 1010;
 	}
 
 	#main_header
@@ -897,6 +904,8 @@ input:checked + .slider:before
 	{
 		vertical-align: top;
 		margin: 8px 0px 0px 10px;
+		filter: brightness(3);
+		opacity: 0.7;
 	}
 
 	#main_footer

@@ -389,6 +389,7 @@ tr:hover .action_icon
 		margin: 0px;
 		box-shadow: none;
 		border-radius: 0px;
+		min-height: 100%;
 	}
 
 	.form_title

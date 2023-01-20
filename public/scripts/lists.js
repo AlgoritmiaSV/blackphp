@@ -327,6 +327,9 @@ $( function()
 				html = print_header + $($(this).data("content")).html() + print_footer;
 				getPDF(html);
 			});
+			_div.find(".filter_button").on("click", function() {
+				$(".action_filter").toggle("slow");
+			});
 			$(".open_dialog_button").on("click", function() {
 				$("#" + $(this).data("dialog")).dialog("open");
 			});
@@ -422,11 +425,12 @@ $( function()
 		.done(function(json_data) {
 			if(json_data.results)
 			{
+				var select_default_width = screen.width < 750 ? '100%' : 'fit-content';
 				var select_params = {
 					data: json_data.results,
 					dropdownAutoWidth: true,
 					placeholder: _selector.data("placeholder") || "",
-					width: _selector.data("width") || "fit-content"
+					width: _selector.data("width") || select_default_width
 				}
 				if(_selector.data("search") != "none" || _selector.data("default") == "none")
 				{
@@ -463,6 +467,10 @@ $( function()
 		.always(function() {
 		});
 	}
+
+	$(".filter_button").on("click", function() {
+		$(".action_filter").toggle("slow");
+	});
 
 	/* Go To URL */
 	function goto_url()

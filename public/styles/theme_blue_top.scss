@@ -1,0 +1,45 @@
+$verdanaV2_url: "../../../external/fonts/VerdanaV2";
+$content_section_display: block;
+$content_section_width: auto;
+$content_section_bg: transparent;
+$main_aside_bg: #ffffff;
+$main_aside_shadow: #999999;
+$main_aside_a_color: initial;
+$main_aside_a_hover_color: initial;
+$main_aside_a_hover_bg: #d8f5ee;
+$main_content_display: block;
+$main_content_valign: initial;
+$main_content_width: auto;
+$main_footer_bg: #333366;
+$main_header_bg: linear-gradient(#0066CC, #3377ff, #2266ff);
+$main_header_padding: 0px 10px;
+$main_header_border: 0px;
+$main_nav_display: block;
+$main_nav_bg: #c9c9c9;
+$main_nav_width: auto;
+$main_nav_a_display: inline-block;
+$main_nav_a_padding: 5px 7px;
+$main_nav_a_margin: 2px;
+$main_nav_a_bg: #56698c;
+$main_nav_a_h_bg: #6F8ABC;
+$main_title_nav_display: none !important;
+$main_title_span_width: calc(100% - 120px);
+$user_link_color: #d9d9d9;
+$user_link_radius: 3px;
+$primary_button_bg: #0000ff;
+$primary_button_h_bg: #3333ff;
+$action_filter_color: #333333;
+$module_name_color: #e0e0e0;
+$cell_display: initial;
+$table_display: initial;
+$table_width: auto;
+$small_button_bg: #d9d9d9;
+@mixin link_active_after
+{
+	top: 18px;
+	border-bottom: 10px solid #ffffff;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	left: calc(50% - 10px);
+}
+@import 'main.scss';

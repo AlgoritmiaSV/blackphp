@@ -1,0 +1,45 @@
+$verdanaV2_url: "../../../external/fonts/VerdanaV2";
+$content_section_display: block;
+$content_section_width: auto;
+$content_section_bg: #ffffff;
+$main_aside_bg: #ffffff;
+$main_aside_shadow: #999999;
+$main_aside_a_color: initial;
+$main_aside_a_hover_color: initial;
+$main_aside_a_hover_bg: #d8f5ee;
+$main_content_display: block;
+$main_content_valign: initial;
+$main_content_width: 100%;
+$main_footer_bg: #6666cc;
+$main_header_bg: linear-gradient(to bottom, #ffffff 70%, #cccccc 100%);
+$main_header_padding: 0px;
+$main_header_border: 2px solid #cccccc;
+$main_nav_display: none;
+$main_nav_bg: transparent;
+$main_nav_width: auto;
+$main_nav_a_display: block;
+$main_nav_a_padding: 14px 5px;
+$main_nav_a_margin: 2px;
+$main_nav_a_bg: #56698c;
+$main_nav_a_h_bg: #6F8ABC;
+$main_title_nav_display: block;
+$main_title_span_width: auto;
+$user_link_color: #444466;
+$user_link_radius: 0px;
+$primary_button_bg: #0000ff;
+$primary_button_h_bg: #3333ff;
+$action_filter_color: #333333;
+$module_name_color: #333366;
+$cell_display: table-cell;
+$table_display: table;
+$table_width: 100%;
+$small_button_bg: #d9d9d9;
+@mixin link_active_after
+{
+	top: 18px;
+	border-bottom: 10px solid #ffffff;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	left: calc(50% - 10px);
+}
+@import 'main.scss';

@@ -95,7 +95,7 @@ class date_utilities
 		}
 		if(Session::get("lang") == "es")
 		{
-			$date .= $time_data[2] . ' de ' . self::$months[$time_data[1]] . ' de ' . $time_data[0];
+			$date .= $time_data[2] . ' de ' . _(self::$months[$time_data[1]]) . ' de ' . $time_data[0];
 		}
 		else
 		{

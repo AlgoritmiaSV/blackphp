@@ -1,0 +1,85 @@
+$verdanaV2_url: "../../../external/fonts/VerdanaV2";
+$content_section_display: table;
+$content_section_width: 100%;
+$content_section_bg: transparent;
+$main_aside_bg: #505050;
+$main_aside_shadow: #666666;
+$main_aside_a_color: #ccccff;
+$main_aside_a_hover_color: #d9d9ff;
+$main_aside_a_hover_bg: #222525;
+$main_content_display: table-cell;
+$main_content_valign: top;
+$main_content_width: calc(100% - 170px);
+$main_footer_bg: #666666;
+$main_header_bg: linear-gradient(#000000, #666666, #000000);
+$main_header_padding: 0px;
+$main_header_border: 0px;
+$main_nav_display: table-cell;
+$main_nav_bg: #666666;
+$main_nav_width: 150px;
+$main_nav_a_display: block;
+$main_nav_a_padding: 14px 7px;
+$main_nav_a_margin: 2px;
+$main_nav_a_bg: #535458;
+$main_nav_a_h_bg: #000000;
+$main_title_nav_display: none !important;
+$main_title_span_width: calc(100% - 120px);
+$user_link_color: #d9d9d9;
+$user_link_radius: 3px;
+$primary_button_bg: #000525;
+$primary_button_h_bg: #3333ff;
+$action_filter_color: #e0e0e0;
+$module_name_color: #e0e0e0;
+$cell_display: table-cell;
+$table_display: table;
+$table_width: 100%;
+$small_button_bg: #828282;
+@mixin link_active_after
+{
+	top: 16px;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-right: 10px solid #333333;
+	right: 0px;
+}
+@import 'main.scss';
+
+/* Extra */
+body
+{
+	background-color: #333333;
+	color: #ffffff;
+}
+
+input, select, textarea
+{
+	background-color: #525252;
+	color: #ffffff;
+}
+
+.ui-widget-header
+{
+	border: 1px solid #636363 !important;
+}
+
+.ui-widget-content
+{
+	color: #ffffff !important;
+	background-color: #000000 !important;
+}
+
+.ui-dialog-titlebar
+{
+	background-color: #2c4b67 !important;
+	color: #ffffff !important;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active
+{
+	background-color: #8a8a8a !important;
+}
+
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited, a.ui-button, a:link.ui-button, a:visited.ui-button, .ui-button
+{
+	color: #000000 !important;
+}

@@ -191,6 +191,9 @@ msgstr "Error al guardar"
 msgid "February"
 msgstr "febrero"
 
+msgid "Filter"
+msgstr "Filtrar"
+
 msgid "filtered from _MAX_ total entries"
 msgstr "filtrados de _MAX_ entradas totales"
 
@@ -531,4 +534,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 171 messages translated.
+# 172 messages translated.

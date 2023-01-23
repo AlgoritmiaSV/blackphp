@@ -1256,6 +1256,30 @@ $( function()
 	}
 	$(".local_code").on("change", search_by_code);
 
+	if($(".details_table").length)
+	{
+		$(".data_search").on("keyup", function() {
+			var string_value = $(this).val();
+			$(".details_table tbody tr").not(".template").each(function() {
+				found = false;
+				$(this).find("td").each(function() {
+					if($(this).text().toUpperCase().indexOf(string_value.toUpperCase()) >= 0)
+					{
+						found = true;
+					}
+				});
+				if(found)
+				{
+					$(this).show();
+				}
+				else
+				{
+					$(this).hide();
+				}
+			});
+		});
+	}
+
 	/* Check DUI */
 	$(".check_identifier").on("change", function() {
 		$(".identifier_clean").val("");

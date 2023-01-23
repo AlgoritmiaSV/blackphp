@@ -25,5 +25,8 @@ $(function() {
 		}
 	});
 
-	$(".children_container").sortable();
+	if(screen.width >= 800)
+	{
+		$(".children_container").sortable();
+	}
 });

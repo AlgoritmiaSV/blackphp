@@ -155,10 +155,11 @@ class Installation extends Controller
 		}
 
 		$entity = entities_model::find($data["entity_id"]);
+		$subdomain = empty($data["subdomain"]) ? $entity->getEntity_subdomain() : $data["subdomain"];
 		if(empty($entity->getEntity_id()))
 		{
 			$entity->set(Array(
-				"entity_subdomain" => empty($data["subdomain"]) ? $entity->getEntity_subdomain() : $data["subdomain"],
+				"entity_subdomain" => $subdomain,
 				"entity_date" => $today,
 				"entity_begin" => $today,
 				"creation_installer" => Session::get("installer_id"),
@@ -169,6 +170,7 @@ class Installation extends Controller
 		}
 		$entity->set(Array(
 			"entity_name" => $data["entity_name"],
+			"app_name" => empty($data["app_name"]) ? ucfirst($subdomain) : $data["app_name"],
 			"entity_slogan" => $data["entity_slogan"],
 			"edition_user" => Session::get("user_id") == null ? 0 : Session::get("user_id"),
 			"user_edition_time" => $now

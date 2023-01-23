@@ -44,6 +44,11 @@
 	font-size: 12pt;
 }
 
+.ui-accordion .ui-accordion-content
+{
+	padding: 10px;
+}
+
 @media screen and (max-width: 799px)
 {
 	.ui-dialog-content input

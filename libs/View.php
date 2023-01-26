@@ -196,10 +196,9 @@ class View
 			'node_modules/datatables.net-responsive-dt/css/responsive.dataTables.min.css',
 			'external/css/select2.css',
 			'external/css/jqpagination.css',
-			'styles/main.css',
+			'styles/theme.min.css',
 			'styles/lists.css',
 			'styles/loading.css',
-			'styles/forms.css',
 			'styles/print_area.css',
 			'styles/dialogs.css',
 			'styles/currencies.css'
@@ -234,9 +233,8 @@ class View
 			'external/css/select2.css',
 			'external/css/image-uploader.min.css',
 			'external/css/imagereader.css',
-			'styles/main.css',
+			'styles/theme.min.css',
 			'styles/loading.css',
-			'styles/forms.css',
 			'styles/dialogs.css',
 			'styles/print_area.css',
 			"styles/currencies.css",
@@ -266,9 +264,8 @@ class View
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
-			'styles/main.css',
+			'styles/theme.min.css',
 			'styles/loading.css',
-			'styles/forms.css',
 			'styles/dialogs.css',
 			'styles/print_area.css',
 			'styles/details.css',
@@ -293,9 +290,8 @@ class View
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
-			'styles/main.css',
+			'styles/theme.min.css',
 			'styles/loading.css',
-			'styles/forms.css',
 			'styles/dialogs.css',
 			'styles/print_area.css',
 			'styles/details.css',
@@ -327,8 +323,7 @@ class View
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
-			'styles/main.css',
-			'styles/forms.css',
+			'styles/theme.min.css',
 			'styles/loading.css',
 			'styles/menu.css'
 		));
@@ -353,7 +348,7 @@ class View
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
-			'styles/main.css'
+			'styles/theme.min.css'
 		));
 		$this->add("scripts", "js", Array(
 			'node_modules/jquery/dist/jquery.min.js',

@@ -34,9 +34,7 @@
 
 #content_section
 {
-	display: $content_section_display;
-	width: $content_section_width;
-	background-color: $content_section_bg;
+	@include content_section;
 }
 
 #main_aside
@@ -125,10 +123,7 @@
 
 #main_nav a
 {
-	display: $main_nav_a_display;
-	padding: $main_nav_a_padding;
-	background-color: $main_nav_a_bg;
-	margin-bottom: $main_nav_a_margin;
+	@include main_nav_a;
 	color: #ffffff;
 	text-decoration: none;
 }
@@ -799,20 +794,24 @@ input:checked + .slider:before
 	border-bottom: 1px solid #666666;
 }
 
-::-webkit-scrollbar {
+::-webkit-scrollbar
+{
 	width: 10px;
 	height: 10px;
 }
 
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track
+{
 	background: #0002;
 }
 
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb
+{
 	background: #888;
 }
 
-::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover
+{
 	background: #555;
 }
 
@@ -892,6 +891,11 @@ input:checked + .slider:before
 	.small_button
 	{
 		margin: 5px 0px;
+	}
+
+	.select2-results__option
+	{
+		padding: 20px 6px;
 	}
 
 	#main_nav

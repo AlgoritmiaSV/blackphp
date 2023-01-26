@@ -1,6 +1,4 @@
 $verdanaV2_url: "../../../external/fonts/VerdanaV2";
-$content_section_display: table;
-$content_section_width: 100%;
 $content_section_bg: transparent;
 $main_aside_bg: #505050;
 $main_aside_shadow: #666666;
@@ -17,10 +15,6 @@ $main_header_border: 0px;
 $main_nav_display: table-cell;
 $main_nav_bg: #666666;
 $main_nav_width: 150px;
-$main_nav_a_display: block;
-$main_nav_a_padding: 14px 7px;
-$main_nav_a_margin: 2px;
-$main_nav_a_bg: #535458;
 $main_nav_a_h_bg: #000000;
 $main_title_nav_display: none !important;
 $main_title_span_width: calc(100% - 120px);
@@ -34,6 +28,11 @@ $cell_display: table-cell;
 $table_display: table;
 $table_width: 100%;
 $small_button_bg: #828282;
+@mixin content_section
+{
+	display: table;
+	width: 100%;
+}
 @mixin link_active_after
 {
 	top: 16px;
@@ -42,9 +41,16 @@ $small_button_bg: #828282;
 	border-right: 10px solid #333333;
 	right: 0px;
 }
+@mixin main_nav_a
+{
+	display: block;
+	padding: 14px 7px;
+	margin-bottom: 2px;
+	background-color: #535458;
+}
 @import 'main.scss';
 
-/* Extra */
+/* Extra Main */
 body
 {
 	background-color: #333333;
@@ -83,3 +89,18 @@ input, select, textarea
 {
 	color: #000000 !important;
 }
+
+/* **************** Estilos de formularios **************** */
+$form_main_content_bg: linear-gradient(to right, #333333, #0f0f0f 20%);
+$close_form_bg: #808080;
+$close_form_h_bg: #666666;
+$details_table_even_bg: #444444;
+$details_table_odd_bg: #666666;
+$form_content_bg:#525252;
+$form_content_shadow: 0px 0px 4px 4px #686868;
+$form_title_bg:linear-gradient(#39546e, #294968, #000000);
+$form_td_border: 1px solid #757575;
+$form_thead_tr_bg: #182741;
+$notes_bg_image: repeating-linear-gradient(#000000, #000000 24px, #666666 24px, #666666 25px, #000000 25px);
+$additional_note_color: #999999;
+@import 'forms.scss';

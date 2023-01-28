@@ -4,6 +4,7 @@ Manual del desarrollador de BlackPHP
 Contenido
 ---------
 * [Generalidades](#Generalidades)
+* [BlackPHP updater](#BlackPHP-updater)
 * [Base de datos](#Base-de-datos)
 * [Scripts en el directorio raíz](#Scripts-en-el-directorio-raíz)
 * [Carpetas](#Carpetas)
@@ -19,11 +20,20 @@ Generalidades
 -----------------
 **BlackPHP** es un Framework escalable desarrollado por miembros de la sociedad **Red Teleinformática** en Centroamérica; la intención preliminar fue acelerar la producción de los sistemas que comparten características similares, tales como la creación de múltiples entidades y múltiples usuarios por entidad.
 
-**BlackPHP** está desarrollado en PHP y sigue la lógina de una estructura MVC estándar.
+**BlackPHP** está desarrollado en PHP y sigue la lógina de una estructura MVC estándar. La versión actual es compatible con PHP 8.2
+
+BlackPHP updater
+----------------
+Adicionalmente, se ha creado un conjunto de script para Linux, a fin de actualizar cada una de las partes fundamentales del Framework. Las acciones que realiza son las siguientes:
+- Crea un sólo archivo js minificado que incluye todos los archivos anteriores.
+- Compila los estilos scss en varios temas .min.css
+- Sincroniza las carpetas básicas de BlackPHP en cada proyecto: node_modules, vendor, libs, utilities, entre otros.
+- Explora la base de datos en busca de cambios en la estructura de cada proyecto, y actualiza los modelos.
+- Revisa todas las palabras y frases sujetas a traducción con gettext, y actualiza los archivos de lenguaje .po; compila los archivos po existentes en .mo
 
 Base de datos
 -------------
-La base de datos de **BlackPHP** comprende básicamente dos partes: Un conjunto de tablas de uso del sistema (todas aquellas cuyos nombres inician con app_), y las tablas para el almacenamiento de datos de los negocios durante el uso.
+La base de datos de **BlackPHP** comprende básicamente dos partes: Un conjunto de tablas de uso del sistema (todas aquellas cuyos nombres inician con app_), y las tablas para el almacenamiento de datos de las entidades durante el uso.
 
 Scripts en el directorio raíz
 -----------------------------
@@ -37,8 +47,13 @@ Se aconseja no incluir este archivo en las versiones de prodicción del sistema.
 
 **error_log.php**: Con este fichero podrá obtener de manera sencilla una impresión del fichero error_log ubicado en el directorio raíz, cuando ocurra algun error durante la ejecución del sistema. (Sólo para implementaciones en línea con cPanel).
 
+En las versiones más recientes, se está migrando todo al módulo devUtils, donde además se setán colocando una serie de herramientas importantes para el desarrollador, por ejemplo, se puede visitar: /devUtils/error_log, /devUtils/advances, devUtils/session_vars, devUtils/phpinfo
+
 Carpetas
 --------
+*/libs/*
+En esta sessión se encuentra el núcleo del sistema, desde donde se controla la forma en que ha de interpretarse los controladores, las vistas y los modelos. Estos scripts se cargan siempre en cada petición al sistema.
+
 */controllers/*
 
 */db/*
@@ -46,8 +61,6 @@ Carpetas
 */documentation/*
 
 */entities/*
-
-*/libs/*
 
 Modelos
 -------

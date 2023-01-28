@@ -1,0 +1,284 @@
+.show_details_table
+{
+	border-collapse: collapse;
+	border: 1px solid #a0a0a0;
+	margin: 10px 0px;
+	width: 100%;
+}
+
+.show_details_table td, .show_details_table th
+{
+	border: 1px solid #a0a0a0;
+	vertical-align: top;
+}
+
+.details_main_content
+{
+	background: $dt_main_content_bg;
+}
+
+.close_details
+{
+	width: 15px;
+	float: right;
+	padding: 5px;
+	border-radius: 3px;
+	margin:-6px -6px 0px 0px;
+}
+
+.close_details:hover
+{
+	background-color: #cccccc;
+}
+
+.close_details img
+{
+	width: 100%;
+}
+
+.float_container
+{
+	overflow: hidden;
+}
+
+.details_body
+{
+	padding: 10px;
+	overflow: hidden;
+}
+
+.details_content
+{
+	background-color: $dt_content_bg;
+	border-radius: 5px;
+	margin: 7px;
+	box-shadow: 0px 0px 4px 4px #999999;
+	transition: all 1s ease-out;
+}
+
+.details_title
+{
+	padding: 10px;
+	border-radius: 5px 5px 0px 0px;
+	background: $dt_title_bg;
+	color: #ffffff;
+}
+
+.totals_table
+{
+	border: 1px solid #a0a0a0;
+	border-collapse: collapse;
+	float: right;
+}
+
+.totals_table td
+{
+	border: 1px solid #a0a0a0;
+}
+
+.details_foot
+{
+	padding: 10px;
+	text-align: right;
+}
+
+.details_users
+{
+	font-style: italic;
+	color: $dt_users_color;
+	padding: 10px 5px;
+	border-top: 3px solid #a9a9a9;
+}
+
+.field_label
+{
+	font-weight: bold;
+}
+
+.field_data
+{
+	padding: 5px 0px 10px 5px;
+	display: block;
+	text-align: justify;
+}
+
+.profile_photo
+{
+	max-width: 150px;
+	max-height: 200px;
+}
+
+.link_row
+{
+	cursor: pointer;
+}
+
+.link_row:hover
+{
+	color: #0000ff;
+	background-color: #d9d9d9;
+}
+
+.half_page_column
+{
+	vertical-align: top;
+	height: 250px;
+}
+
+.half_page_left_column
+{
+	border-right: 1px solid #666666;
+	padding-right: 10px;
+}
+
+.half_page_right_column
+{
+	padding-left: 10px;
+}
+
+.half_page_footer
+{
+	border: 0px;
+	border-top: 1px solid #000000;
+}
+
+.half_page_footer table
+{
+	width: 100%;
+}
+
+.bill_table
+{
+	width: 100%;
+}
+
+.list_options
+{
+	padding: 5px;
+	min-height: 40px;
+}
+
+.list_options table tr
+{
+	height: 35px;
+}
+
+.signature_table
+{
+	width: 100%;
+}
+
+.signature_table td
+{
+	vertical-align: top;
+}
+
+.signature_space
+{
+	display: inline-block;
+	width: 200px;
+	height: 80px;
+}
+
+.field_cell
+{
+	min-width: 200px;
+}
+
+.vertical_page
+{
+	max-width: 720px;
+	margin: 0px auto;
+}
+
+.small_text
+{
+	font-size: 7pt;
+}
+
+.small_text h3
+{
+	margin: 0px;
+}
+
+.small_text .show_details_table
+{
+	margin: 0px;
+}
+
+.dividing_line
+{
+	border: 1px dashed #666666;
+	margin: 20px 0px 10px 0px;
+}
+
+.document_container
+{
+	border: 1px solid #d9d9d9;
+	margin: 10px 0px;
+	page-break-inside: avoid;
+}
+
+.document_name
+{
+	padding: 10px 5px;
+	color: #666666;
+}
+
+.document_container img
+{
+	max-width: 100%;
+}
+
+.details_foot button:not(.delete_button)
+{
+	margin-left: 7px;
+}
+
+.data_sheet_table
+{
+	border: $dsheet_table_border;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.data_sheet_table tbody tr:nth-child(odd)
+{
+	background-color: $dsheet_tbody_bg;
+}
+
+.data_sheet_table td
+{
+	padding: 10px 5px;
+	border: $dsheet_td_border;
+}
+
+.data_sheet_field
+{
+	width: 25%;
+}
+
+.writable_table td
+{
+	padding: 10px 1px;
+}
+
+.void_content
+{
+	height: 699px;
+}
+
+.writable_td_number
+{
+	width: 50px;
+}
+
+.writable_td_text
+{
+	width: 100px;
+}
+
+.no_break
+{
+	page-break-inside: avoid;
+}

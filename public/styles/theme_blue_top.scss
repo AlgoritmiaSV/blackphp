@@ -61,4 +61,14 @@ $form_td_border: 1px solid #f0f0f0;
 $form_thead_tr_bg: #4472C4;
 $notes_bg_image: repeating-linear-gradient(white, white 24px, #ccc 24px, #ccc 25px, white 25px);
 $additional_note_color: #666666;
-@import 'forms.scss'
+@import 'forms.scss';
+
+/* **************** Estilos para vista de detalles embebidas **************** */
+$dt_main_content_bg: linear-gradient(to bottom, #ffffff, #cccccc 20%);
+$dt_content_bg: #ffffff;
+$dt_title_bg: linear-gradient(#71A6DB, #559BDB, #438AC9);
+$dt_users_color: #666644;
+$dsheet_table_border: 2px solid #ffffff;
+$dsheet_tbody_bg: #ededed;
+$dsheet_td_border: 2px solid #ffffff;
+@import 'details.scss';

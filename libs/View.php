@@ -268,7 +268,6 @@ class View
 			'styles/loading.css',
 			'styles/dialogs.css',
 			'styles/print_area.css',
-			'styles/details.css',
 			"styles/currencies.css"
 		));
 		$this->add("scripts", "js", Array(
@@ -294,7 +293,6 @@ class View
 			'styles/loading.css',
 			'styles/dialogs.css',
 			'styles/print_area.css',
-			'styles/details.css',
 			"styles/currencies.css"
 		));
 		$this->add("scripts", "js", Array(

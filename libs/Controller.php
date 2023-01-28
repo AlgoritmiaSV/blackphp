@@ -25,6 +25,8 @@ class Controller
 	 * 6) Se elige la entidad, y se establece el directorio, el logo y las restricciones de dicha entidad.
 	 * 7) Se establece un tema por defecto
 	 */
+	protected $view;
+	protected $system_name;
 	function __construct()
 	{
 		#1 Creación de la vista

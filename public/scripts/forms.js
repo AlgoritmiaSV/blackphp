@@ -626,7 +626,7 @@ $( function()
 							_tr.find("select." + v_index).data("value", v_value);
 							_tr.find("span." + v_index).text(v_value);
 						});
-						if(bill_type == 2)
+						if(bill_type == 2 && url.module == 'Sales')
 						{
 							_tr.find(".sale_price").val(ui.item.nvat_price);
 						}

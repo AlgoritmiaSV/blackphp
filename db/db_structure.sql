@@ -127,7 +127,7 @@ CREATE TABLE `app_options` (
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -257,7 +257,7 @@ CREATE TABLE `entities` (
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -525,7 +525,7 @@ CREATE TABLE `users` (
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
 /*!50001 VIEW `available_methods` AS select `am`.`method_id` AS `method_id`,`am`.`module_id` AS `module_id`,`am`.`method_name` AS `method_name`,`am`.`method_url` AS `method_url`,`am`.`method_icon` AS `method_icon`,`am`.`method_description` AS `method_description`,`am`.`default_order` AS `default_order`,`am`.`status` AS `status`,`im`.`method_order` AS `method_order`,`am`.`method_id` AS `id`,`am`.`method_name` AS `label`,`im`.`entity_id` AS `entity_id`,`um`.`user_id` AS `user_id` from (((`app_methods` `am` join `user_methods` `um`) join `entity_methods` `im`) join `users` `u`) where `um`.`method_id` = `am`.`method_id` and `um`.`status` = 1 and `im`.`method_id` = `am`.`method_id` and `im`.`status` = 1 and `u`.`entity_id` = `im`.`entity_id` and `u`.`user_id` = `um`.`user_id` */;
@@ -543,7 +543,7 @@ CREATE TABLE `users` (
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
 /*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` order by `em`.`module_order` */;
@@ -561,7 +561,7 @@ CREATE TABLE `users` (
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
 /*!50001 VIEW `user_data` AS select `u`.`user_id` AS `user_id`,`u`.`entity_id` AS `entity_id`,`u`.`user_name` AS `user_name`,`u`.`nickname` AS `nickname`,`u`.`email` AS `email`,`u`.`password` AS `password`,`u`.`theme_id` AS `theme_id`,`u`.`locale` AS `locale`,`u`.`creation_user` AS `creation_user`,`u`.`creation_time` AS `creation_time`,`u`.`edition_user` AS `edition_user`,`u`.`edition_time` AS `edition_time`,`u`.`status` AS `status`,`ls`.`last_login` AS `last_login` from (`users` `u` left join (select `user_sessions`.`user_id` AS `user_id`,max(`user_sessions`.`date_time`) AS `last_login` from `user_sessions` group by `user_sessions`.`user_id`) `ls` on(`ls`.`user_id` = `u`.`user_id`)) where `u`.`status` = 1 */;

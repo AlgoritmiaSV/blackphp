@@ -18,13 +18,13 @@
 
 .data_viewer, .data_viewer td, .data_viewer th
 {
-	border: 1px solid #cccccc;
+	border: $dv_border;
 	border-collapse:collapse;
 }
 
 .data_viewer tbody tr:nth-child(even)
 {
-	background-color: #f0f0ff;
+	background-color: $dv_even_bg;
 }
 
 /*.data_viewer tbody tr:nth-child(odd)
@@ -39,12 +39,12 @@
 
 .data_viewer thead
 {
-	background-color: #ffffff;
+	background-color: $dv_thead_bg;
 }
 
 .data_viewer tfoot
 {
-	background-color: #ffffff;
+	background-color: $dv_tfoot_bg;
 	font-weight: bold;
 }
 
@@ -77,7 +77,7 @@
 
 .data_search
 {
-	border: 1px solid #99ccff;
+	border: $data_search_border;
 	border-radius: 3px;
 	width: 100%;
 	min-width: 300px;
@@ -91,7 +91,7 @@
 
 .data_viewer tbody tr:hover
 {
-	background-color: #99ccff;
+	background-color: $dv_tr_h_bg;
 }
 
 .currency_symbol
@@ -102,7 +102,7 @@
 }
 
 .data_table tbody tr:hover {
-	color: #009900;
+	color: $dt_tr_h_color;
 }
 
 .void_tr {

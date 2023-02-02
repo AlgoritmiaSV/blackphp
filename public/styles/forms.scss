@@ -180,7 +180,6 @@ tr:hover .action_icon
 	padding: 10px;
 	border-radius: 5px 5px 0px 0px;
 	background: $form_title_bg;
-	color: #ffffff;
 }
 
 .form_section_title
@@ -380,9 +379,14 @@ tr:hover .action_icon
 
 	.form_entry input, .form_entry textarea
 	{
-		width: -webkit-fill-available;
+		width: -webkit-fill-available !important;
 	}
 
+	.form_entry input.default_width
+	{
+		width: calc(100% - 175px) !important;
+	}
+	
 	.form_content
 	{
 		margin: 0px;
@@ -394,6 +398,7 @@ tr:hover .action_icon
 	.form_title
 	{
 		border-radius: 0px;
+		font-weight: bold;
 	}
 
 	.details_table, .details_table tbody, .details_table tr, .details_table td:not(.pc_cell), .details_table tfoot

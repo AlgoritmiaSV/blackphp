@@ -312,6 +312,7 @@
 {
 	max-width: 200px;
 	max-height: 150px;
+	border-radius: 5px;
 }
 
 .content_viewer
@@ -323,6 +324,18 @@
 .delete_button
 {
 	float: left;
+}
+
+.flex
+{
+	display: flex;
+	justify-content: space-between;
+	padding: 2px 0px;
+}
+
+.flex_cell
+{
+	display: inline-block;
 }
 
 .float_container
@@ -508,9 +521,9 @@ input, select, textarea
 	font-family: "Verdana V2 V1", Verdana, Geneva, Sans-Serif;
 	font-size: 10pt;
 	padding: 5px;
-	border: 0px;
-	border-bottom: 1px solid #99ccff;
+	border: 1px solid transparent;
 	outline: 0px;
+	background-color: $input_bg;
 }
 
 input:not(.select2-search__field):focus
@@ -862,6 +875,23 @@ input:checked + .slider:before
 		width: 120px;
 	}
 
+	.flex
+	{
+		display: block;
+	}
+
+	.flex_cell
+	{
+		display: block;
+		padding: 5px 0px;
+	}
+
+	.flex_cell label
+	{
+		display: inline-block;
+		width: 120px;
+	}
+
 	.table, .cell:not(.pc_cell)
 	{
 		display: block;
@@ -958,7 +988,7 @@ input:checked + .slider:before
 
 	.phone_block, .phone_inline
 	{
-		display: none;
+		display: none !important;
 	}
 }
 

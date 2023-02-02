@@ -220,6 +220,7 @@ $( function()
 		if(json.found_rows != null)
 		{
 			var current_page = 0;
+			var page_size = json.page_size || 100;
 			if(url.options.page == null)
 			{
 				current_page = json.found_rows > 0 ? 1 : 0;
@@ -233,7 +234,7 @@ $( function()
 					url.options["page"] = page;
 					goto_url();
 				},
-				max_page: Math.ceil(json.found_rows / 100),
+				max_page: Math.ceil(json.found_rows / page_size),
 				current_page: current_page,
 				page_string: "{current_page} / {max_page}"
 			});

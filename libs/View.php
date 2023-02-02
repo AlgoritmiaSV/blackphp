@@ -197,7 +197,6 @@ class View
 			'external/css/select2.css',
 			'external/css/jqpagination.css',
 			'styles/theme.min.css',
-			'styles/lists.css',
 			'styles/loading.css',
 			'styles/print_area.css',
 			'styles/dialogs.css',

@@ -126,7 +126,7 @@ position: absolute !important;
 width: 1px !important; }
 
 .select2-container--default .select2-selection--single {
-background-color: #fff;
+background-color: #e6e6e6;
 border: 1px solid #D9D9D9;
 min-height: 33px; /*Added*/
 }

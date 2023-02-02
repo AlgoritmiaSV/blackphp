@@ -28,6 +28,7 @@ $cell_display: table-cell;
 $table_display: table;
 $table_width: 100%;
 $small_button_bg: #828282;
+$input_bg: #353535;
 @mixin content_section
 {
 	display: table;
@@ -59,7 +60,6 @@ body
 
 input, select, textarea
 {
-	background-color: #525252;
 	color: #ffffff;
 }
 
@@ -97,20 +97,30 @@ $close_form_h_bg: #666666;
 $details_table_even_bg: #444444;
 $details_table_odd_bg: #666666;
 $form_content_bg:#525252;
-$form_content_shadow: 0px 0px 4px 4px #686868;
-$form_title_bg:linear-gradient(#39546e, #294968, #000000);
+$form_content_shadow: 0px 0px 4px 4px #333333;
+$form_title_bg: #353535;
 $form_td_border: 1px solid #757575;
 $form_thead_tr_bg: #182741;
-$notes_bg_image: repeating-linear-gradient(#000000, #000000 24px, #666666 24px, #666666 25px, #000000 25px);
+$notes_bg_image: repeating-linear-gradient(#353535, #353535 24px, #757575 24px, #757575 25px, #353535 25px);
 $additional_note_color: #999999;
 @import 'forms.scss';
 
 /* **************** Estilos para vista de detalles embebidas **************** */
 $dt_main_content_bg: #0f0f0f;
 $dt_content_bg: #525252;
-$dt_title_bg: linear-gradient(#39546e, #294968, #000000);
+$dt_title_bg: #353535;
 $dt_users_color: #ffffff;
 $dsheet_table_border: 2px solid #666666;
 $dsheet_tbody_bg: #494949;
 $dsheet_td_border: 2px solid #666666;
 @import 'details.scss';
+
+/* **************** Estilos para listas **************** */
+$dv_border: 1px solid #666666;
+$dv_even_bg: #000000;
+$dv_thead_bg: #666666;
+$dv_tfoot_bg: #666666;
+$data_search_border: 1px solid #394b5e;
+$dv_tr_h_bg: #222c36;
+$dt_tr_h_color: #ffff99;
+@import 'lists.scss';

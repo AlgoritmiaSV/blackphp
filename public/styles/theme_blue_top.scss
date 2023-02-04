@@ -47,6 +47,28 @@ $input_bg: #e6e6e6;
 	margin-bottom: 2px;
 	background-color: #56698c;
 }
+@media screen and (max-width: 799px)
+{
+	#main_nav
+	{
+		text-align: center;
+	}
+	#main_nav a
+	{
+		padding: 10px !important;
+		margin: 5px;
+		width: 80px;
+	}
+	#main_nav a span
+	{
+		display: block;
+	}
+	.nav_link_active::after
+	{
+		top: auto !important;
+		bottom: 0px;
+	}
+}
 @import 'main.scss';
 
 /* **************** Estilos de formulario **************** */

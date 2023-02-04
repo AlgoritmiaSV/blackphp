@@ -769,7 +769,10 @@ $( function()
 			$("#bill_number").attr("type", "text");
 		}*/
 		var object_data = $(this).select2("data")[0];
-		$("#bill_number").val(object_data.next);
+		if(object_data && object_data.next)
+		{
+			$("#bill_number").val(object_data.next);
+		}
 		if(type_id == "")
 		{
 			JSON.ticket++;

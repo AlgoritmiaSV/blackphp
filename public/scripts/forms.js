@@ -199,23 +199,6 @@ $( function()
 			});
 		}
 
-		/**
-		 * Presentaciones
-		 * @deprecated Obsoleto: Se eliminará en la próxima versión
-		 */
-		if(json.presentations)
-		{
-			trs = $("#pres_container tr");
-			for(i = 0; i < trs.length && i < json.presentations.length; i++)
-			{
-				var pres = json.presentations[i];
-				_tr = $(trs.get(i));
-				_tr.find(".pres_id").val(pres.pres_id);
-				_tr.find(".pres_name").val(pres.pres_name);
-				_tr.find(".pres_price").val(pres.price);
-				_tr.find(".pres_units").val(pres.units);
-			}
-		}
 		/* Form Pagination */
 		if(json.found_rows != null)
 		{
@@ -463,21 +446,6 @@ $( function()
 			div_error.fadeOut("slow");
 		}, 5000);
 	}
-
-	/**
-	 * Copiar datos a span antes de imprimir
-	 * 
-	 * Esta función será removida en el futuro, ya que se está imprimiendo sólo reportes
-	 * con printThis
-	 */
-	$(window).on("beforeprint", function() {
-		$('input, textarea').each(function() {
-			$(this).parent().find('.no_screen').text($(this).val());
-		});
-		$('select').each(function() {
-			$(this).parent().find('.no_screen').text($(this).find("option:selected").text());
-		});
-	});
 
 	/* Clalc details */
 	bill_type = 1;

@@ -5,6 +5,7 @@ Requisitos
 - PHP 8.2
 - Módulos de PHP: gettext, intl, gd, zip, mbstring
 - Módulos de Apache: mod-rewrite
+
 Instalación para el uso
 =======================
 
@@ -61,10 +62,10 @@ Pasos:
 - Instale un servidor con PHP y MySQL
 
 - Clone el repositorio desde GitHub
-`gh repo clone RedTeleinformatica/BlackPHP`
+`git clone RedTeleinformatica/BlackPHP .`
 
 - Instale y active las dependencias necesarias de PHP
-`apt install php8.1-gd php8.1-mbstring php8.1-zip php8.1-curl php8.1-intl`
+`apt install php-gd php-mbstring php-zip php-curl php-intl`
 
 - Instale Composer
 (Ver instrucciones en getcomposer.org)

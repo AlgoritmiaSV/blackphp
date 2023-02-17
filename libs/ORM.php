@@ -141,23 +141,35 @@ trait ORM
 	/**
 	 * Guardar
 	 * 
-	 * Inserta o actualiza un registro en la base de datos. Si existe un valos en la propiedad
+	 * Inserta o actualiza un registro en la base de datos. Si existe un valor en la propiedad
 	 * indicada como llave primaria, el registro se actualiza; sino, se crea uno nuevo.
 	 * 
 	 * @return void
 	 */
 	public function save()
 	{
+		// Las vistas no se guardan
 		if(self::$_table_type == "VIEW")
 		{
 			return 0;
+		}
+		$primary_key = self::$_primary_key;
+		if(!empty($this->{$primary_key}))
+		{
+			$class = get_called_class();
+			$initial = new $class;
+			$initial = $initial->find($this->{$primary_key});
+			if($this == $initial)
+			{
+				return 0;
+			}
 		}
 		self::init();
 		$now = Date("Y-m-d H:i:s");
 		if(self::$_timestamps)
 		{
 			$user_id = empty(Session::get("user_id")) ? 0 : Session::get("user_id");
-			if(empty($this->{self::$_primary_key}))
+			if(empty($this->{$_primary_key}))
 			{
 				$this->setCreation_user($user_id);
 				$this->setCreation_time($now);
@@ -172,7 +184,6 @@ trait ORM
 		$data = get_object_vars($this);
 		$sth = null;
 		$table_name = self::$_table_name;
-		$primary_key = self::$_primary_key;
 		if(empty($this->{$primary_key}))
 		{
 			$fieldNames = implode(',', array_keys($data));
@@ -1010,6 +1021,72 @@ trait ORM
 			return 0;
 		}
 		return $this->{self::$_primary_key};
+	}
+
+	/**
+	 * Where in
+	 * 
+	 * Agrega una condición Where In con los valores de un arreglo unidimensional
+	 * 
+	 * @param Array<string> $list La lista de elementos a ser incluídos.
+	 * @param string $field El nombre del campo a evaluar. Si no se especifica, se toma por defecto la llave primaria.
+	 * 
+	 * @return object Una instancia de la misma clase
+	*/
+	public static function whereIn($list, $field = null)
+	{
+		if($field == null)
+		{
+			if(self::$_primary_key == null)
+			{
+				return new static();
+			}
+			$field = self::$_primary_key;
+		}
+		if(!is_array($list))
+		{
+			return new static();
+		}
+		if(count($list) == 0)
+		{
+			return self::where($field . " IN (NULL)");
+		}
+
+		$objects = "'" . implode("','", $list) . "'";
+		return self::where($field . " IN ($objects)");
+	}
+
+	/**
+	 * Where in
+	 * 
+	 * Agrega una condición Where In excluyendo los valores de un arreglo unidimensional
+	 * 
+	 * @param Array<string> $list La lista de elementos a ser incluídos.
+	 * @param string $field El nombre del campo a evaluar. Si no se especifica, se toma por defecto la llave primaria.
+	 * 
+	 * @return object Una instancia de la misma clase
+	*/
+	public static function whereNotIn($list, $field = null)
+	{
+		if($field == null)
+		{
+			if(self::$_primary_key == null)
+			{
+				return new static();
+			}
+			$field = self::$_primary_key;
+		}
+		if(!is_array($list))
+		{
+			return new static();
+		}
+		if(count($list) == 0)
+		{
+			return new static();
+		}
+
+		$objects = "'" . implode("','", $list) . "'";
+		return self::where($field . " NOT IN ($objects)");
 	}
 }
 

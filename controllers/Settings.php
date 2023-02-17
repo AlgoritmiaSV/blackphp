@@ -582,7 +582,7 @@ class Settings extends Controller
 		if($user_id != Session::get("user_id"))
 		{
 			#Module access
-			user_modules_model::where("user_id", $user_id)->update(Array("status" => 0));
+			user_modules_model::where("user_id", $user_id)->whereNotIn($_POST["modules"], "module_id")->update(Array("status" => 0));
 			foreach($_POST["modules"] as $module_id)
 			{
 				user_modules_model::where("user_id", $user_id)
@@ -597,7 +597,7 @@ class Settings extends Controller
 			}
 
 			#Method access
-			user_methods_model::where("user_id", $user_id)->update(Array("status" => 0));
+			user_methods_model::where("user_id", $user_id)->whereNotIn($_POST["methods"], "method_id")->update(Array("status" => 0));
 			foreach($_POST["methods"] as $method_id)
 			{
 				user_methods_model::where("user_id", $user_id)

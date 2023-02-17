@@ -187,7 +187,7 @@ class Installation extends Controller
 
 		#Set modules
 		$i = 0;
-		entity_modules_model::where("entity_id", $entity->getEntity_id())->update(Array("status" => 0));
+		entity_modules_model::where("entity_id", $entity->getEntity_id())->whereNotIn($data["modules"], "module_id")->update(Array("status" => 0));
 		foreach($data["modules"] as $module_id)
 		{
 			$i++;
@@ -208,7 +208,7 @@ class Installation extends Controller
 		}
 
 		#Set methods
-		entity_methods_model::where("entity_id", $entity->getEntity_id())->update(Array("status" => 0));
+		entity_methods_model::where("entity_id", $entity->getEntity_id())->whereNotIn($data["methods"], "method_id")->update(Array("status" => 0));
 		$i = 0;
 		foreach($data["methods"] as $method_id)
 		{
@@ -246,7 +246,7 @@ class Installation extends Controller
 		if($user->getUser_id() != Session::get("user_id"))
 		{
 			#Set modules
-			user_modules_model::where("user_id", $user->getUser_id())->update(Array("status" => 0));
+			user_modules_model::where("user_id", $user->getUser_id())->whereNotIn($data["modules"], "module_id")->update(Array("status" => 0));
 			foreach($data["modules"] as $module_id)
 			{
 				$module = user_modules_model::where("module_id", $module_id)->where("user_id", $user->getUser_id())->where("status", ">=", 0)->get();
@@ -258,7 +258,7 @@ class Installation extends Controller
 			}
 
 			#Set methods
-			user_methods_model::where("user_id", $user->getUser_id())->update(Array("status" => 0));
+			user_methods_model::where("user_id", $user->getUser_id())->whereNotIn($data["methods"], "method_id")->update(Array("status" => 0));
 			foreach($data["methods"] as $method_id)
 			{
 				$method = user_methods_model::where("method_id", $method_id)->where("user_id", $user->getUser_id())->where("status", ">=", 0)->get();

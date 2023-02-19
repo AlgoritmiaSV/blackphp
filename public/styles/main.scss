@@ -338,6 +338,12 @@
 	display: inline-block;
 }
 
+.flex_cell label
+{
+	min-width: 80px;
+	display: inline-block;
+}
+
 .float_container
 {
 	overflow: hidden;

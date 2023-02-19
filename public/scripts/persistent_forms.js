@@ -28,7 +28,7 @@ $(function() {
 		}
 		$(this).on("change", function() {
 			var name = $(this).attr("name");
-			if(name.indexOf("[") < 0)
+			if(name && name.indexOf("[") < 0)
 			{
 				localStorage.setItem(name, $(this).val());
 			}

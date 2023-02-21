@@ -25,5 +25,5 @@ ALTER TABLE `app_elements` CHANGE `element_key` `element_key` VARCHAR(32) CHARAC
 -- 2023-01-14
 ALTER TABLE `entities` DROP `sys_name`;
 ALTER TABLE `entities` ADD `app_name` VARCHAR(32) NOT NULL DEFAULT 'BlackPHP' COMMENT 'Nombre de la App para instalación como PWA' AFTER `entity_subdomain`;
--- teleinf:blackphp
 -- inabve:blackphp
+-- teleinf:blackphp

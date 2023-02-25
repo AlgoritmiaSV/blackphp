@@ -84,9 +84,18 @@ trait ORM
 	{
 		if(self::$_db == null)
 		{
-			self::$_db = new PDO(DB_TYPE.':host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME, DB_USER, DB_PASS);
-			self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
+			if(DB_TYPE == 'sqlsrv')
+			{
+				self::$_db = new PDO(DB_TYPE.':Server='.DB_HOST.','.DB_PORT.';Database='.DB_NAME, DB_USER, DB_PASS);
+				self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				# self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
+			}
+			else
+			{
+				self::$_db = new PDO(DB_TYPE.':host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME, DB_USER, DB_PASS);
+				self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
+			}
 		}
 	}
 
@@ -125,7 +134,7 @@ trait ORM
 	 * Obtiene un registro de la tabla indicada por un campo específico.
 	 * @param string $field El nombre del campo a considerar
 	 * @param mixed $value El valor del campo a considerar
-	 * @param bool $deleted Obtener un registro aún si ya ha sido eliminado (status = 0)
+	 * @param bool $deleted Obtener un registro aún si ya ha sido eliminado (status = 0 o NULL)
 	 * 
 	 * @return object Objeto de la clase que llamó al método
 	 */
@@ -186,6 +195,7 @@ trait ORM
 		$table_name = self::$_table_name;
 		if(empty($this->{$primary_key}))
 		{
+			unset($data[$primary_key]);
 			$fieldNames = implode(',', array_keys($data));
 			$fieldValues = ':' . implode(', :', array_keys($data));
 			$sth = self::$_db->prepare("INSERT INTO $table_name ($fieldNames) VALUES ($fieldValues)");
@@ -195,9 +205,14 @@ trait ORM
 			$fieldDetails = "";
 			foreach($data as $key => $value)
 			{
-				$fieldDetails .= "$key=:$key,";
+				if($key != $primary_key)
+				{
+					$fieldDetails .= "$key=:$key,";
+				}
 			}
 			$fieldDetails = rtrim($fieldDetails, ',');
+			error_log("UPDATE $table_name SET $fieldDetails WHERE $primary_key = :$primary_key");
+			error_log(print_r($data, true));
 			$sth = self::$_db->prepare("UPDATE $table_name SET $fieldDetails WHERE $primary_key = :$primary_key");
 		}
 		foreach ($data as $key => $value)
@@ -324,7 +339,7 @@ trait ORM
 	 * 
 	 * En el caso de un borrado suave, para que las llaves únicas (UNIQUE KEY) no tengan conflicto
 	 * con los campos eliminados, se recomientda permitir valores nulos en el estado de las tablas
-	 * que contengan llaves únicas.
+	 * que contengan llaves únicas (Aplica para MySQL).
 	 * Por ejemplo: Se desea eliminar el registro de usuario con user_name = juan; pero user_name es
 	 * una llave única; entonces al cambiar el estado del registro a cero, la llave única no
 	 * permitirá crear un nuevo registro con user_name = juan. Para resolver esto, si el campo
@@ -487,7 +502,7 @@ trait ORM
 	/**
 	 * Obtener
 	 * 
-	 * Realiza la consulta con los paràmetros (Considiones) previamente configurados en otros
+	 * Realiza la consulta con los paràmetros (Condiciones) previamente configurados en otros
 	 * métodos, y devuelve los resultados. Puede devolver como resultado lo siguiente:
 	 * a) Sin parámetros: Devuelve un opbjeto de la clase que lo ha llamado con el primer
 	 * resultado obtenido. En caso de no encontrar resultados, devuelve un objeto de la clase, vacío.
@@ -612,7 +627,7 @@ trait ORM
 			}
 			elseif(is_string($value))
 			{
-				if($value == "ISNULL(" . $prefix . "status)")
+				if($value == $prefix . "status IS NULL")
 				{
 					self::$_ommit_status = true;
 				}
@@ -631,7 +646,7 @@ trait ORM
 
 		if(empty($where))
 		{
-			$where = 1;
+			$where = '1 = 1';
 		}
 
 		# Order By
@@ -672,23 +687,33 @@ trait ORM
 		}
 
 		# Punto de partida y límite
+		# MySQL Limit
 		$limit = "";
+		# SQL Server TOP
+		$top = "";
 		if(is_numeric($results))
 		{
 			self::$_limit = $results;
 		}
 		if(self::$_limit !== false)
 		{
-			$limit = "LIMIT ";
-			if(self::$_offset !== false)
+			if(DB_TYPE == "sqlsrv")
 			{
-				$limit .= (self::$_offset . ",");
+				$top = "TOP " . self::$_limit;
 			}
-			$limit .= self::$_limit;
+			else
+			{
+				$limit = "LIMIT ";
+				if(self::$_offset !== false)
+				{
+					$limit .= (self::$_offset . ",");
+				}
+				$limit .= self::$_limit;
+			}
 		}
 
 		self::init();
-		$sql = "SELECT $modifier $select $extra_select FROM $table_name $join WHERE $where $order_by $group_by $limit";
+		$sql = "SELECT $modifier $top $select $extra_select FROM $table_name $join WHERE $where $order_by $group_by $limit";
 		$sth = self::$_db->prepare($sql);
 		foreach ($data as $key => $value) {
 			$sth->bindValue(":$key", $value);
@@ -803,9 +828,16 @@ trait ORM
 	public static function addCounter($field = "num")
 	{
 		self::init();
-		$sth = self::$_db->prepare("SET @row_number = 0");
-		$sth->execute();
-		self::$_extra_select .= ", (@row_number:=@row_number + 1) AS $field";
+		if(DB_TYPE == "sqlsrv")
+		{
+			self::$_extra_select .= ", ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS $field";
+		}
+		else
+		{
+			$sth = self::$_db->prepare("SET @row_number = 0");
+			$sth->execute();
+			self::$_extra_select .= ", (@row_number:=@row_number + 1) AS $field";
+		}
 		return new static();
 	}
 
@@ -994,7 +1026,7 @@ trait ORM
 		}
 		else
 		{
-			$query->where("ISNULL($table_name.status)");
+			$query->where("$table_name.status IS NULL");
 		}
 		if(self::$_timestamps && !empty($from))
 		{

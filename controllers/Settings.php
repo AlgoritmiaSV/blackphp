@@ -36,10 +36,10 @@ class Settings extends Controller
 		$this->session_required("html", $this->module);
 		$this->view->standard_menu();
 		$this->view->data["nav"] = $this->view->render("nav", true);
-		$module = app_modules_model::findBy("module_url", $this->module);
-		$this->view->data["title"] = _($module->getModule_name());
-		$this->view->data["methods"] = available_methods_model::where("user_id", Session::get("user_id"))
-		->where("module_id", $module->getModule_id())
+		$module = appModulesModel::findBy("module_url", $this->module);
+		$this->view->data["title"] = _($module->getModuleName());
+		$this->view->data["methods"] = availableMethodsModel::where("user_id", Session::get("user_id"))
+		->where("module_id", $module->getModuleId())
 		->orderBy("method_order")->getAllArray();
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
 		$this->view->render("main");
@@ -79,8 +79,8 @@ class Settings extends Controller
 		$this->view->data["config_modules"] = Array();
 		foreach($this->view->data["modules"] as $key => $module)
 		{
-			$switches = entity_options_model::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 1)->getAllArray();
-			$fields = entity_options_model::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 2)->getAllArray();
+			$switches = entityOptionsModel::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 1)->getAllArray();
+			$fields = entityOptionsModel::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 2)->getAllArray();
 			if(count($switches) > 0 || count($fields) > 0)
 			{
 				$this->view->data["switches"] = $switches;
@@ -130,7 +130,7 @@ class Settings extends Controller
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("nav", true);
 		$this->view->restrict[] = "edition";
-		$modules = available_modules_model::where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
+		$modules = availableModulesModel::where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
 		$this->view->data["modules"] = "";
 		foreach($modules as $module)
 		{
@@ -138,7 +138,7 @@ class Settings extends Controller
 			{
 				$this->view->data[$key] = $item;
 			}
-			$this->view->data["methods"] = available_methods_model::where("user_id", Session::get("user_id"))
+			$this->view->data["methods"] = availableMethodsModel::where("user_id", Session::get("user_id"))
 			->where("module_id", $module["module_id"])
 			->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"] .= $this->view->render("modules", true);
@@ -165,7 +165,7 @@ class Settings extends Controller
 			$this->view->restrict[] = "no_self";
 		}
 		$this->view->restrict[] = "creation";
-		$modules = available_modules_model::where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
+		$modules = availableModulesModel::where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
 		$this->view->data["modules"] = "";
 		foreach($modules as $module)
 		{
@@ -173,7 +173,7 @@ class Settings extends Controller
 			{
 				$this->view->data[$key] = $item;
 			}
-			$this->view->data["methods"] = available_methods_model::where("user_id", Session::get("user_id"))
+			$this->view->data["methods"] = availableMethodsModel::where("user_id", Session::get("user_id"))
 			->where("module_id", $module["module_id"])
 			->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"] .= $this->view->render("modules", true);
@@ -233,20 +233,20 @@ class Settings extends Controller
 		$data = Array();
 		if($_POST["method"] == "Entity")
 		{
-			$data["update"] = entities_model::find($this->entity_id)->toArray();
+			$data["update"] = entitiesModel::find($this->entity_id)->toArray();
 		}
 		if($_POST["method"] == "EditUser")
 		{
-			$data["update"] = users_model::find($_POST["id"])->toArray();
+			$data["update"] = usersModel::find($_POST["id"])->toArray();
 			$data["check"] = Array();
-			$data["check"]["modules"] = user_modules_model::select("module_id AS id")
+			$data["check"]["modules"] = userModulesModel::select("module_id AS id")
 				->where("user_id", $_POST["id"])->getAll();
-			$data["check"]["methods"] = user_methods_model::select("method_id AS id")
+			$data["check"]["methods"] = userMethodsModel::select("method_id AS id")
 				->where("user_id", $_POST["id"])->getAll();
 		}
 		if($_POST["method"] == "Preferences")
 		{
-			$options = entity_options_model::join("app_options", "option_id")->getAll();
+			$options = entityOptionsModel::join("app_options", "option_id")->getAll();
 			$data["update"] = Array();
 			foreach($options as $option)
 			{
@@ -268,7 +268,7 @@ class Settings extends Controller
 	{
 		$this->session_required("json");
 		$data = Array();
-		$users = user_data_model::getAllArray();
+		$users = userDataModel::getAllArray();
 		foreach($users as $key => $user)
 		{
 			$users[$key]["last_login"] = "";
@@ -367,9 +367,9 @@ class Settings extends Controller
 		{
 			$user_id = $_POST["id"];
 		}
-		$user = users_model::find($user_id)->toArray();
+		$user = usersModel::find($user_id)->toArray();
 		$this->view->data = array_merge($this->view->data, $user);
-		$sessions = user_sessions_model::join("browsers", "browser_id")->where("user_sessions.user_id", $user_id)->orderBy("date_time", "DESC")->addCounter("item")->get(10);
+		$sessions = userSessionsModel::join("browsers", "browser_id")->where("user_sessions.user_id", $user_id)->orderBy("date_time", "DESC")->addCounter("item")->get(10);
 		foreach($sessions as $key => $session)
 		{
 			$time = strtotime($session["date_time"]);
@@ -378,7 +378,7 @@ class Settings extends Controller
 		}
 		$this->view->data["sessions"] = $sessions;
 
-		$modules = available_modules_model::where("user_id", $user_id)->getAllArray();
+		$modules = availableModulesModel::where("user_id", $user_id)->getAllArray();
 		$i = -1;
 		$j = 0;
 		$modules_table = Array();
@@ -448,16 +448,16 @@ class Settings extends Controller
 		$this->session_required("json");
 		$data = $_POST;
 		$data["success"] = false;
-		entity_options_model::where("option_id IN (SELECT option_id FROM app_options WHERE option_type = 1)")->update(Array("option_value" => 0));
+		entityOptionsModel::where("option_id IN (SELECT option_id FROM app_options WHERE option_type = 1)")->update(Array("option_value" => 0));
 		foreach($_POST as $key => $value)
 		{
-			$option = app_options_model::where("option_key", $key)->get();
-			$entity_option = $option->entity_options()->get();
-			$entity_option->setOption_value($value);
+			$option = appOptionsModel::where("option_key", $key)->get();
+			$entity_option = $option->entityOptions()->get();
+			$entity_option->setOptionValue($value);
 			$entity_option->save();
 		}
 
-		$option_list = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
+		$option_list = entityOptionsModel::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
 		$options = Array();
 		foreach($option_list as $item)
 		{
@@ -487,7 +487,7 @@ class Settings extends Controller
 		if(!empty($_POST["entity_name"]))
 		{
 			$time = Date("Y-m-d H:i:s");
-			$entity = entities_model::find($this->entity_id);
+			$entity = entitiesModel::find($this->entity_id);
 			$entity->set(Array(
 				"entity_name" => $_POST["entity_name"],
 				"entity_slogan" => $_POST["entity_slogan"],
@@ -551,9 +551,9 @@ class Settings extends Controller
 		}
 
 		#Validate nickname
-		$test = users_model::where("nickname", $_POST["nickname"])
+		$test = usersModel::where("nickname", $_POST["nickname"])
 			->where("user_id", "!=", $_POST["user_id"])->get();
-		if(!empty($test->getUser_id()))
+		if(!empty($test->getUserId()))
 		{
 			$data["title"] = "Error";
 			$data["message"] = _("The nickname already exists!");
@@ -563,7 +563,7 @@ class Settings extends Controller
 		}
 
 		$user_id = 0;
-		$user = users_model::find($_POST["user_id"])
+		$user = usersModel::find($_POST["user_id"])
 			->set(Array(
 				"user_name" => $_POST["user_name"],
 				"nickname" => $_POST["nickname"]
@@ -578,14 +578,14 @@ class Settings extends Controller
 		}
 		$user->save();
 
-		$user_id = $user->getUser_id();
+		$user_id = $user->getUserId();
 		if($user_id != Session::get("user_id"))
 		{
 			#Module access
-			user_modules_model::where("user_id", $user_id)->whereNotIn($_POST["modules"], "module_id")->update(Array("status" => 0));
+			userModulesModel::where("user_id", $user_id)->whereNotIn($_POST["modules"], "module_id")->update(Array("status" => 0));
 			foreach($_POST["modules"] as $module_id)
 			{
-				user_modules_model::where("user_id", $user_id)
+				userModulesModel::where("user_id", $user_id)
 					->where("module_id", $module_id)
 					->where("status", ">=", 0)
 					->get()->set(Array(
@@ -597,10 +597,10 @@ class Settings extends Controller
 			}
 
 			#Method access
-			user_methods_model::where("user_id", $user_id)->whereNotIn($_POST["methods"], "method_id")->update(Array("status" => 0));
+			userMethodsModel::where("user_id", $user_id)->whereNotIn($_POST["methods"], "method_id")->update(Array("status" => 0));
 			foreach($_POST["methods"] as $method_id)
 			{
-				user_methods_model::where("user_id", $user_id)
+				userMethodsModel::where("user_id", $user_id)
 					->where("method_id", $method_id)
 					->where("status", ">=", 0)
 					->get()->set(Array(
@@ -635,7 +635,7 @@ class Settings extends Controller
 			$this->json($data);
 			return;
 		}
-		$user = users_model::find($_POST["id"]);
+		$user = usersModel::find($_POST["id"]);
 		$affected = $user->delete();
 		$data["deleted"] = $affected > 0;
 		$this->json($data);

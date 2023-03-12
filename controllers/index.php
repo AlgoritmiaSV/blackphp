@@ -38,7 +38,7 @@ class Index extends Controller
 		foreach($this->view->data["modules"] as $key => $module)
 		{
 			$this->view->data["module"] = $module["module_url"];
-			$this->view->data["methods"] = available_methods_model::where("user_id", Session::get("user_id"))
+			$this->view->data["methods"] = availableMethodsModel::where("user_id", Session::get("user_id"))
 			->where("module_id", $module["module_id"])
 			->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"][$key]["module_menu"] = $this->view->render("generic_menu", true);

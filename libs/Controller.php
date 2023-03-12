@@ -120,7 +120,7 @@ class Controller
 			if($this->is_ip_address($_SERVER["SERVER_NAME"]))
 			{
 				# Primera entidad de la tabla
-				$entity = entities_model::first()->toArray();
+				$entity = entitiesModel::first()->toArray();
 			}
 			else
 			{
@@ -129,7 +129,7 @@ class Controller
 				$subdomain = $server_name[0];
 				if($subdomain != "installer")
 				{
-					$entity = entities_model::findBy("entity_subdomain", $subdomain)->toArray();
+					$entity = entitiesModel::findBy("entity_subdomain", $subdomain)->toArray();
 					if(!isset($entity["entity_id"]))
 					{
 						$protocol = "http";
@@ -145,7 +145,7 @@ class Controller
 			# Moneda
 			if(!empty($entity["country_iso"]))
 			{
-				$currency = app_currencies_model::select("*")->join("app_countries", "currency_iso")->where("country_iso", $entity["country_iso"])->get();
+				$currency = appCurrenciesModel::select("*")->join("app_countries", "currency_iso")->where("country_iso", $entity["country_iso"])->get();
 				$entity["currency_symbol"] = $currency["symbol"];
 			}
 			else
@@ -156,13 +156,13 @@ class Controller
 			# Municipio y departamento
 			if(!empty($entity["city_id"]))
 			{
-				$city = app_cities_model::select("city_name, department_name")->join("app_departments", "department_id")->where("city_id", $entity["city_id"])->get();
+				$city = appCitiesModel::select("city_name, department_name")->join("app_departments", "department_id")->where("city_id", $entity["city_id"])->get();
 				$entity = array_merge($entity, $city);
 			}
 
 			Session::set("entity", $entity);
 			
-			$option_list = entity_options_model::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
+			$option_list = entityOptionsModel::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
 			$options = Array();
 			foreach($option_list as $item)
 			{
@@ -215,11 +215,11 @@ class Controller
 		#7 Tema por defecto
 		if(Session::get("theme_id") == null)
 		{
-			$theme = app_themes_model::first();
-			Session::set("theme_id", $theme->getTheme_id());
-			Session::set("theme_url", $theme->getTheme_url());
-			$this->view->data["theme_id"] = $theme->getTheme_id();
-			$this->view->data["theme_url"] = $theme->getTheme_url();
+			$theme = appThemesModel::first();
+			Session::set("theme_id", $theme->getThemeId());
+			Session::set("theme_url", $theme->getThemeUrl());
+			$this->view->data["theme_id"] = $theme->getThemeId();
+			$this->view->data["theme_url"] = $theme->getThemeUrl();
 		}
 	}
 
@@ -301,9 +301,9 @@ class Controller
 		{
 			if(!empty($module))
 			{
-				$module = app_modules_model::findBy("module_url", $module);
-				$perms = user_modules_model::where("module_id", $module->getModule_id())->where("user_id", Session::get("user_id"))->get();
-				if(empty($perms->getUmodule_id()))
+				$module = appModulesModel::findBy("module_url", $module);
+				$perms = userModulesModel::where("module_id", $module->getModuleId())->where("user_id", Session::get("user_id"))->get();
+				if(empty($perms->getUmoduleId()))
 				{
 					if($type == 'json')
 					{
@@ -393,8 +393,8 @@ class Controller
 		}
 		if($element["creation_user"] != 0)
 		{
-			$creator = users_model::find($element["creation_user"]);
-			$this->view->data["cr_user_name"] = $creator->getUser_name();
+			$creator = usersModel::find($element["creation_user"]);
+			$this->view->data["cr_user_name"] = $creator->getUserName();
 			$this->view->data["cr_time"] = date_utilities::sql_date_to_string($element["creation_time"], true);
 		}
 		else
@@ -403,8 +403,8 @@ class Controller
 		}
 		if($element["edition_user"] != 0 && $element["edition_time"] != $element["creation_time"])
 		{
-			$editor = users_model::find($element["edition_user"]);
-			$this->view->data["ed_user_name"] = $editor->getUser_name();
+			$editor = usersModel::find($element["edition_user"]);
+			$this->view->data["ed_user_name"] = $editor->getUserName();
 			$this->view->data["ed_time"] = date_utilities::sql_date_to_string($element["edition_time"], true);
 		}
 		else
@@ -433,15 +433,15 @@ class Controller
 		{
 			$date_time = Date("Y-m-d H:i:s");
 		}
-		$element = app_elements_model::findBy("element_key", $element_key);
+		$element = appElementsModel::findBy("element_key", $element_key);
 		if(!$element->exists())
 		{
 			return;
 		}
-		$user_log = new user_logs_model();
+		$user_log = new userLogsModel();
 		$user_log->set(Array(
 			"user_id" => Session::get("user_id"),
-			"element_id" => $element->getElement_id(),
+			"element_id" => $element->getElementId(),
 			"action_id" => $action_key,
 			"date_time" => $date_time,
 			"element_link" => $element_link

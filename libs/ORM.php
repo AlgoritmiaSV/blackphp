@@ -180,11 +180,11 @@ trait ORM
 			$user_id = empty(Session::get("user_id")) ? 0 : Session::get("user_id");
 			if(empty($this->{$_primary_key}))
 			{
-				$this->setCreation_user($user_id);
-				$this->setCreation_time($now);
+				$this->setCreationUser($user_id);
+				$this->setCreationTime($now);
 			}
-			$this->setEdition_user($user_id);
-			$this->setEdition_time($now);
+			$this->setEditionUser($user_id);
+			$this->setEditionTime($now);
 		}
 		if(property_exists($this, "entity_id") && is_null($this->entity_id))
 		{
@@ -358,8 +358,8 @@ trait ORM
 		{
 			if(self::$_timestamps)
 			{
-				$this->setEdition_user(Session::get("user_id"));
-				$this->setEdition_time(Date("Y-m-d H:i:s"));
+				$this->setEditionUser(Session::get("user_id"));
+				$this->setEditionTime(Date("Y-m-d H:i:s"));
 			}
 			$this->setStatus(self::$_deleted_status);
 			$affected = $this->save();
@@ -809,7 +809,8 @@ trait ORM
 		{
 			if(array_key_exists($key, $data))
 			{
-				$this->{"set" . ucfirst($key)}($value);
+				$key = str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+				$this->{"set" . $key}($value);
 			}
 		}
 		return $this;

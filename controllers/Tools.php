@@ -39,10 +39,10 @@ class Tools extends Controller
 		$this->session_required("html", $this->module);
 		$this->view->standard_menu();
 		$this->view->data["nav"] = $this->view->render("nav", true);
-		$module = app_modules_model::findBy("module_url", $this->module);
-		$this->view->data["title"] = _($module->getModule_name());
-		$this->view->data["methods"] = available_methods_model::where("user_id", Session::get("user_id"))
-		->where("module_id", $module->getModule_id())
+		$module = appModulesModel::findBy("module_url", $this->module);
+		$this->view->data["title"] = _($module->getModuleName());
+		$this->view->data["methods"] = availableMethodsModel::where("user_id", Session::get("user_id"))
+		->where("module_id", $module->getModuleId())
 		->orderBy("method_order")->getAllArray();
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
 		$this->view->render("main");
@@ -90,6 +90,12 @@ class Tools extends Controller
 	}
 
 	################################ LISTAS Y FORMULARIOS
+
+	public function load_form_data()
+	{
+		$this->json(Array());
+	}
+
 	/**
 	 * Filtro de papelera
 	 * 
@@ -100,7 +106,7 @@ class Tools extends Controller
 	public function trash_filter_loader()
 	{
 		$this->session_required("json");
-		$elements = app_elements_model::where("deletable", 1)->list("element_key", "element_name");
+		$elements = appElementsModel::where("deletable", 1)->list("element_key", "element_name");
 		foreach($elements as &$element)
 		{
 			$element["text"] = _($element["text"]);
@@ -130,10 +136,10 @@ class Tools extends Controller
 		$type = $_POST["options"]["type"];
 		$from = empty($_POST["options"]["from"]) ? "" : $_POST["options"]["from"];
 		$to = empty($_POST["options"]["to"]) ? "" : $_POST["options"]["to"];
-		$element = app_elements_model::findBy("element_key", $type);
-		$element_name = _($element->getElement_name());
+		$element = appElementsModel::findBy("element_key", $type);
+		$element_name = _($element->getElementName());
 		$title = sprintf(_("Deleted %s"), $element_name);
-		$model = $element->getTable_name() . "_model";
+		$model = lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $element->getTableName())))) . "Model";
 		$query = new $model;
 		$items = $query->list_deleted($from, $to);
 		foreach($items as &$item)

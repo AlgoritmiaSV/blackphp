@@ -49,7 +49,7 @@ class User extends Controller
 		$data = Array();
 		if($_POST["method"] == "MyAccount")
 		{
-			$themes = app_themes_model::list();
+			$themes = appThemesModel::list();
 			foreach($themes as $key => $theme)
 			{
 				$themes[$key]["text"] = _($theme["text"]);
@@ -59,11 +59,11 @@ class User extends Controller
 				Array("id" => "en_US", "text" => _("English")),
 				Array("id" => "es_ES", "text" => _("Spanish"))
 			);
-			$user = users_model::find(Session::get("user_id"));
+			$user = usersModel::find(Session::get("user_id"));
 			$data["update"] = Array(
 				"theme_id" => Session::get("theme_id"),
 				"locale" => Session::get("locale"),
-				"user_name" => $user->getUser_name(),
+				"user_name" => $user->getUserName(),
 				"nickname" => $user->getNickname()
 			);
 		}
@@ -89,7 +89,7 @@ class User extends Controller
 			$this->json($data);
 			return;
 		}
-		$user = users_model::where("nickname", $_POST["nickname"])->where("password", md5($_POST["password"]))->get()->toArray();
+		$user = usersModel::where("nickname", $_POST["nickname"])->where("password", md5($_POST["password"]))->get()->toArray();
 		if(isset($user["nickname"]))
 		{
 			$data["reload"] = true;
@@ -103,9 +103,9 @@ class User extends Controller
 			}
 			if(!empty($user["theme_id"]))
 			{
-				$theme = app_themes_model::find($user["theme_id"]);
-				Session::set("theme_id", $theme->getTheme_id());
-				Session::set("theme_url", $theme->getTheme_url());
+				$theme = appThemesModel::find($user["theme_id"]);
+				Session::set("theme_id", $theme->getThemeId());
+				Session::set("theme_url", $theme->getThemeUrl());
 			}
 			$now = Date("Y-m-d H:i:s");
 			# Get user agent
@@ -113,7 +113,7 @@ class User extends Controller
 			# Get IP Address
 			$ipv4 = $this->getRealIP();
 			# Check if exists
-			$browser = browsers_model::where("user_agent", $user_agent)->get();
+			$browser = browsersModel::where("user_agent", $user_agent)->get();
 			if(!$browser->exists())
 			{
 				#Set new browser
@@ -130,16 +130,16 @@ class User extends Controller
 			}
 
 			#Set session
-			$session = new user_sessions_model();
+			$session = new userSessionsModel();
 			$session->set(Array(
 				"user_id" => $user["user_id"],
 				"ip_address" => $ipv4,
-				"browser_id" => $browser->getBrowser_id(),
+				"browser_id" => $browser->getBrowserId(),
 				"date_time" => $now
 			))->save();
 
 			#Set modules
-			Session::set("modules", available_modules_model::where("user_id", $user["user_id"])->orderBy("module_order")->getAllArray());
+			Session::set("modules", availableModulesModel::where("user_id", $user["user_id"])->orderBy("module_order")->getAllArray());
 		}
 		else
 		{
@@ -194,13 +194,13 @@ class User extends Controller
 		$this->session_required("json");
 		$data = $_POST;
 		$data["success"] = false;
-		$user = users_model::find(Session::get("user_id"));
+		$user = usersModel::find(Session::get("user_id"));
 		if($data["theme_id"] != Session::get("theme_id"))
 		{
-			$user->setTheme_id($data["theme_id"]);
-			$theme = app_themes_model::find($data["theme_id"]);
-			Session::set("theme_id", $theme->getTheme_id());
-			Session::set("theme_url", $theme->getTheme_url());
+			$user->setThemeId($data["theme_id"]);
+			$theme = appThemesModel::find($data["theme_id"]);
+			Session::set("theme_id", $theme->getThemeId());
+			Session::set("theme_url", $theme->getThemeUrl());
 		}
 		if($data["locale"] != Session::get("locale"))
 		{
@@ -210,7 +210,7 @@ class User extends Controller
 		}
 		if($data["user_name"] != Session::get("user_name"))
 		{
-			$user->setUser_name($data["user_name"]);
+			$user->setUserName($data["user_name"]);
 			Session::set("user_name", $data["user_name"]);
 		}
 		$user->save();
@@ -234,7 +234,7 @@ class User extends Controller
 		$this->session_required("json");
 		$data = $_POST;
 		$data["success"] = false;
-		$user = users_model::find(Session::get("user_id"));
+		$user = usersModel::find(Session::get("user_id"));
 		if(md5($data["current_password"]) != $user->getPassword())
 		{
 			$data["title"] = "Error";

@@ -30,6 +30,11 @@ class Session
 	{
 		$_SESSION[$key] = $value;
 	}
+
+	public static function unset($key)
+	{
+		unset($_SESSION[$key]);
+	}
 	
 	/**
 	 * Obtener valor

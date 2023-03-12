@@ -43,7 +43,7 @@ class Installation extends Controller
 		$this->view->data["nav"] = "";
 		if(Session::get("authorization_code") != null)
 		{
-			$modules = app_modules_model::orderBy("default_order")->getAllArray();
+			$modules = appModulesModel::orderBy("default_order")->getAllArray();
 			$this->view->data["modules"] = "";
 			foreach($modules as $module)
 			{
@@ -51,7 +51,7 @@ class Installation extends Controller
 				{
 					$this->view->data[$key] = $item;
 				}
-				$this->view->data["methods"] = app_methods_model::where("module_id", $module["module_id"])->orderBy("default_order")->getAllArray();
+				$this->view->data["methods"] = appMethodsModel::where("module_id", $module["module_id"])->orderBy("default_order")->getAllArray();
 				$this->view->data["modules"] .= $this->view->render("modules", true);
 			}
 			$this->view->data["subdomain"] = $subdomain;
@@ -98,12 +98,12 @@ class Installation extends Controller
 		$data = Array();
 		if($this->entity_id != null)
 		{
-			$entity = entities_model::find($this->entity_id)->toArray();
-			$user = users_model::find($entity["admin_user"])->toArray();
+			$entity = entitiesModel::find($this->entity_id)->toArray();
+			$user = usersModel::find($entity["admin_user"])->toArray();
 			$data["update"] = array_merge($entity, $user);
 			$data["check"] = Array(
-				"modules" => entity_modules_model::select("module_id AS id")->getAll(),
-				"methods" => entity_methods_model::select("method_id AS id")->getAll()
+				"modules" => entityModulesModel::select("module_id AS id")->getAll(),
+				"methods" => entityMethodsModel::select("method_id AS id")->getAll()
 			);
 		}
 		$this->json($data);
@@ -143,7 +143,7 @@ class Installation extends Controller
 					return;
 				}
 			}
-			$entity = entities_model::where("entity_subdomain", $data["subdomain"])->get()->toArray();
+			$entity = entitiesModel::where("entity_subdomain", $data["subdomain"])->get()->toArray();
 			if(isset($entity["entity_id"]) || in_array($data["subdomain"], $reserved_subdomains))
 			{
 				$data["title"] = "Error";
@@ -154,9 +154,9 @@ class Installation extends Controller
 			}
 		}
 
-		$entity = entities_model::find($data["entity_id"]);
-		$subdomain = empty($data["subdomain"]) ? $entity->getEntity_subdomain() : $data["subdomain"];
-		if(empty($entity->getEntity_id()))
+		$entity = entitiesModel::find($data["entity_id"]);
+		$subdomain = empty($data["subdomain"]) ? $entity->getEntitySubdomain() : $data["subdomain"];
+		if(empty($entity->getEntityId()))
 		{
 			$entity->set(Array(
 				"entity_subdomain" => $subdomain,
@@ -176,7 +176,7 @@ class Installation extends Controller
 			"user_edition_time" => $now
 		));
 		$entity->save();
-		if(empty($entity->getEntity_id()))
+		if(empty($entity->getEntityId()))
 		{
 			$data["title"] = "Error";
 			$data["message"] = _("Failed to create the entity");
@@ -187,15 +187,15 @@ class Installation extends Controller
 
 		#Set modules
 		$i = 0;
-		entity_modules_model::where("entity_id", $entity->getEntity_id())->whereNotIn($data["modules"], "module_id")->update(Array("status" => 0));
+		entityModulesModel::where("entity_id", $entity->getEntityId())->whereNotIn($data["modules"], "module_id")->update(Array("status" => 0));
 		foreach($data["modules"] as $module_id)
 		{
 			$i++;
-			$module = entity_modules_model::where("module_id", $module_id)->where("entity_id", $entity->getEntity_id())->where("status", ">=", 0)->get();
-			if(empty($module->getEmodule_id()))
+			$module = entityModulesModel::where("module_id", $module_id)->where("entity_id", $entity->getEntityId())->where("status", ">=", 0)->get();
+			if(empty($module->getEmoduleId()))
 			{
 				$module->set(Array(
-					"entity_id" => $entity->getEntity_id(),
+					"entity_id" => $entity->getEntityId(),
 					"module_id" => $module_id,
 					"creation_time" => $now,
 				));
@@ -208,16 +208,16 @@ class Installation extends Controller
 		}
 
 		#Set methods
-		entity_methods_model::where("entity_id", $entity->getEntity_id())->whereNotIn($data["methods"], "method_id")->update(Array("status" => 0));
+		entityMethodsModel::where("entity_id", $entity->getEntityId())->whereNotIn($data["methods"], "method_id")->update(Array("status" => 0));
 		$i = 0;
 		foreach($data["methods"] as $method_id)
 		{
 			$i++;
-			$method = entity_methods_model::where("method_id", $method_id)->where("entity_id", $entity->getEntity_id())->where("status", ">=", 0)->get();
-			if(empty($method->getEmethod_id()))
+			$method = entityMethodsModel::where("method_id", $method_id)->where("entity_id", $entity->getEntityId())->where("status", ">=", 0)->get();
+			if(empty($method->getEmethodId()))
 			{
 				$method->set(Array(
-					"entity_id" => $entity->getEntity_id(),
+					"entity_id" => $entity->getEntityId(),
 					"method_id" => $method_id,
 					"creation_time" => $now,
 				));
@@ -230,40 +230,40 @@ class Installation extends Controller
 		}
 
 		#Save default user
-		$user = users_model::find($data["admin_user"]);
+		$user = usersModel::find($data["admin_user"]);
 
 		$user->set(Array(
-			"entity_id" => $entity->getEntity_id(),
+			"entity_id" => $entity->getEntityId(),
 			"user_name" => $data["user_name"],
 			"nickname" => $data["nickname"],
 			"password" => empty($data["password"]) ? $user->getPassword() : md5($data["password"]),
 			"theme_id" => 1
 		))->save();
-		$entity->setAdmin_user($user->getUser_id());
+		$entity->setAdminUser($user->getUserId());
 		$entity->save();
 
 		#Set user modules permissions
-		if($user->getUser_id() != Session::get("user_id"))
+		if($user->getUserId() != Session::get("user_id"))
 		{
 			#Set modules
-			user_modules_model::where("user_id", $user->getUser_id())->whereNotIn($data["modules"], "module_id")->update(Array("status" => 0));
+			userModulesModel::where("user_id", $user->getUserId())->whereNotIn($data["modules"], "module_id")->update(Array("status" => 0));
 			foreach($data["modules"] as $module_id)
 			{
-				$module = user_modules_model::where("module_id", $module_id)->where("user_id", $user->getUser_id())->where("status", ">=", 0)->get();
+				$module = userModulesModel::where("module_id", $module_id)->where("user_id", $user->getUserId())->where("status", ">=", 0)->get();
 				$module->set(Array(
 					"module_id" => $module_id,
-					"user_id" => $user->getUser_id(),
+					"user_id" => $user->getUserId(),
 					"status" => 1
 				))->save();
 			}
 
 			#Set methods
-			user_methods_model::where("user_id", $user->getUser_id())->whereNotIn($data["methods"], "method_id")->update(Array("status" => 0));
+			userMethodsModel::where("user_id", $user->getUserId())->whereNotIn($data["methods"], "method_id")->update(Array("status" => 0));
 			foreach($data["methods"] as $method_id)
 			{
-				$method = user_methods_model::where("method_id", $method_id)->where("user_id", $user->getUser_id())->where("status", ">=", 0)->get();
+				$method = userMethodsModel::where("method_id", $method_id)->where("user_id", $user->getUserId())->where("status", ">=", 0)->get();
 				$method->set(Array(
-					"user_id" => $user->getUser_id(),
+					"user_id" => $user->getUserId(),
 					"method_id" => $method_id,
 					"status" => 1
 				))->save();
@@ -338,7 +338,7 @@ class Installation extends Controller
 			$this->json($data);
 			return;
 		}
-		$installer = app_installers_model::where("installer_nickname", $data["nickname"])->where("installer_password", md5($data["password"]))->get()->toArray();
+		$installer = appInstallersModel::where("installer_nickname", $data["nickname"])->where("installer_password", md5($data["password"]))->get()->toArray();
 		if(isset($installer["installer_id"]))
 		{
 			Session::set("authorization_code", true);

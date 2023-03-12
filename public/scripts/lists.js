@@ -86,7 +86,7 @@ $( function()
 					{
 						location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
 					}
-					if($(this).data("alert"))
+					else if($(this).data("alert"))
 					{
 						$.jAlert({
 							'title': $(this).data("title") || false,
@@ -456,6 +456,16 @@ $( function()
 					}
 					_selector.on("change", function(){
 						url.options[_selector.data("identifier")] = _selector.val();
+						if(_selector.data("reset"))
+						{
+							fields = _selector.data("reset").split(",");
+							$.each(fields, function() {
+								if(url.options[this])
+								{
+									url.options[this] = null;
+								}
+							});
+						}
 						goto_url();
 					});
 				}

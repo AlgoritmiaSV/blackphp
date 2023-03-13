@@ -8,6 +8,10 @@ $(function() {
 	if($(".list_options").length)
 	{
 		content_height -= $(".list_options").outerHeight();
+		if($(".path_container").length)
+		{
+			content_height -= 1;
+		}
 	}
 	if($("#main_nav").length && $("#main_nav").css("width") == $("#main_nav").parent().css("width") && screen.width >= 800)
 	{

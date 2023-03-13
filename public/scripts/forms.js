@@ -788,7 +788,7 @@ $( function()
 		});
 	}
 
-	$(".delete_button").on("click", delete_button_click);
+	$(".delete_button, .delete_link").on("click", delete_button_click);
 
 	function delete_entry()
 	{

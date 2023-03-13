@@ -121,6 +121,27 @@
 	font-size: 30pt;
 }
 
+.path_container
+{
+	font-family: monospace;
+	font-size: 8pt;
+	background-color: $path_container_bg;
+	padding: 3px;
+	border-radius: 2px;
+	min-height: 13px;
+}
+
+.path_container span
+{
+	display: inline-block;
+}
+
+.path_container a
+{
+	text-decoration: none;
+	display: inline-block;
+}
+
 @media screen and (max-width: 799px)
 {
 	.action_filter

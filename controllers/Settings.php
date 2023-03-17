@@ -411,7 +411,7 @@ class Settings extends Controller
 		{
 			$this->view->data["user_photo"] = "public/images/user.png";
 		}
-		$this->user_actions($user);
+		$this->userActions($user);
 		if($user_id == Session::get("user_id"))
 		{
 			$this->view->restrict[] = "no_self";

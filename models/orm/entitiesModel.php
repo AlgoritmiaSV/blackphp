@@ -270,6 +270,12 @@ class entitiesModel
 		return entityOptionsModel::where("entity_id", $this->entity_id);
 	}
 
+	public function roles()
+	{
+		rolesModel::flush();
+		return rolesModel::where("entity_id", $this->entity_id);
+	}
+
 	public function users()
 	{
 		usersModel::flush();

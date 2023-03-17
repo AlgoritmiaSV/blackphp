@@ -106,7 +106,7 @@ class Tools extends Controller
 	public function trash_filter_loader()
 	{
 		$this->session_required("json");
-		$elements = appElementsModel::where("deletable", 1)->list("element_key", "element_name");
+		$elements = appElementsModel::where("is_deletable", 1)->list("element_key", "element_name");
 		foreach($elements as &$element)
 		{
 			$element["text"] = _($element["text"]);

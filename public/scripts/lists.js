@@ -16,7 +16,7 @@ jQuery(function($) { $.extend({
 		});
 
 		var addData = function(name, data) {
-			if ($.isArray(data)) {
+			if (Array.isArray(data)) {
 				for (var i = 0; i < data.length; i++) {
 					var value = data[i];
 					addData(name + '[]', value);

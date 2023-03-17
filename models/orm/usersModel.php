@@ -33,6 +33,9 @@ class usersModel
 	/** @var string $locale Idioma del usuario */
 	private $locale;
 
+	/** @var int $role_id ID del rol */
+	private $role_id;
+
 	/** @var int $creation_user - */
 	private $creation_user;
 
@@ -161,6 +164,16 @@ class usersModel
 	public function setLocale($value)
 	{
 		$this->locale = $value === null ? null : (string)$value;
+	}
+
+	public function getRoleId()
+	{
+		return $this->role_id;
+	}
+
+	public function setRoleId($value)
+	{
+		$this->role_id = $value === null ? null : (int)$value;
 	}
 
 	public function getCreationUser()

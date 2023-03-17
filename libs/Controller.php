@@ -117,7 +117,7 @@ class Controller
 		if(Session::get("entity") == null)
 		{
 			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
-			if($this->is_ip_address($_SERVER["SERVER_NAME"]))
+			if($this->isIpAddress($_SERVER["SERVER_NAME"]))
 			{
 				# Primera entidad de la tabla
 				$entity = entitiesModel::first()->toArray();
@@ -385,7 +385,7 @@ class Controller
 	 * 
 	 * @return void Realiza los cambios directamente en la vista
 	 */
-	protected function user_actions($element)
+	protected function userActions($element)
 	{
 		if(is_object($element))
 		{
@@ -427,7 +427,7 @@ class Controller
 	 * 
 	 * @return void No se devuelven valores
 	 */
-	protected function set_user_log($action_key, $element_key, $element_link = 0, $date_time = "")
+	protected function setUserLog($action_key, $element_key, $element_link = 0, $date_time = "")
 	{
 		if(empty($date_time))
 		{
@@ -456,7 +456,7 @@ class Controller
 	 * 
 	 * @return boolean Verdadero si es una IP, falso en caso contrario.
 	 */
-	protected function is_ip_address($str)
+	protected function isIpAddress($str)
 	{
 		$octets = explode(".", $str);
 		if(count($octets) != 4)

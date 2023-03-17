@@ -374,6 +374,12 @@ msgstr "Imprimir"
 msgid "Provided to"
 msgstr "Proporcionado a"
 
+msgid "role"
+msgstr "rol"
+
+msgid "Roles"
+msgstr "Roles"
+
 msgid "Saturday"
 msgstr "Sábado"
 
@@ -534,4 +540,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 172 messages translated.
+# 174 messages translated.

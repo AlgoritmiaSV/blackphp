@@ -30,6 +30,12 @@ class appMethodsModel
 	/** @var int $default_order Orden por defecto */
 	private $default_order;
 
+	/** @var int $element_id Elemento al que requiere permisos */
+	private $element_id;
+
+	/** @var int $permissions Tipo de permisos requeridos */
+	private $permissions;
+
 	/** @var int $status Estado 0:inactivo, 1:activo */
 	private $status;
 
@@ -135,6 +141,26 @@ class appMethodsModel
 	public function setDefaultOrder($value)
 	{
 		$this->default_order = $value === null ? null : (int)$value;
+	}
+
+	public function getElementId()
+	{
+		return $this->element_id;
+	}
+
+	public function setElementId($value)
+	{
+		$this->element_id = $value === null ? null : (int)$value;
+	}
+
+	public function getPermissions()
+	{
+		return $this->permissions;
+	}
+
+	public function setPermissions($value)
+	{
+		$this->permissions = $value === null ? null : (int)$value;
 	}
 
 	public function getStatus()

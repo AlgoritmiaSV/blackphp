@@ -567,7 +567,7 @@ $( function()
 			style: "currency",
 			currency: "USD"
 		}
-		return n.toLocaleString("en-US", myObj).slice(1);
+		return n.toLocaleString("en-US", myObj).slice(1).replace(",", "");
 	}
 
 	/* Autocomplete */

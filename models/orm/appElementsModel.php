@@ -33,8 +33,14 @@ class appElementsModel
 	/** @var string $method_name Nombre del método para ver detalle */
 	private $method_name;
 
-	/** @var int $deletable El elemento se puede eliminar */
-	private $deletable;
+	/** @var int $is_creatable Se pueden crear nuevos elementos */
+	private $is_creatable;
+
+	/** @var int $is_updatable Se pueden modificar los elementos */
+	private $is_updatable;
+
+	/** @var int $is_deletable Se pueden eliminar los elementos */
+	private $is_deletable;
 
 	/** @var string $table_name Nombre de la tabla */
 	private $table_name;
@@ -153,14 +159,34 @@ class appElementsModel
 		$this->method_name = $value === null ? null : (string)$value;
 	}
 
-	public function getDeletable()
+	public function getIsCreatable()
 	{
-		return $this->deletable;
+		return $this->is_creatable;
 	}
 
-	public function setDeletable($value)
+	public function setIsCreatable($value)
 	{
-		$this->deletable = $value === null ? null : (int)$value;
+		$this->is_creatable = $value === null ? null : (int)$value;
+	}
+
+	public function getIsUpdatable()
+	{
+		return $this->is_updatable;
+	}
+
+	public function setIsUpdatable($value)
+	{
+		$this->is_updatable = $value === null ? null : (int)$value;
+	}
+
+	public function getIsDeletable()
+	{
+		return $this->is_deletable;
+	}
+
+	public function setIsDeletable($value)
+	{
+		$this->is_deletable = $value === null ? null : (int)$value;
 	}
 
 	public function getTableName()
@@ -171,6 +197,12 @@ class appElementsModel
 	public function setTableName($value)
 	{
 		$this->table_name = $value === null ? null : (string)$value;
+	}
+
+	public function roleElements()
+	{
+		roleElementsModel::flush();
+		return roleElementsModel::where("element_id", $this->element_id);
 	}
 
 	public function userLogs()

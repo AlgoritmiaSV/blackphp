@@ -31,7 +31,9 @@ CREATE TABLE `app_elements` (
   `unique_element` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'Es un elemento único',
   `module_id` int(11) NOT NULL COMMENT 'ID del módulo',
   `method_name` varchar(32) NOT NULL COMMENT 'Nombre del método para ver detalle',
-  `deletable` tinyint(4) NOT NULL COMMENT 'El elemento se puede eliminar',
+  `is_creatable` tinyint(4) NOT NULL COMMENT 'Se pueden crear nuevos elementos',
+  `is_updatable` tinyint(4) NOT NULL COMMENT 'Se pueden modificar los elementos',
+  `is_deletable` tinyint(4) NOT NULL COMMENT 'Se pueden eliminar los elementos',
   `table_name` varchar(64) NOT NULL COMMENT 'Nombre de la tabla',
   PRIMARY KEY (`element_id`),
   UNIQUE KEY `element_key` (`element_key`),
@@ -75,6 +77,8 @@ CREATE TABLE `app_methods` (
   `method_icon` varchar(32) NOT NULL COMMENT 'Ícono del método en el menú',
   `method_description` tinytext NOT NULL COMMENT 'Descripción del método',
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
+  `element_id` tinyint(4) DEFAULT NULL COMMENT 'Elemento al que requiere permisos',
+  `permissions` tinyint(4) NOT NULL COMMENT 'Tipo de permisos requeridos',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo',
   PRIMARY KEY (`method_id`),
   KEY `module_id` (`module_id`),
@@ -340,6 +344,53 @@ CREATE TABLE `entity_options` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `role_elements`
+--
+
+DROP TABLE IF EXISTS `role_elements`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_elements` (
+  `role_element_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
+  `role_id` int(11) NOT NULL COMMENT 'ID del rol',
+  `element_id` smallint(6) NOT NULL COMMENT 'ID del elemento',
+  `permissions` tinyint(4) NOT NULL DEFAULT 8 COMMENT 'Permisos (Leer, crear, editar, eliminar)',
+  `creation_user` int(11) NOT NULL,
+  `creation_time` int(11) NOT NULL,
+  `edition_user` int(11) NOT NULL,
+  `edition_time` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`role_element_id`),
+  KEY `role_element_role` (`role_id`),
+  KEY `role_element_element` (`element_id`),
+  CONSTRAINT `role_element_element` FOREIGN KEY (`element_id`) REFERENCES `app_elements` (`element_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `role_element_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Cada uno de los permisos de un rol';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
+  `entity_id` int(11) NOT NULL COMMENT 'ID de la entidad',
+  `role_name` varchar(64) NOT NULL COMMENT 'Nombre del rol',
+  `creation_user` int(11) NOT NULL,
+  `creation_time` datetime NOT NULL,
+  `edition_user` int(11) NOT NULL,
+  `edition_time` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`role_id`),
+  KEY `role_entity` (`entity_id`),
+  CONSTRAINT `role_entity` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Roles para configuración de permisos';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Temporary table structure for view `user_data`
 --
 
@@ -501,6 +552,7 @@ CREATE TABLE `users` (
   `password` char(32) NOT NULL COMMENT 'Contraseña',
   `theme_id` int(11) DEFAULT 1 COMMENT 'Tema de visualización del usuario',
   `locale` char(5) DEFAULT NULL COMMENT 'Idioma del usuario',
+  `role_id` int(11) DEFAULT NULL COMMENT 'ID del rol',
   `creation_user` int(11) NOT NULL,
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
@@ -510,7 +562,9 @@ CREATE TABLE `users` (
   UNIQUE KEY `entity_nickname` (`entity_id`,`nickname`,`status`) USING BTREE,
   UNIQUE KEY `entity_email` (`entity_id`,`email`,`status`) USING BTREE,
   KEY `theme_id` (`theme_id`),
+  KEY `user_role` (`role_id`),
   CONSTRAINT `user_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `user_theme` FOREIGN KEY (`theme_id`) REFERENCES `app_themes` (`theme_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Usuarios';
 /*!40101 SET character_set_client = @saved_cs_client */;

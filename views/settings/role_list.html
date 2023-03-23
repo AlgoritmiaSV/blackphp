@@ -1,0 +1,48 @@
+<div class="list_options">
+	<div class="action_icons">
+		<a href="/{{ module }}/NewRole/">
+			<img src="public/images/add.png" alt="_(New role)">
+		</a>
+		<a href="#" class="download_link" data-url="/{{ module }}/role_table_loader/Excel/">
+			<img src="public/images/excel.png" alt="_(Export to Excel)">
+		</a>
+		<a href="#" class="print_button" data-print=".data_viewer">
+			<img src="public/images/printer.png" alt="_(Print)">
+		</a>
+	</div>
+	<div class="action_filter">
+		<input class="data_search" type="text" placeholder="_(Type a word for search)">
+	</div>
+</div>
+{{ print_header }}
+<div class="content_viewer">
+	<table class="data_viewer" data-source="content" id="role_table">
+		<thead>
+			<tr>
+				<th>_(Role name)</th>
+				<th>_(Users)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="template" data-id="{{role_id}}" data-alert="{{ module }}/role_details_loader/{{role_id}}/standalone/" data-title="_(Role details)">
+				<td>{{role_name}}</td>
+				<td>{{users}}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+
+		</tfoot>
+	</table>
+	<div class="loading_data">
+		<img src="public/images/loading.gif" class="medium_icon">
+		<span>_(Loading)...</span>
+	</div>
+	<div class="loading_error">
+		<img src="public/images/error.png" class="medium_icon">
+		<span>
+			_(Error!)<br>
+			_(Failed to load page).
+		</span>
+	</div>
+	<div class="empty_table_message">_(No records found!)</div>
+</div>

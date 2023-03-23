@@ -35,6 +35,9 @@ msgstr "ordenar la columna de forma descendente"
 msgid "Admin user"
 msgstr "Usuario administrador"
 
+msgid "Allows to manage roles and permissions for each role"
+msgstr "Permite administrar roles y permisos para cada rol"
+
 msgid "Allows to set and modify optional system parameters in the company"
 msgstr "Permite establecer y modificar parámetros opcionales del sistema en la empresa"
 
@@ -145,6 +148,9 @@ msgstr "Tema de visualización"
 
 msgid "Edit"
 msgstr "Editar"
+
+msgid "Edit role"
+msgstr "Editar rol"
 
 msgid "Edit user"
 msgstr "Editar usuario"
@@ -311,6 +317,9 @@ msgstr "Mi nombre"
 msgid "New password"
 msgstr "Nueva contraseña"
 
+msgid "New role"
+msgstr "Nuevo rol"
+
 msgid "New user"
 msgstr "Nuevo usuario"
 
@@ -376,6 +385,12 @@ msgstr "Proporcionado a"
 
 msgid "role"
 msgstr "rol"
+
+msgid "Role details"
+msgstr "Detalles del rol"
+
+msgid "Role name"
+msgstr "Nombre del rol"
 
 msgid "Roles"
 msgstr "Roles"
@@ -482,6 +497,9 @@ msgstr "Herramientas"
 msgid "Trash"
 msgstr "Papelera"
 
+msgid "trash"
+msgstr "papelera"
+
 msgid "Tuesday"
 msgstr "Martes"
 
@@ -540,4 +558,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 174 messages translated.
+# 180 messages translated.

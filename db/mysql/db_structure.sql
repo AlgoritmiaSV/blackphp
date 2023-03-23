@@ -77,11 +77,13 @@ CREATE TABLE `app_methods` (
   `method_icon` varchar(32) NOT NULL COMMENT 'Ícono del método en el menú',
   `method_description` tinytext NOT NULL COMMENT 'Descripción del método',
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
-  `element_id` tinyint(4) DEFAULT NULL COMMENT 'Elemento al que requiere permisos',
+  `element_id` smallint(6) DEFAULT NULL COMMENT 'Elemento al que requiere permisos',
   `permissions` tinyint(4) NOT NULL COMMENT 'Tipo de permisos requeridos',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo',
   PRIMARY KEY (`method_id`),
   KEY `module_id` (`module_id`),
+  KEY `method_element` (`element_id`),
+  CONSTRAINT `method_element` FOREIGN KEY (`element_id`) REFERENCES `app_elements` (`element_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `method_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Todos los métodos disponibles en el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;

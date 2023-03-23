@@ -18,5 +18,20 @@ ALTER TABLE `users` ADD `role_id` INT NULL COMMENT 'ID del rol' AFTER `locale`;
 ALTER TABLE `users` ADD CONSTRAINT `user_role` FOREIGN KEY (`role_id`) REFERENCES `roles`(`role_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE `roles` ADD CONSTRAINT `role_entity` FOREIGN KEY (`entity_id`) REFERENCES `entities`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 -- Fin de estructura para roles
--- inabve:blackphp
+-- 2022-03-17
+UPDATE `app_methods` SET `default_order` = '127' WHERE `app_methods`.`method_id` = 4;
+UPDATE `app_methods` SET `default_order` = '2' WHERE `app_methods`.`method_id` = 3;
+UPDATE `app_methods` SET `default_order` = '3' WHERE `app_methods`.`method_id` = 2;
+INSERT INTO `app_methods` (`method_id`, `module_id`, `method_name`, `method_url`, `method_icon`, `method_description`, `default_order`, `element_id`, `permissions`, `status`) VALUES (NULL, '1', 'Roles', 'Roles', 'roles', 'Allows to manage roles and permissions for each role', '4', NULL, '8', '1');
+INSERT INTO `roles` SELECT NULL, `entity_id`, 'Administrador', 0, now(), 0, now(), 1 FROM `entities`;
+-- 2023-03-18
+ALTER TABLE `app_methods` CHANGE `element_id` `element_id` SMALLINT NULL DEFAULT NULL COMMENT 'Elemento al que requiere permisos';
+ALTER TABLE `app_methods` ADD CONSTRAINT `method_element` FOREIGN KEY (`element_id`) REFERENCES `app_elements`(`element_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+UPDATE `app_methods` SET `element_id` = '1', `permissions` = '8' WHERE `app_methods`.`method_id` = 1;
+UPDATE `app_methods` SET `element_id` = '2', `permissions` = '8' WHERE `app_methods`.`method_id` = 2;
+UPDATE `app_methods` SET `element_id` = '3', `permissions` = '8' WHERE `app_methods`.`method_id` = 3;
+INSERT INTO `app_elements` (`element_id`, `element_key`, `element_name`, `singular_name`, `element_gender`, `unique_element`, `module_id`, `method_name`, `is_creatable`, `is_updatable`, `is_deletable`, `table_name`) VALUES (NULL, 'trash', 'Trash', 'trash', 'F', '1', '2', 'Trash', '0', '0', '0', '');
+UPDATE `app_methods` SET `element_id` = '5', `permissions` = '8' WHERE `app_methods`.`method_id` = 5;
+UPDATE `app_methods` SET `element_id` = '4' WHERE `app_methods`.`method_id` = 6;
 -- teleinf:blackphp
+-- inabve:blackphp

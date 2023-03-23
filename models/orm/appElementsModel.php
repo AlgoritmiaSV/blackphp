@@ -199,6 +199,12 @@ class appElementsModel
 		$this->table_name = $value === null ? null : (string)$value;
 	}
 
+	public function appMethods()
+	{
+		appMethodsModel::flush();
+		return appMethodsModel::where("element_id", $this->element_id);
+	}
+
 	public function roleElements()
 	{
 		roleElementsModel::flush();

@@ -16,6 +16,7 @@ $( function()
 
 	$("#main_content").has(".form_content").addClass("form_main_content");
 
+	bill_type = 1;
 	/* Build select2 */
 	building_entry_selector = true;
 	function build_selectors()
@@ -125,7 +126,7 @@ $( function()
 							"visibility":"visible"
 						});
 					}
-					calc_bill_total();
+					//calc_bill_total();
 				}
 			});
 			$(".current").on("change", calculate_consumption);
@@ -225,6 +226,7 @@ $( function()
 		/* selectors */
 		build_selectors();
 		build_autocomplete();
+		calc_bill_total();
 		/* Unique selection */
 		$(".unique_selection").on("change", function() {
 			setTimeout(unique_selection, 500);
@@ -448,7 +450,6 @@ $( function()
 	}
 
 	/* Clalc details */
-	bill_type = 1;
 	function calc_row_total(_input)
 	{
 		var row_quantity = _input.closest("tr").find(".row_quantity").val();
@@ -549,7 +550,7 @@ $( function()
 		});
 		$("#subtotal").val(format_number(bill_total));
 		$("#iva").val(format_number(bill_total * 0.13));
-		if(bill_type == 2)
+		if(parseInt($("#bill_type").val()) == 2)
 		{
 			$("#total").val(format_number(bill_total * 1.13));
 		}

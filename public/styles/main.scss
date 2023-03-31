@@ -225,7 +225,7 @@
 .action_filter > span:not(.select2)
 {
 	display: inline-block;
-	padding: 4px 0px;
+	padding: 4px;
 }
 
 .action_icons
@@ -246,7 +246,7 @@
 
 .action_icons a:hover
 {
-	background-color: #d9d9d9;
+	background-color: $action_icons_hover_bg;
 }
 
 .action_icons img
@@ -880,10 +880,61 @@ input:checked + .slider:before
 
 @media screen and (max-width: 799px)
 {
+	#main_aside
+	{
+		width: 100%;
+	}
+
 	#content_section
 	{
 		display: block;
 		width: auto;
+	}
+
+	#main_nav
+	{
+		display: none;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		z-index: 1010;
+	}
+
+	#main_header
+	{
+		padding: 0px 5px;
+	}
+
+	#main_header h3
+	{
+		margin: 0px;
+		position: relative;
+		padding: 7px 0px 7px 35px;
+	}
+
+	#menu_button
+	{
+		vertical-align: top;
+		margin: 8px 0px 0px 10px;
+		filter: brightness(3);
+		opacity: 0.7;
+	}
+
+	#main_footer
+	{
+		padding: 0px;
+		text-align: center;
+	}
+
+	#main_content
+	{
+		display: block;
+		width: auto;
+	}
+
+	#user_link .user_icon
+	{
+		padding: 5px;
 	}
 
 	.action_filter > span:not(.select2)
@@ -942,51 +993,6 @@ input:checked + .slider:before
 	.select2-results__option
 	{
 		padding: 20px 6px;
-	}
-
-	#main_nav
-	{
-		display: none;
-		width: 100%;
-		position: absolute;
-		z-index: 1010;
-	}
-
-	#main_header
-	{
-		padding: 0px 5px;
-	}
-
-	#main_header h3
-	{
-		margin: 0px;
-		position: relative;
-		padding: 7px 0px 7px 35px;
-	}
-
-	#menu_button
-	{
-		vertical-align: top;
-		margin: 8px 0px 0px 10px;
-		filter: brightness(3);
-		opacity: 0.7;
-	}
-
-	#main_footer
-	{
-		padding: 0px;
-		text-align: center;
-	}
-
-	#main_content
-	{
-		display: block;
-		width: auto;
-	}
-
-	#user_link .user_icon
-	{
-		padding: 5px;
 	}
 }
 

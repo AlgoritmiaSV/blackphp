@@ -211,8 +211,6 @@ trait ORM
 				}
 			}
 			$fieldDetails = rtrim($fieldDetails, ',');
-			error_log("UPDATE $table_name SET $fieldDetails WHERE $primary_key = :$primary_key");
-			error_log(print_r($data, true));
 			$sth = self::$_db->prepare("UPDATE $table_name SET $fieldDetails WHERE $primary_key = :$primary_key");
 		}
 		foreach ($data as $key => $value)

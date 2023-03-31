@@ -23,6 +23,7 @@ $user_link_radius: 3px;
 $primary_button_bg: #000525;
 $primary_button_h_bg: #3333ff;
 $action_filter_color: #e0e0e0;
+$action_icons_hover_bg: #666666;
 $module_name_color: #e0e0e0;
 $cell_display: table-cell;
 $table_display: table;
@@ -111,7 +112,7 @@ $dt_content_bg: #525252;
 $dt_title_bg: #353535;
 $dt_users_color: #ffffff;
 $dsheet_table_border: 2px solid #666666;
-$dsheet_tbody_bg: #494949;
+$dsheet_tbody_bg: #404040;
 $dsheet_td_border: 2px solid #666666;
 @import 'details.scss';
 

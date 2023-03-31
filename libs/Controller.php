@@ -136,7 +136,12 @@ class Controller
 						if( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
 							$protocol .= "s";
 						}
-						header("Location: " . $protocol . "://installer." . $server_name[1] . "." . $server_name[2] . "/Installation/NewEntity/" . $subdomain . "/");
+						$installer_url = $protocol . "://installer";
+						for($i = 1; $i < count($server_name); $i++)
+						{
+							$installer_url .= ("." . $server_name[$i]);
+						}
+						header("Location: " . $installer_url . "/Installation/NewEntity/" . $subdomain . "/");
 						return;
 					}
 				}

@@ -57,7 +57,8 @@ class User extends Controller
 			$data["themes"] = $themes;
 			$data["locales"] = Array(
 				Array("id" => "en_US", "text" => _("English")),
-				Array("id" => "es_ES", "text" => _("Spanish"))
+				Array("id" => "es_ES", "text" => _("Spanish")),
+				Array("id" => "it_IT", "text" => _("Italian"))
 			);
 			$user = usersModel::find(Session::get("user_id"));
 			$data["update"] = Array(

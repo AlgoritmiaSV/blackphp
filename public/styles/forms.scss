@@ -62,12 +62,12 @@ tr:hover .action_icon
 
 .details_table .small_cell
 {
-	width: 90px;
+	width: 80px;
 }
 
 .details_table .smallest_cell
 {
-	width: 50px;
+	width: 40px;
 }
 
 .details_table input
@@ -370,11 +370,17 @@ tr:hover .action_icon
 
 @media screen and (max-width: 799px)
 {
-	.form_entry label
+	.form_entry label:not(.switch)
 	{
 		display: block;
 		width: auto;
 		color: #9999cc;
+	}
+
+	.switch_span
+	{
+		padding: 0px 5px 10px 5px;
+		width: calc(100% - 80px);
 	}
 
 	.form_entry input, .form_entry textarea

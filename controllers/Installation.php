@@ -338,11 +338,11 @@ class Installation extends Controller
 			$this->json($data);
 			return;
 		}
-		$installer = appInstallersModel::where("installer_nickname", $data["nickname"])->where("installer_password", md5($data["password"]))->get()->toArray();
-		if(isset($installer["installer_id"]))
+		$installer = appInstallersModel::where("installer_nickname", $data["nickname"])->get();
+		if(password_verify($data["password"], $installer->getInstallerPassword()))
 		{
 			Session::set("authorization_code", true);
-			Session::set("installer_id", $installer["installer_id"]);
+			Session::set("installer_id", $installer->getInstallerId());
 			$data["reload"] = true;
 		}
 		else

@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS `app_installers`;
 CREATE TABLE `app_installers` (
   `installer_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `installer_nickname` varchar(32) NOT NULL COMMENT 'Usuario',
-  `installer_password` char(32) NOT NULL COMMENT 'Resumen de contraseña',
+  `installer_password` char(60) NOT NULL COMMENT 'Resumen de contraseña',
   `installer_name` varchar(128) NOT NULL COMMENT 'Nombre del instalador',
   `installer_phone` varchar(16) NOT NULL COMMENT 'Teléfono',
   `installer_email` varchar(64) NOT NULL COMMENT 'Correo electrónico',

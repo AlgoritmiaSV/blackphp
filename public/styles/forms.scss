@@ -115,6 +115,11 @@ tr:hover .action_icon
 	background-color: $details_table_odd_bg;
 }
 
+.details_table .td_active
+{
+	box-shadow: 0px 0px 0px 2px #666666 inset;
+}
+
 .details_table input
 {
 	background-color: transparent;
@@ -200,6 +205,11 @@ tr:hover .action_icon
 	padding: 5px 0px;
 }
 
+.total_entry input
+{
+	width: 160px;
+}
+
 .total_entry label
 {
 	width: 100px;
@@ -227,6 +237,11 @@ tr:hover .action_icon
 {
 	font-size: 10pt;
 	padding: 5px;
+}
+
+.form_content td.select2_td
+{
+	padding: 2px;
 }
 
 .form_content td

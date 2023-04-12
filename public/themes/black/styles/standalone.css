@@ -11,7 +11,7 @@
 
 .details_body
 {
-	padding: 5px 5px 105px 5px;
+	padding: 20px 20px 105px 20px;
 }
 
 .details_users
@@ -29,4 +29,12 @@
 	border-radius: 3px;
 	background-color: #999999;
 	width: calc(100% - 20px);
+}
+
+@media screen and (max-width: 799px)
+{
+	.details_body
+	{
+		padding: 5px 5px 105px 5px;
+	}
 }

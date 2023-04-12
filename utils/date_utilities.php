@@ -336,5 +336,29 @@ class date_utilities
 		}
 		return $date;
 	}
+
+	public static function month_list($from, $to, $desc = false)
+	{
+		$list = Array();
+		$year_month = explode('-', $from);
+		$year = intval($year_month[0]);
+		$month = intval($year_month[1]);
+		while($from <= $to)
+		{
+			$month_name = _(self::$months[$month - 1]);
+			$list[] = Array("id" => $from, "text" => $month_name . " " . $year);
+			if($month == 12)
+			{
+				$year++;
+			}
+			$month = ($month % 12) + 1;
+			$from = $year . "-" . str_pad($month, 2, "0", STR_PAD_LEFT);
+		}
+		if($desc)
+		{
+			$list = array_reverse($list, true);
+		}
+		return $list;
+	}
 }
 ?>

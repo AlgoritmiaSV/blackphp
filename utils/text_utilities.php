@@ -22,22 +22,6 @@
 		private static $php_out = Array(" ", "&aacute;", "&eacute;", "&iacute;", "&oacute;", "&uacute;", "&iquest", "?", ",", "&ntilde;", "(", ")", "/");
 		private static $url_in = Array("_", "a", "e", "i", "o", "u", "", "", "_", "n", "_", "", "_");
 		
-		public static function html_entities($sql_string)
-		{
-			$text = urlencode($sql_string);
-			$text = str_replace(self::$url_out, self::$php_out, $text);
-			return $text;
-		}
-		
-		public static function list_html_entities($list)
-		{
-			foreach($list as $key => $value)
-			{
-				$list[$key] = utf8_decode($value);
-			}
-			return $list;
-		}
-		
 		public static function list_sql_html($list)
 		{
 			foreach($list as $key => $value)
@@ -92,12 +76,6 @@
 				}
 			}
 			return $array;
-		}
-		
-		public static function actual_time()
-		{
-			$now = Date("Y-m-d H:i:s");
-			return strtotime($now);
 		}
 		
 		public static function url_entities($string)

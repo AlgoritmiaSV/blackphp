@@ -991,6 +991,23 @@ $( function()
 		_tr.find(".partial_value").blur(partial_blur);
 		_tr.find(".partial_value").change(partial_change);
 		_tr.find(".local_code").change(search_by_code);
+		_tr.find("td").removeClass("td_active");
+		_tr.find("td").on("click", function(){
+			if(td_active)
+			{
+				td_active.removeClass("td_active");
+			}
+			td_active = $(this);
+			td_active.addClass("td_active");
+		});
+		_tr.find("input").on("focus", function(){
+			if(td_active)
+			{
+				td_active.removeClass("td_active");
+			}
+			td_active = $(this).closest("td");
+			td_active.addClass("td_active");
+		});
 		build_autocomplete(_tr);
 		build_selectors();
 	});
@@ -1332,5 +1349,26 @@ $( function()
 			days = (end - start) / 86400000 + 1;
 		}
 		$(".interval_count").text(days);
+	});
+
+	/**
+	 * Control de celdas activas en tablas detalles
+	 */
+	td_active = null;
+	$(".details_table tbody td").on("click", function(){
+		if(td_active)
+		{
+			td_active.removeClass("td_active");
+		}
+		td_active = $(this);
+		td_active.addClass("td_active");
+	});
+	$(".details_table tbody td input").on("focus", function(){
+		if(td_active)
+		{
+			td_active.removeClass("td_active");
+		}
+		td_active = $(this).closest("td");
+		td_active.addClass("td_active");
 	});
 });

@@ -1,6 +1,6 @@
 <div class="content_viewer">
 	<div class="form_content">
-		<form action="save_installation" data-reset="{{ module }}/" enctype="multipart/form-data">
+		<form action="save_entity" data-reset="{{ module }}/" enctype="multipart/form-data">
 			<div class="form_title">
 				_(System)
 			</div>
@@ -10,10 +10,6 @@
 				<div class="form_entry">
 					<label>_(App name):</label>
 					<input name="app_name" maxlength="64" class="update_input" value="{{ system_name }}">
-				</div>
-				<div>
-					<label>_(Modules):</label>
-					{{ modules }}
 				</div>
 			</div>
 			<div class="form_title">
@@ -31,38 +27,10 @@
 			</div>
 			<p>_(Entity logo):</p>
 			<div class="input-images"></div>
-			<div class="form_title">
-				_(Admin user)
-			</div>
-			<div class="form_body">
-				<input type="hidden" name="admin_user" class="update_input">
-				<div class="form_entry">
-					<label>_(Complete name):</label>
-					<input name="user_name" maxlength="64" class="update_input" required>
-				</div>
-				<div class="form_entry">
-					<label>_(User):</label>
-					<input name="nickname" maxlength="32" class="update_input" required>
-				</div>
-				<div class="form_entry">
-					<label>_(Password):</label>
-					<input name="password" type="password" maxlength="256">
-				</div>
-				<div class="form_entry">
-					<label>_(Confirm password):</label>
-					<input name="confirm_password" type="password" maxlength="256">
-				</div>
-			</div>
-			<div class="form_title">
-				_(Other settings)
-			</div>
-			<div class="form_body">
-				<p>_(There are no more settings to do).</p>
-			</div>
 			<div class="form_foot">
 				<button class="blue_button" type="submit">
 					<img src="public/images/outline/save.png" class="x-small_icon">
-					_(Save)
+					_(Continue)
 				</button>
 				<!-- inside_installation -->
 				<button class="grey_button cancel_button" type="reset">

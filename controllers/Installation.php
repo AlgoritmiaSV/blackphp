@@ -26,6 +26,7 @@ class Installation extends Controller
 		$this->view->data["module"] = $this->module;
 	}
 
+	################################ VISTAS
 	/**
 	 * Inicio de la instalación
 	 * 
@@ -41,34 +42,40 @@ class Installation extends Controller
 		$this->view->data["title"] = _("Installation");
 		$this->view->standard_form();
 		$this->view->data["nav"] = "";
-		if(Session::get("authorization_code") != null)
+		if(Session::get("authorization_code") == null)
 		{
-			$modules = appModulesModel::orderBy("default_order")->getAllArray();
-			$this->view->data["modules"] = "";
-			foreach($modules as $module)
-			{
-				foreach($module as $key => $item)
-				{
-					$this->view->data[$key] = $item;
-				}
-				$this->view->data["methods"] = appMethodsModel::where("module_id", $module["module_id"])->orderBy("default_order")->getAllArray();
-				$this->view->data["modules"] .= $this->view->render("modules", true);
-			}
-			$this->view->data["subdomain"] = $subdomain;
-			if(Session::get("user_id") == null)
-			{
-				$this->view->restrict[] = "inside_installation";
-			}
-			else
-			{
-				$this->view->restrict[] = "outside_installation";
-			}
-			$this->view->data["content"] = $this->view->render("installation/install", true);
+			$this->view->data["content"] = $this->view->render("installation/install_login", true);
+			$this->view->render('main');
+			return;
+		}
+		$this->view->data["subdomain"] = $subdomain;
+		if(Session::get("user_id") == null)
+		{
+			$this->view->restrict[] = "inside_installation";
 		}
 		else
 		{
-			$this->view->data["content"] = $this->view->render("installation/install_login", true);
+			$this->view->restrict[] = "outside_installation";
 		}
+		$this->view->data["content"] = $this->view->render("installation/entity_data", true);
+		$this->view->render('main');
+	}
+
+	/**
+	 * Iniciar
+	 * 
+	 * Este método es utilizado para las instalaciones locales a través del cliente Windows, como
+	 * primera pantalla antes de configurarse la entidad.
+	 * 
+	 * @return void
+	 */
+	function getStarted() 
+	{
+		$this->view->data["title"] = _("Start");
+		$this->view->standard_error();
+		$this->view->data["nav"] = "";
+		$this->view->data["welcome"] = sprintf(_("Welcome to %s!"), $this->system_name);
+		$this->view->data["content"] = $this->view->render("installation/install_missing_conf", true);
 		$this->view->render('main');
 	}
 
@@ -86,6 +93,82 @@ class Installation extends Controller
 		$this->index($subdomain);
 	}
 
+	public function RoleAndUser()
+	{
+		$this->view->data["title"] = _("Installation");
+		$this->view->standard_form();
+		$this->view->data["nav"] = "";
+		if(Session::get("authorization_code") == null)
+		{
+			$this->view->data["content"] = $this->view->render("installation/install_login", true);
+			$this->view->render('main');
+			return;
+		}
+		if(Session::get("user_id") == null)
+		{
+			$this->view->restrict[] = "inside_installation";
+		}
+		else
+		{
+			$this->view->restrict[] = "outside_installation";
+		}
+		$elements = appElementsModel::getAllArray();
+		foreach($elements as &$element)
+		{
+			if($element["is_creatable"] == 0)
+			{
+				$element["creatable"] = "disabled";
+			}
+			if($element["is_updatable"] == 0)
+			{
+				$element["updatable"] = "disabled";
+			}
+			if($element["is_deletable"] == 0)
+			{
+				$element["deletable"] = "disabled";
+			}
+		}
+		unset($element);
+		$this->view->data["elements"] = $elements;
+		$this->view->data["content"] = $this->view->render("installation/role_and_user", true);
+		$this->view->render('main');
+	}
+
+	public function Menu()
+	{
+		$this->view->data["title"] = _("Installation");
+		$this->view->standard_form();
+		$this->view->data["nav"] = "";
+		if(Session::get("authorization_code") == null)
+		{
+			$this->view->data["content"] = $this->view->render("installation/install_login", true);
+			$this->view->render('main');
+			return;
+		}
+		$modules = appModulesModel::orderBy("default_order")->getAllArray();
+		$this->view->data["modules"] = "";
+		foreach($modules as $module)
+		{
+			foreach($module as $key => $item)
+			{
+				$this->view->data[$key] = $item;
+			}
+			$this->view->data["methods"] = appMethodsModel::where("module_id", $module["module_id"])->orderBy("default_order")->getAllArray();
+			$this->view->data["modules"] .= $this->view->render("modules", true);
+		}
+		if(Session::get("user_id") == null)
+		{
+			$this->view->restrict[] = "inside_installation";
+		}
+		else
+		{
+			$this->view->restrict[] = "outside_installation";
+		}
+		$this->view->data["content"] = $this->view->render("installation/menu", true);
+		$this->view->render('main');
+	}
+
+	################################ LISTAS Y FORMULARIOS
 	/**
 	 * Cargar datos de formulario.
 	 * 
@@ -110,6 +193,44 @@ class Installation extends Controller
 	}
 
 	/**
+	 * Verificación de sesión
+	 * 
+	 * Verifica elusuario y contraseña de instalador enviada a través del formulario de inicio de
+	 * sesión. Si es correcto, inicia la sesión, de los contrario, imprime un mensaje de error.
+	 * 
+	 * @return void
+	 */
+	public function test_authorization()
+	{
+		$data = $_POST;
+		$data["success"] = false;
+		if(empty($data["nickname"]) || empty($data["password"]))
+		{
+			$data["title"] = "Error";
+			$data["message"] = _("Enter your installer user and password");
+			$data["theme"] = "red";
+			$this->json($data);
+			return;
+		}
+		$installer = appInstallersModel::where("installer_nickname", $data["nickname"])->get();
+		if(password_verify($data["password"], $installer->getInstallerPassword()))
+		{
+			Session::set("authorization_code", true);
+			Session::set("installer_id", $installer->getInstallerId());
+			$data["reload"] = true;
+		}
+		else
+		{
+			$data["title"] = "Error";
+			$data["message"] = _("Bad user or password");
+			$data["theme"] = "red";
+			$data["no_reset"] = true;
+		}
+		$this->json($data);
+	}
+
+	################################ GUARDADO DE DATOS
+	/**
 	 * Guardar datos de la entidad.
 	 * 
 	 * Crea o actualiza una entidad, crea o actualiza un usuario administrador, guarda el logotipo
@@ -119,7 +240,7 @@ class Installation extends Controller
 	 * 
 	 * @return void.
 	 */
-	public function save_installation()
+	public function save_entity()
 	{
 		$data = $_POST;
 		$data["success"] = false;
@@ -185,6 +306,153 @@ class Installation extends Controller
 			return;
 		}
 
+		#Logo
+		if(!empty($_FILES["images"]["name"][0]))
+		{
+			$extension = strtolower(pathinfo($_FILES["images"]["name"][0], PATHINFO_EXTENSION));
+			$dir = "entities/" . $data["subdomain"] . "/";
+			if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
+			{
+				$dir = "entities/local/";
+			}
+			$file = $dir . "logo." . $extension;
+			$generic_file = glob($dir . "logo.*");
+			if(!is_dir($dir))
+			{
+				mkdir($dir, 0755, true);
+			}
+			else
+			{
+				foreach($generic_file as $previous)
+				{
+					unlink($previous);
+				}
+			}
+			move_uploaded_file($_FILES["images"]["tmp_name"][0], $file);
+		}
+
+		#Finish and response
+		$data["success"] = true;
+		$data["title"] = _("Success");
+		$data["message"] = _("Installation completed successfully");
+		$data["theme"] = "green";
+		$data["no_reset"] = true;
+		if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
+		{
+			$protocol = "http";
+			if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
+				$protocol .= "s";
+			}
+			$data["redirect_after"] = $protocol . "://" . str_replace("installer", $data["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/RoleAndUser/";
+		}
+		else
+		{
+			$data["reload_after"] = true;
+		}
+		$this->json($data);
+	}
+
+	public function save_role_and_user()
+	{
+		$data = $_POST;
+		$data["success"] = false;
+		$now = Date("Y-m-d H:i:s");
+		$today = Date("Y-m-d");
+
+		#Check session type
+		$entity = entitiesModel::find($this->entity_id);
+
+		# Creación del rol administrador
+		$role = rolesModel::find($entity->getAdminRole());
+		if(!$role->exists())
+		{
+			$role->set([
+				"entity_id" => $entity->getEntityId(),
+				"role_name" => "Administrator"
+			])->save();
+			$entity->setAdminRole($role->getRoleId());
+			$entity->save();
+		}
+		$elements = Array();
+		foreach($_POST["read"] as $element)
+		{
+			$elements[$element] = 8;
+		}
+		foreach($_POST["create"] as $element)
+		{
+			$elements[$element] = intval($elements[$element]) + 4;
+		}
+		foreach($_POST["update"] as $element)
+		{
+			$elements[$element] = intval($elements[$element]) + 2;
+		}
+		foreach($_POST["delete"] as $element)
+		{
+			$elements[$element] = intval($elements[$element]) + 1;
+		}
+		foreach($elements as $element_id => $permissions)
+		{
+			$role_element = roleElementsModel::where("role_id", $role->getRoleId())->where("element_id", $element_id)->get();
+			$role_element->set([
+				"role_id" => $role->getRoleId(),
+				"element_id" => $element_id,
+				"permissions" => $permissions,
+				"status" => 1
+			])->save();
+		}
+		roleElementsModel::where("role_id", $role->getRoleId())->whereNotIn(array_keys($elements), "element_id")->update(["status" => 0]);
+		$data["elements"] = $elements;
+
+		#Save default user
+		$user = usersModel::find($data["admin_user"]);
+
+		$user->set(Array(
+			"entity_id" => $entity->getEntityId(),
+			"user_name" => $data["user_name"],
+			"nickname" => $data["nickname"],
+			"password" => empty($data["password"]) ? $user->getPassword() : md5($data["password"]),
+			"role_id" => $role->getRoleId(),
+			"theme_id" => 1
+		))->save();
+		$entity->setAdminUser($user->getUserId());
+		$entity->save();
+
+		#Finish and response
+		$data["success"] = true;
+		$data["title"] = _("Success");
+		$data["message"] = _("Installation completed successfully");
+		$data["theme"] = "green";
+		$data["no_reset"] = true;
+		if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
+		{
+			$protocol = "http";
+			if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
+				$protocol .= "s";
+			}
+			$data["redirect_after"] = $protocol . "://" . str_replace("installer", $data["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/Menu/";
+		}
+		else
+		{
+			$data["reload_after"] = true;
+		}
+		$this->json($data);
+	}
+
+	public function save_menu()
+	{
+		$data = $_POST;
+		$data["success"] = false;
+		$now = Date("Y-m-d H:i:s");
+		$today = Date("Y-m-d");
+		#Check session type
+		$entity_id = $this->entity_id;
+		if($entity_id == null)
+		{
+			//Redirigir a formulario de entidad
+		}
+
+		$entity = entitiesModel::find($this->entity_id);
+
 		#Set modules
 		$i = 0;
 		entityModulesModel::where("entity_id", $entity->getEntityId())->whereNotIn($data["modules"], "module_id")->update(Array("status" => 0));
@@ -229,19 +497,7 @@ class Installation extends Controller
 			))->save();
 		}
 
-		#Save default user
-		$user = usersModel::find($data["admin_user"]);
-
-		$user->set(Array(
-			"entity_id" => $entity->getEntityId(),
-			"user_name" => $data["user_name"],
-			"nickname" => $data["nickname"],
-			"password" => empty($data["password"]) ? $user->getPassword() : md5($data["password"]),
-			"theme_id" => 1
-		))->save();
-		$entity->setAdminUser($user->getUserId());
-		$entity->save();
-
+		$user = usersModel::find($entity->getAdminUser());
 		#Set user modules permissions
 		if($user->getUserId() != Session::get("user_id"))
 		{
@@ -269,32 +525,6 @@ class Installation extends Controller
 				))->save();
 			}
 		}
-
-		#Logo
-		if(!empty($_FILES["images"]["name"][0]))
-		{
-			$extension = strtolower(pathinfo($_FILES["images"]["name"][0], PATHINFO_EXTENSION));
-			$dir = "entities/" . $data["subdomain"] . "/";
-			if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
-			{
-				$dir = "entities/local/";
-			}
-			$file = $dir . "logo." . $extension;
-			$generic_file = glob($dir . "logo.*");
-			if(!is_dir($dir))
-			{
-				mkdir($dir, 0755, true);
-			}
-			else
-			{
-				foreach($generic_file as $previous)
-				{
-					unlink($previous);
-				}
-			}
-			move_uploaded_file($_FILES["images"]["tmp_name"][0], $file);
-		}
-
 		#Finish and response
 		$data["success"] = true;
 		$data["title"] = _("Success");
@@ -316,61 +546,6 @@ class Installation extends Controller
 		#Close installer session
 		Session::destroy();
 		$this->json($data);
-	}
-
-	/**
-	 * Verificación de sesión
-	 * 
-	 * Verifica elusuario y contraseña de instalador enviada a través del formulario de inicio de
-	 * sesión. Si es correcto, inicia la sesión, de los contrario, imprime un mensaje de error.
-	 * 
-	 * @return void
-	 */
-	public function test_authorization()
-	{
-		$data = $_POST;
-		$data["success"] = false;
-		if(empty($data["nickname"]) || empty($data["password"]))
-		{
-			$data["title"] = "Error";
-			$data["message"] = _("Enter your installer user and password");
-			$data["theme"] = "red";
-			$this->json($data);
-			return;
-		}
-		$installer = appInstallersModel::where("installer_nickname", $data["nickname"])->get();
-		if(password_verify($data["password"], $installer->getInstallerPassword()))
-		{
-			Session::set("authorization_code", true);
-			Session::set("installer_id", $installer->getInstallerId());
-			$data["reload"] = true;
-		}
-		else
-		{
-			$data["title"] = "Error";
-			$data["message"] = _("Bad user or password");
-			$data["theme"] = "red";
-			$data["no_reset"] = true;
-		}
-		$this->json($data);
-	}
-
-	/**
-	 * Iniciar
-	 * 
-	 * Este método es utilizado para las instalaciones locales a través del cliente Windows, como
-	 * primera pantalla antes de consigurarse la entidad.
-	 * 
-	 * @return void
-	 */
-	function get_started() 
-	{
-		$this->view->data["title"] = _("Start");
-		$this->view->standard_error();
-		$this->view->data["nav"] = "";
-		$this->view->data["welcome"] = sprintf(_("Welcome to %s!"), $this->system_name);
-		$this->view->data["content"] = $this->view->render("installation/install_missing_conf", true);
-		$this->view->render('main');
 	}
 }
 ?>

@@ -147,6 +147,12 @@ class rolesModel
 		$this->status = $value === null ? null : (int)$value;
 	}
 
+	public function entities()
+	{
+		entitiesModel::flush();
+		return entitiesModel::where("admin_role", $this->role_id);
+	}
+
 	public function roleElements()
 	{
 		roleElementsModel::flush();

@@ -18,6 +18,9 @@ class entitiesModel
 	/** @var string $entity_slogan Eslogan de la empresa */
 	private $entity_slogan;
 
+	/** @var int $admin_role Rol administrador */
+	private $admin_role;
+
 	/** @var int $admin_user Usuario principal (Superadministrador) */
 	private $admin_user;
 
@@ -120,6 +123,16 @@ class entitiesModel
 	public function setEntitySlogan($value)
 	{
 		$this->entity_slogan = $value === null ? null : (string)$value;
+	}
+
+	public function getAdminRole()
+	{
+		return $this->admin_role;
+	}
+
+	public function setAdminRole($value)
+	{
+		$this->admin_role = $value === null ? null : (int)$value;
 	}
 
 	public function getAdminUser()

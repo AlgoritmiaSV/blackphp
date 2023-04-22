@@ -237,6 +237,7 @@ CREATE TABLE `entities` (
   `entity_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `entity_name` varchar(64) NOT NULL COMMENT 'Nombre de la empresa',
   `entity_slogan` varchar(128) NOT NULL COMMENT 'Eslogan de la empresa',
+  `admin_role` int(11) DEFAULT NULL COMMENT 'Rol administrador',
   `admin_user` int(11) DEFAULT NULL COMMENT 'Usuario principal (Superadministrador)',
   `entity_date` date NOT NULL COMMENT 'Fecha actual de operaciones (En caso que difiera del sistema)',
   `entity_begin` date NOT NULL COMMENT 'Fecha de inicio de las operaciones',
@@ -254,8 +255,10 @@ CREATE TABLE `entities` (
   UNIQUE KEY `comp_subdomain` (`entity_subdomain`),
   KEY `company_creator` (`creation_installer`),
   KEY `company_editor` (`edition_installer`),
-  CONSTRAINT `company_creator` FOREIGN KEY (`creation_installer`) REFERENCES `app_installers` (`installer_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `company_editor` FOREIGN KEY (`edition_installer`) REFERENCES `app_installers` (`installer_id`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `entity_role` (`admin_role`),
+  CONSTRAINT `entity_installer_creator` FOREIGN KEY (`creation_installer`) REFERENCES `app_installers` (`installer_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `entity_installer_editor` FOREIGN KEY (`edition_installer`) REFERENCES `app_installers` (`installer_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `entity_role` FOREIGN KEY (`admin_role`) REFERENCES `roles` (`role_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Negocios, empresas y compañías que utilizarán el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -358,12 +361,12 @@ CREATE TABLE `role_elements` (
   `element_id` smallint(6) NOT NULL COMMENT 'ID del elemento',
   `permissions` tinyint(4) NOT NULL DEFAULT 8 COMMENT 'Permisos (Leer, crear, editar, eliminar)',
   `creation_user` int(11) NOT NULL,
-  `creation_time` int(11) NOT NULL,
+  `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
-  `edition_time` int(11) NOT NULL,
+  `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`role_element_id`),
-  KEY `role_element_role` (`role_id`),
+  UNIQUE KEY `unique_role_element` (`role_id`,`element_id`),
   KEY `role_element_element` (`element_id`),
   CONSTRAINT `role_element_element` FOREIGN KEY (`element_id`) REFERENCES `app_elements` (`element_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `role_element_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE

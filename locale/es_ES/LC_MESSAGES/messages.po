@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2023-04-11 10:40+UTC-6\n"
+"PO-Revision-Date: 2023-04-21 15:48+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: es_ES\n"
@@ -34,6 +34,12 @@ msgstr "ordenar la columna de forma descendente"
 
 msgid "Admin user"
 msgstr "Usuario administrador"
+
+msgid "Administrator"
+msgstr "Administrador"
+
+msgid "Administrator role"
+msgstr "Rol administrador"
 
 msgid "Allows to manage roles and permissions for each role"
 msgstr "Permite administrar roles y permisos para cada rol"
@@ -107,6 +113,9 @@ msgstr "Contacto y soporte técnico"
 msgid "Continue"
 msgstr "Continuar"
 
+msgid "Create"
+msgstr "Crear"
+
 msgid "Created at"
 msgstr "Creado el"
 
@@ -154,6 +163,9 @@ msgstr "Editar rol"
 
 msgid "Edit user"
 msgstr "Editar usuario"
+
+msgid "Element"
+msgstr "Elemento"
 
 msgid "Element ID"
 msgstr "ID Elemento"
@@ -353,9 +365,6 @@ msgstr "noviembre"
 msgid "October"
 msgstr "octubre"
 
-msgid "Other settings"
-msgstr "Otras configuraciones"
-
 msgid "Password"
 msgstr "Contrase&ntilde;a"
 
@@ -385,6 +394,9 @@ msgstr "Imprimir"
 
 msgid "Provided to"
 msgstr "Proporcionado a"
+
+msgid "Read"
+msgstr "Leer"
 
 msgid "role"
 msgstr "rol"
@@ -476,9 +488,6 @@ msgstr "¡El nombre de usuario ya existe!"
 msgid "The subdomain %s is not available"
 msgstr "El subdominio %s no está disponible"
 
-msgid "There are no more settings to do"
-msgstr "No hay más configuraciones que realizar"
-
 msgid "This method will be available very soon"
 msgstr "Este método estará disponible muy pronto"
 
@@ -508,6 +517,9 @@ msgstr "Martes"
 
 msgid "Type a word for search"
 msgstr "Escriba una palabra para buscar"
+
+msgid "Update"
+msgstr "Actualizar"
 
 msgid "User"
 msgstr "Usuario"
@@ -548,8 +560,8 @@ msgstr "Blanco - Sin menú lateral"
 msgid "year"
 msgstr "año"
 
-msgid "You are creating a new company account in BlackPHP. For this action you need to have an account as an installer"
-msgstr "Estás creando una nueva cuenta de empresa en BlackPHP. Para esta acción necesitas tener una cuenta como instalador"
+msgid "You are creating a new company account. For this action you need to have an account as an installer"
+msgstr "Estás creando una nueva cuenta de empresa. Para esta acción necesitas tener una cuenta como instalador"
 
 msgid "You are not logged in"
 msgstr "No ha iniciado sesión"
@@ -561,4 +573,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 181 messages translated.
+# 185 messages translated.

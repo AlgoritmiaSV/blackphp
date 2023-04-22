@@ -24,13 +24,13 @@ class roleElementsModel
 	/** @var int $creation_user - */
 	private $creation_user;
 
-	/** @var int $creation_time - */
+	/** @var string $creation_time - */
 	private $creation_time;
 
 	/** @var int $edition_user - */
 	private $edition_user;
 
-	/** @var int $edition_time - */
+	/** @var string $edition_time - */
 	private $edition_time;
 
 	/** @var int $status - */
@@ -128,7 +128,7 @@ class roleElementsModel
 
 	public function setCreationTime($value)
 	{
-		$this->creation_time = $value === null ? null : (int)$value;
+		$this->creation_time = $value === null ? null : (string)$value;
 	}
 
 	public function getEditionUser()
@@ -148,7 +148,7 @@ class roleElementsModel
 
 	public function setEditionTime($value)
 	{
-		$this->edition_time = $value === null ? null : (int)$value;
+		$this->edition_time = $value === null ? null : (string)$value;
 	}
 
 	public function getStatus()

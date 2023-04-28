@@ -112,24 +112,32 @@ class Installation extends Controller
 		{
 			$this->view->restrict[] = "outside_installation";
 		}
-		$elements = appElementsModel::getAllArray();
-		foreach($elements as &$element)
+		$role_elements = "";
+		$modules = appModulesModel::getAll();
+		foreach($modules as $module)
 		{
-			if($element["is_creatable"] == 0)
+			$elements = appElementsModel::where("module_id", $module->getModuleId())->getAllArray();
+			foreach($elements as &$element)
 			{
-				$element["creatable"] = "disabled";
+				if($element["is_creatable"] == 0)
+				{
+					$element["creatable"] = "disabled";
+				}
+				if($element["is_updatable"] == 0)
+				{
+					$element["updatable"] = "disabled";
+				}
+				if($element["is_deletable"] == 0)
+				{
+					$element["deletable"] = "disabled";
+				}
 			}
-			if($element["is_updatable"] == 0)
-			{
-				$element["updatable"] = "disabled";
-			}
-			if($element["is_deletable"] == 0)
-			{
-				$element["deletable"] = "disabled";
-			}
+			unset($element);
+			$this->view->data["module_name"] = $module->getModuleName();
+			$this->view->data["elements"] = $elements;
+			$role_elements .= $this->view->render("installation/role_elements", true);
 		}
-		unset($element);
-		$this->view->data["elements"] = $elements;
+		$this->view->data["role_elements"] = $role_elements;
 		$this->view->data["content"] = $this->view->render("installation/role_and_user", true);
 		$this->view->render('main');
 	}
@@ -275,7 +283,7 @@ class Installation extends Controller
 			}
 		}
 
-		$entity = entitiesModel::find($data["entity_id"]);
+		$entity = entitiesModel::find($this->entity_id);
 		$subdomain = empty($data["subdomain"]) ? $entity->getEntitySubdomain() : $data["subdomain"];
 		if(empty($entity->getEntityId()))
 		{
@@ -448,7 +456,7 @@ class Installation extends Controller
 		$entity_id = $this->entity_id;
 		if($entity_id == null)
 		{
-			//Redirigir a formulario de entidad
+			header("Location: /" . $this->module . "/");
 		}
 
 		$entity = entitiesModel::find($this->entity_id);

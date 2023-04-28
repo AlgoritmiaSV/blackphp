@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2023-04-21 15:48+UTC-6\n"
+"PO-Revision-Date: 2023-04-27 21:29+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: es_ES\n"
@@ -31,6 +31,12 @@ msgstr "ordenar la columna de forma ascendente"
 
 msgid "activate to sort column descending"
 msgstr "ordenar la columna de forma descendente"
+
+msgid "activity log"
+msgstr "registro de actividades"
+
+msgid "Activity log"
+msgstr "Registro de actividades"
 
 msgid "Admin user"
 msgstr "Usuario administrador"
@@ -573,4 +579,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 185 messages translated.
+# 187 messages translated.

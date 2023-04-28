@@ -278,14 +278,14 @@ class Controller
 		}
 		elseif($type == 'internal')
 		{
-			$this->view->render('maintenance');
+			$this->view->render("main/maintenance");
 		}
 		else
 		{
 			$this->view->data["title"] = _("System under maintenance");
 			$this->view->standard_error();
 			$this->view->data["nav"] = "";
-			$this->view->data["content"] = $this->view->render("maintenance", true);
+			$this->view->data["content"] = $this->view->render("main/maintenance", true);
 			$this->view->render('clean_main');
 		}
 		exit();
@@ -324,8 +324,8 @@ class Controller
 					{
 						$this->view->data["title"] = _("Not authorized");
 						$this->view->standard_error();
-						$this->view->data["nav"] = $this->view->render("nav", true);
-						$this->view->data["content"] = $this->view->render("forbidden", true);
+						$this->view->data["nav"] = $this->view->render("main/nav", true);
+						$this->view->data["content"] = $this->view->render("main/forbidden", true);
 						$this->view->render('main');
 					}
 					exit();

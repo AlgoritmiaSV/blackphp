@@ -20,7 +20,7 @@
 
 LOCK TABLES `app_elements` WRITE;
 /*!40000 ALTER TABLE `app_elements` DISABLE KEYS */;
-INSERT INTO `app_elements` VALUES (1,'entity_data','Entity data','entity data','M',1,1,'Entity',0,1,0,'entities'),(2,'users','Users','user','M',0,1,'UserDetails',1,1,1,'users'),(3,'preferences','Preferences','preferences','F',1,1,'Preferences',0,1,0,'entity_options'),(4,'roles','Roles','role','M',0,1,'RoleDetails',1,1,1,'roles'),(5,'trash','Trash','trash','F',1,2,'Trash',0,0,0,'');
+INSERT INTO `app_elements` VALUES (1,'entity_data','Entity data','entity data','M',1,1,'Entity',0,1,0,'entities'),(2,'users','Users','user','M',0,1,'UserDetails',1,1,1,'users'),(3,'preferences','Preferences','preferences','F',1,1,'Preferences',0,1,0,'entity_options'),(4,'roles','Roles','role','M',0,1,'RoleDetails',1,1,1,'roles'),(5,'trash','Trash','trash','F',1,2,'Trash',0,0,0,''),(6,'logs','Activity log','activity log','M',1,2,'',0,0,0,'');
 /*!40000 ALTER TABLE `app_elements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -32,6 +32,16 @@ LOCK TABLES `app_installers` WRITE;
 /*!40000 ALTER TABLE `app_installers` DISABLE KEYS */;
 INSERT INTO `app_installers` VALUES (1,'admin','$2y$10$9LarkKwQGYEAPBxnrCkB/.YvyCBqEwbasYZK/vPrTjY1NmPWb0qlW','Instalador','(503) 77197466','contacto@edwinfajardo.com','2023-04-04 08:05:24',1);
 /*!40000 ALTER TABLE `app_installers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `app_locales`
+--
+
+LOCK TABLES `app_locales` WRITE;
+/*!40000 ALTER TABLE `app_locales` DISABLE KEYS */;
+INSERT INTO `app_locales` VALUES (1,'en','en_US','English'),(2,'es','es_ES','Spanish'),(3,'it','it_IT','Italian');
+/*!40000 ALTER TABLE `app_locales` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

@@ -13,7 +13,7 @@ trait Users
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("Users");
 		$this->view->standard_list();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["print_title"] = _("Users");
 		$this->view->data["print_header"] = $this->view->render("print_header", true);
 		$this->view->data["content"] = $this->view->render("settings/user_list", true);
@@ -34,7 +34,7 @@ trait Users
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("New user");
 		$this->view->standard_form();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->restrict[] = "edition";
 		$modules = availableModulesModel::where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
 		$this->view->data["modules"] = "";
@@ -65,7 +65,7 @@ trait Users
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("Edit user");
 		$this->view->standard_form();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		if($user_id == Session::get("user_id"))
 		{
 			$this->view->restrict[] = "no_self";
@@ -102,7 +102,7 @@ trait Users
 		$this->view->data["title"] = _("User details");
 		$this->view->standard_details();
 		$this->view->data["system_short_date"] = Date("d/m/Y");
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["content_id"] = "user_details";
 		$this->view->data["content"] = $this->view->render("content_loader", true);
 		$this->view->render('main');

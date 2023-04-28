@@ -13,7 +13,7 @@ trait Roles
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("Roles");
 		$this->view->standard_list();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["print_title"] = _("Roles");
 		$this->view->data["print_header"] = $this->view->render("print_header", true);
 		$this->view->data["content"] = $this->view->render("settings/role_list", true);
@@ -34,7 +34,7 @@ trait Roles
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("New role");
 		$this->view->standard_form();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->restrict[] = "edition";
 		$elements = roleElementsModel::where("role_id", Session::get("role_id"))->getAllArray();
 		$this->view->data["elements"] = "";
@@ -62,7 +62,7 @@ trait Roles
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("Edit role");
 		$this->view->standard_form();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		if($role_id == Session::get("role_id"))
 		{
 			$this->view->restrict[] = "no_self";
@@ -95,7 +95,7 @@ trait Roles
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("Role details");
 		$this->view->standard_details();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["content_id"] = "role_details";
 		$this->view->data["content"] = $this->view->render("content_loader", true);
 		$this->view->render('main');

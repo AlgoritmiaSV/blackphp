@@ -42,7 +42,7 @@ class Settings extends Controller
 	{
 		$this->session_required("html", $this->module);
 		$this->view->standard_menu();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$module = appModulesModel::findBy("module_url", $this->module);
 		$this->view->data["title"] = _($module->getModuleName());
 		$this->view->data["methods"] = availableMethodsModel::where("user_id", Session::get("user_id"))
@@ -64,7 +64,7 @@ class Settings extends Controller
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
 		$this->view->standard_details();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["content_id"] = "info_details";
 		$this->view->data["content"] = $this->view->render("content_loader", true);
 		$this->view->render('main');
@@ -84,6 +84,33 @@ class Settings extends Controller
 		if($_POST["method"] == "Entity")
 		{
 			$data["update"] = entitiesModel::find($this->entity_id)->toArray();
+		}
+		if($_POST["method"] == "NewUser" || $_POST["method"] == "EditUser")
+		{
+			# Cargando roles asignables
+			$roles = rolesModel::getAll();
+			$asignables = [];
+			$permissions = Session::get("permissions");
+			$data["asign"] = Array();
+			foreach($roles as $role)
+			{
+				$elements = roleElementsModel::join("app_elements", "element_id")->where("role_id", $role->getRoleId())->getAll();
+				$asignable = true;
+				foreach($elements as $element)
+				{
+					$test = intval($element["permissions"]) & intval($permissions[$element["element_key"]]);
+					if($permissions[$element["element_key"]] < $test)
+					{
+						$asignable = false;
+					}
+					$data["asign"][] = $test;
+				}
+				if($asignable)
+				{
+					$asignables[] = $role->getRoleId();
+				}
+			}
+			$data["roles"] = rolesModel::whereIn($asignables)->list();
 		}
 		if($_POST["method"] == "EditUser")
 		{

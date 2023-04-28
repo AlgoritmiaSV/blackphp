@@ -181,6 +181,19 @@ class View
 	}
 
 	/**
+	 * Insertar valores
+	 * 
+	 * Inserta los valores de un array asociativo recibido por parámetro.
+	 * @param array $values Valores a insertar
+	 * 
+	 * @return void
+	*/
+	public function set($values)
+	{
+		$this->data = array_merge($this->data, $values);
+	}
+
+	/**
 	 * Lista entándar
 	 * 
 	 * Definición de script y hojas de estilos para una vista que contiene una tabla con una lista

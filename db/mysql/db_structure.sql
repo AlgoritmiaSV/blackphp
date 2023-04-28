@@ -63,6 +63,23 @@ CREATE TABLE `app_installers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `app_locales`
+--
+
+DROP TABLE IF EXISTS `app_locales`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `app_locales` (
+  `locale_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria de idioma regional',
+  `language_code` char(2) NOT NULL COMMENT 'Código de idioma en ISO 639-1',
+  `locale_code` char(5) NOT NULL COMMENT 'Código de idioma regional',
+  `locale_name` varchar(32) NOT NULL COMMENT 'Nombre del idioma',
+  PRIMARY KEY (`locale_id`),
+  UNIQUE KEY `locale_code` (`locale_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Idiomas regionales soportados por la aplicación';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `app_methods`
 --
 

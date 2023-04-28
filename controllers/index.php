@@ -17,7 +17,7 @@ class Index extends Controller
 		$this->session_required();
 		$this->view->data["title"] = _("Home");
 		$this->view->standard_menu();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["content_id"] = "home_content";
 		$this->view->data["content"] = $this->view->render("content_loader", true);
 		$this->view->render('main');

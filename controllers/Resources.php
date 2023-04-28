@@ -18,8 +18,8 @@ class Resources extends Controller
 	{
 		$this->view->data["title"] = _("Not authorized");
 		$this->view->standard_error();
-		$this->view->data["nav"] = $this->view->render("nav", true);
-		$this->view->data["content"] = $this->view->render("forbidden", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
+		$this->view->data["content"] = $this->view->render("main/forbidden", true);
 		$this->view->render('main');
 	}
 

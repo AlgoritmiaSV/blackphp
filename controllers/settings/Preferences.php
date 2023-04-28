@@ -13,7 +13,7 @@ trait Preferences
 		$this->session_required("html", $this->module);
 		$this->view->data["title"] = _("Preferences");
 		$this->view->standard_form();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["config_modules"] = Array();
 		foreach($this->view->data["modules"] as $key => $module)
 		{

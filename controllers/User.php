@@ -49,17 +49,18 @@ class User extends Controller
 		$data = Array();
 		if($_POST["method"] == "MyAccount")
 		{
-			$themes = appThemesModel::list();
-			foreach($themes as $key => $theme)
+			$data["themes"] = appThemesModel::list();
+			foreach($data["themes"] as &$theme)
 			{
-				$themes[$key]["text"] = _($theme["text"]);
+				$theme["text"] = _($theme["text"]);
 			}
-			$data["themes"] = $themes;
-			$data["locales"] = Array(
-				Array("id" => "en_US", "text" => _("English")),
-				Array("id" => "es_ES", "text" => _("Spanish")),
-				Array("id" => "it_IT", "text" => _("Italian"))
-			);
+			unset($theme);
+			$data["locales"] = appLocalesModel::list("locale_code", "locale_name");
+			foreach($data["locales"] as &$locale)
+			{
+				$locale["text"] = _($locale["text"]);
+			}
+			unset($locale);
 			$user = usersModel::find(Session::get("user_id"));
 			$data["update"] = Array(
 				"theme_id" => Session::get("theme_id"),
@@ -95,29 +96,32 @@ class User extends Controller
 		{
 			$data["reload"] = true;
 
+			# Cargar los datos del usuario a la sesión actual
 			foreach ($user as $key => $value) {
 				Session::set($key, $value);
 			}
+
+			# Cargar el idioma del usuario
 			if(!empty($user["locale"]))
 			{
 				Session::set("lang", explode("_", $user["locale"])[0]);
 			}
+
+			# Cargar el tema del usuario
 			if(!empty($user["theme_id"]))
 			{
 				$theme = appThemesModel::find($user["theme_id"]);
 				Session::set("theme_id", $theme->getThemeId());
 				Session::set("theme_url", $theme->getThemeUrl());
 			}
+
+			# Obtener la dirección IP y el navegador
 			$now = Date("Y-m-d H:i:s");
-			# Get user agent
 			$user_agent = $_SERVER['HTTP_USER_AGENT'];
-			# Get IP Address
 			$ipv4 = $this->getRealIP();
-			# Check if exists
 			$browser = browsersModel::where("user_agent", $user_agent)->get();
 			if(!$browser->exists())
 			{
-				#Set new browser
 				$parser = new UserAgentParser();
 				$ua = $parser->parse($user_agent);
 				$browser->set(Array(
@@ -130,7 +134,7 @@ class User extends Controller
 				))->save();
 			}
 
-			#Set session
+			# Guardar un registro del inicio de sesión
 			$session = new userSessionsModel();
 			$session->set(Array(
 				"user_id" => $user["user_id"],
@@ -139,8 +143,17 @@ class User extends Controller
 				"date_time" => $now
 			))->save();
 
-			#Set modules
+			# Cargar los módulos a la sesión actual
 			Session::set("modules", availableModulesModel::where("user_id", $user["user_id"])->orderBy("module_order")->getAllArray());
+
+			# Cargar los permisos del usuario
+			$permissions = Array();
+			$elements = roleElementsModel::where("role_id", $user["role_id"])->join("app_elements", "element_id")->getAll();
+			foreach($elements as $element)
+			{
+				$permissions[$element["element_key"]] = $element["permissions"];
+			}
+			Session::set("permissions", $permissions);
 		}
 		else
 		{
@@ -178,7 +191,7 @@ class User extends Controller
 		$this->session_required();
 		$this->view->data["title"] = _("My account");
 		$this->view->standard_form();
-		$this->view->data["nav"] = $this->view->render("nav", true);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["content"] = $this->view->render("user/my_account", true);
 		$this->view->render('main');
 	}

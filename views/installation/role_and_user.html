@@ -1,65 +1,12 @@
 <div class="content_viewer">
-	<div class="form_content">
+	<div class="form_content medium_form">
 		<form action="save_role_and_user" data-reset="{{ module }}/" enctype="multipart/form-data">
 			<div class="form_title">
-				_(System)
+				_(Administrator role)
 			</div>
 			<div class="form_body">
 				<input type="hidden" name="entity_id" class="update_input">
-				<div>
-					<label>_(Administrator role)</label>
-				</div>
-				<div>
-					<table class="details_table">
-						<thead>
-							<tr>
-								<th>_(Element)</th>
-								<th>_(Read)</th>
-								<th>_(Create)</th>
-								<th>_(Update)</th>
-								<th>_(Delete)</th>
-							</tr>
-						</thead>
-						<tbody>
-							[[ elements ]]
-							<tr>
-								<td>{{ element_name }}</td>
-								<td class="radio_td smallest_cell">
-									<div class="checkbox_container radio_inline">
-										<label>
-											<input type="checkbox" class="update_check" name="read[]" value="{{ element_id }}" data-source="read">
-											<span class="checkmark"></span>
-										</label>
-									</div>
-								</td>
-								<td class="radio_td smallest_cell">
-									<div class="checkbox_container radio_inline">
-										<label>
-											<input type="checkbox" class="update_check" name="create[]" value="{{ element_id }}" data-source="create" {{ creatable }}>
-											<span class="checkmark"></span>
-										</label>
-									</div>
-								</td>
-								<td class="radio_td smallest_cell">
-									<div class="checkbox_container radio_inline">
-										<label>
-											<input type="checkbox" class="update_check" name="update[]" value="{{ element_id }}" data-source="update" {{ updatale }}>
-											<span class="checkmark"></span>
-										</label>
-									</div>
-								</td>
-								<td class="radio_td smallest_cell">
-									<div class="checkbox_container radio_inline">
-										<label>
-											<input type="checkbox" class="update_check" name="delete[]" value="{{ element_id }}" data-source="delete" {{ deletable }}>
-											<span class="checkmark"></span>
-										</label>
-									</div>
-								</td>
-							</tr>[[/ elements ]]
-						</tbody>
-					</table>
-				</div>
+				{{ role_elements }}
 			</div>
 			<div class="form_title">
 				_(Admin user)

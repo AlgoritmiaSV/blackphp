@@ -18,9 +18,6 @@ class userModulesModel
 	/** @var int $user_id ID del usuario */
 	private $user_id;
 
-	/** @var int $access_type Tipo de acceso al módulo */
-	private $access_type;
-
 	/** @var int $creation_user - */
 	private $creation_user;
 
@@ -98,16 +95,6 @@ class userModulesModel
 	public function setUserId($value)
 	{
 		$this->user_id = $value === null ? null : (int)$value;
-	}
-
-	public function getAccessType()
-	{
-		return $this->access_type;
-	}
-
-	public function setAccessType($value)
-	{
-		$this->access_type = $value === null ? null : (int)$value;
 	}
 
 	public function getCreationUser()

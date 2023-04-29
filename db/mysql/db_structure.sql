@@ -217,7 +217,6 @@ SET character_set_client = utf8;
   1 AS `module_description`,
   1 AS `default_order`,
   1 AS `status`,
-  1 AS `access_type`,
   1 AS `entity_id`,
   1 AS `user_id`,
   1 AS `module_order` */;
@@ -471,7 +470,6 @@ CREATE TABLE `user_methods` (
   `umethod_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
   `method_id` int(11) NOT NULL COMMENT 'ID del método',
-  `access_type` tinyint(3) unsigned NOT NULL DEFAULT 255 COMMENT 'Tipo de acceso',
   `creation_user` int(11) NOT NULL,
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
@@ -497,7 +495,6 @@ CREATE TABLE `user_modules` (
   `umodule_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `module_id` int(11) NOT NULL COMMENT 'ID del módulo',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
-  `access_type` int(11) DEFAULT NULL COMMENT 'Tipo de acceso al módulo',
   `creation_user` int(11) NOT NULL,
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
@@ -617,12 +614,12 @@ CREATE TABLE `users` (
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
-/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`um`.`access_type` AS `access_type`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` join `app_modules` `m`) join `user_modules` `um`) join `users` `u`) where `m`.`module_id` = `em`.`module_id` and `em`.`status` = 1 and `um`.`module_id` = `m`.`module_id` and `um`.`status` = 1 and `u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id` order by `em`.`module_order` */;
+/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` left join `app_modules` `m` on(`m`.`module_id` = `em`.`module_id`)) left join `user_modules` `um` on(`um`.`module_id` = `m`.`module_id` and `um`.`status` = 1)) left join `users` `u` on(`u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id`)) where `em`.`status` = 1 order by `em`.`module_order` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

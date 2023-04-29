@@ -276,6 +276,10 @@ trait Users
 		{
 			$user->setPassword("");
 		}
+		if(!empty($_POST["role_id"]))
+		{
+			$user->setRoleId($_POST["role_id"]);
+		}
 		$user->save();
 
 		$user_id = $user->getUserId();
@@ -291,7 +295,6 @@ trait Users
 					->get()->set(Array(
 						"module_id" => $module_id,
 						"user_id" => $user_id,
-						"access_type" => 1,
 						"status" => 1
 					))->save();
 			}
@@ -306,7 +309,6 @@ trait Users
 					->get()->set(Array(
 						"method_id" => $method_id,
 						"user_id" => $user_id,
-						"access_type" => 1,
 						"status" => 1
 					))->save();
 			}

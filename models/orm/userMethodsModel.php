@@ -18,9 +18,6 @@ class userMethodsModel
 	/** @var int $method_id ID del método */
 	private $method_id;
 
-	/** @var int $access_type Tipo de acceso */
-	private $access_type;
-
 	/** @var int $creation_user - */
 	private $creation_user;
 
@@ -66,7 +63,6 @@ class userMethodsModel
 	{
 		if($default)
 		{
-			$this->access_type = 255;
 			$this->status = 1;
 		}
 	}
@@ -99,16 +95,6 @@ class userMethodsModel
 	public function setMethodId($value)
 	{
 		$this->method_id = $value === null ? null : (int)$value;
-	}
-
-	public function getAccessType()
-	{
-		return $this->access_type;
-	}
-
-	public function setAccessType($value)
-	{
-		$this->access_type = $value === null ? null : (int)$value;
 	}
 
 	public function getCreationUser()

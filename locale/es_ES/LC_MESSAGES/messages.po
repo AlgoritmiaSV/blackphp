@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2023-04-27 21:29+UTC-6\n"
+"PO-Revision-Date: 2023-04-28 10:37+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: es_ES\n"
@@ -37,6 +37,9 @@ msgstr "registro de actividades"
 
 msgid "Activity log"
 msgstr "Registro de actividades"
+
+msgid "Activity log on each element for each user"
+msgstr "Registro de actividades en cada elemento, por cada usuario"
 
 msgid "Admin user"
 msgstr "Usuario administrador"
@@ -407,6 +410,9 @@ msgstr "Leer"
 msgid "role"
 msgstr "rol"
 
+msgid "Role"
+msgstr "Rol"
+
 msgid "Role details"
 msgstr "Detalles del rol"
 
@@ -579,4 +585,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 187 messages translated.
+# 189 messages translated.

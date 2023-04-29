@@ -33,9 +33,6 @@ class availableModulesModel
 	/** @var int $status Estado 0:inactivo, 1:activo */
 	private $status;
 
-	/** @var int $access_type Tipo de acceso al módulo */
-	private $access_type;
-
 	/** @var int $entity_id ID de la empresa */
 	private $entity_id;
 
@@ -62,7 +59,7 @@ class availableModulesModel
 	private static $_soft_delete = true;
 
 	/** @var int|null $_deleted_status Valor a asignar en caso de borrado suave. */
-	private static $_deleted_status = 0;
+	private static $_deleted_status = null;
 
 	/**
 	 * Constructor de la clase
@@ -160,16 +157,6 @@ class availableModulesModel
 	public function setStatus($value)
 	{
 		$this->status = $value === null ? null : (int)$value;
-	}
-
-	public function getAccessType()
-	{
-		return $this->access_type;
-	}
-
-	public function setAccessType($value)
-	{
-		$this->access_type = $value === null ? null : (int)$value;
 	}
 
 	public function getEntityId()

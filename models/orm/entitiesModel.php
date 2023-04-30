@@ -294,5 +294,11 @@ class entitiesModel
 		usersModel::flush();
 		return usersModel::where("entity_id", $this->entity_id);
 	}
+
+	public function userLogs()
+	{
+		userLogsModel::flush();
+		return userLogsModel::where("entity_id", $this->entity_id);
+	}
 }
 ?>

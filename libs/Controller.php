@@ -432,7 +432,7 @@ class Controller
 	 * 
 	 * @return void No se devuelven valores
 	 */
-	protected function setUserLog($action_key, $element_key, $element_link = 0, $date_time = "")
+	protected function setUserLog($action_key, $element_key, $element_link = null, $date_time = "")
 	{
 		if(empty($date_time))
 		{
@@ -443,11 +443,20 @@ class Controller
 		{
 			return;
 		}
+		$actions = [
+			"create" => 4,
+			"update" => 2,
+			"delete" => 1
+		];
+		if(!isset($actions[$action_key]))
+		{
+			return;
+		}
 		$user_log = new userLogsModel();
 		$user_log->set(Array(
 			"user_id" => Session::get("user_id"),
 			"element_id" => $element->getElementId(),
-			"action_id" => $action_key,
+			"action_id" => $actions[$action_key],
 			"date_time" => $date_time,
 			"element_link" => $element_link
 		))->save();

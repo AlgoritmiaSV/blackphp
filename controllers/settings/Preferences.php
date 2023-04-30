@@ -53,6 +53,7 @@ trait Preferences
 			$entity_option->setOptionValue($value);
 			$entity_option->save();
 		}
+		$this->setUserLog("update", "preferences");
 
 		$option_list = entityOptionsModel::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
 		$options = Array();

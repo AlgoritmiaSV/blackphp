@@ -74,6 +74,7 @@ trait Entity
 				}
 				move_uploaded_file($_FILES["logo"]["tmp_name"], $file);
 			}
+			$this->setUserLog("update", "entity_data");
 		}
 		$this->json($data);
 	}

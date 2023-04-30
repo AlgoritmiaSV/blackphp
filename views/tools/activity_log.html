@@ -1,0 +1,56 @@
+<div class="list_options">
+	<div class="action_icons">
+		<a href="#" class="filter_button phone_inline">
+			<img src="public/images/filter.png" alt="_(Filter)">
+		</a>
+		<a href="#" class="download_link" data-url="/{{ module }}/log_table_loader/Excel/">
+			<img src="public/images/excel.png" alt="_(Export to Excel)">
+		</a>
+		<a href="#" class="print_button" data-print=".data_viewer">
+			<img src="public/images/printer.png" alt="_(Print)">
+		</a>
+	</div>
+	<div class="action_filter">
+		<span>_(From):</span>
+		<input type="text" class="date_input data_filter" data-identifier="from" value="{{ from }}">
+	</div>
+	<div class="action_filter">
+		<span>_(to):</span>
+		<input type="text" class="date_input data_filter" data-identifier="to" value="{{ to }}">
+	</div>
+	<div class="action_filter">
+		<input class="data_search" type="text" placeholder="_(Type a word for search)">
+	</div>
+</div>
+{{ print_header }}
+<div class="content_viewer">
+	<table class="data_viewer" data-source="content" id="log_table">
+		<thead>
+			<tr>
+				<th>_(Date and time)</th>
+				<th>_(Activity description)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="template">
+				<td>{{date_time}}</td>
+				<td>{{description}}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+
+		</tfoot>
+	</table>
+	<div class="loading_data">
+		<img src="public/images/loading.gif" class="medium_icon">
+		<span>_(Loading)...</span>
+	</div>
+	<div class="loading_error">
+		<img src="public/images/error.png" class="medium_icon">
+		<span>
+			_(Error!)<br>
+			_(Failed to load page).
+		</span>
+	</div>
+	<div class="empty_table_message">_(No records found!)</div>
+</div>

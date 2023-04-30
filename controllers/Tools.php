@@ -20,7 +20,7 @@ foreach(glob("controllers/tools/*") as $file)
 
 class Tools extends Controller
 {
-	use Trash;
+	use Trash, ActivityLog;
 
 	/**
 	 * Constructor de la clase
@@ -55,7 +55,6 @@ class Tools extends Controller
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
 		$this->view->render("main");
 	}
-
 
 	################################ LISTAS Y FORMULARIOS
 

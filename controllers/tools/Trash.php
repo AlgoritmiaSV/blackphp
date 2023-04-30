@@ -15,9 +15,9 @@ trait Trash
 		$this->view->standard_list();
 		$this->view->set([
 			"title" => _("Trash"),
-			"nav" => $this->view->render("main/nav", true),
 			"print_title" => _("Trash")
 		]);
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["print_header"] = $this->view->render("print_header", true);
 		$args = func_get_args();
 		$options = Array();

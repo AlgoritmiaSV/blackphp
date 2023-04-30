@@ -445,16 +445,19 @@ DROP TABLE IF EXISTS `user_logs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_logs` (
   `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `entity_id` int(11) NOT NULL COMMENT 'ID de la entidad',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
   `element_id` smallint(6) NOT NULL COMMENT 'ID del tipo de elemento',
   `action_id` tinyint(4) NOT NULL COMMENT 'Acción realizada',
   `date_time` datetime NOT NULL COMMENT 'Hora y fecha',
-  `element_link` int(11) NOT NULL COMMENT 'Enlace al elemento en cuestión',
+  `element_link` int(11) DEFAULT NULL COMMENT 'Enlace al elemento en cuestión',
   PRIMARY KEY (`log_id`),
   KEY `log_user` (`user_id`),
   KEY `log_element` (`element_id`),
   KEY `log_action` (`action_id`),
+  KEY `log_entity` (`entity_id`),
   CONSTRAINT `log_element` FOREIGN KEY (`element_id`) REFERENCES `app_elements` (`element_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `log_entity` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `log_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Registro de actividades del usuario';
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -281,6 +281,14 @@ trait Users
 			$user->setRoleId($_POST["role_id"]);
 		}
 		$user->save();
+		if(!empty($_POST["user_id"]))
+		{
+			$this->setUserLog("update", "users", $user->getUserId());
+		}
+		else
+		{
+			$this->setUserLog("create", "users", $user->getUserId());
+		}
 
 		$user_id = $user->getUserId();
 		if($user_id != Session::get("user_id"))
@@ -340,6 +348,7 @@ trait Users
 		$user = usersModel::find($_POST["id"]);
 		$affected = $user->delete();
 		$data["deleted"] = $affected > 0;
+		$this->setUserLog("delete", "users", $user->getUserId());
 		$this->json($data);
 	}
 }

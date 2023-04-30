@@ -12,6 +12,9 @@ class userLogsModel
 	/** @var int $log_id ID de la tabla */
 	private $log_id;
 
+	/** @var int $entity_id ID de la entidad */
+	private $entity_id;
+
 	/** @var int $user_id ID del usuario */
 	private $user_id;
 
@@ -68,6 +71,16 @@ class userLogsModel
 	public function setLogId($value)
 	{
 		$this->log_id = $value === null ? null : (int)$value;
+	}
+
+	public function getEntityId()
+	{
+		return $this->entity_id;
+	}
+
+	public function setEntityId($value)
+	{
+		$this->entity_id = $value === null ? null : (int)$value;
 	}
 
 	public function getUserId()

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2023-04-28 10:37+UTC-6\n"
+"PO-Revision-Date: 2023-04-29 19:02+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: es_ES\n"
@@ -31,6 +31,9 @@ msgstr "ordenar la columna de forma ascendente"
 
 msgid "activate to sort column descending"
 msgstr "ordenar la columna de forma descendente"
+
+msgid "Activity description"
+msgstr "Descripción de la actividad"
 
 msgid "activity log"
 msgstr "registro de actividades"
@@ -125,6 +128,9 @@ msgstr "Continuar"
 msgid "Create"
 msgstr "Crear"
 
+msgid "created"
+msgstr "creó"
+
 msgid "Created at"
 msgstr "Creado el"
 
@@ -137,6 +143,9 @@ msgstr "Contraseña actual"
 msgid "Date"
 msgstr "Fecha"
 
+msgid "Date and time"
+msgstr "Fecha y hora"
+
 msgid "day"
 msgstr "día"
 
@@ -145,6 +154,9 @@ msgstr "diciembre"
 
 msgid "Delete"
 msgstr "Eliminar"
+
+msgid "deleted"
+msgstr "eliminó"
 
 msgid "Deleted %s"
 msgstr "%s eliminados"
@@ -533,6 +545,9 @@ msgstr "Escriba una palabra para buscar"
 msgid "Update"
 msgstr "Actualizar"
 
+msgid "updated"
+msgstr "actualizó"
+
 msgid "User"
 msgstr "Usuario"
 
@@ -581,8 +596,24 @@ msgstr "No ha iniciado sesión"
 msgid "You do not have permissions to perform this operation"
 msgstr "No tiene permisos para realizar esta operación"
 
+msgctxt "female"
+msgid "a"
+msgstr "una"
+
+msgctxt "female"
+msgid "an"
+msgstr "una"
+
+msgctxt "male"
+msgid "a"
+msgstr "un"
+
+msgctxt "male"
+msgid "an"
+msgstr "un"
+
 msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 189 messages translated.
+# 198 messages translated.

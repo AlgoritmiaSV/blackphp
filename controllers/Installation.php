@@ -246,7 +246,7 @@ class Installation extends Controller
 	 * tanto a la entidad como al usuario administrador.
 	 * Finalmente, redirige hacia el subdominio creado.
 	 * 
-	 * @return void.
+	 * @return void
 	 */
 	public function save_entity()
 	{

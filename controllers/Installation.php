@@ -186,16 +186,59 @@ class Installation extends Controller
 	 */
 	public function load_form_data()
 	{
-		$data = Array();
+		$data = [];
 		if($this->entity_id != null)
 		{
 			$entity = entitiesModel::find($this->entity_id)->toArray();
-			$user = usersModel::find($entity["admin_user"])->toArray();
-			$data["update"] = array_merge($entity, $user);
-			$data["check"] = Array(
+			$admin_user = usersModel::find($entity["admin_user"])->toArray();
+			$data["update"] = array_merge($entity, $admin_user);
+			$data["check"] = [
 				"modules" => entityModulesModel::select("module_id AS id")->getAll(),
 				"methods" => entityMethodsModel::select("method_id AS id")->getAll()
-			);
+			];
+			$admin_role = rolesModel::find($entity["admin_role"]);
+			if($admin_role->exists())
+			{
+				$read = [];
+				$create = [];
+				$update = [];
+				$delete = [];
+				$elements = roleElementsModel::where("role_id", $admin_role->getRoleId())->getAll();
+				foreach($elements as &$element)
+				{
+					if((intval($element->getPermissions()) & 8) != 0)
+					{
+						$read[] = ["id" => $element->getElementId()];
+					}
+					if((intval($element->getPermissions()) & 4) != 0)
+					{
+						$create[] = ["id" => $element->getElementId()];
+					}
+					if((intval($element->getPermissions()) & 2) != 0)
+					{
+						$update[] = ["id" => $element->getElementId()];
+					}
+					if((intval($element->getPermissions()) & 1) != 0)
+					{
+						$delete[] = ["id" => $element->getElementId()];
+					}
+					$data["check"]["read"] = $read;
+					$data["check"]["create"] = $create;
+					$data["check"]["update"] = $update;
+					$data["check"]["delete"] = $delete;
+				}
+				unset($element);
+			}
+			else
+			{
+				$data["check"]["read"] = appElementsModel::select("element_id AS id")->getAll();
+				$data["check"]["create"] = appElementsModel::select("element_id AS id")
+					->where("is_creatable", 1)->getAll();
+				$data["check"]["update"] = appElementsModel::select("element_id AS id")
+					->where("is_updatable", 1)->getAll();
+				$data["check"]["delete"] = appElementsModel::select("element_id AS id")
+					->where("is_deletable", 1)->getAll();
+			}
 		}
 		$this->json($data);
 	}

@@ -128,12 +128,6 @@
 		color: inherit;
 		background: none;
 	}
-
-	/* Tags */
-	button:not(.swal2-confirm)
-	{
-		width:93%;
-	}
 }
 
 @media screen and (min-width: 800px)

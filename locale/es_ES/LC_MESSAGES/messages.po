@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2023-04-29 19:02+UTC-6\n"
+"PO-Revision-Date: 2023-05-08 21:30+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: es_ES\n"
@@ -503,9 +503,6 @@ msgstr "Soporte técnico"
 msgid "Thanks for waiting"
 msgstr "Gracias por esperar"
 
-msgid "The framework to maximize productivity!"
-msgstr "¡El framework para maximizar la productividad!"
-
 msgid "The nickname already exists!"
 msgstr "¡El nombre de usuario ya existe!"
 
@@ -616,4 +613,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 198 messages translated.
+# 197 messages translated.

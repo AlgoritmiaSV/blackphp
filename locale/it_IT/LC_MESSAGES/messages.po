@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-01 20:38-0600\n"
-"PO-Revision-Date: 2023-05-08 21:30+UTC-6\n"
+"PO-Revision-Date: 2023-05-09 22:42+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: it_IT\n"
@@ -103,6 +103,9 @@ msgstr "Cambiare la password"
 
 msgid "Changes have been saved"
 msgstr "I cambiamenti sono stati salvati"
+
+msgid "Choose an option"
+msgstr "Scegliere un'opzione"
 
 msgid "Click here"
 msgstr "Clicca qui"
@@ -613,4 +616,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 197 messages translated.
+# 198 messages translated.

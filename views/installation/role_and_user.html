@@ -19,15 +19,15 @@
 				</div>
 				<div class="form_entry">
 					<label>_(User):</label>
-					<input name="nickname" maxlength="32" class="update_input default_width" value="admin" required>
+					<input name="nickname" minlength="3" maxlength="32" class="update_input default_width" value="admin" pattern="[a-zA-Z0-9_]+" required>
 				</div>
 				<div class="form_entry">
 					<label>_(Password):</label>
-					<input name="password" type="password" maxlength="256" class="default_width">
+					<input name="password" type="password" minlength="6" maxlength="256" class="default_width">
 				</div>
 				<div class="form_entry">
 					<label>_(Confirm password):</label>
-					<input name="confirm_password" type="password" maxlength="256" class="default_width">
+					<input name="confirm_password" type="password" minlength="6" maxlength="256" class="default_width">
 				</div>
 			</div>
 			<div class="form_foot">

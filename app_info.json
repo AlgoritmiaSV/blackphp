@@ -1,9 +1,33 @@
 {
   "system_name": "BlackPHP",
   "version": "1.0",
-  "number": "145",
-  "last_update": "2023-05-08 21:45:58",
-  "copyright_year": "2022 - 2023",
-  "copyright_author": "Edwin Fajardo",
-  "copyright_link": "www.edwinfajardo.com"
+  "number": "150",
+  "last_update": "2023-05-11 20:45:30",
+  "copyright": {
+    "year": "2022- 2023",
+    "author": "Edwin Fajardo",
+    "link": "www.edwinfajardo.com"
+  },
+  "technical_support": [
+    {
+      "icon": "phone.png",
+      "name": "Phone",
+      "link": "tel://+50377197466"
+    },
+    {
+      "icon": "telegram.png",
+      "name": "Telegram",
+      "link": "https://t.me/ingEdwinFajardo"
+    },
+    {
+      "icon": "whatsapp.png",
+      "name": "WhatsApp",
+      "link": "https://wa.me/50377197466"
+    },
+    {
+      "icon": "messenger.png",
+      "name": "Messenger",
+      "link": "https://m.me/ingEdwinFajardo"
+    }
+  ]
 }

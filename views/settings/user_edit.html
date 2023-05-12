@@ -14,10 +14,10 @@
 				<div class="form_entry">
 					<label>_(User):</label>
 					<!-- edition -->
-					<input type="text" name="nickname" maxlength="32" class="update_input" readonly>
+					<input type="text" name="nickname" class="update_input" readonly>
 					<!-- /edition -->
 					<!-- creation -->
-					<input type="text" name="nickname" maxlength="32">
+					<input type="text" name="nickname" minlength="3" maxlength="32" pattern="[a-zA-Z0-9_]+" required>
 					<!-- /creation -->
 				</div>
 				<div class="form_entry">

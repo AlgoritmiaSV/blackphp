@@ -51,5 +51,37 @@ class Index extends Controller
 		$data = Array();
 		$this->json($data);
 	}
+
+	/**
+	 * Carga de contactos para soporte técnico
+	 * 
+	 * Imprime, en formato HTML, los íconos para acceso a soporte técnico previamente
+	 * configurados en app_info.json.
+	 * 
+	 * @return void
+	 */
+	public function technical_support_loader($mode = "embedded")
+	{
+		if(file_exists("app_info.json"))
+		{
+			$info = json_decode(file_get_contents("app_info.json"), true);
+			$this->view->data["contacts"] = $info["technical_support"];
+		}
+		if($mode == "standalone")
+		{
+			$this->view->data["title"] = _("Technical support");
+			$this->view->standard_menu();
+			$this->view->add("styles", "css", Array(
+				'styles/standalone.css'
+			));
+			$this->view->restrict[] = "embedded";
+			$this->view->data["content"] = $this->view->render('main/technical_support', true);
+			$this->view->render('clean_main');
+		}
+		else
+		{
+			$this->view->render('main/technical_support');
+		}
+	}
 }
 ?>

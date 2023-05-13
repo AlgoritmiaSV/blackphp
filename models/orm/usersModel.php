@@ -27,6 +27,9 @@ class usersModel
 	/** @var string $password Contraseña */
 	private $password;
 
+	/** @var string $password_hash Hash de la contraseña */
+	private $password_hash;
+
 	/** @var int $theme_id Tema de visualización del usuario */
 	private $theme_id;
 
@@ -144,6 +147,16 @@ class usersModel
 	public function setPassword($value)
 	{
 		$this->password = $value === null ? null : (string)$value;
+	}
+
+	public function getPasswordHash()
+	{
+		return $this->password_hash;
+	}
+
+	public function setPasswordHash($value)
+	{
+		$this->password_hash = $value === null ? null : (string)$value;
 	}
 
 	public function getThemeId()

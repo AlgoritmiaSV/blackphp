@@ -461,7 +461,8 @@ class Installation extends Controller
 			"entity_id" => $entity->getEntityId(),
 			"user_name" => $data["user_name"],
 			"nickname" => $data["nickname"],
-			"password" => empty($data["password"]) ? $user->getPassword() : md5($data["password"]),
+			"password" => empty($data["password"]) ? $user->getPassword() : "HASH",
+			"password_hash" => empty($data["password"]) ? $user->getPasswordHash() : password_hash($_POST["password"], PASSWORD_BCRYPT),
 			"role_id" => $role->getRoleId(),
 			"theme_id" => 1
 		))->save();

@@ -572,6 +572,7 @@ CREATE TABLE `users` (
   `nickname` varchar(32) DEFAULT NULL COMMENT 'Usuario para inicio de sesión',
   `email` varchar(64) DEFAULT NULL COMMENT 'Correo electrónico',
   `password` char(32) NOT NULL COMMENT 'Contraseña',
+  `password_hash` char(60) NOT NULL COMMENT 'Hash de la contraseña',
   `theme_id` int(11) DEFAULT 1 COMMENT 'Tema de visualización del usuario',
   `locale` char(5) DEFAULT NULL COMMENT 'Idioma del usuario',
   `role_id` int(11) DEFAULT NULL COMMENT 'ID del rol',

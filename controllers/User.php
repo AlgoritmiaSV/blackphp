@@ -91,26 +91,33 @@ class User extends Controller
 			$this->json($data);
 			return;
 		}
-		$user = usersModel::where("nickname", $_POST["nickname"])->where("password", md5($_POST["password"]))->get()->toArray();
-		if(isset($user["nickname"]))
+		$user = usersModel::findBy("nickname", $_POST["nickname"]);
+		if($user->exists() && empty($user->getPasswordHash()) && md5($_POST["password"]) == $user->getPassword())
+		{
+			$user->set([
+				"password_hash" => password_hash($_POST["password"], PASSWORD_BCRYPT),
+				"password" => "HASH"
+			])->save();
+		}
+		if($user->exists() && password_verify($_POST["password"], $user->getPasswordHash()))
 		{
 			$data["reload"] = true;
 
 			# Cargar los datos del usuario a la sesión actual
-			foreach ($user as $key => $value) {
+			foreach ($user->toArray() as $key => $value) {
 				Session::set($key, $value);
 			}
 
 			# Cargar el idioma del usuario
-			if(!empty($user["locale"]))
+			if(!empty($user->getLocale()))
 			{
-				Session::set("lang", explode("_", $user["locale"])[0]);
+				Session::set("lang", explode("_", $user->getLocale())[0]);
 			}
 
 			# Cargar el tema del usuario
-			if(!empty($user["theme_id"]))
+			if(!empty($user->getThemeId()))
 			{
-				$theme = appThemesModel::find($user["theme_id"]);
+				$theme = appThemesModel::find($user->getThemeId());
 				Session::set("theme_id", $theme->getThemeId());
 				Session::set("theme_url", $theme->getThemeUrl());
 			}
@@ -124,31 +131,31 @@ class User extends Controller
 			{
 				$parser = new UserAgentParser();
 				$ua = $parser->parse($user_agent);
-				$browser->set(Array(
+				$browser->set([
 					"user_agent" => $user_agent,
 					"browser_name" => $ua->browser(),
 					"browser_version" => $ua->browserVersion(),
 					"platform" => $ua->platform(),
-					"creation_user" => $user["user_id"],
+					"creation_user" => $user->getUserId(),
 					"creation_time" => $now
-				))->save();
+				])->save();
 			}
 
 			# Guardar un registro del inicio de sesión
 			$session = new userSessionsModel();
-			$session->set(Array(
-				"user_id" => $user["user_id"],
+			$session->set([
+				"user_id" => $user->getUserId(),
 				"ip_address" => $ipv4,
 				"browser_id" => $browser->getBrowserId(),
 				"date_time" => $now
-			))->save();
+			])->save();
 
 			# Cargar los módulos a la sesión actual
-			Session::set("modules", availableModulesModel::where("user_id", $user["user_id"])->orderBy("module_order")->getAllArray());
+			Session::set("modules", availableModulesModel::where("user_id", $user->getUserId())->orderBy("module_order")->getAllArray());
 
 			# Cargar los permisos del usuario
 			$permissions = Array();
-			$elements = roleElementsModel::where("role_id", $user["role_id"])->join("app_elements", "element_id")->getAll();
+			$elements = roleElementsModel::where("role_id", $user->getRoleId())->join("app_elements", "element_id")->getAll();
 			foreach($elements as $element)
 			{
 				$permissions[$element["element_key"]] = $element["permissions"];

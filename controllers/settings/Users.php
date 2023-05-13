@@ -270,11 +270,13 @@ trait Users
 			));
 		if(!empty($_POST["password"]))
 		{
-			$user->setPassword(md5($_POST["password"]));
+			$user->setPassword("HASH");
+			$user->setPasswordHash(password_hash($_POST["password"], PASSWORD_BCRYPT));
 		}
 		if(empty($user->getPassword()))
 		{
 			$user->setPassword("");
+			$user->setPasswordHash("");
 		}
 		if(!empty($_POST["role_id"]))
 		{

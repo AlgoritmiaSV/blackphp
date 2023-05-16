@@ -46,6 +46,13 @@ class Controller
 			Session::set("system", $system);
 		}
 		$this->view->data["system_name"] = $system["system_name"];
+		if(isset($system["copyright"]))
+		{
+			foreach($system["copyright"] as $key => $value)
+			{
+				$this->view->data["copyright_" . $key] = $value;
+			}
+		}
 		$this->system_name = $system["system_name"];
 
 		#2 Zona horaria por defecto

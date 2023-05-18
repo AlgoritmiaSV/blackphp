@@ -130,6 +130,52 @@ class Settings extends Controller
 				$data["update"][$option["option_key"]] = $option["option_value"];
 			}
 		}
+		if($_POST["method"] == "NewRole" || $_POST["method"] == "EditRole")
+		{
+			$role = rolesModel::find($_POST["id"]);
+			if($role->exists())
+			{
+				$read = [];
+				$create = [];
+				$update = [];
+				$delete = [];
+				$elements = roleElementsModel::where("role_id", $role->getRoleId())->getAll();
+				foreach($elements as &$element)
+				{
+					if((intval($element->getPermissions()) & 8) != 0)
+					{
+						$read[] = ["id" => $element->getElementId()];
+					}
+					if((intval($element->getPermissions()) & 4) != 0)
+					{
+						$create[] = ["id" => $element->getElementId()];
+					}
+					if((intval($element->getPermissions()) & 2) != 0)
+					{
+						$update[] = ["id" => $element->getElementId()];
+					}
+					if((intval($element->getPermissions()) & 1) != 0)
+					{
+						$delete[] = ["id" => $element->getElementId()];
+					}
+					$data["check"]["read"] = $read;
+					$data["check"]["create"] = $create;
+					$data["check"]["update"] = $update;
+					$data["check"]["delete"] = $delete;
+				}
+				unset($element);
+			}
+			else
+			{
+				$data["check"]["read"] = appElementsModel::select("element_id AS id")->getAll();
+				$data["check"]["create"] = appElementsModel::select("element_id AS id")
+					->where("is_creatable", 1)->getAll();
+				$data["check"]["update"] = appElementsModel::select("element_id AS id")
+					->where("is_updatable", 1)->getAll();
+				$data["check"]["delete"] = appElementsModel::select("element_id AS id")
+					->where("is_deletable", 1)->getAll();
+			}
+		}
 		$this->json($data);
 	}
 

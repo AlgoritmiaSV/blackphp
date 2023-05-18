@@ -27,11 +27,17 @@ class userDataModel
 	/** @var string $password Contraseña */
 	private $password;
 
+	/** @var string $password_hash Hash de la contraseña */
+	private $password_hash;
+
 	/** @var int $theme_id Tema de visualización del usuario */
 	private $theme_id;
 
 	/** @var string $locale Idioma del usuario */
 	private $locale;
+
+	/** @var int $role_id ID del rol */
+	private $role_id;
 
 	/** @var int $creation_user - */
 	private $creation_user;
@@ -50,6 +56,9 @@ class userDataModel
 
 	/** @var string $last_login Fecha y hora */
 	private $last_login;
+
+	/** @var string $role_name Nombre del rol */
+	private $role_name;
 
 
 	/** @var string $_table_name Nombre de la tabla */
@@ -147,6 +156,16 @@ class userDataModel
 		$this->password = $value === null ? null : (string)$value;
 	}
 
+	public function getPasswordHash()
+	{
+		return $this->password_hash;
+	}
+
+	public function setPasswordHash($value)
+	{
+		$this->password_hash = $value === null ? null : (string)$value;
+	}
+
 	public function getThemeId()
 	{
 		return $this->theme_id;
@@ -165,6 +184,16 @@ class userDataModel
 	public function setLocale($value)
 	{
 		$this->locale = $value === null ? null : (string)$value;
+	}
+
+	public function getRoleId()
+	{
+		return $this->role_id;
+	}
+
+	public function setRoleId($value)
+	{
+		$this->role_id = $value === null ? null : (int)$value;
 	}
 
 	public function getCreationUser()
@@ -225,6 +254,16 @@ class userDataModel
 	public function setLastLogin($value)
 	{
 		$this->last_login = $value === null ? null : (string)$value;
+	}
+
+	public function getRoleName()
+	{
+		return $this->role_name;
+	}
+
+	public function setRoleName($value)
+	{
+		$this->role_name = $value === null ? null : (string)$value;
 	}
 }
 ?>

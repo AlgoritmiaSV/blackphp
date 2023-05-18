@@ -36,17 +36,35 @@ trait Roles
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->restrict[] = "edition";
-		$elements = roleElementsModel::where("role_id", Session::get("role_id"))->getAllArray();
-		$this->view->data["elements"] = "";
-		foreach($elements as $element)
+
+		$role_elements = "";
+		$modules = appModulesModel::getAll();
+		foreach($modules as $module)
 		{
-			foreach($element as $key => $item)
+			$elements = appElementsModel::where("module_id", $module->getModuleId())->getAllArray();
+			foreach($elements as &$element)
 			{
-				$this->view->data[$key] = $item;
+				if($element["is_creatable"] == 0)
+				{
+					$element["creatable"] = "disabled";
+				}
+				if($element["is_updatable"] == 0)
+				{
+					$element["updatable"] = "disabled";
+				}
+				if($element["is_deletable"] == 0)
+				{
+					$element["deletable"] = "disabled";
+				}
 			}
-			$this->view->data["elements"] .= $this->view->render("settings/elements", true);
+			unset($element);
+			$this->view->data["module_name"] = $module->getModuleName();
+			$this->view->data["elements"] = $elements;
+			$role_elements .= $this->view->render("installation/role_elements", true);
 		}
-		$this->view->data["content"] = $this->view->render("settings/user_edit", true);
+		$this->view->data["role_elements"] = $role_elements;
+
+		$this->view->data["content"] = $this->view->render("settings/role_edit", true);
 		$this->view->render('main');
 	}
 
@@ -131,6 +149,62 @@ trait Roles
 		{
 			$this->json($data);
 		}
+	}
+
+	public function save_role()
+	{
+		$data = $_POST;
+		$data["success"] = false;
+
+		$role = rolesModel::find($_POST["role_id"]);
+		$role->set([
+			"role_name" => $_POST["role_name"]
+		])->save();
+		$elements = Array();
+		foreach($_POST["read"] as $element)
+		{
+			$elements[$element] = 8;
+		}
+		foreach($_POST["create"] as $element)
+		{
+			$elements[$element] = intval($elements[$element]) + 4;
+		}
+		foreach($_POST["update"] as $element)
+		{
+			$elements[$element] = intval($elements[$element]) + 2;
+		}
+		foreach($_POST["delete"] as $element)
+		{
+			$elements[$element] = intval($elements[$element]) + 1;
+		}
+		foreach($elements as $element_id => $permissions)
+		{
+			$role_element = roleElementsModel::where("role_id", $role->getRoleId())->where("element_id", $element_id)->get();
+			$role_element->set([
+				"role_id" => $role->getRoleId(),
+				"element_id" => $element_id,
+				"permissions" => $permissions,
+				"status" => 1
+			])->save();
+		}
+		roleElementsModel::where("role_id", $role->getRoleId())->whereNotIn(array_keys($elements), "element_id")->update(["status" => 0]);
+
+		#Finish and response
+		$data["success"] = true;
+		$data["title"] = _("Success");
+		$data["message"] = _("Changes have been saved");
+		$data["theme"] = "green";
+		if(!empty($_POST["role_id"]))
+		{
+			$data["no_reset"] = true;
+			$this->setUserLog("update", "roles", $role->getRoleId());
+		}
+		else
+		{
+			$data["reload_after"] = true;
+			$this->setUserLog("create", "roles", $role->getRoleId());
+		}
+		$this->json($data);
 	}
 }
 ?>

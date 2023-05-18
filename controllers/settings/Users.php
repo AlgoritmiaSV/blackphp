@@ -116,7 +116,7 @@ trait Users
 	 * 
 	 * @return void
 	 */
-	public function users_table_loader($response = "JSON")
+	public function user_table_loader($response = "JSON")
 	{
 		$this->session_required("json");
 		$data = Array();
@@ -164,7 +164,7 @@ trait Users
 		{
 			$user_id = $_POST["id"];
 		}
-		$user = usersModel::find($user_id)->toArray();
+		$user = userDataModel::findBy("user_id", $user_id)->toArray();
 		$this->view->data = array_merge($this->view->data, $user);
 		$sessions = userSessionsModel::join("browsers", "browser_id")->where("user_sessions.user_id", $user_id)->orderBy("date_time", "DESC")->addCounter("item")->get(10);
 		foreach($sessions as $key => $session)

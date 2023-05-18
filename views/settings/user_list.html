@@ -1,9 +1,12 @@
 <div class="list_options">
 	<div class="action_icons">
+		<a href="#" class="filter_button phone_inline">
+			<img src="public/images/filter.png" alt="_(Filter)">
+		</a>
 		<a href="/{{ module }}/NewUser/">
 			<img src="public/images/add.png" alt="_(New user)">
 		</a>
-		<a href="#" class="download_link" data-url="/{{ module }}/users_table_loader/Excel/">
+		<a href="#" class="download_link" data-url="/{{ module }}/user_table_loader/Excel/">
 			<img src="public/images/excel.png" alt="_(Export to Excel)">
 		</a>
 		<a href="#" class="print_button" data-print=".data_viewer">
@@ -16,11 +19,12 @@
 </div>
 {{ print_header }}
 <div class="content_viewer">
-	<table class="data_viewer" data-source="content" id="users_table">
+	<table class="data_viewer" data-source="content" id="user_table">
 		<thead>
 			<tr>
 				<th>_(User)</th>
 				<th>_(Complete name)</th>
+				<th>_(Role)</th>
 				<th class="pc_cell">_(Last login)</th>
 			</tr>
 		</thead>
@@ -28,6 +32,7 @@
 			<tr class="template" data-id="{{user_id}}" data-alert="{{ module }}/user_details_loader/{{user_id}}/standalone/" data-title="_(User details)">
 				<td>{{nickname}}</td>
 				<td>{{user_name}}</td>
+				<td class="pc_cell">{{role_name}}</td>
 				<td class="pc_cell">{{last_login}}</td>
 			</tr>
 		</tbody>

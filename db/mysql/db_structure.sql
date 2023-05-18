@@ -426,14 +426,17 @@ SET character_set_client = utf8;
   1 AS `nickname`,
   1 AS `email`,
   1 AS `password`,
+  1 AS `password_hash`,
   1 AS `theme_id`,
   1 AS `locale`,
+  1 AS `role_id`,
   1 AS `creation_user`,
   1 AS `creation_time`,
   1 AS `edition_user`,
   1 AS `edition_time`,
   1 AS `status`,
-  1 AS `last_login` */;
+  1 AS `last_login`,
+  1 AS `role_name` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -636,12 +639,12 @@ CREATE TABLE `users` (
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
-/*!50001 VIEW `user_data` AS select `u`.`user_id` AS `user_id`,`u`.`entity_id` AS `entity_id`,`u`.`user_name` AS `user_name`,`u`.`nickname` AS `nickname`,`u`.`email` AS `email`,`u`.`password` AS `password`,`u`.`theme_id` AS `theme_id`,`u`.`locale` AS `locale`,`u`.`creation_user` AS `creation_user`,`u`.`creation_time` AS `creation_time`,`u`.`edition_user` AS `edition_user`,`u`.`edition_time` AS `edition_time`,`u`.`status` AS `status`,`ls`.`last_login` AS `last_login` from (`users` `u` left join (select `user_sessions`.`user_id` AS `user_id`,max(`user_sessions`.`date_time`) AS `last_login` from `user_sessions` group by `user_sessions`.`user_id`) `ls` on(`ls`.`user_id` = `u`.`user_id`)) where `u`.`status` = 1 */;
+/*!50001 VIEW `user_data` AS select `u`.`user_id` AS `user_id`,`u`.`entity_id` AS `entity_id`,`u`.`user_name` AS `user_name`,`u`.`nickname` AS `nickname`,`u`.`email` AS `email`,`u`.`password` AS `password`,`u`.`password_hash` AS `password_hash`,`u`.`theme_id` AS `theme_id`,`u`.`locale` AS `locale`,`u`.`role_id` AS `role_id`,`u`.`creation_user` AS `creation_user`,`u`.`creation_time` AS `creation_time`,`u`.`edition_user` AS `edition_user`,`u`.`edition_time` AS `edition_time`,`u`.`status` AS `status`,`ls`.`last_login` AS `last_login`,`r`.`role_name` AS `role_name` from ((`users` `u` left join `roles` `r` on(`u`.`role_id` = `r`.`role_id`)) left join (select `user_sessions`.`user_id` AS `user_id`,max(`user_sessions`.`date_time`) AS `last_login` from `user_sessions` group by `user_sessions`.`user_id`) `ls` on(`ls`.`user_id` = `u`.`user_id`)) where `u`.`status` = 1 */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

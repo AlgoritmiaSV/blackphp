@@ -15,8 +15,8 @@
 		<tbody>
 			[[ elements ]]
 			<tr>
-				<td>{{ element_name }}</td>
-				<td class="radio_td smallest_cell">
+				<td data-label="_(Element)">{{ element_name }}</td>
+				<td class="radio_td smallest_cell" data-label="_(Read)">
 					<div class="checkbox_container radio_inline">
 						<label>
 							<input type="checkbox" class="update_check" name="read[]" value="{{ element_id }}" data-source="read">
@@ -24,7 +24,7 @@
 						</label>
 					</div>
 				</td>
-				<td class="radio_td smallest_cell">
+				<td class="radio_td smallest_cell" data-label="_(Create)">
 					<div class="checkbox_container radio_inline">
 						<label>
 							<input type="checkbox" class="update_check" name="create[]" value="{{ element_id }}" data-source="create" {{ creatable }}>
@@ -32,7 +32,7 @@
 						</label>
 					</div>
 				</td>
-				<td class="radio_td smallest_cell">
+				<td class="radio_td smallest_cell" data-label="_(Update)">
 					<div class="checkbox_container radio_inline">
 						<label>
 							<input type="checkbox" class="update_check" name="update[]" value="{{ element_id }}" data-source="update" {{ updatale }}>
@@ -40,7 +40,7 @@
 						</label>
 					</div>
 				</td>
-				<td class="radio_td smallest_cell">
+				<td class="radio_td smallest_cell" data-label="_(Delete)">
 					<div class="checkbox_container radio_inline">
 						<label>
 							<input type="checkbox" class="update_check" name="delete[]" value="{{ element_id }}" data-source="delete" {{ deletable }}>

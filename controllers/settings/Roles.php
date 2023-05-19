@@ -60,7 +60,7 @@ trait Roles
 			unset($element);
 			$this->view->data["module_name"] = $module->getModuleName();
 			$this->view->data["elements"] = $elements;
-			$role_elements .= $this->view->render("installation/role_elements", true);
+			$role_elements .= $this->view->render("settings/role_elements", true);
 		}
 		$this->view->data["role_elements"] = $role_elements;
 

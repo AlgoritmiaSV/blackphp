@@ -959,6 +959,11 @@ input:checked + .slider:before
 		width: 120px;
 	}
 
+	.medium_icon
+	{
+		width: 40px;
+	}
+
 	.table, .cell:not(.pc_cell)
 	{
 		display: block;

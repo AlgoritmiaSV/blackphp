@@ -81,21 +81,35 @@ trait Roles
 		$this->view->data["title"] = _("Edit role");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		if($role_id == Session::get("role_id"))
-		{
-			$this->view->restrict[] = "no_self";
-		}
 		$this->view->restrict[] = "creation";
-		$elements = roleElements::where("role_id", Session::get("role_id"))->getAllArray();
-		$this->view->data["elements"] = "";
-		foreach($elements as $element)
+
+		$role_elements = "";
+		$modules = appModulesModel::getAll();
+		foreach($modules as $module)
 		{
-			foreach($element as $key => $item)
+			$elements = appElementsModel::where("module_id", $module->getModuleId())->getAllArray();
+			foreach($elements as &$element)
 			{
-				$this->view->data[$key] = $item;
+				if($element["is_creatable"] == 0)
+				{
+					$element["creatable"] = "disabled";
+				}
+				if($element["is_updatable"] == 0)
+				{
+					$element["updatable"] = "disabled";
+				}
+				if($element["is_deletable"] == 0)
+				{
+					$element["deletable"] = "disabled";
+				}
 			}
-			$this->view->data["elements"] .= $this->view->render("settings/elements", true);
+			unset($element);
+			$this->view->data["module_name"] = $module->getModuleName();
+			$this->view->data["elements"] = $elements;
+			$role_elements .= $this->view->render("settings/role_elements", true);
 		}
+		$this->view->data["role_elements"] = $role_elements;
+
 		$this->view->data["content"] = $this->view->render("settings/role_edit", true);
 		$this->view->render('main');
 	}
@@ -148,6 +162,76 @@ trait Roles
 		else
 		{
 			$this->json($data);
+		}
+	}
+
+	/**
+	 * Carga de detalles del rol
+	 * 
+	 * Muestra una hoja con los detalles del rol. Este método puede ser invocado por a través
+	 * de RoleDetails (embedded) y directamente para ser mostrado en un jAlert (standalone); por
+	 * ejemplo, para el rol con ID 1, se podría visitar:
+	 * - Settings/RoleDetails/1/ (embedded)
+	 * - Settings/role_details_loader/1/standalone/ (standalone)
+	 * @param int $role_id ID del usuario
+	 * @param string $mode Modo en que se mostrará la vista
+	 * 
+	 * @return void
+	 */
+	public function role_details_loader($role_id = "", $mode = "embedded")
+	{
+		$this->session_required("internal");
+		if(empty($role_id))
+		{
+			$role_id = $_POST["id"];
+		}
+		$role = rolesModel::find($role_id)->toArray();
+		$this->view->data = array_merge($this->view->data, $role);
+
+		$this->view->data["users"] = implode(", ", array_column(usersModel::where("role_id", $role_id)->getAllArray(), "user_name"));
+
+		if($role["role_id"] == Session::get("role_id"))
+		{
+			$this->view->restrict[] = "self";
+		}
+		
+		# Permissions
+		$appModules = appModulesModel::whereIn(array_column(entityModulesModel::getAllArray(), "module_id"))->getAll();
+		$modules = "";
+		foreach($appModules as $module)
+		{
+			$this->view->data["module_name"] = $module->getModuleName();
+			$permissions = appElementsModel::join("role_elements", "element_id")->where("module_id", $module->getModuleId())->where("role_id", $role_id)->getAll();
+			foreach($permissions as &$permission)
+			{
+				$permission["read"] = ($permission["permissions"] & 8) == 0 ? "not_permitted" : "checked";
+				$permission["create"] = ($permission["permissions"] & 4) == 0 ? "not_permitted" : "checked";
+				$permission["update"] = ($permission["permissions"] & 2) == 0 ? "not_permitted" : "checked";
+				$permission["delete"] = ($permission["permissions"] & 1) == 0 ? "not_permitted" : "checked";
+			}
+			unset($permission);
+			$this->view->data["permissions"] = $permissions;
+			$modules .= $this->view->render("settings/role_details_modules", true);
+		}
+		$this->view->data["modules"] = $modules;
+
+		$this->userActions($role);
+		$this->view->data["print_title"] = _("Role details");
+		$this->view->data["print_header"] = $this->view->render("print_header", true);
+		if($mode == "standalone")
+		{
+			$this->view->data["title"] = _("Role details");
+			$this->view->standard_details();
+			$this->view->add("styles", "css", Array(
+				'styles/standalone.css'
+			));
+			$this->view->restrict[] = "embedded";
+			$this->view->data["content"] = $this->view->render('settings/role_details', true);
+			$this->view->render('clean_main');
+		}
+		else
+		{
+			$this->view->render("settings/role_details");
 		}
 	}
 
@@ -204,6 +288,40 @@ trait Roles
 			$data["reload_after"] = true;
 			$this->setUserLog("create", "roles", $role->getRoleId());
 		}
+		$this->json($data);
+	}
+
+	/**
+	 * Eliminar rol
+	 * 
+	 * Elimina un rol e imprime la respuesta en formato JSON.
+	 * 
+	 * @return void
+	 */
+	public function delete_role()
+	{
+		$this->session_required("json");
+		$data = Array("deleted" => false);
+		if(empty($_POST["id"]))
+		{
+			$this->json($data);
+			return;
+		}
+		$role = rolesModel::find($_POST["id"]);
+		$users = usersModel::where("role_id", $role->getRoleId())->count();
+		if($users > 0)
+		{
+			$this->json([
+				"deleted" => false,
+				"title" => _("Error"),
+				"message" => _("There are active users in this role"),
+				"theme" => "red"
+			]);
+			return;
+		}
+		$affected = $role->delete();
+		$data["deleted"] = $affected > 0;
+		$this->setUserLog("delete", "roles", $role->getRoleId());
 		$this->json($data);
 	}
 }

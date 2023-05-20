@@ -135,6 +135,7 @@ class Settings extends Controller
 			$role = rolesModel::find($_POST["id"]);
 			if($role->exists())
 			{
+				$data["update"] = $role->toArray();
 				$read = [];
 				$create = [];
 				$update = [];

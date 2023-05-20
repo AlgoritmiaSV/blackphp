@@ -3,9 +3,10 @@
 		<form action="save_role" data-reset="{{ module }}/Roles" enctype="multipart/form-data">
 			<div class="form_title">
 				_(Edit role)
+				<a class="close_form" href="#"><img src="public/images/close.png"></a>
 			</div>
 			<div class="form_body">
-				<input type="hidden" name="entity_id" class="update_input">
+				<input type="hidden" name="role_id" class="update_input">
 				<div class="form_entry">
 					<label>_(Role name):</label>
 					<input type="text" name="role_name" maxlength="64" class="update_input" required>

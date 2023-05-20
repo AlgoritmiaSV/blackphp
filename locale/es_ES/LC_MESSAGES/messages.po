@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2023-05-09 22:42+UTC-6\n"
+"PO-Revision-Date: 2023-05-19 11:03+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: es_ES\n"
@@ -214,6 +214,9 @@ msgstr "Logotipo de la entidad"
 
 msgid "Entity name"
 msgstr "Nombre de la entidad"
+
+msgid "Error"
+msgstr "Error"
 
 msgid "Error!"
 msgstr "¡Error!"
@@ -512,6 +515,9 @@ msgstr "¡El nombre de usuario ya existe!"
 msgid "The subdomain %s is not available"
 msgstr "El subdominio %s no está disponible"
 
+msgid "There are active users in this role"
+msgstr "Hay usuarios activos en este rol"
+
 msgid "This method will be available very soon"
 msgstr "Este método estará disponible muy pronto"
 
@@ -616,4 +622,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 198 messages translated.
+# 200 messages translated.

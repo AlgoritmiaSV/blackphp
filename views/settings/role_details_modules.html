@@ -1,0 +1,26 @@
+<!-- Incluir: src="public/images/checked.png" -->
+<!-- Incluir: src="public/images/not_permitted.png" -->
+<table class="show_details_table">
+	<thead>
+		<tr>
+			<th colspan="5">{{ module_name }}</th>
+		</tr>
+		<tr>
+			<th>_(Element)</th>
+			<th class="smallest_cell">_(Read)</th>
+			<th class="smallest_cell">_(Create)</th>
+			<th class="smallest_cell">_(Update)</th>
+			<th class="smallest_cell">_(Delete)</th>
+		</tr>
+	</thead>
+	<tbody>
+		[[ permissions ]]
+		<tr>
+			<td>{{ element_name }}</td>
+			<td class="smallest_cell"><img src="public/images/{{ read }}.png" class="x-small_icon"></td>
+			<td class="smallest_cell"><img src="public/images/{{ create }}.png" class="x-small_icon"></td>
+			<td class="smallest_cell"><img src="public/images/{{ update }}.png" class="x-small_icon"></td>
+			<td class="smallest_cell"><img src="public/images/{{ delete }}.png" class="x-small_icon"></td>
+		</tr>[[/ permissions ]]
+	</tbody>
+</table>

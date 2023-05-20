@@ -1,0 +1,51 @@
+{{ print_header }}
+<div class="details_content">
+	<!-- embedded -->
+	<div class="details_title no_print">
+		_(Role details)
+		<a class="close_details" href="#"><img src="public/images/close.png"></a>
+	</div>
+	<!-- /embedded -->
+	<div class="details_body">
+		<table class="data_sheet_table">
+			<tr>
+				<td class="data_sheet_field">_(Role name):</td>
+				<td>{{ role_name }}</td>
+			</tr>
+			<tr>
+				<td class="data_sheet_field">_(Users):</td>
+				<td>{{ users }}</td>
+			</tr>
+		</table>
+		<p>_(Permissions):</p>
+		{{ modules }}
+	</div>
+	<div class="details_users">
+		<!-- created -->
+		_(Created by): {{ cr_user_name }}, _(timeon) {{ cr_time }}<br>
+		<!-- /created -->
+		<!-- edited -->
+		_(Last edition by): {{ ed_user_name }}, _(timeon) {{ ed_time }}
+		<!-- /edited -->
+	</div>
+	<div class="details_foot no_print">
+		<!-- self -->
+		<button class="delete_button red_button" data-url="{{ module }}/delete_role" data-next="{{ module }}/Roles">
+			<img src="public/images/outline/delete.png" class="x-small_icon">
+			_(Delete)
+		</button>
+		<button class="blue_button link_button" data-href="{{ module }}/EditRole/{{ role_id }}/">
+			<img src="public/images/outline/edit.png" class="x-small_icon">
+			_(Edit)
+		</button>
+		<!-- /self -->
+		<button class="blue_button print_button" data-print=".details_body">
+			<img src="public/images/outline/print.png" class="x-small_icon">
+			_(Print)
+		</button>
+		<button class="blue_button pdf_button" data-content=".details_body">
+			<img src="public/images/outline/pdf.png" class="x-small_icon">
+			PDF
+		</button>
+	</div>
+</div>

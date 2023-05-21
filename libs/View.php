@@ -202,7 +202,7 @@ class View
 
 	public function standard_list()
 	{
-		$this->add("styles", "css", Array(
+		$this->add("styles", "css", [
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'node_modules/datatables.net-dt/css/jquery.dataTables.min.css',
@@ -214,8 +214,8 @@ class View
 			'styles/print_area.css',
 			'styles/dialogs.css',
 			'styles/currencies.css'
-		));
-		$this->add("scripts", "js", Array(
+		]);
+		$this->add("scripts", "js", [
 			'node_modules/jquery/dist/jquery.min.js',
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
@@ -229,7 +229,14 @@ class View
 			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'external/js/jquery.jqpagination.min.js',
 			'scripts/bpscript.min.js'
-		));
+		]);
+		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
+		if(file_exists($select2_lang))
+		{
+			$this->add("scripts", "js", [
+				$select2_lang
+			]);
+		}
 	}
 
 	/**
@@ -239,7 +246,7 @@ class View
 	 */
 	public function standard_form()
 	{
-		$this->add("styles", "css", Array(
+		$this->add("styles", "css", [
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
@@ -251,8 +258,8 @@ class View
 			'styles/print_area.css',
 			"styles/currencies.css",
 			'styles/tree.css'
-		));
-		$this->add("scripts", "js", Array(
+		]);
+		$this->add("scripts", "js", [
 			'node_modules/jquery/dist/jquery.min.js',
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
@@ -261,7 +268,14 @@ class View
 			'external/js/jquery.imagereader.js',
 			'external/js/image-uploader.js',
 			'scripts/bpscript.min.js'
-		));
+		]);
+		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
+		if(file_exists($select2_lang))
+		{
+			$this->add("scripts", "js", [
+				$select2_lang
+			]);
+		}
 	}
 
 	/**
@@ -272,7 +286,7 @@ class View
 	 */
 	public function standard_details()
 	{
-		$this->add("styles", "css", Array(
+		$this->add("styles", "css", [
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
@@ -281,8 +295,8 @@ class View
 			'styles/dialogs.css',
 			'styles/print_area.css',
 			"styles/currencies.css"
-		));
-		$this->add("scripts", "js", Array(
+		]);
+		$this->add("scripts", "js", [
 			'node_modules/jquery/dist/jquery.min.js',
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
@@ -292,12 +306,19 @@ class View
 			'node_modules/jspdf/dist/jspdf.umd.min.js',
 			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'scripts/bpscript.min.js'
-		));
+		]);
+		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
+		if(file_exists($select2_lang))
+		{
+			$this->add("scripts", "js", [
+				$select2_lang
+			]);
+		}
 	}
 
 	public function standard_details_charts()
 	{
-		$this->add("styles", "css", Array(
+		$this->add("styles", "css", [
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
@@ -306,8 +327,8 @@ class View
 			'styles/dialogs.css',
 			'styles/print_area.css',
 			"styles/currencies.css"
-		));
-		$this->add("scripts", "js", Array(
+		]);
+		$this->add("scripts", "js", [
 			'node_modules/jquery/dist/jquery.min.js',
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
@@ -320,7 +341,14 @@ class View
 			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'scripts/charts.js',
 			'scripts/bpscript.min.js'
-		));
+		]);
+		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
+		if(file_exists($select2_lang))
+		{
+			$this->add("scripts", "js", [
+				$select2_lang
+			]);
+		}
 	}
 	/**
 	 * Menú estándar
@@ -329,21 +357,28 @@ class View
 	 */
 	public function standard_menu()
 	{
-		$this->add("styles", "css", Array(
+		$this->add("styles", "css", [
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
 			'styles/theme.min.css',
 			'styles/loading.css',
 			'styles/menu.css'
-		));
-		$this->add("scripts", "js", Array(
+		]);
+		$this->add("scripts", "js", [
 			'node_modules/jquery/dist/jquery.min.js',
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
 			'node_modules/select2/dist/js/select2.min.js',
 			'scripts/bpscript.min.js'
-		));
+		]);
+		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
+		if(file_exists($select2_lang))
+		{
+			$this->add("scripts", "js", [
+				$select2_lang
+			]);
+		}
 	}
 
 	/**
@@ -354,19 +389,26 @@ class View
 	 */
 	public function standard_error()
 	{
-		$this->add("styles", "css", Array(
+		$this->add("styles", "css", [
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
 			'external/css/select2.css',
 			'styles/theme.min.css'
-		));
-		$this->add("scripts", "js", Array(
+		]);
+		$this->add("scripts", "js", [
 			'node_modules/jquery/dist/jquery.min.js',
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
 			'node_modules/select2/dist/js/select2.min.js',
 			'scripts/bpscript.min.js'
-		));
+		]);
+		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
+		if(file_exists($select2_lang))
+		{
+			$this->add("scripts", "js", [
+				$select2_lang
+			]);
+		}
 	}
 }
 ?>

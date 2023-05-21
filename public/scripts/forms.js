@@ -34,12 +34,15 @@ $( function()
 					item = $(document.createElement("option"));
 					item.appendTo(selector);
 				}
+				var language = $("html").first().attr("lang");
 				var select_params = {
 					data: json[selector.data("source")],
 					dropdownAutoWidth: true,
 					placeholder: selector.data("placeholder") || "",
-					width: selector.data("width") || "fit-content"
+					width: selector.data("width") || "fit-content",
+					language: language
 				}
+				console.log(JSON.stringify(select_params));
 				if(selector.data("search") == "none")
 				{
 					select_params.minimumResultsForSearch = Infinity;

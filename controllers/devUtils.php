@@ -47,7 +47,7 @@ class devUtils extends Controller
 	 */
 	public function session_vars()
 	{
-		echo '<pre>' . print_r($_SESSION, true) . '</pre>';
+		$this->json($_SESSION);
 	}
 
 	/**
@@ -359,7 +359,7 @@ class devUtils extends Controller
 	public function app_info()
 	{
 		$system = file_get_contents("app_info.json");
-		echo "<pre>$system</pre>";
+		echo $system;
 	}
 }
 ?>

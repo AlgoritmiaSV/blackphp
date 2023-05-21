@@ -977,7 +977,8 @@ trait ORM
 			$last_model->where($key, $value);
 		}
 		$last = $last_model->first();
-		$next = $last->is_null($field) ? 1 : $last->{"get" . ucfirst($field)}() + 1;
+		$property = str_replace(' ', '', ucwords(str_replace('_', ' ', $field)));
+		$next = $last->is_null($field) ? 1 : $last->{"get" . $property}() + 1;
 		return $next;
 	}
 

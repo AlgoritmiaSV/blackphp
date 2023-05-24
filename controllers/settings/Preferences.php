@@ -10,7 +10,7 @@ trait Preferences
 	 */
 	public function Preferences()
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("read", "preferences");
 		$this->view->data["title"] = _("Preferences");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -42,7 +42,7 @@ trait Preferences
 	 */
 	public function save_preferences()
 	{
-		$this->session_required("json");
+		$this->check_permissions("update", "preferences");
 		$data = $_POST;
 		$data["success"] = false;
 		entityOptionsModel::where("option_id IN (SELECT option_id FROM app_options WHERE option_type = 1)")->update(Array("option_value" => 0));

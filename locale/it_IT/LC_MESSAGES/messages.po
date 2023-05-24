@@ -9,13 +9,16 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-01 20:38-0600\n"
-"PO-Revision-Date: 2023-05-19 11:03+UTC-6\n"
+"PO-Revision-Date: 2023-05-23 11:25+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "%s ago"
+msgstr "%s fa"
 
 msgid "About %s"
 msgstr "Su %s"
@@ -76,6 +79,9 @@ msgstr "il"
 
 msgid "August"
 msgstr "Agosto"
+
+msgid "Authors"
+msgstr "Autori"
 
 msgid "Bad request"
 msgstr "Brutta richiesta"
@@ -172,6 +178,12 @@ msgstr "Eliminato da"
 
 msgid "Deleted elements"
 msgstr "Elementi eliminati"
+
+msgid "Dependence"
+msgstr "Dipendenza"
+
+msgid "Dependences"
+msgstr "Dipendenze"
 
 msgid "Description"
 msgstr "Descrizione"
@@ -317,6 +329,9 @@ msgstr "Ultime sessioni"
 msgid "Last update"
 msgstr "Ultimo aggiornamento"
 
+msgid "License type"
+msgstr "Tipo di licenza"
+
 msgid "Loading"
 msgstr "Caricamento"
 
@@ -334,6 +349,9 @@ msgstr "Marzo"
 
 msgid "May"
 msgstr "Maggio"
+
+msgid "Member and founder of"
+msgstr "Membro e fondatore di"
 
 msgid "member of"
 msgstr "membro di"
@@ -521,6 +539,9 @@ msgstr "Ci sono utenti attivi in questo ruolo"
 msgid "This method will be available very soon"
 msgstr "Questo metodo sarà disponibile molto presto"
 
+msgid "This system makes use of the following resources"
+msgstr "Questo sistema utilizza le seguenti risorse"
+
 msgid "Thursday"
 msgstr "Giovedì"
 
@@ -622,4 +643,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 200 messages translated.
+# 207 messages translated.

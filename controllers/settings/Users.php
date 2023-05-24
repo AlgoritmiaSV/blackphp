@@ -10,7 +10,7 @@ trait Users
 	 */
 	public function Users()
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("read", "users");
 		$this->view->data["title"] = _("Users");
 		$this->view->standard_list();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -31,7 +31,7 @@ trait Users
 	 */
 	public function NewUser()
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("create", "users");
 		$this->view->data["title"] = _("New user");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -62,7 +62,7 @@ trait Users
 	 */
 	public function EditUser($user_id)
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("update", "users");
 		$this->view->data["title"] = _("Edit user");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -98,7 +98,7 @@ trait Users
 	 */
 	public function UserDetails($user_id)
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("read", "users");
 		$this->view->data["title"] = _("User details");
 		$this->view->standard_details();
 		$this->view->data["system_short_date"] = Date("d/m/Y");
@@ -118,7 +118,7 @@ trait Users
 	 */
 	public function user_table_loader($response = "JSON")
 	{
-		$this->session_required("json");
+		$this->check_permissions("read", "users");
 		$data = Array();
 		$users = userDataModel::getAllArray();
 		foreach($users as $key => $user)
@@ -159,7 +159,7 @@ trait Users
 	 */
 	public function user_details_loader($user_id = "", $mode = "embedded")
 	{
-		$this->session_required("internal");
+		$this->check_permissions("read", "users", $mode);
 		if(empty($user_id))
 		{
 			$user_id = $_POST["id"];
@@ -242,7 +242,7 @@ trait Users
 	 */
 	public function save_user()
 	{
-		$this->session_required("json");
+		$this->check_permissions(empty($_POST["user_id"]) ? "create" : "update", "users");
 		$data = Array("success" => false);
 		if(empty($_POST["user_name"]))
 		{
@@ -340,7 +340,7 @@ trait Users
 	 */
 	public function delete_user()
 	{
-		$this->session_required("json");
+		$this->check_permissions("delete", "users");
 		$data = Array("deleted" => false);
 		if(empty($_POST["id"]))
 		{

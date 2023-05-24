@@ -10,7 +10,7 @@ trait Roles
 	 */
 	public function Roles()
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("read", "roles");
 		$this->view->data["title"] = _("Roles");
 		$this->view->standard_list();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -31,7 +31,7 @@ trait Roles
 	 */
 	public function NewRole()
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("create", "roles");
 		$this->view->data["title"] = _("New role");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -77,7 +77,7 @@ trait Roles
 	 */
 	public function EditRole($role_id)
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("update", "roles");
 		$this->view->data["title"] = _("Edit role");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -124,7 +124,7 @@ trait Roles
 	 */
 	public function RoleDetails($role_id)
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("read", "roles");
 		$this->view->data["title"] = _("Role details");
 		$this->view->standard_details();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -143,7 +143,7 @@ trait Roles
 	 */
 	public function role_table_loader($response = "JSON")
 	{
-		$this->session_required("json");
+		$this->check_permissions("read", "roles");
 		$data = Array();
 		$roles = rolesModel::getAllArray();
 		foreach($roles as &$role)
@@ -180,7 +180,7 @@ trait Roles
 	 */
 	public function role_details_loader($role_id = "", $mode = "embedded")
 	{
-		$this->session_required("internal");
+		$this->check_permissions("read", "roles", $mode);
 		if(empty($role_id))
 		{
 			$role_id = $_POST["id"];
@@ -237,6 +237,7 @@ trait Roles
 
 	public function save_role()
 	{
+		$this->check_permissions(empty($_POST["role_id"]) ? "create" : "update", "roles");
 		$data = $_POST;
 		$data["success"] = false;
 
@@ -300,7 +301,7 @@ trait Roles
 	 */
 	public function delete_role()
 	{
-		$this->session_required("json");
+		$this->check_permissions("delete", "roles", $mode);
 		$data = Array("deleted" => false);
 		if(empty($_POST["id"]))
 		{

@@ -517,5 +517,53 @@ class Controller
 		header('Content-type: application/json');
 		echo json_encode($data);
 	}
+
+	/**
+	 * Comprobar permisos
+	 * 
+	 * Comprueba si un usuario tiene permisos para el método solicitado
+	 */
+	protected function check_permissions($action, $element, $response = "default")
+	{
+		if($response == "default")
+		{
+			$response = $_SERVER["REQUEST_METHOD"] == "GET" ? "html" : "json";
+		}
+		$actions = ["read" => 8, "create" => 4, "update" => 2, "delete" => 1];
+		$permissions = Session::get("permissions");
+		if($permissions == null || !isset($permissions[$element]) || ($actions[$action] & $permissions[$element]) == 0)
+		{
+			if($response == "json")
+			{
+				$this->json(Array(
+					"success" => false,
+					"error" => true,
+					"message" => _("You do not have permissions to perform this operation"),
+					"title" => "Error",
+					"theme" => "red"
+				));
+			}
+			elseif($response == "embedded")
+			{
+				$this->view->render("main/forbidden");
+			}
+			else
+			{
+				$this->view->data["title"] = _("Not authorized");
+				$this->view->standard_error();
+				$this->view->data["nav"] = $this->view->render("main/nav", true);
+				$this->view->data["content"] = $this->view->render("main/forbidden", true);
+				if($response == "standalone")
+				{
+					$this->view->render('clean_main');
+				}
+				else
+				{
+					$this->view->render('main');
+				}
+			}
+			exit();
+		}
+	}
 }
 ?>

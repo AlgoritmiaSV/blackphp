@@ -11,7 +11,7 @@ trait Entity
 	 */
 	public function Entity()
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("read", "entity_data");
 		$this->view->data["title"] = _("Entity data");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -28,7 +28,7 @@ trait Entity
 	 */
 	public function save_entity()
 	{
-		$this->session_required("json");
+		$this->check_permissions("update", "entity_data");
 		$data = Array("success" => false);
 		if(!empty($_POST["entity_name"]))
 		{

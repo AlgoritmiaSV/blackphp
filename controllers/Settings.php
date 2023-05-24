@@ -17,7 +17,7 @@ foreach(glob("controllers/settings/*") as $file)
 
 class Settings extends Controller
 {
-	use Entity, Preferences, Users, Roles;
+	use Entity, Preferences, Users, Roles, Information;
 	/**
 	 * Constructor de la clase
 	 * 
@@ -50,24 +50,6 @@ class Settings extends Controller
 		->orderBy("method_order")->getAllArray();
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
 		$this->view->render("main");
-	}
-
-	/**
-	 * Acerca de
-	 * 
-	 * Muestra información acerca del sistema.
-	 * 
-	 * @return void
-	 */
-	public function About()
-	{
-		$this->session_required("html", $this->module);
-		$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
-		$this->view->standard_details();
-		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$this->view->data["content_id"] = "info_details";
-		$this->view->data["content"] = $this->view->render("content_loader", true);
-		$this->view->render('main');
 	}
 
 	################################ LISTAS Y FORMULARIOS
@@ -178,61 +160,6 @@ class Settings extends Controller
 			}
 		}
 		$this->json($data);
-	}
-
-	/**
-	 * Carga de información del sistema
-	 * 
-	 * Imprime, en formato HTML, la información del sistema: datos de la última actualización e 
-	 * información de contacto.
-	 * 
-	 * @return void
-	 */
-	public function info_details_loader($mode = "embedded")
-	{
-		$info = Array();
-		if(file_exists("app_info.json"))
-		{
-			$info = json_decode(file_get_contents("app_info.json"), true);
-			$info["last_update_ago"] = date_utilities::sql_date_to_ago($info["last_update"]);
-			$info["last_update"] = date_utilities::sql_date_to_string($info["last_update"], true);
-		}
-		else
-		{
-			$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($_SERVER["DOCUMENT_ROOT"]), RecursiveIteratorIterator::SELF_FIRST);
-			$last_modified = 0;
-			foreach($files as $file_object)
-			{
-				$modified = $file_object->getMTime();
-				if($modified > $last_modified)
-				{
-					$last_modified = $modified;
-				}
-			}
-			$info["last_update"] = date_utilities::sql_date_to_string(Date("Y-m-d H:i:s", $last_modified), true);
-			$info["last_update_ago"] = date_utilities::sql_date_to_ago(Date("Y-m-d H:i:s", $last_modified));
-			$info["version"] = "1.0";
-			$info["number"] = "0";
-		}
-		foreach($info as $key => $item)
-		{
-			$this->view->data[$key] = $item;
-		}
-		if($mode == "standalone")
-		{
-			$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
-			$this->view->standard_details();
-			$this->view->add("styles", "css", Array(
-				'styles/standalone.css'
-			));
-			$this->view->restrict[] = "embedded";
-			$this->view->data["content"] = $this->view->render('settings/info_details', true);
-			$this->view->render('clean_main');
-		}
-		else
-		{
-			$this->view->render('settings/info_details');
-		}
 	}
 }
 ?>

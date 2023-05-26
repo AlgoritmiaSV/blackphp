@@ -107,7 +107,7 @@ class Controller
 			$this->view->data["nickname"] = Session::get("nickname");
 			$this->view->data["user_photo"] = "public/images/user.png";
 		}
-		else
+		elseif(Session::get("installer_id") == null)
 		{
 			$this->view->restrict = array("user");
 		}

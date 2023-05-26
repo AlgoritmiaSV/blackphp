@@ -5,13 +5,14 @@ Requisitos
 - PHP 8.2
 - Módulos de PHP: gettext, intl, gd, zip, mbstring
 - Módulos de Apache: mod-rewrite
+- BlackPHP versión para producción
 
 Instalación para el uso
 =======================
 
-Instalación local en Windows para una sola entidad
---------------------------------------------------
-- Instalar XAMP (El sistema también ha sido probado con WAMP, pero ocurrieron problemas, porque en WAMP se ejecuta index como el constructor de la clase de PHP, en vez de __construct).
+Instalación local en Windows
+----------------------------
+- Instalar XAMP.
 - Sustituir la carpeta htdocs por la carpeta raíz del sistema (htdocs normalmente se encuentra en c:\xamp\htdocs)
 - Iniciar los servicios HTTP y MySQL en XAMP
 - Crear una base de datos MySQL vacía
@@ -19,8 +20,16 @@ Instalación local en Windows para una sola entidad
 - Importar en la base de datos creada, los archivos:
 > - *db/db_structure.sql*
 > - *db/initial_data.sql*
+- Copiar el archivo default_config.php en uno llamado config.php y ubicarlo en el directorio raíz.
 - Abrir el archivo config.php ubicado en el directorio raíz del sistema, y modificar los campos correspondientes al acceso a la base de datos
-- Visitar, desde un navegador, la dirección: http://127.0.0.1/Instalacion/ para hacer la configuración inicial del sistema
+- Según el caso, siga los pasos para instalación en Windows para una sola entidad o para varias entidades
+
+Instalación local en Windows para una sola entidad
+--------------------------------------------------
+- Visitar, desde un navegador, la dirección: http://127.0.0.1/Installation/ para hacer la configuración inicial del sistema
+
+Instalación local en Windows para varias entidades
+--------------------------------------------------
 
 Instalación local en Linux
 --------------------------
@@ -33,7 +42,21 @@ Instalación local en Linux
 - Crear un virtualhost en Apache que inicie en el directorio raiz del sistema
 - Si el virtualhost creado incluye un nombre de dominio, deberá agregar el dominio al hosts del sistema (En Debian y afines, se encuentra en /etc/hosts)
 - Reiniciar el servicio de Apache
-- Visitar, desde un navegador, la dirección: http://127.0.0.1/Instalacion/ para hacer la configuración inicial del sistema; la dirección 127.0.0.1 puede ser sustituida por el nombre del virtualhost en caso de que se le haya asignado un nombre
+- Visitar, desde un navegador, la dirección: http://127.0.0.1/Installation/ para hacer la configuración inicial del sistema; la dirección 127.0.0.1 puede ser sustituida por el nombre del virtualhost en caso de que se le haya asignado un nombre
+
+Instalación el Linux para una sola entidad
+------------------------------------------
+
+Instalación en Linux para varias entidades
+------------------------------------------
+
+Instalación en Docker
+---------------------
+- En una carpeta vacía, cree un archivo con nombre Dockerfile, y agregue el siguiente contenido:
+``
+
+- Compile una imagen
+`docker build .`
 
 Instalación local desde otra PC
 --------------------------------
@@ -41,9 +64,9 @@ Instalación local desde otra PC
 - Haga una copia de los archivos en la ruta de instalación (En Windows, podría ser c:/xamp/htdocs).
 - Inicie los pasos de acuerdo con el sistema operativo en donde se encuentre instalando la aplicación.
 
-Instalación en línea desde negkit.com
--------------------------------------
-- Escriba el dominio deseado en un navegador, por ejemplo: midominio.negkit.com
+Instalación en línea desde blackphp.rti.li
+------------------------------------------
+- Escriba el dominio deseado en un navegador, por ejemplo: midominio.blackphp.rti.li
 - El sistema lo guiará hacia la dirección en donde tendrá que acceder con sus credenciales de instalador.
 
 Instalación para desarrollo desde GitHub
@@ -71,7 +94,7 @@ Pasos:
 (Ver instrucciones en getcomposer.org)
 
 - Instale las librerías de Composer
-`composer install`
+`composer update`
 
 - Instale las librerías desde npm
 `npm install`

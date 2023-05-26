@@ -10,7 +10,7 @@ trait ActivityLog
 	 */
 	public function ActivityLog()
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("read", "logs");
 		$args = func_get_args();
 		$options = Array();
 		for($i = 1; $i < func_num_args(); $i = $i + 2)
@@ -47,7 +47,7 @@ trait ActivityLog
 	 */
 	public function log_table_loader($response = "JSON")
 	{
-		$this->session_required("json");
+		$this->check_permissions("read", "logs");
 		$title = "";
 		$items = Array();
 		$type = $_POST["options"]["type"];

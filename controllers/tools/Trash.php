@@ -11,7 +11,7 @@ trait Trash
 	 */
 	public function Trash()
 	{
-		$this->session_required("html", $this->module);
+		$this->check_permissions("read", "trash");
 		$this->view->standard_list();
 		$this->view->set([
 			"title" => _("Trash"),
@@ -107,7 +107,7 @@ trait Trash
 	*/
 	public function trash_filter_loader()
 	{
-		$this->session_required("json");
+		$this->check_permissions("read", "trash");
 		$elements = appElementsModel::where("is_deletable", 1)->list("element_key", "element_name");
 		foreach($elements as &$element)
 		{

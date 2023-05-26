@@ -24,6 +24,7 @@ class Installation extends Controller
 		parent::__construct();
 		$this->module = get_class($this);
 		$this->view->data["module"] = $this->module;
+		$this->view->data["nav"] = Session::get("entity") == null ? "" : $this->view->render("installation/nav", true);
 	}
 
 	################################ VISTAS
@@ -39,15 +40,9 @@ class Installation extends Controller
 	 */
 	public function index($subdomain = "")
 	{
+		$this->installer_required();
 		$this->view->data["title"] = _("Installation");
 		$this->view->standard_form();
-		$this->view->data["nav"] = "";
-		if(Session::get("authorization_code") == null)
-		{
-			$this->view->data["content"] = $this->view->render("installation/install_login", true);
-			$this->view->render('main');
-			return;
-		}
 		$this->view->data["subdomain"] = $subdomain;
 		if(Session::get("user_id") == null)
 		{
@@ -95,9 +90,9 @@ class Installation extends Controller
 
 	public function RoleAndUser()
 	{
-		$this->view->data["title"] = _("Installation");
+		$this->installer_required();
+		$this->view->data["title"] = _("Role and user");
 		$this->view->standard_form();
-		$this->view->data["nav"] = "";
 		if(Session::get("authorization_code") == null)
 		{
 			$this->view->data["content"] = $this->view->render("installation/install_login", true);
@@ -144,9 +139,9 @@ class Installation extends Controller
 
 	public function Menu()
 	{
-		$this->view->data["title"] = _("Installation");
+		$this->installer_required();
+		$this->view->data["title"] = _("Menu");
 		$this->view->standard_form();
-		$this->view->data["nav"] = "";
 		if(Session::get("authorization_code") == null)
 		{
 			$this->view->data["content"] = $this->view->render("installation/install_login", true);
@@ -173,6 +168,202 @@ class Installation extends Controller
 			$this->view->restrict[] = "outside_installation";
 		}
 		$this->view->data["content"] = $this->view->render("installation/menu", true);
+		$this->view->render('main');
+	}
+
+	/**
+	 * Datos de la aplicación
+	 * 
+	 * Imprime el contenido del archivo app_info.json
+	 * 
+	 * @return void
+	 */
+	function AppInfo() 
+	{
+		$this->installer_required();
+		$this->view->data["title"] = _("App info");
+		$this->view->standard_error();
+		$this->view->data["text"] = file_get_contents("app_info.json");
+		$this->view->data["content"] = $this->view->render("installation/text_viewer", true);
+		$this->view->render('main');
+	}
+
+	/**
+	 * Datos de la sesión
+	 * 
+	 * Imprime los datos contenidos en la variable global $_SESSION
+	 * 
+	 * @return void
+	 */
+	function SessionData() 
+	{
+		$this->installer_required();
+		$this->view->data["title"] = _("Session data");
+		$this->view->standard_error();
+		$this->view->data["text"] = json_encode($_SESSION, JSON_PRETTY_PRINT);
+		$this->view->data["content"] = $this->view->render("installation/text_viewer", true);
+		$this->view->render('main');
+	}
+
+	/**
+	 * Acerca de
+	 * 
+	 * Muestra información acerca del sistema.
+	 * 
+	 * @return void
+	 */
+	public function PHPInfo()
+	{
+		$this->installer_required();
+		$this->view->data["title"] = _("PHP info");
+		$this->view->standard_details();
+		$this->view->data["content_id"] = "php_info";
+		$this->view->data["content"] = $this->view->render("content_loader", true);
+		$this->view->render('main');
+	}
+
+	/**
+	 * Datos de la sesión
+	 * 
+	 * Imprime los datos contenidos en la variable global $_SESSION
+	 * 
+	 * @return void
+	 */
+	function Summary() 
+	{
+		$this->installer_required();
+		$this->view->data["title"] = _("Summary");
+		$this->view->standard_error();
+		/** Directorio inicial */
+		$init_directory = ".";
+		# Set time zone to UTC-6.
+		$time_diff = 0;
+		date_default_timezone_set('America/El_Salvador');
+		#--------------------------------------------------------------------------
+		$folders = Array(".");
+		$this->add_folders(".", $folders);
+		$self = "./" . pathinfo($_SERVER["PHP_SELF"], PATHINFO_BASENAME);
+		$text = "";
+		$text .= "\r\n            DETAILS OF SITE\r\n";
+		$text .= "    Generated " . Date("Y-m-d H:i:s", time() + $time_diff) . "\r\n";
+		$text .= "           By: Edwin Fajardo.\r\n";
+		$text .= "--------------------------------------------------------------\r\n";
+		$text .= "\r\n";
+		$total_files = 0;
+		$total_size = 0;
+		$total_lines = 0;
+		$total_types = Array();
+		$type_lines = Array();
+		$finfo = finfo_open(FILEINFO_MIME_TYPE);
+		foreach($folders as $folder)
+		{
+			$object = new DirectoryIterator($folder);
+			$folder_files = 0;
+			$folder_size = 0;
+			$folder_lines = 0;
+			$folder_text = "\r\nFolder: " . $folder . "\r\n\r\n";
+			$folder_text .= "Lines\t|Size\t|Last modified\t\t|Filename\r\n";
+			$folder_text .= "--------+-------+-----------------------+---------------------\r\n";
+			$files = Array();
+			foreach($object as $file_object)
+			{
+				$files[] = Array($file_object->getFilename(), $file_object->getMTime());
+			}
+			asort($files);
+			foreach($files as $file_info)
+			{
+				$file = $folder . "/" . $file_info[0];
+				$mime_type = finfo_file($finfo, $file);
+				if(strncmp($mime_type, "text", 4) != 0 || $file == $self)
+				{
+					continue;
+				}
+				$modified = $file_info[1];
+				$size = filesize($file);
+				$extension = pathinfo($file, PATHINFO_EXTENSION);
+				if(isset($total_types[$extension]))
+				{
+					$total_types[$extension]++;
+				}
+				else
+				{
+					$total_types[$extension] = 1;
+				}
+				$lines = 0;
+				$file_descriptor = fopen($file, "r");
+				while(!feof($file_descriptor))
+				{
+					$line = fgets($file_descriptor);
+					$lines++;
+				}
+				$folder_text .= $lines . "\t|" . $size . "\t|" . Date("Y-m-d H:i:s", $modified + $time_diff) . "\t|" . $file_info[0]. "\r\n";
+				fclose($file_descriptor);
+				$folder_files++;
+				$folder_size += $size;
+				$folder_lines += $lines;
+				if(isset($type_lines[$extension]))
+				{
+					$type_lines[$extension] += $lines;
+				}
+				else
+				{
+					$type_lines[$extension] = $lines;
+				}
+			}
+			$folder_text .= "--------+-------+-----------------------+---------------------\r\n";
+			$folder_text .= $folder_files . " files; " . $folder_lines . " lines; " . $folder_size . " bytes.\r\n";
+			if($folder_files == 0)
+			{
+				continue;
+			}
+			else
+			{
+				$text .= $folder_text;
+			}
+			$total_files += $folder_files;
+			$total_size += $folder_size;
+			$total_lines += $folder_lines;
+		}
+		finfo_close($finfo);
+		$text .= "\r\n\r\n";
+		$text .= "                    TOTALS\r\n";
+		$text .= "--------------------------------------------------------------\r\n";
+		$text .= "Files: " . $total_files . "\r\n";
+		$text .= "Bytes: " . $total_size . "\r\n";
+		$text .= "Lines: " . $total_lines . "\r\n";
+		$text .= "\r\n";
+		$text .= "Lines per file: " . ($total_lines / $total_files) . "\r\n";
+		$text .= "Bytes per line: " . ($total_size / $total_lines) . "\r\n";
+		$text .= "Bytes per file: " . ($total_size / $total_files) . "\r\n";
+		$text .= "\r\n";
+		$text .= "--------File types--------\r\n";
+		foreach($total_types as $key => $total)
+		{
+			$text .= $key . (strlen($key) > 7 ? "\t" : "\t\t") . $total . "\r\n";
+		}
+		$text .= "\r\n";
+		$text .= "--------Lines by type of file--------\r\n";
+		foreach($type_lines as $key => $total)
+		{
+			$text .= $key . (strlen($key) > 7 ? "\t" : "\t\t") . $total . "\r\n";
+		}
+		$this->view->data["text"] = $text;
+		$this->view->data["content"] = $this->view->render("installation/text_viewer", true);
+		$this->view->render('main');
+	}
+
+	public function ErrorLog()
+	{
+		$this->installer_required();
+		$this->view->data["title"] = _("Error log");
+		$this->view->standard_error();
+		$text = "No errors found!";
+		if(file_exists("error_log"))
+		{
+			$text = file_get_contents("error_log");
+		}
+		$this->view->data["text"] = $text;
+		$this->view->data["content"] = $this->view->render("installation/text_viewer", true);
 		$this->view->render('main');
 	}
 
@@ -280,6 +471,20 @@ class Installation extends Controller
 		$this->json($data);
 	}
 
+	public function php_info_loader()
+	{
+		ob_start () ;
+		phpinfo () ;
+		$pinfo = ob_get_contents () ;
+		ob_end_clean () ;
+		$pinfo = preg_replace('/\s+/', ' ', $pinfo);
+		$pinfo = preg_replace('/(,)(?=[^\s])/', ', ', $pinfo);
+		$pinfo = preg_replace('/(:\/)(?=[^\/])/', ': /', $pinfo);
+		$pinfo = substr($pinfo, strpos($pinfo, '<body>') + 6);
+		$pinfo = substr($pinfo, 0, strpos($pinfo, '</body>'));
+		$pinfo = str_replace('<table', '<table class="show_details_table"', $pinfo);
+		echo $pinfo;
+	}
 	################################ GUARDADO DE DATOS
 	/**
 	 * Guardar datos de la entidad.
@@ -598,6 +803,74 @@ class Installation extends Controller
 		#Close installer session
 		Session::destroy();
 		$this->json($data);
+	}
+
+	/**
+	 * Validación de sesión de instalador
+	 * 
+	 * Verifica si hay una sesión abierta para el instalador.
+	 * 
+	 * @param string $type Tipo de respuesta esperada (html, internal o JSON)
+	 */
+	protected function installer_required($type = 'html')
+	{
+		if(Session::get("installer_id") == null)
+		{
+			if($type == 'json')
+			{
+				$this->json(Array(
+					"success" => false,
+					"error" => true,
+					"message" => _("You are not logged in"),
+					"title" => "Error",
+					"theme" => "red"
+				));
+			}
+			elseif($type == 'internal')
+			{
+				$this->view->render('error');
+			}
+			else
+			{
+				$this->view->data["title"] = _("Log in");
+				$this->view->standard_form();
+				$this->view->data["nav"] = "";
+				$this->view->data["content"] = $this->view->render("installation/install_login", true);
+				$this->view->render('main');
+			}
+			exit();
+		}
+	}
+
+	/**
+	 * Agregado de carpetas
+	 * 
+	 * Esta función agregará a una lista cada uno de los archivos que serán procesados para el 
+	 * cálculo de las estadísticas de código.
+	 * 
+	 * En la variable local $excluded_folders, debe agregarse sólo las carpetas que incluyan archivos
+	 * de texto (Como la carpeta vendor/). Las carpetas que no incluyen archivos de texto son 
+	 * excluídas de forma automática.
+	 * 
+	 * @param string $dir Directorio que se va a agregar
+	 * @param array $array Arreglo en donde se agregará el directorio
+	 * 
+	 * @return void El resultado es recogido en la variable $array que es pasada por referencia.
+	 */
+	function add_folders($dir, &$array)
+	{
+		# Carpetas a excluir
+		$excluded_folders = Array("./public/external", "./plugins", "./db", "./public/icons", "./vendor", "./node_modules");
+		$list = glob($dir . "/*", GLOB_ONLYDIR);
+		foreach($list as $directory)
+		{
+			if(in_array($directory, $excluded_folders))
+			{
+				continue;
+			}
+			array_push($array, $directory);
+			$this->add_folders($directory, $array);
+		}
 	}
 }
 ?>

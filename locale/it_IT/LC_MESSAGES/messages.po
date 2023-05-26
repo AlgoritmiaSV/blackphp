@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-01 20:38-0600\n"
-"PO-Revision-Date: 2023-05-23 11:25+UTC-6\n"
+"PO-Revision-Date: 2023-05-25 08:58+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: it_IT\n"
@@ -67,6 +67,9 @@ msgstr "Consente di configurare le informazioni generali dell'attività/società
 
 msgid "Allows you to manage users and permissions for each user"
 msgstr "Consente di gestire gli utenti e le autorizzazioni per ciascun utente"
+
+msgid "App info"
+msgstr "Informazioni sull'app"
 
 msgid "App name"
 msgstr "Nome dell'app"
@@ -230,6 +233,9 @@ msgstr "Nome dell'entità"
 msgid "Error"
 msgstr "Errore"
 
+msgid "Error log"
+msgstr "Registro errori"
+
 msgid "Error!"
 msgstr "Errore!"
 
@@ -356,6 +362,9 @@ msgstr "Membro e fondatore di"
 msgid "member of"
 msgstr "membro di"
 
+msgid "Menu"
+msgstr "Menù"
+
 msgid "minute"
 msgstr "minuto"
 
@@ -422,6 +431,9 @@ msgstr "Autorizazzioni"
 msgid "Phone"
 msgstr "Telefono"
 
+msgid "PHP info"
+msgstr "Informazioni PHP"
+
 msgid "Please, select an element type from the list"
 msgstr "Per favore, seleziona un tipo di elemento dalla lista"
 
@@ -448,6 +460,9 @@ msgstr "ruolo"
 
 msgid "Role"
 msgstr "Ruolo"
+
+msgid "Role and user"
+msgstr "Ruolo e utente"
 
 msgid "Role details"
 msgstr "Dettagli del ruolo"
@@ -482,6 +497,9 @@ msgstr "Settembre"
 msgid "Server date"
 msgstr "Data del server"
 
+msgid "Session data"
+msgstr "Dati della sessione"
+
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -508,6 +526,9 @@ msgstr "Inizia"
 
 msgid "Success"
 msgstr "Successo"
+
+msgid "Summary"
+msgstr "Riepilogo"
 
 msgid "Sunday"
 msgstr "Domenica"
@@ -643,4 +664,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 207 messages translated.
+# 214 messages translated.

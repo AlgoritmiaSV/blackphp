@@ -35,6 +35,24 @@ Base de datos
 -------------
 La base de datos de **BlackPHP** comprende básicamente dos partes: Un conjunto de tablas de uso del sistema (todas aquellas cuyos nombres inician con app_), y las tablas para el almacenamiento de datos de las entidades durante el uso.
 
+*ID de la entidad*
+Para los sistemas diseñados para varias entidades, se puede añadir en cada tabla entidad, un campo con la definición: `entity_id INT NOT NULL`, preferiblemente con una llave foránea hacia la tabla `entities.entity_id`.
+
+*Timestamps*
+En cada registro de las tablas se controla la hora, fecha y usuario de creación y la hora, fecha y usuario de última actualización. Para tener control automatizado de la creación y actualización de los registros de una tabla, ésta debe contener los campos siguientes:
+`creation_user INT NOT NULL, 
+creation_time DATETIME NOT NULL, 
+edition_user INT NOT NULL, 
+edition_time DATETIME NOT NULL`
+
+*Borrado lógico*
+Las tablas pueden soportar borrado lógico, si la tabla posee un campo con la definición siguiente:
+`status TINYINT NOT NULL DEFAULT 1`
+En este caso, se almacenará 0 en este campo cuando el elemento haya sido eliminado, y un valor diferente de cero para otros tipos de estados.
+Si el registro genera conflicto por alguna llave única que exista en la tabla, entonces puede crearse un campo de estado con la siguiente definición:
+`status TINYINT NULL DEFAULT 1`
+En este caso, se almacenará NULL en el campo de estado cuando un registro haya sido aliminado, y un valor diferente de NULL y diferente de cero para otros casos.
+
 Scripts en el directorio raíz
 -----------------------------
 *Script utilitarios para el desarrollador*
@@ -61,9 +79,11 @@ En esta sessión se encuentra el núcleo del sistema, desde donde se controla la
 */documentation/*
 
 */entities/*
+En este directorio se guadarán los datos de cada entidad (logo, fotos de los usuarios y otros archivos). Cada carpeta será llamada con el nombre del subdominio asignado a la entidad. En los casos de instalaciones para una sola entidad con acceso a través de direcciones IP, se utilizará la carpeta default.
 
 Modelos
 -------
+Los modelos son archivos PHP conteniendo clases que representas tablas o vistas de la base de datos. Estos modelos se generan de manera automática con BlackPHPUpdater.
 
 Vistas
 ------

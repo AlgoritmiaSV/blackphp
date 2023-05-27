@@ -175,29 +175,6 @@ trait Users
 		}
 		$this->view->data["sessions"] = $sessions;
 
-		$modules = availableModulesModel::where("user_id", $user_id)->getAllArray();
-		$i = -1;
-		$j = 0;
-		$modules_table = Array();
-		foreach($modules as $k => $module)
-		{
-			if($k % 4 == 0)
-			{
-				$i++;
-				$modules_table[$i] = Array();
-				$j = 0;
-			}
-			$modules_table[$i]["module_" . $j] = $module["module_name"];
-			$j++;
-			$k++;
-		}
-		while($j % 4 != 0)
-		{
-			$modules_table[$i]["module_" . $j] = "";
-			$j++;
-		}
-		$this->view->data["user_modules"] = $modules_table;
-		
 		#User photo
 		$photo = glob("entities/" . $this->entity_subdomain . "/users/profile_" . $user["user_id"] . ".*");
 		if(count($photo) > 0)

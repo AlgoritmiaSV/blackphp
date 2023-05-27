@@ -118,6 +118,21 @@
 	}
 
 	/* Class */
+	.credits
+	{
+		text-align: center;
+	}
+
+	.credits a
+	{
+		width: 130px;
+	}
+
+	.credits a span
+	{
+		display: block;
+	}
+
 	.entry input
 	{
 		width:90%;

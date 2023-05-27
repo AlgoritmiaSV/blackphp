@@ -301,7 +301,7 @@ trait Roles
 	 */
 	public function delete_role()
 	{
-		$this->check_permissions("delete", "roles", $mode);
+		$this->check_permissions("delete", "roles");
 		$data = Array("deleted" => false);
 		if(empty($_POST["id"]))
 		{

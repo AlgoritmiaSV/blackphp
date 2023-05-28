@@ -256,7 +256,7 @@ class User extends Controller
 		$data = $_POST;
 		$data["success"] = false;
 		$user = usersModel::find(Session::get("user_id"));
-		if(md5($data["current_password"]) != $user->getPassword())
+		if(md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash()))
 		{
 			$data["title"] = "Error";
 			$data["message"] = _("Incorrect password");
@@ -272,7 +272,8 @@ class User extends Controller
 			$this->json($data);
 			return;
 		}
-		$user->setPassword(md5($data["new_password"]));
+		$user->setPassword("HASH");
+		$user->setPasswordHash(password_hash($_POST["new_password"], PASSWORD_BCRYPT));
 		$user->save();
 		$data["reload_after"] = true;
 		$data["success"] = true;

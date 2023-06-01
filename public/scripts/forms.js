@@ -1146,6 +1146,10 @@ $( function()
 			var target = $($(this).data("target"));
 			default_entries = target.find(".entry_type_" + $(this).data("default"));
 		}
+		else
+		{
+			default_entries = $(".entry_type_" + $(this).data("default"));
+		}
 		default_entries.show();
 	});
 

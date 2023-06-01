@@ -531,7 +531,37 @@ class Controller
 		}
 		$actions = ["read" => 8, "create" => 4, "update" => 2, "delete" => 1];
 		$permissions = Session::get("permissions");
-		if($permissions == null || !isset($permissions[$element]) || ($actions[$action] & $permissions[$element]) == 0)
+		if($permissions == null)
+		{
+			if($response == 'json')
+			{
+				$this->json(Array(
+					"success" => false,
+					"error" => true,
+					"message" => _("You are not logged in"),
+					"title" => "Error",
+					"theme" => "red"
+				));
+			}
+			elseif($response == 'embedded')
+			{
+				$this->view->render('error');
+			}
+			else
+			{
+				$this->view->data["title"] = _("Log in");
+				$this->view->standard_form();
+				$this->view->add("styles", "css", Array(
+					'styles/login.css'
+					));
+				$this->view->data["nav"] = "";
+				$this->view->data["about"] = sprintf(_("About %s"), $this->system_name);
+				$this->view->data["content"] = $this->view->render("login", true);
+				$this->view->render('main');
+			}
+			exit();
+		}
+		elseif(!isset($permissions[$element]) || ($actions[$action] & $permissions[$element]) == 0)
 		{
 			if($response == "json")
 			{

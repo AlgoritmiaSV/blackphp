@@ -54,7 +54,7 @@ trait Trash
 	 */
 	public function trash_table_loader($response = "JSON")
 	{
-		$this->session_required("json");
+		$this->check_permissions("read", "trash");
 		$title = "";
 		$items = Array();
 		$type = $_POST["options"]["type"];

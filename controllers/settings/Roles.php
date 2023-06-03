@@ -204,6 +204,7 @@ trait Roles
 			$permissions = appElementsModel::join("role_elements", "element_id")->where("module_id", $module->getModuleId())->where("role_id", $role_id)->getAll();
 			foreach($permissions as &$permission)
 			{
+				$permission["element_name"] = _($permission["element_name"]);
 				$permission["read"] = ($permission["permissions"] & 8) == 0 ? "not_permitted" : "checked";
 				$permission["create"] = ($permission["permissions"] & 4) == 0 ? "not_permitted" : "checked";
 				$permission["update"] = ($permission["permissions"] & 2) == 0 ? "not_permitted" : "checked";

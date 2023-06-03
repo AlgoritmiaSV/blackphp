@@ -595,5 +595,16 @@ class Controller
 			exit();
 		}
 	}
+
+	protected function Building($title = "")
+	{
+		$this->session_required("html", $this->module);
+		$this->view->data["title"] = empty($title) ? _("In construction") : $title;
+		$this->view->standard_list();
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
+		$this->view->data["print_header"] = $this->view->render("print_header", true);
+		$this->view->data["content"] = $this->view->render("main/building", true);
+		$this->view->render("main");
+	}
 }
 ?>

@@ -18,7 +18,20 @@
 			</tr>
 		</table>
 		<p>_(Permissions):</p>
-		{{ modules }}
+		<table class="show_details_table">
+			<thead>
+				<tr>
+					<th>_(Element)</th>
+					<th class="smallest_cell">_(Read)</th>
+					<th class="smallest_cell">_(Create)</th>
+					<th class="smallest_cell">_(Update)</th>
+					<th class="smallest_cell">_(Delete)</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{ modules }}
+			</tbody>
+		</table>
 	</div>
 	<div class="details_users">
 		<!-- created -->

@@ -24,7 +24,7 @@ class Installation extends Controller
 		parent::__construct();
 		$this->module = get_class($this);
 		$this->view->data["module"] = $this->module;
-		$this->view->data["nav"] = Session::get("entity") == null ? "" : $this->view->render("installation/nav", true);
+		$this->view->data["nav"] = empty(Session::get("entity")["entity_id"]) ? "" : $this->view->render("installation/nav", true);
 	}
 
 	################################ VISTAS
@@ -563,9 +563,9 @@ class Installation extends Controller
 		}
 
 		#Logo
-		if(!empty($_FILES["images"]["name"][0]))
+		if(!empty($_FILES["logo"]["name"]))
 		{
-			$extension = strtolower(pathinfo($_FILES["images"]["name"][0], PATHINFO_EXTENSION));
+			$extension = strtolower(pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION));
 			$dir = "entities/" . $data["subdomain"] . "/";
 			if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
 			{
@@ -584,7 +584,7 @@ class Installation extends Controller
 					unlink($previous);
 				}
 			}
-			move_uploaded_file($_FILES["images"]["tmp_name"][0], $file);
+			move_uploaded_file($_FILES["logo"]["tmp_name"], $file);
 		}
 
 		#Finish and response

@@ -11,7 +11,7 @@ trait Entity
 	 */
 	public function Entity()
 	{
-		$this->check_permissions("read", "entity_data");
+		$this->check_permissions("read", "entityData");
 		$this->view->data["title"] = _("Entity data");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
@@ -28,7 +28,7 @@ trait Entity
 	 */
 	public function save_entity()
 	{
-		$this->check_permissions("update", "entity_data");
+		$this->check_permissions("update", "entityData");
 		$data = Array("success" => false);
 		if(!empty($_POST["entity_name"]))
 		{
@@ -74,7 +74,7 @@ trait Entity
 				}
 				move_uploaded_file($_FILES["logo"]["tmp_name"], $file);
 			}
-			$this->setUserLog("update", "entity_data");
+			$this->setUserLog("update", "entityData");
 		}
 		$this->json($data);
 	}

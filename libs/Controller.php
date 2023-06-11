@@ -111,6 +111,10 @@ class Controller
 		{
 			$this->view->restrict = array("user");
 		}
+		else
+		{
+			$this->view->data["user_photo"] = "public/images/user.png";
+		}
 
 		# Sistema en mantenimiento
 		if(defined('SYSTEM_STATUS') && SYSTEM_STATUS == 'MAINTENANCE')

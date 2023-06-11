@@ -40,7 +40,7 @@ $(function() {
 		$("#main_aside").slideToggle("fast");
 	});
 
-	$("#u_close").on("click", function() {
+	$(".logout_button").on("click", function() {
 		$.ajax({
 			method: "GET",
 			url: "User/logout/",

@@ -20,7 +20,7 @@ trait ActivityLog
 		if(empty($options["from"]) || empty($options["to"]))
 		{
 			$date = Date("Y-m-d");
-			header("Location: /" . $this->module . "/ActivityLog/from/$date/to/$date/");
+			header("Location: /" . $this->module . "/" . __FUNCTION__ . "/from/$date/to/$date/");
 			return;
 		}
 		$this->view->standard_list();

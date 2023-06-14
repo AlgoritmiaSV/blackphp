@@ -32,7 +32,6 @@ class Index extends Controller
 		{
 			$this->view->data[$key] = $value;
 		}
-		$this->view->data["branch_name"] = Session::get("branch")["branch_name"];
 		$this->view->data["entity_date"] = date_utilities::sql_date_to_string($entity["entity_date"]);
 		Session::set("entity_date", $entity["entity_date"]);
 		foreach($this->view->data["modules"] as $key => $module)

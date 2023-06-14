@@ -41,12 +41,29 @@ class Session
 	 * 
 	 * Devuelve un valor almacenado en la sesión, o null si no existe.
 	 * 
-	 * @param string $key La clave del valor solicitado
+	 * @param string $key La clave del valor solicitado, que puede estar expresada de manera simple o en multinivel separado
+	 * por pleca. Por ejemplo:
+	 * Session::get("user") equivale a $_SESSION["user"]
+	 * Session::get("user/user_id") equivale a $_SESSION["user"]["user_id"]
 	 * 
 	 * @return mixed|null El valor solicitado, o null, si no existe.
 	 */
 	public static function get($key)
 	{
+		if(strpos($key, "/") !== false)
+		{
+			$indexes = explode("/", $key);
+			$result = $_SESSION;
+			foreach($indexes as $index)
+			{
+				if(!isset($result[$index]))
+				{
+					return null;
+				}
+				$result = $result[$index];
+			}
+			return $result;
+		}
 		if (isset($_SESSION[$key]))
 		{
 			return $_SESSION[$key];

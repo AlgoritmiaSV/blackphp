@@ -188,7 +188,7 @@ trait ORM
 		}
 		if(property_exists($this, "entity_id") && is_null($this->entity_id))
 		{
-			$this->entity_id = Session::get("entity")["entity_id"];
+			$this->entity_id = Session::get("entity/entity_id");
 		}
 		$data = get_object_vars($this);
 		$sth = null;
@@ -308,9 +308,9 @@ trait ORM
 		{
 			$wheres[] = $prefix . "status != 0";
 		}
-		if(property_exists(new static(), "entity_id") && !$entity && Session::get("entity") != null && Session::get("entity")["entity_id"] != null)
+		if(property_exists(new static(), "entity_id") && !$entity && Session::get("entity") != null && Session::get("entity/entity_id") != null)
 		{
-			$wheres[] = $prefix . "entity_id = " . Session::get("entity")["entity_id"];
+			$wheres[] = $prefix . "entity_id = " . Session::get("entity/entity_id");
 		}
 		$where = implode(" AND ", $wheres);
 
@@ -636,9 +636,9 @@ trait ORM
 		{
 			$wheres[] = $prefix . "status != 0";
 		}
-		if(property_exists(new static(), "entity_id") && !$entity && !empty(Session::get("entity")["entity_id"]))
+		if(property_exists(new static(), "entity_id") && !$entity && !empty(Session::get("entity/entity_id")))
 		{
-			$wheres[] = $prefix . "entity_id = " . Session::get("entity")["entity_id"];
+			$wheres[] = $prefix . "entity_id = " . Session::get("entity/entity_id");
 		}
 		$where = implode(" AND ", $wheres);
 

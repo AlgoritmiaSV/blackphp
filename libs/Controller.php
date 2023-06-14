@@ -356,7 +356,7 @@ class Controller
 		}
 		elseif($type == 'internal')
 		{
-			$this->view->render('error');
+			$this->view->render("main/error");
 		}
 		else
 		{
@@ -549,7 +549,7 @@ class Controller
 			}
 			elseif($response == 'embedded')
 			{
-				$this->view->render('error');
+				$this->view->render("main/error");
 			}
 			else
 			{

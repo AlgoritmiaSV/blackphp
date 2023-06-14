@@ -24,7 +24,7 @@ class Installation extends Controller
 		parent::__construct();
 		$this->module = get_class($this);
 		$this->view->data["module"] = $this->module;
-		$this->view->data["nav"] = empty(Session::get("entity")["entity_id"]) ? "" : $this->view->render("installation/nav", true);
+		$this->view->data["nav"] = empty(Session::get("entity/entity_id")) ? "" : $this->view->render("installation/nav", true);
 	}
 
 	################################ VISTAS
@@ -828,7 +828,7 @@ class Installation extends Controller
 			}
 			elseif($type == 'internal')
 			{
-				$this->view->render('error');
+				$this->view->render("main/error");
 			}
 			else
 			{

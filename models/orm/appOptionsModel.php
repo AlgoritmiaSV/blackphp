@@ -121,6 +121,12 @@ class appOptionsModel
 		$this->default_value = $value === null ? null : (string)$value;
 	}
 
+	public function appOptionValues()
+	{
+		appOptionValuesModel::flush();
+		return appOptionValuesModel::where("option_id", $this->option_id);
+	}
+
 	public function entityOptions()
 	{
 		entityOptionsModel::flush();

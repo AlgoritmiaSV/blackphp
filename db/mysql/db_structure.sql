@@ -126,6 +126,24 @@ CREATE TABLE `app_modules` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `app_option_values`
+--
+
+DROP TABLE IF EXISTS `app_option_values`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `app_option_values` (
+  `option_value_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
+  `option_id` int(11) NOT NULL COMMENT 'ID de la opción',
+  `value_key` varchar(32) NOT NULL COMMENT 'Clave del valor',
+  `value_label` tinytext NOT NULL COMMENT 'Etiqueta del valor',
+  PRIMARY KEY (`option_value_id`),
+  KEY `option_value_option` (`option_id`),
+  CONSTRAINT `option_value_option` FOREIGN KEY (`option_id`) REFERENCES `app_options` (`option_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Valores posibles para selectores en las preferencias';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `app_options`
 --
 

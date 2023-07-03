@@ -111,6 +111,19 @@ class Settings extends Controller
 			{
 				$data["update"][$option["option_key"]] = $option["option_value"];
 			}
+
+			$optionValues = appOptionValuesModel::join("app_options", "option_id")->getAll();
+			foreach($optionValues as $value)
+			{
+				if(!isset($data[$value["option_key"]]))
+				{
+					$data[$value["option_key"]] = [];
+				}
+				$data[$value["option_key"]][] = [
+					"id" => $value["value_key"],
+					"text" => $value["value_label"]
+				];
+			}
 		}
 		if($_POST["method"] == "NewRole" || $_POST["method"] == "EditRole")
 		{

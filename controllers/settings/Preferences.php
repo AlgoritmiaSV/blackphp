@@ -19,10 +19,14 @@ trait Preferences
 		{
 			$switches = entityOptionsModel::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 1)->getAllArray();
 			$fields = entityOptionsModel::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 2)->getAllArray();
-			if(count($switches) > 0 || count($fields) > 0)
+			$selectors = entityOptionsModel::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 3)->getAllArray();
+			$numbers = entityOptionsModel::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 4)->getAllArray();
+			if(count($switches) + count($fields) + count($selectors) + count($numbers) > 0)
 			{
 				$this->view->data["switches"] = $switches;
 				$this->view->data["fields"] = $fields;
+				$this->view->data["selectors"] = $selectors;
+				$this->view->data["numbers"] = $numbers;
 				$this->view->data["config_modules"][] = Array(
 					"module_name" => $module["module_name"],
 					"preferences" => $this->view->render("settings/preference_item", true)

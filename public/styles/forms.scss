@@ -482,3 +482,18 @@ tr:hover .action_icon
 		width: auto;
 	}
 }
+
+@media screen and (min-width: 800px)
+{
+	.middle_line
+	{
+		background: linear-gradient(to bottom, #ffffff 0%, #ffffff 49%, #d9d9d9 50%, #ffffff 51%);
+	}
+	
+	.form_group
+	{
+		padding: 2px;
+		border-radius: 5px;
+		background-color: $input_bg;
+	}
+}

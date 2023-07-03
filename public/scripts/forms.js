@@ -1,8 +1,51 @@
-/*
-#	Functions for add register
-#	By: Edwin Fajardo
-#	Date-time: 2017-09-24 16:31
-*/
+/**
+ * Funciones para el control de formularios
+ * Date-time: 2017-09-24 16:31
+ * 
+ * @author Edwin Fajardo
+ */
+
+building_entry_selector = true;
+function build_selectors()
+{
+	$(".data_selector:not(.select2-hidden-accessible)").each(function() {
+		var selector = $(this);
+		if($(window).width() < 900)
+		{
+			selector.data("width", "100%");
+		}
+		if(json[selector.data("source")] != null)
+		{
+			if(selector.data("search") != "none" || selector.data("default") == "none")
+			{
+				item = $(document.createElement("option"));
+				item.appendTo(selector);
+			}
+			var language = $("html").first().attr("lang");
+			var select_params = {
+				data: json[selector.data("source")],
+				dropdownAutoWidth: true,
+				placeholder: selector.data("placeholder") || "",
+				width: selector.data("width") || "fit-content",
+				language: language
+			}
+			if(selector.data("search") == "none")
+			{
+				select_params.minimumResultsForSearch = Infinity;
+			}
+			selector.select2(select_params);
+			if(selector.data("value") != null)
+			{
+				selector.val(selector.data("value"));
+				selector.trigger('change.select2');
+			}
+		}
+	});
+	$("#bill_type").trigger("change");
+	$(".entry_selector").trigger("change");
+	building_entry_selector = false;
+}
+
 $( function()
 {
 	new_item_row = $(".item_row").first().clone(true);
@@ -17,48 +60,6 @@ $( function()
 	$("#main_content").has(".form_content").addClass("form_main_content");
 
 	bill_type = 1;
-	/* Build select2 */
-	building_entry_selector = true;
-	function build_selectors()
-	{
-		$(".data_selector:not(.select2-hidden-accessible)").each(function() {
-			var selector = $(this);
-			if($(window).width() < 900)
-			{
-				selector.data("width", "100%");
-			}
-			if(json[selector.data("source")] != null)
-			{
-				if(selector.data("search") != "none" || selector.data("default") == "none")
-				{
-					item = $(document.createElement("option"));
-					item.appendTo(selector);
-				}
-				var language = $("html").first().attr("lang");
-				var select_params = {
-					data: json[selector.data("source")],
-					dropdownAutoWidth: true,
-					placeholder: selector.data("placeholder") || "",
-					width: selector.data("width") || "fit-content",
-					language: language
-				}
-				console.log(JSON.stringify(select_params));
-				if(selector.data("search") == "none")
-				{
-					select_params.minimumResultsForSearch = Infinity;
-				}
-				selector.select2(select_params);
-				if(selector.data("value") != null)
-				{
-					selector.val(selector.data("value"));
-					selector.trigger('change.select2');
-				}
-			}
-		});
-		$("#bill_type").trigger("change");
-		$(".entry_selector").trigger("change");
-		building_entry_selector = false;
-	}
 
 	/* Get form data */
 	$.ajax({

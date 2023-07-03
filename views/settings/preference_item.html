@@ -9,5 +9,16 @@
 [[ fields ]]
 <div class="form_entry">
 	<label class="description_label">{{ option_description }}:</label>
-	<input name="{{ option_key }}" maxlength="512" class="update_input default_width">
+	<input name="{{ option_key }}" maxlength="32" class="update_input default_width">
 </div>[[/ fields ]]
+[[ numbers ]]
+<div class="form_entry">
+	<label class="description_label">{{ option_description }}:</label>
+	<input name="{{ option_key }}" type="number" min="0" max="127" class="update_input default_width">
+</div>[[/ numbers ]]
+[[ selectors ]]
+<div class="form_entry">
+	<label class="description_label">{{ option_description }}</label>
+	<select class="data_selector update_input" name="{{ option_key }}" data-source="{{ option_key }}" data-search="none" data-placeholder="_(Select)"></select>
+</div>
+[[/ selectors ]]

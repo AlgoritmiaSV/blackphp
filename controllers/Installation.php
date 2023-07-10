@@ -114,6 +114,7 @@ class Installation extends Controller
 			$elements = appElementsModel::where("module_id", $module->getModuleId())->getAllArray();
 			foreach($elements as &$element)
 			{
+				$element["element_name"] = _($element["element_name"]);
 				if($element["is_creatable"] == 0)
 				{
 					$element["creatable"] = "disabled";
@@ -128,7 +129,7 @@ class Installation extends Controller
 				}
 			}
 			unset($element);
-			$this->view->data["module_name"] = $module->getModuleName();
+			$this->view->data["module_name"] = _($module->getModuleName());
 			$this->view->data["elements"] = $elements;
 			$role_elements .= $this->view->render("installation/role_elements", true);
 		}
@@ -566,7 +567,7 @@ class Installation extends Controller
 		if(!empty($_FILES["logo"]["name"]))
 		{
 			$extension = strtolower(pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION));
-			$dir = "entities/" . $data["subdomain"] . "/";
+			$dir = "entities/" . $subdomain . "/";
 			if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
 			{
 				$dir = "entities/local/";

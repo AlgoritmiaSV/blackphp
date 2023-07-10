@@ -459,11 +459,11 @@ $( function()
 		var row_quantity = _input.closest("tr").find(".row_quantity").val();
 		var row_price = _input.closest("tr").find(".row_price").val();
 		var total_cell = _input.closest("tr").find(".row_total").find("span");
-		if(row_quantity == '' && !isNaN(row_price))
+		if(row_quantity == '' && row_price != '' && !isNaN(row_price))
 		{
 			total_cell.text(parseFloat(row_price).toFixed(2));
 		}
-		else if(isNaN(row_quantity) || isNaN(row_price))
+		else if(isNaN(row_quantity) || isNaN(row_price) || row_price == '')
 		{
 			total_cell.text("0.00");
 		}
@@ -498,15 +498,17 @@ $( function()
 			if($(this).closest("tr").is(':last-child'))
 			{
 				var last_price = $(this).closest("tr").find(".row_price");
+				last_price.removeAttr("data-sale_price");
+				last_price.removeAttr("data-nvat_price");
 				var last_product = $(this).closest("tr").find(".row_product_name");
 				if(last_product.val() == "")
 				{
-					last_product.focus();
+					last_product.trigger("focus");
 					return false;
 				}
 				if(last_price.val() == "")
 				{
-					last_price.focus();
+					last_price.trigger("focus");
 					return false;
 				}
 				$(this).closest("tr").find(".data_selector").each(function() {
@@ -603,6 +605,11 @@ $( function()
 						if(bill_type == 2 && url.module == 'Sales')
 						{
 							_tr.find(".sale_price").val(ui.item.nvat_price);
+						}
+						if(ui.item.sale_price && ui.item.nvat_price)
+						{
+							_tr.find(".sale_price").attr("data-sale_price", ui.item.sale_price);
+							_tr.find(".sale_price").attr("data-nvat_price", ui.item.nvat_price);
 						}
 						_tr.find(".row_available").text(ui.item.quantity);
 						var row_quantity = _tr.find(".row_quantity").val();
@@ -726,11 +733,30 @@ $( function()
 		if(type_id == 2)
 		{
 			$("#vat_total, #subtotal_div").show();
+			var inputs = $(".items_container .row_price").toArray();
+			$.each(inputs, function() {
+				var _input = $(this);
+				if(_input.data("nvat_price"))
+				{
+					_input.val(_input.data("nvat_price"));
+					_input.trigger("change");
+				}
+			});
 		}
 		else
 		{
 			$("#vat_total, #subtotal_div").hide();
+			var inputs = $(".items_container .row_price").toArray();
+			$.each(inputs, function() {
+				var _input = $(this);
+				if(_input.data("sale_price"))
+				{
+					_input.val(_input.data("sale_price"));
+					_input.trigger("change");
+				}
+			});
 		}
+		//calc_bill_total();
 		/*if(type_id == 3)
 		{
 			$("#bill_number").val(json.ticket);
@@ -978,6 +1004,8 @@ $( function()
 		_tr.find(".row_number").val(tbody.find("tr").length - 1);
 		_tr.find(".date_input").each(set_date_picker);
 		_tr.find("input").keypress(input_keypress);
+		_tr.find(".row_price").removeAttr("data-sale_price");
+		_tr.find(".row_price").removeAttr("data-nvat_price");
 		_tr.find(".row_quantity, .row_price").change(function() {
 			calc_row_total($(this));
 			calc_bill_total();

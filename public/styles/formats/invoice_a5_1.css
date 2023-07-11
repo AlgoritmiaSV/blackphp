@@ -1,0 +1,20 @@
+/**
+ * Impresiones de facturas en hojas de tamaño A5
+ * Formato 1
+ */
+.invoice_area
+{
+	position: relative;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 9pt;
+}
+
+@media screen {
+	.invoice_area
+	{
+		width: 529px;
+		height: 793px;
+		margin: 0px auto;
+		border: 2px dashed #999999;
+	}
+}

@@ -59,7 +59,7 @@ trait Preferences
 		}
 		$this->setUserLog("update", "preferences");
 
-		$option_list = entityOptionsModel::select("option_key", "option_value")->join("app_options", "option_id")->where("option_type", 1)->getAll();
+		$option_list = entityOptionsModel::select("option_key", "option_value")->join("app_options", "option_id")->getAll();
 		$options = Array();
 		foreach($option_list as $item)
 		{

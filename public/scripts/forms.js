@@ -46,7 +46,7 @@ function build_selectors()
 	building_entry_selector = false;
 }
 
-$( function()
+$(function()
 {
 	new_item_row = $(".item_row").first().clone(true);
 	json = [];
@@ -58,8 +58,6 @@ $( function()
 	}
 
 	$("#main_content").has(".form_content").addClass("form_main_content");
-
-	bill_type = 1;
 
 	/* Get form data */
 	$.ajax({
@@ -111,7 +109,10 @@ $( function()
 						{
 							_tr.find(".pres_id").val(value.pres_id);
 						}
-						calc_row_total(_tr);
+						if(typeof("calc_row_total") == "function")
+						{
+							calc_row_total(_tr);
+						}
 						container.append(_tr);
 						_tr.find("input").first().trigger("focus");
 						/* Partial values */
@@ -130,7 +131,6 @@ $( function()
 							"visibility":"visible"
 						});
 					}
-					//calc_bill_total();
 				}
 			});
 			$(".current").on("change", calculate_consumption);
@@ -230,7 +230,10 @@ $( function()
 		/* selectors */
 		build_selectors();
 		build_autocomplete();
-		calc_bill_total();
+		if(typeof("calc_bill_total") == "function")
+		{
+			calc_bill_total();
+		}
 		/* Unique selection */
 		$(".unique_selection").on("change", function() {
 			setTimeout(unique_selection, 500);
@@ -453,32 +456,6 @@ $( function()
 		}, 5000);
 	}
 
-	/* Clalc details */
-	function calc_row_total(_input)
-	{
-		var row_quantity = _input.closest("tr").find(".row_quantity").val();
-		var row_price = _input.closest("tr").find(".row_price").val();
-		var total_cell = _input.closest("tr").find(".row_total").find("span");
-		if(row_quantity == '' && row_price != '' && !isNaN(row_price))
-		{
-			total_cell.text(parseFloat(row_price).toFixed(2));
-		}
-		else if(isNaN(row_quantity) || isNaN(row_price) || row_price == '')
-		{
-			total_cell.text("0.00");
-		}
-		else
-		{
-			var total = row_quantity * row_price;
-			total_cell.text(total.toFixed(2));
-		}
-	}
-
-	$(".row_quantity, .row_price").on("change", function() {
-		calc_row_total($(this));
-		calc_bill_total();
-	});
-
 	$(".details_table input").on("keypress", input_keypress);
 
 	/**
@@ -497,6 +474,15 @@ $( function()
 			}
 			if($(this).closest("tr").is(':last-child'))
 			{
+
+				/* Comprobación de número de filas */
+				var max_items = tbody.data("max_items");
+				if(max_items != null && max_items != 0 && tbody.find("tr").length >= max_items)
+				{
+					return false;
+				}
+				/* Fin de omprobación de número de filas */
+
 				var last_price = $(this).closest("tr").find(".row_price");
 				last_price.removeAttr("data-sale_price");
 				last_price.removeAttr("data-nvat_price");
@@ -548,25 +534,6 @@ $( function()
 		}
 	}
 
-	function calc_bill_total()
-	{
-		var bill_total = 0;
-		$(".row_total").each(function() {
-			bill_total += parseFloat($(this).find("span").text());
-		});
-		$("#subtotal").val(format_number(bill_total));
-		$("#iva").val(format_number(bill_total * 0.13));
-		if(parseInt($("#bill_type").val()) == 2)
-		{
-			$("#total").val(format_number(bill_total * 1.13));
-		}
-		else
-		{
-			$("#total").val(format_number(bill_total));
-		}
-		$("#paid_amount_input").trigger("change");
-	}
-
 	format_number = function(str)
 	{
 		var n = new Number(str);
@@ -602,7 +569,7 @@ $( function()
 							_tr.find("select." + v_index).data("value", v_value);
 							_tr.find("span." + v_index).text(v_value);
 						});
-						if(bill_type == 2 && url.module == 'Sales')
+						if(bill_type && bill_type == 2 && url.module == 'Sales')
 						{
 							_tr.find(".sale_price").val(ui.item.nvat_price);
 						}
@@ -617,8 +584,11 @@ $( function()
 						{
 							_tr.find(".row_quantity").val(1);
 						}
-						calc_row_total(_tr);
-						calc_bill_total();
+						if(typeof("calc_row_total") == "function")
+						{
+							calc_row_total(_tr);
+							calc_bill_total();
+						}
 						if(ui.item.combo_id)
 						{
 							setTimeout(check_generic, 50, _tr, ui.item.combo_id);
@@ -693,114 +663,12 @@ $( function()
 		});
 	}
 
-	function check_generic(_tr, combo_id)
-	{
-		var combo_tr = _tr;
-		$.ajax({
-			method: "GET",
-			url: url.module + "/generic_by_combo/" + combo_id,
-			dataType: "json"
-		})
-		.done(function(generic_data) {
-			combo_tr.find(".row_generics").html("");
-			$.each(generic_data, function(index, value) {
-				var div = $(document.createElement("div"));
-				var generic_span = $(document.createElement("span"));
-				generic_span.text(value.product_name + ":");
-				div.append(generic_span);
-				var select = $(document.createElement("select"));
-				select.attr("name", "generics[]");
-				div.append(select);
-				combo_tr.find(".row_generics").append(div);
-				$.each(value.options, function(oindex, ovalue) {
-					var new_option = $(document.createElement("option"));
-					new_option.attr("value", ovalue.product_id);
-					new_option.text(ovalue.product_name);
-					select.append(new_option);
-				});
-			});
-		})
-		.fail(function() {
-		})
-		.always(function() {
-		});	
-	}
-
-	/* Bill type */
-	$("#bill_type").on("change", function()
-	{
-		var type_id = $(this).val();
-		if(type_id == 2)
-		{
-			$("#vat_total, #subtotal_div").show();
-			var inputs = $(".items_container .row_price").toArray();
-			$.each(inputs, function() {
-				var _input = $(this);
-				if(_input.data("nvat_price"))
-				{
-					_input.val(_input.data("nvat_price"));
-					_input.trigger("change");
-				}
-			});
-		}
-		else
-		{
-			$("#vat_total, #subtotal_div").hide();
-			var inputs = $(".items_container .row_price").toArray();
-			$.each(inputs, function() {
-				var _input = $(this);
-				if(_input.data("sale_price"))
-				{
-					_input.val(_input.data("sale_price"));
-					_input.trigger("change");
-				}
-			});
-		}
-		//calc_bill_total();
-		/*if(type_id == 3)
-		{
-			$("#bill_number").val(json.ticket);
-			$("#bill_number").attr("type", "number");
-		}
-		else
-		{
-			$("#bill_number").val('');
-			$("#bill_number").attr("type", "text");
-		}*/
-		var object_data = $(this).select2("data")[0];
-		if(object_data && object_data.next)
-		{
-			$("#bill_number").val(object_data.next);
-		}
-		if(type_id == "")
-		{
-			JSON.ticket++;
-		}
-		bill_type = type_id;
-	});
-
 	/* Classifier */
 	$(".classifier_input").on("change", function() {
 		$(".content_viewer").css("visibility", "hidden");
 		$(".classifier_button").show();
 		$(".print_button").hide();
 		$(".data_search").hide();
-	});
-
-	/* Calculate change */
-	$("#paid_amount_input").on("change", function() {
-		var payment = parseFloat($(this).val());
-		var total = $("#total").val();
-		total = parseFloat(total.replace(",",""));
-		var change = payment - total;
-		if(!isNaN(change))
-		{
-			$("#change_input").val(change.toFixed(2));
-		}
-		else
-		{
-			$("#change_input").val('');
-		}
 	});
 
 	/* Delete */
@@ -904,20 +772,12 @@ $( function()
 						input.attr("type", "hidden");
 						delete_button.closest("form").append(input);
 					}
-					// Services
-					service_id = delete_button.closest("tr").find(".service_id").val();
-					if(service_id != null && service_id != "")
-					{
-						removed = delete_button.closest("tr").find(".item_id").val();
-						input = $(document.createElement("input"));
-						input.val(removed);
-						input.attr("name", "removed_services[]");
-						input.attr("type", "hidden");
-						delete_button.closest("form").append(input);
-					}
 					// Others
 					delete_button.closest("tr").remove();
-					calc_bill_total();
+					if(typeof("calc_bill_total") == "function")
+					{
+						calc_bill_total();
+					}
 					row_count = 0;
 					tbody.find(".row_count").each(function() {
 						$(this).text(++row_count);
@@ -983,13 +843,22 @@ $( function()
 		}
 	});
 
-	/* Add item from button */
+	/* Agregar filas a una tabla de formulario desde el botón */
 	$(".add_row_button").on("click", function() {
 		var tbody = $($(this).data("tbody"));
 		if(tbody == null)
 		{
 			tbody = $(".items_container").first();
 		}
+
+		/* Comprobación de número de filas */
+		var max_items = tbody.data("max_items");
+		if(max_items != null && max_items != 0 && tbody.find("tr").length >= max_items)
+		{
+			return false;
+		}
+		/* Fin de omprobación de número de filas */
+
 		var last_tr = tbody.find("tr").last();
 		last_tr.find(".data_selector").each(function() {
 			$(this).select2("destroy");
@@ -1092,7 +961,10 @@ $( function()
 	}
 	$(".delete_entry_icon").on("click", delete_entry_click);
 
-	/* Image uploader */
+	/** 
+	 * Image uploader
+	 * Por el momento esta funcionalidad sólo se encuentra en combos
+	*/
 	if($('.input-images').length)
 	{
 		$('.input-images').imageUploader({

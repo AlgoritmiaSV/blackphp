@@ -109,10 +109,7 @@ $(function()
 						{
 							_tr.find(".pres_id").val(value.pres_id);
 						}
-						if(typeof("calc_row_total") == "function")
-						{
-							calc_row_total(_tr);
-						}
+						calc_row_total(_tr);
 						container.append(_tr);
 						_tr.find("input").first().trigger("focus");
 						/* Partial values */
@@ -230,10 +227,7 @@ $(function()
 		/* selectors */
 		build_selectors();
 		build_autocomplete();
-		if(typeof("calc_bill_total") == "function")
-		{
-			calc_bill_total();
-		}
+		calc_bill_total();
 		/* Unique selection */
 		$(".unique_selection").on("change", function() {
 			setTimeout(unique_selection, 500);
@@ -584,11 +578,8 @@ $(function()
 						{
 							_tr.find(".row_quantity").val(1);
 						}
-						if(typeof("calc_row_total") == "function")
-						{
-							calc_row_total(_tr);
-							calc_bill_total();
-						}
+						calc_row_total(_tr);
+						calc_bill_total();
 						if(ui.item.combo_id)
 						{
 							setTimeout(check_generic, 50, _tr, ui.item.combo_id);
@@ -774,10 +765,7 @@ $(function()
 					}
 					// Others
 					delete_button.closest("tr").remove();
-					if(typeof("calc_bill_total") == "function")
-					{
-						calc_bill_total();
-					}
+					calc_bill_total();
 					row_count = 0;
 					tbody.find(".row_count").each(function() {
 						$(this).text(++row_count);

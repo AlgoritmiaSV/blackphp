@@ -487,7 +487,7 @@ tr:hover .action_icon
 {
 	.middle_line
 	{
-		background: linear-gradient(to bottom, #ffffff 0%, #ffffff 49%, #d9d9d9 50%, #ffffff 51%);
+		background: linear-gradient(to bottom, $form_content_bg 0%, $form_content_bg 49%, #d9d9d9 50%, $form_content_bg 51%);
 	}
 	
 	.form_group

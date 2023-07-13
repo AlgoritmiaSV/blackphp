@@ -9,7 +9,7 @@ function calc_row_total(_input)
 	{
 		total_cell.text(parseFloat(row_price).toFixed(2));
 	}
-	else if(isNaN(row_quantity) || isNaN(row_price) || row_price == '')
+	else if(isNaN(row_quantity) || isNaN(row_price) || row_quantity == '' || row_price == '')
 	{
 		total_cell.text("0.00");
 	}
@@ -24,7 +24,11 @@ function calc_bill_total()
 {
 	var bill_total = 0;
 	$(".row_total").each(function() {
-		bill_total += parseFloat($(this).find("span").text());
+		var row_total = parseFloat($(this).find("span").text());
+		if(!isNaN(row_total))
+		{
+			bill_total += row_total;
+		}
 	});
 	$("#subtotal").val(format_number(bill_total));
 	$("#iva").val(format_number(bill_total * 0.13));
@@ -38,7 +42,6 @@ function calc_bill_total()
 	}
 	$("#paid_amount_input").trigger("change");
 }
-
 
 function check_generic(_tr, combo_id)
 {
@@ -109,9 +112,25 @@ $(function() {
 			});
 		}
 		var object_data = $(this).select2("data")[0];
-		if(object_data && object_data.next)
+		if(object_data)
 		{
-			$("#bill_number").val(object_data.next);
+			if(object_data.next)
+			{
+				$("#bill_number").val(object_data.next);
+			}
+			if(object_data.max_items)
+			{
+				$(".items_container").data("max_items", object_data.max_items);
+				if(object_data.max_items != 0 && $(".items_container tr").length > object_data.max_items)
+				{
+					Swal.fire({
+						'title': "Advertencia",
+						'html': "Ya ha registrado más artículos de los permitidos para este tipo de documento",
+						'icon': "warning",
+						'confirmButtonText': 'Acceptar'
+					});
+				}
+			}
 		}
 		if(type_id == "")
 		{

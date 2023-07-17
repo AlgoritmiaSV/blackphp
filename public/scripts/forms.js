@@ -130,7 +130,6 @@ $(function()
 					}
 				}
 			});
-			$(".current").on("change", calculate_consumption);
 			$(".current").trigger("change");
 		}
 
@@ -1121,6 +1120,7 @@ $(function()
 			$(this).show();
 		}
 	}
+	
 	$(".image-upload").each(function()
 	{
 		$(this).imageReader();
@@ -1165,70 +1165,6 @@ $(function()
 			});
 		});
 	}
-
-	/* Check DUI */
-	$(".check_identifier").on("change", function() {
-		$(".identifier_clean").val("");
-		check_url = url.module + "/check_identifier/" + $(this).val();
-		if($(".list_selector").val() != null && $(".list_selector").val() != "")
-		{
-			check_url += "/" + $(".list_selector").val() + "/";
-		}
-		$.ajax({
-			method: "GET",
-			url: check_url,
-			dataType: "json"
-		})
-		.done(function(identified) {
-			if(identified.found)
-			{
-				$.jAlert({
-					'title': "Entrada duplicada",
-					'content': "El(la) sr(a) " + identified.complete_name + " ya se encuentra en la lista seleccionada.",
-					'theme': "red",
-					'autofocus': '.jalert_accept',
-					'btns': [
-						{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
-				});
-			}
-			$.each(identified, function(index, value) {
-				$("." + index).val(value);
-			});
-		})
-		.fail(function() {
-		})
-		.always(function() {
-		});
-	});
-
-	/** Calculate consumption */
-	calculate_consumption = function() {
-		tr = $(this).closest("tr");
-		var previous_value = parseInt(tr.find(".previous").text());
-		var current_value = parseInt($(this).val());
-		var consumption_span = tr.find(".consumption");
-		if(isNaN(previous_value) || isNaN(current_value))
-		{
-			return false;
-		}
-		consumption = current_value - previous_value;
-		if(consumption < 0)
-		{
-			$.jAlert({
-				'title': "Error",
-				'content': "La lectura no puede ser inferior a " + previous_value + ".",
-				'theme': "red",
-				'autofocus': '.jalert_accept',
-				'btns': [
-					{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
-			});
-			consumption_span.text("");
-		}
-		else
-		{
-			consumption_span.text(consumption);
-		}
-	};
 
 	/**
 	 * Cálculo de intervalo de fechas

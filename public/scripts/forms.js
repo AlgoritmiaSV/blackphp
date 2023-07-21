@@ -41,7 +41,10 @@ function build_selectors()
 			}
 		}
 	});
-	$("#bill_type").trigger("change");
+	if(building_entry_selector)
+	{
+		$("#bill_type").trigger("change");
+	}
 	$(".entry_selector").trigger("change");
 	building_entry_selector = false;
 }

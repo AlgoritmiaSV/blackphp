@@ -1132,9 +1132,10 @@ $(function()
 	/* Search by local_code and barcode */
 	function search_by_code()
 	{
-		local_code = $(this).val();
-		list_input = $(this).closest("tr").find(".list_input");
-		items = json[list_input.data("source")];
+		var local_code = $(this).val();
+		local_code = local_code.replace("\r", "");
+		var list_input = $(this).closest("tr").find(".list_input");
+		var items = json[list_input.data("source")];
 		$.each(items, function(index, value) {
 			if((value.local_code == local_code || value.barcode == local_code) && !value.pres_id)
 			{

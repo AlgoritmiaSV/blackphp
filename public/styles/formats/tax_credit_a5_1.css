@@ -2,3 +2,54 @@
  * Impresiones de facturas en hojas de tamaño A5
  * Formato 1
  */
+.a5_area
+{
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 9pt;
+	width: 529px;
+	height: 793px;
+	margin: 0px auto;
+}
+
+.a5_container
+{
+	position: relative;
+	width: 529px;
+	height: 793px;
+}
+
+.quote_date
+{
+	position: absolute;
+	top: 94px;
+	left: 378px;
+}
+
+.quote_items {
+	position: absolute;
+	top: 227px;
+	left: 18px;
+}
+
+td.column_quantity {
+	width: 40px;
+	padding: 0px 10px;
+}
+
+td.column_description {
+	width: 206px;
+	padding: 0px 10px;
+}
+
+table.quote_totals {
+	position: absolute;
+	top: 570px;
+	left: 423px;
+}
+
+@media screen {
+	.a5_area
+	{
+		border: 2px dashed #999999;
+	}
+}

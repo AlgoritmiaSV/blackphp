@@ -8,7 +8,8 @@
 	font-size: 9pt;
 	width: 529px;
 	height: 793px;
-	margin: 0px auto;
+	margin: 0px;
+	padding: 0px !important;
 }
 
 .a5_container
@@ -21,29 +22,66 @@
 .invoice_date
 {
 	position: absolute;
-	top: 94px;
+	top: 113px;
 	left: 378px;
+}
+
+.invoice_address
+{
+	position: absolute;
+	top: 168px;
+	left: 84px;
+}
+
+.invoice_customer
+{
+	position: absolute;
+	top: 149px;
+	left: 78px;
+}
+
+.invoice_nit_dui
+{
+	position: absolute;
+	top: 181px;
+	left: 372px;
+}
+
+.text_amount
+{
+	position: absolute;
+	top: 624px;
+	left: 72px;
+	width: 226px;
 }
 
 .invoice_items {
 	position: absolute;
-	top: 227px;
-	left: 18px;
+	top: 233px;
+	left: 23px;
 }
 
-td.column_quantity {
+.invoice_items tr
+{
+	height: 24px;
+}
+
+td.column_quantity
+{
 	width: 40px;
 	padding: 0px 10px;
 }
 
-td.column_description {
+td.column_description
+{
 	width: 206px;
 	padding: 0px 10px;
 }
 
-table.invoice_totals {
+table.invoice_totals
+{
 	position: absolute;
-	top: 570px;
+	top: 604px;
 	left: 423px;
 }
 
@@ -51,5 +89,6 @@ table.invoice_totals {
 	.a5_area
 	{
 		border: 2px dashed #999999;
+		margin: 0px auto;
 	}
 }

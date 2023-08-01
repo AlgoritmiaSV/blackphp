@@ -8,7 +8,8 @@
 	font-size: 9pt;
 	width: 529px;
 	height: 793px;
-	margin: 0px auto;
+	margin: 0px;
+	padding: 0px !important;
 }
 
 .a5_container
@@ -21,14 +22,40 @@
 .quote_date
 {
 	position: absolute;
-	top: 94px;
-	left: 378px;
+	top: 132px;
+	left: 321px;
+}
+
+.quote_address
+{
+	position: absolute;
+	top: 181px;
+	left: 94px;
+}
+
+.quote_customer
+{
+	position: absolute;
+	top: 155px;
+	left: 94px;
+}
+
+.quote_phone
+{
+	position: absolute;
+	top: 204px;
+	left: 303px;
 }
 
 .quote_items {
 	position: absolute;
-	top: 227px;
-	left: 18px;
+	top: 265px;
+	left: 45px;
+}
+
+.quote_items tr
+{
+	height: 29px;
 }
 
 td.column_quantity {
@@ -41,15 +68,15 @@ td.column_description {
 	padding: 0px 10px;
 }
 
-table.quote_totals {
-	position: absolute;
-	top: 570px;
-	left: 423px;
+table.quote_totals
+{
+	display: none;
 }
 
 @media screen {
 	.a5_area
 	{
 		border: 2px dashed #999999;
+		margin: 0px auto;
 	}
 }

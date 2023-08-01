@@ -8,7 +8,8 @@
 	font-size: 9pt;
 	width: 529px;
 	height: 793px;
-	margin: 0px auto;
+	margin: 0px;
+	padding: 0px !important;
 }
 
 .a5_container
@@ -18,30 +19,92 @@
 	height: 793px;
 }
 
-.quote_date
+.tax_credit_date
 {
 	position: absolute;
-	top: 94px;
-	left: 378px;
+	top: 151px;
+	left: 321px;
 }
 
-.quote_items {
+.tax_credit_address
+{
 	position: absolute;
-	top: 227px;
-	left: 18px;
+	top: 204px;
+	left: 86px;
 }
 
-td.column_quantity {
+.tax_credit_customer
+{
+	position: absolute;
+	top: 181px;
+	left: 68px;
+}
+
+.tax_credit_nit
+{
+	position: absolute;
+	top: 222px;
+	left: 68px;
+}
+
+.tax_credit_nrc
+{
+	position: absolute;
+	top: 249px;
+	left: 332px;
+}
+
+.tax_credit_department
+{
+	position: absolute;
+	top: 230px;
+	left: 377px;
+}
+
+.tax_credit_activity
+{
+	position: absolute;
+	top: 268px;
+	left: 321px;
+}
+
+.text_amount
+{
+	position: absolute;
+	top: 585px;
+	left: 49px;
+	width: 226px;
+}
+
+.tax_credit_items {
+	position: absolute;
+	top: 317px;
+	left: 23px;
+}
+
+.tax_credit_items tr
+{
+	height: 23px;
+}
+
+td.column_quantity
+{
 	width: 40px;
 	padding: 0px 10px;
 }
 
-td.column_description {
+td.column_description
+{
 	width: 206px;
 	padding: 0px 10px;
 }
 
-table.quote_totals {
+td.column_space
+{
+	width: 106px;
+}
+
+table.tax_credit_totals {
 	position: absolute;
 	top: 570px;
 	left: 423px;
@@ -51,5 +114,6 @@ table.quote_totals {
 	.a5_area
 	{
 		border: 2px dashed #999999;
+		margin: 0px auto;
 	}
 }

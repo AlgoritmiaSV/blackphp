@@ -4,10 +4,8 @@
  */
 .a5_area
 {
-	font-family: 'Courier New', Courier, monospace;
-	font-size: 9pt;
-	width: 529px;
-	height: 793px;
+	width: 14.8cm;
+	height: 21cm;
 	margin: 0px;
 	padding: 0px !important;
 }
@@ -15,57 +13,68 @@
 .a5_container
 {
 	position: relative;
-	width: 529px;
-	height: 793px;
+	width: 14.8cm;
+	height: 21cm;
 }
 
 .quote_date
 {
 	position: absolute;
-	top: 132px;
-	left: 321px;
+	top: 3.4cm;
+	left: 8.5cm;
 }
 
 .quote_address
 {
 	position: absolute;
-	top: 181px;
-	left: 94px;
+	top: 4.8cm;
+	left: 2.5cm;
 }
 
 .quote_customer
 {
 	position: absolute;
-	top: 155px;
-	left: 94px;
+	top: 4.1cm;
+	left: 2.5cm;
 }
 
 .quote_phone
 {
 	position: absolute;
-	top: 204px;
-	left: 303px;
+	top: 5.4cm;
+	left: 8cm;
 }
 
 .quote_items {
 	position: absolute;
-	top: 265px;
-	left: 45px;
+	top: 6.8cm;
+	left: 0.7cm;
 }
 
 .quote_items tr
 {
-	height: 29px;
+	height: 0.706cm;
 }
 
 td.column_quantity {
-	width: 40px;
-	padding: 0px 10px;
+	width: 1cm;
+	padding: 0cm 0.5cm 0cm 0cm;
 }
 
 td.column_description {
-	width: 206px;
-	padding: 0px 10px;
+	width: 6.5cm;
+}
+
+td.column_price
+{
+	width: 1.2cm;
+	padding: 0cm 0.5cm 0cm 0cm;
+}
+
+td.column_total
+{
+	width: 1.7cm;
+	padding: 0cm 0.5cm 0cm 0cm;
 }
 
 table.quote_totals

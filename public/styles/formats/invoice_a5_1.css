@@ -4,26 +4,24 @@
  */
 .a5_area
 {
-	font-family: 'Courier New', Courier, monospace;
-	font-size: 9pt;
-	width: 529px;
-	height: 793px;
-	margin: 0px;
-	padding: 0px !important;
+	width: 14.8cm;
+	height: 21cm;
+	margin: 0cm;
+	padding: 0cm !important;
 }
 
 .a5_container
 {
 	position: relative;
-	width: 529px;
-	height: 793px;
+	width: 14.8cm;
+	height: 21cm;
 }
 
 .invoice_date
 {
 	position: absolute;
-	top: 113px;
-	left: 378px;
+	top: 3.6cm;
+	left: 9.8cm;
 }
 
 .invoice_address
@@ -36,8 +34,8 @@
 .invoice_customer
 {
 	position: absolute;
-	top: 149px;
-	left: 78px;
+	top: 4.3cm;
+	left: 2.2cm;
 }
 
 .invoice_nit_dui

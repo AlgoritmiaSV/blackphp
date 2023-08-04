@@ -1132,14 +1132,14 @@ $(function()
 	/* Search by local_code and barcode */
 	function search_by_code()
 	{
-		var local_code = $(this).val();
+		var local_code = $(this).val().toLowerCase();
 		local_code = local_code.replace("\r", "");
 		var list_input = $(this).closest("tr").find(".list_input");
 		var items = json[list_input.data("source")];
 		$.each(items, function(index, value) {
-			if((value.local_code == local_code || value.barcode == local_code) && !value.pres_id)
+			if((value.local_code.toLowerCase() == local_code || value.barcode.toLowerCase() == local_code) && parseInt(value.pres_id) == 0)
 			{
-				list_input.val(value.product_name);
+				list_input.val(value.element_name);
 				list_input.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item:value});
 			}
 		});

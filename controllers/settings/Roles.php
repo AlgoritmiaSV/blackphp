@@ -202,7 +202,7 @@ trait Roles
 		$modules = "";
 		foreach($appModules as $module)
 		{
-			$this->view->data["module_name"] = $module->getModuleName();
+			$this->view->data["module_name"] = _($module->getModuleName());
 			$permissions = appElementsModel::join("role_elements", "element_id")->where("module_id", $module->getModuleId())->where("role_id", $role_id)->getAll();
 			foreach($permissions as &$permission)
 			{

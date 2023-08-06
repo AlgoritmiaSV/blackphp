@@ -56,13 +56,24 @@
 	height: 0.706cm;
 }
 
-td.column_quantity {
+td.column_quantity
+{
 	width: 1cm;
 	padding: 0cm 0.5cm 0cm 0cm;
 }
 
-td.column_description {
+td.column_description
+{
 	width: 6.5cm;
+}
+
+td.column_description span
+{
+	display: block;
+	width: 6.4cm;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 td.column_price

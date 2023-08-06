@@ -166,3 +166,13 @@
 		display: block;
 	}
 }
+
+@media screen {
+	.data_viewer tbody td
+	{
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		max-width: 200px;
+	}
+}

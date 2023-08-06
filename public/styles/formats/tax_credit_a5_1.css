@@ -20,92 +20,113 @@
 .tax_credit_date
 {
 	position: absolute;
-	top: 151px;
-	left: 321px;
+	top: 4.2cm;
+	left: 8.2cm;
 }
 
 .tax_credit_address
 {
 	position: absolute;
 	top: 5.4cm;
-	left: 2.3cm;
+	left: 2.7cm;
 }
 
 .tax_credit_customer
 {
 	position: absolute;
 	top: 4.8cm;
-	left: 1.8cm;
+	left: 2cm;
 }
 
 .tax_credit_nit
 {
 	position: absolute;
 	top: 5.9cm;
-	left: 1.8cm;
+	left: 2cm;
 }
 
 .tax_credit_nrc
 {
 	position: absolute;
-	top: 6.6cm;
-	left: 8.8cm;
+	top: 6.5cm;
+	left: 9.1cm;
 }
 
 .tax_credit_department
 {
 	position: absolute;
-	top: 6.1cm;
-	left: 10cm;
+	top: 6cm;
+	left: 10.3cm;
 }
 
 .tax_credit_activity
 {
 	position: absolute;
 	top: 7.1cm;
-	left: 8.5cm;
+	left: 8.8cm;
 }
 
 .text_amount
 {
 	position: absolute;
-	top: 15.5cm;
-	left: 1.3cm;
-	width: 226px;
+	top: 15cm;
+	left: 1.7cm;
+	width: 6cm;
 }
 
 .tax_credit_items {
 	position: absolute;
-	top: 317px;
-	left: 23px;
+	top: 8.6cm;
+	left: 0.7cm;
 }
 
 .tax_credit_items tr, .tax_credit_totals tr
 {
-	height: 0.609cm;
+	height: 0.52cm;
 }
 
 td.column_quantity
 {
-	width: 1cm;
-	padding: 0cm 0.5cm 0cm 0cm;
+	width: 0.8cm;
+	padding: 0cm 0.2cm 0cm 0cm;
 }
 
 td.column_description
 {
-	width: 206px;
-	padding: 0px 10px;
+	width: 5.7cm;
+}
+
+
+td.column_description span
+{
+	display: block;
+	width: 5.7cm;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 td.column_space
 {
-	width: 106px;
+	width: 2.7cm;
+}
+
+td.colum_total
+{
+	width: 1.5cm;
+	padding: 0cm 0.3cm 0cm 0cm;
 }
 
 table.tax_credit_totals {
 	position: absolute;
 	top: 15.1cm;
 	left: 11.2cm;
+	width: 1.5cm;
+}
+
+.tax_credit_totals td
+{
+	padding: 0cm 0.3cm 0cm 0cm;
 }
 
 @media screen {

@@ -20,67 +20,98 @@
 .invoice_date
 {
 	position: absolute;
-	top: 3.6cm;
-	left: 9.8cm;
+	top: 3.7cm;
+	left: 9.6cm;
 }
 
 .invoice_address
 {
 	position: absolute;
-	top: 168px;
-	left: 84px;
+	top: 4.9cm;
+	left: 2.8cm;
 }
 
 .invoice_customer
 {
 	position: absolute;
-	top: 4.3cm;
+	top: 4.4cm;
 	left: 2.2cm;
 }
 
 .invoice_nit_dui
 {
 	position: absolute;
-	top: 181px;
-	left: 372px;
+	top: 5.4cm;
+	left: 10cm;
 }
 
 .text_amount
 {
 	position: absolute;
-	top: 624px;
-	left: 72px;
-	width: 226px;
+	top: 16.5cm;
+	left: 2cm;
+	width: 6cm;
 }
 
 .invoice_items {
 	position: absolute;
-	top: 233px;
-	left: 23px;
+	top: 6.5cm;
+	left: 0.7cm;
 }
 
 .invoice_items tr
 {
-	height: 24px;
+	height: 0.58cm;
 }
 
 td.column_quantity
 {
-	width: 40px;
-	padding: 0px 10px;
+	width: 1cm;
+	padding: 0cm 0.5cm 0cm 0cm;
 }
 
 td.column_description
 {
-	width: 206px;
-	padding: 0px 10px;
+	width: 6.2cm;
+}
+
+td.column_description span
+{
+	display: block;
+	width: 6.2cm;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+td.column_price
+{
+	width: 0.8cm;
+	padding: 0cm 0.2cm 0cm 0cm;
+}
+
+td.column_total
+{
+	width: 1.7cm;
+	padding: 0cm 0.5cm 0cm 0cm;
+}
+
+td.column_space
+{
+	width: 2cm;
 }
 
 table.invoice_totals
 {
 	position: absolute;
-	top: 604px;
-	left: 423px;
+	top: 16.5cm;
+	left: 12.2cm;
+	width: 1.7cm;
+}
+
+.invoice_totals td
+{
+	padding: 0cm 0.5cm 0cm 0cm;
 }
 
 @media screen {

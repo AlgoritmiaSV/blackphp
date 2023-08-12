@@ -51,9 +51,9 @@ trait ActivityLog
 		$title = "";
 		$items = Array();
 		$type = $_POST["options"]["type"];
-		$from = empty($_POST["options"]["from"]) ? Date("Y-m-d") : $_POST["options"]["from"];
+		$from = $_POST["options"]["from"] ?? Date("Y-m-d");
 		$from .= " 00:00:00";
-		$to = empty($_POST["options"]["to"]) ? Date("Y-m-d") : $_POST["options"]["to"];
+		$to = $_POST["options"]["to"] ?? Date("Y-m-d");
 		$to .= " 23:59:59";
 		$items = userLogsModel::select("user_logs.*", "users.user_name", "app_elements.singular_name", "app_elements.element_gender", "app_elements.unique_element")
 			->join("users", "user_id")

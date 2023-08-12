@@ -80,7 +80,7 @@ class Controller
 			$locale = Session::get("locale");
 			$lang = Session::get("lang");
 		}
-		$charset = empty(Session::get("charset")) ? "UTF-8" : Session::get("charset");
+		$charset = Session::get("charset") ?? "UTF-8";
 		$this->view->data["lang"] = $lang;
 
 		if (defined('LC_MESSAGES'))

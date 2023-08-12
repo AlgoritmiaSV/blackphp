@@ -177,7 +177,7 @@ trait ORM
 		$now = Date("Y-m-d H:i:s");
 		if(self::$_timestamps)
 		{
-			$user_id = empty(Session::get("user_id")) ? 0 : Session::get("user_id");
+			$user_id = Session::get("user_id") ?? 0;
 			if(empty($this->{$primary_key}))
 			{
 				$this->setCreationUser($user_id);

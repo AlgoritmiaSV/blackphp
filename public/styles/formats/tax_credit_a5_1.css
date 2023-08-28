@@ -5,7 +5,7 @@
 .a5_area
 {
 	width: 14.8cm;
-	height: 21cm;
+	height: 20cm;
 	margin: 0cm;
 	padding: 0cm !important;
 }
@@ -14,7 +14,7 @@
 {
 	position: relative;
 	width: 14.8cm;
-	height: 21cm;
+	height: 20cm;
 }
 
 .tax_credit_date
@@ -68,10 +68,7 @@
 
 .text_amount
 {
-	position: absolute;
-	top: 15cm;
-	left: 1.7cm;
-	width: 6cm;
+	vertical-align: top;
 }
 
 .tax_credit_items {

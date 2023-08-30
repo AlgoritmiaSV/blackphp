@@ -161,7 +161,7 @@ class Controller
 			# Moneda
 			if(!empty($entity["country_iso"]))
 			{
-				$currency = appCurrenciesModel::select("*")->join("app_countries", "currency_iso")->where("country_iso", $entity["country_iso"])->get();
+				$currency = appCurrenciesModel::join("app_countries", "currency_iso")->where("country_iso", $entity["country_iso"])->get();
 				$entity["currency_symbol"] = $currency["symbol"];
 			}
 			else

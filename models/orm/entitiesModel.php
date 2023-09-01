@@ -112,6 +112,7 @@ class entitiesModel
 
 	public function setEntityName($value)
 	{
+		self::validateStringSize($value, 64);
 		$this->entity_name = $value === null ? null : (string)$value;
 	}
 
@@ -122,6 +123,7 @@ class entitiesModel
 
 	public function setEntitySlogan($value)
 	{
+		self::validateStringSize($value, 128);
 		$this->entity_slogan = $value === null ? null : (string)$value;
 	}
 
@@ -172,6 +174,7 @@ class entitiesModel
 
 	public function setEntitySubdomain($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->entity_subdomain = $value === null ? null : (string)$value;
 	}
 
@@ -182,6 +185,7 @@ class entitiesModel
 
 	public function setAppName($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->app_name = $value === null ? null : (string)$value;
 	}
 
@@ -192,6 +196,7 @@ class entitiesModel
 
 	public function setDefaultLocale($value)
 	{
+		self::validateStringSize($value, 5);
 		$this->default_locale = $value === null ? null : (string)$value;
 	}
 

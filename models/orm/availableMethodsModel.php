@@ -112,6 +112,7 @@ class availableMethodsModel
 
 	public function setMethodName($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->method_name = $value === null ? null : (string)$value;
 	}
 
@@ -122,6 +123,7 @@ class availableMethodsModel
 
 	public function setMethodUrl($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->method_url = $value === null ? null : (string)$value;
 	}
 
@@ -132,6 +134,7 @@ class availableMethodsModel
 
 	public function setMethodIcon($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->method_icon = $value === null ? null : (string)$value;
 	}
 
@@ -142,6 +145,7 @@ class availableMethodsModel
 
 	public function setMethodDescription($value)
 	{
+		self::validateStringSize($value, 255);
 		$this->method_description = $value === null ? null : (string)$value;
 	}
 
@@ -192,6 +196,7 @@ class availableMethodsModel
 
 	public function setLabel($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->label = $value === null ? null : (string)$value;
 	}
 

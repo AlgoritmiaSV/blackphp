@@ -1120,6 +1120,21 @@ trait ORM
 		$objects = "'" . implode("','", $list) . "'";
 		return self::where($field . " NOT IN ($objects)");
 	}
+
+	################ Validación de datos
+	/**
+	 * Validar tamaño de cadenas
+	 * 
+	 * Valida el tamaño de una cadena para asegurarse de que un campo char, varchar, text, tinytext, smalltext,
+	 * mediumtext o longtext reciba como máximo el número de caracteres que soporta.
+	 */
+	private static function validateStringSize(&$string, $size)
+	{
+		if($string != null && strlen($string) > $size)
+		{
+			$string = substr($string, 0, $size);
+		}
+	}
 }
 
 /**

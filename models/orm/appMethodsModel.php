@@ -100,6 +100,7 @@ class appMethodsModel
 
 	public function setMethodName($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->method_name = $value === null ? null : (string)$value;
 	}
 
@@ -110,6 +111,7 @@ class appMethodsModel
 
 	public function setMethodUrl($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->method_url = $value === null ? null : (string)$value;
 	}
 
@@ -120,6 +122,7 @@ class appMethodsModel
 
 	public function setMethodIcon($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->method_icon = $value === null ? null : (string)$value;
 	}
 
@@ -130,6 +133,7 @@ class appMethodsModel
 
 	public function setMethodDescription($value)
 	{
+		self::validateStringSize($value, 255);
 		$this->method_description = $value === null ? null : (string)$value;
 	}
 

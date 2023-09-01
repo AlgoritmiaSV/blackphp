@@ -88,6 +88,7 @@ class appOptionsModel
 
 	public function setOptionKey($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->option_key = $value === null ? null : (string)$value;
 	}
 
@@ -98,6 +99,7 @@ class appOptionsModel
 
 	public function setOptionDescription($value)
 	{
+		self::validateStringSize($value, 255);
 		$this->option_description = $value === null ? null : (string)$value;
 	}
 
@@ -118,6 +120,7 @@ class appOptionsModel
 
 	public function setDefaultValue($value)
 	{
+		self::validateStringSize($value, 255);
 		$this->default_value = $value === null ? null : (string)$value;
 	}
 

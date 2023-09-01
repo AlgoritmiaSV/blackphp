@@ -107,6 +107,7 @@ class entityOptionsModel
 
 	public function setOptionValue($value)
 	{
+		self::validateStringSize($value, 255);
 		$this->option_value = $value === null ? null : (string)$value;
 	}
 

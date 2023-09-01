@@ -84,6 +84,7 @@ class appInstallersModel
 
 	public function setInstallerNickname($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->installer_nickname = $value === null ? null : (string)$value;
 	}
 
@@ -94,6 +95,7 @@ class appInstallersModel
 
 	public function setInstallerPassword($value)
 	{
+		self::validateStringSize($value, 60);
 		$this->installer_password = $value === null ? null : (string)$value;
 	}
 
@@ -104,6 +106,7 @@ class appInstallersModel
 
 	public function setInstallerName($value)
 	{
+		self::validateStringSize($value, 128);
 		$this->installer_name = $value === null ? null : (string)$value;
 	}
 
@@ -114,6 +117,7 @@ class appInstallersModel
 
 	public function setInstallerPhone($value)
 	{
+		self::validateStringSize($value, 16);
 		$this->installer_phone = $value === null ? null : (string)$value;
 	}
 
@@ -124,6 +128,7 @@ class appInstallersModel
 
 	public function setInstallerEmail($value)
 	{
+		self::validateStringSize($value, 64);
 		$this->installer_email = $value === null ? null : (string)$value;
 	}
 

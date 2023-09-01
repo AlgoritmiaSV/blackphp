@@ -68,6 +68,7 @@ class appThemesModel
 
 	public function setThemeName($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->theme_name = $value === null ? null : (string)$value;
 	}
 
@@ -78,6 +79,7 @@ class appThemesModel
 
 	public function setThemeUrl($value)
 	{
+		self::validateStringSize($value, 16);
 		$this->theme_url = $value === null ? null : (string)$value;
 	}
 

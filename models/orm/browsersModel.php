@@ -80,6 +80,7 @@ class browsersModel
 
 	public function setUserAgent($value)
 	{
+		self::validateStringSize($value, 255);
 		$this->user_agent = $value === null ? null : (string)$value;
 	}
 
@@ -90,6 +91,7 @@ class browsersModel
 
 	public function setBrowserName($value)
 	{
+		self::validateStringSize($value, 16);
 		$this->browser_name = $value === null ? null : (string)$value;
 	}
 
@@ -100,6 +102,7 @@ class browsersModel
 
 	public function setBrowserVersion($value)
 	{
+		self::validateStringSize($value, 16);
 		$this->browser_version = $value === null ? null : (string)$value;
 	}
 
@@ -110,6 +113,7 @@ class browsersModel
 
 	public function setPlatform($value)
 	{
+		self::validateStringSize($value, 16);
 		$this->platform = $value === null ? null : (string)$value;
 	}
 

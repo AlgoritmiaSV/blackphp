@@ -123,6 +123,7 @@ class userDataModel
 
 	public function setUserName($value)
 	{
+		self::validateStringSize($value, 64);
 		$this->user_name = $value === null ? null : (string)$value;
 	}
 
@@ -133,6 +134,7 @@ class userDataModel
 
 	public function setNickname($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->nickname = $value === null ? null : (string)$value;
 	}
 
@@ -143,6 +145,7 @@ class userDataModel
 
 	public function setEmail($value)
 	{
+		self::validateStringSize($value, 64);
 		$this->email = $value === null ? null : (string)$value;
 	}
 
@@ -153,6 +156,7 @@ class userDataModel
 
 	public function setPassword($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->password = $value === null ? null : (string)$value;
 	}
 
@@ -163,6 +167,7 @@ class userDataModel
 
 	public function setPasswordHash($value)
 	{
+		self::validateStringSize($value, 60);
 		$this->password_hash = $value === null ? null : (string)$value;
 	}
 
@@ -183,6 +188,7 @@ class userDataModel
 
 	public function setLocale($value)
 	{
+		self::validateStringSize($value, 5);
 		$this->locale = $value === null ? null : (string)$value;
 	}
 
@@ -263,6 +269,7 @@ class userDataModel
 
 	public function setRoleName($value)
 	{
+		self::validateStringSize($value, 64);
 		$this->role_name = $value === null ? null : (string)$value;
 	}
 }

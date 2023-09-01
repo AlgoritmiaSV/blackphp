@@ -71,6 +71,7 @@ class appLocalesModel
 
 	public function setLanguageCode($value)
 	{
+		self::validateStringSize($value, 2);
 		$this->language_code = $value === null ? null : (string)$value;
 	}
 
@@ -81,6 +82,7 @@ class appLocalesModel
 
 	public function setLocaleCode($value)
 	{
+		self::validateStringSize($value, 5);
 		$this->locale_code = $value === null ? null : (string)$value;
 	}
 
@@ -91,6 +93,7 @@ class appLocalesModel
 
 	public function setLocaleName($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->locale_name = $value === null ? null : (string)$value;
 	}
 }

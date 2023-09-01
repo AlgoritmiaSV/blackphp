@@ -96,6 +96,7 @@ class availableModulesModel
 
 	public function setModuleName($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->module_name = $value === null ? null : (string)$value;
 	}
 
@@ -106,6 +107,7 @@ class availableModulesModel
 
 	public function setModuleUrl($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->module_url = $value === null ? null : (string)$value;
 	}
 
@@ -116,6 +118,7 @@ class availableModulesModel
 
 	public function setModuleIcon($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->module_icon = $value === null ? null : (string)$value;
 	}
 
@@ -126,6 +129,7 @@ class availableModulesModel
 
 	public function setModuleKey($value)
 	{
+		self::validateStringSize($value, 1);
 		$this->module_key = $value === null ? null : (string)$value;
 	}
 
@@ -136,6 +140,7 @@ class availableModulesModel
 
 	public function setModuleDescription($value)
 	{
+		self::validateStringSize($value, 255);
 		$this->module_description = $value === null ? null : (string)$value;
 	}
 

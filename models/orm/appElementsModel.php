@@ -96,6 +96,7 @@ class appElementsModel
 
 	public function setElementKey($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->element_key = $value === null ? null : (string)$value;
 	}
 
@@ -106,6 +107,7 @@ class appElementsModel
 
 	public function setElementName($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->element_name = $value === null ? null : (string)$value;
 	}
 
@@ -116,6 +118,7 @@ class appElementsModel
 
 	public function setSingularName($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->singular_name = $value === null ? null : (string)$value;
 	}
 
@@ -126,6 +129,7 @@ class appElementsModel
 
 	public function setElementGender($value)
 	{
+		self::validateStringSize($value, 1);
 		$this->element_gender = $value === null ? null : (string)$value;
 	}
 
@@ -156,6 +160,7 @@ class appElementsModel
 
 	public function setMethodName($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->method_name = $value === null ? null : (string)$value;
 	}
 
@@ -196,6 +201,7 @@ class appElementsModel
 
 	public function setTableName($value)
 	{
+		self::validateStringSize($value, 64);
 		$this->table_name = $value === null ? null : (string)$value;
 	}
 

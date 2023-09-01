@@ -94,6 +94,7 @@ class rolesModel
 
 	public function setRoleName($value)
 	{
+		self::validateStringSize($value, 64);
 		$this->role_name = $value === null ? null : (string)$value;
 	}
 

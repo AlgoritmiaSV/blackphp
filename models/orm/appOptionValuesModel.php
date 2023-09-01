@@ -81,6 +81,7 @@ class appOptionValuesModel
 
 	public function setValueKey($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->value_key = $value === null ? null : (string)$value;
 	}
 
@@ -91,6 +92,7 @@ class appOptionValuesModel
 
 	public function setValueLabel($value)
 	{
+		self::validateStringSize($value, 255);
 		$this->value_label = $value === null ? null : (string)$value;
 	}
 }

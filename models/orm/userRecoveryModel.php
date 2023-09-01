@@ -97,6 +97,7 @@ class userRecoveryModel
 
 	public function setUrecoveryCode($value)
 	{
+		self::validateStringSize($value, 32);
 		$this->urecovery_code = $value === null ? null : (string)$value;
 	}
 

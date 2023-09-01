@@ -97,6 +97,7 @@ class userSessionsModel
 
 	public function setIpAddress($value)
 	{
+		self::validateStringSize($value, 15);
 		$this->ip_address = $value === null ? null : (string)$value;
 	}
 

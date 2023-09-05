@@ -27,14 +27,14 @@
 .invoice_address
 {
 	position: absolute;
-	top: 4.9cm;
+	top: 4.7cm;
 	left: 2.8cm;
 }
 
 .invoice_customer
 {
 	position: absolute;
-	top: 4.4cm;
+	top: 4.2cm;
 	left: 2.2cm;
 }
 
@@ -50,7 +50,8 @@
 	vertical-align: top;
 }
 
-.invoice_items {
+.invoice_items
+{
 	position: absolute;
 	top: 6.5cm;
 	left: 0.7cm;
@@ -69,13 +70,13 @@ td.column_quantity
 
 td.column_description
 {
-	width: 6.2cm;
+	width: 5.9cm;
 }
 
 td.column_description span
 {
 	display: block;
-	width: 6.2cm;
+	width: 5.9cm;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
@@ -83,19 +84,18 @@ td.column_description span
 
 td.column_price
 {
-	width: 0.8cm;
-	padding: 0cm 0.2cm 0cm 0cm;
+	width: 1cm;
 }
 
 td.column_total
 {
-	width: 1.7cm;
+	width: 2.3cm;
 	padding: 0cm 0.5cm 0cm 0cm;
 }
 
 td.column_space
 {
-	width: 2cm;
+	width: 1cm;
 }
 
 table.invoice_totals
@@ -111,7 +111,8 @@ table.invoice_totals
 	padding: 0cm 0.5cm 0cm 0cm;
 }
 
-@media screen {
+@media screen
+{
 	.a5_area
 	{
 		border: 2px dashed #999999;

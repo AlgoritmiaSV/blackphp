@@ -34,7 +34,12 @@ function calc_bill_total()
 	$("#iva").val(format_number(bill_total * 0.13));
 	if(parseInt($("#bill_type").val()) == 2)
 	{
-		$("#total").val(format_number(bill_total * 1.13));
+		var perception = parseFloat($("#perception").val());
+		if(perception == "" || isNaN(perception))
+		{
+			perception = 0;
+		}
+		$("#total").val(format_number(bill_total * 1.13 + perception));
 	}
 	else
 	{
@@ -82,12 +87,16 @@ $(function() {
 		calc_bill_total();
 	});
 
+	$("#perception").on("change", function() {
+		calc_bill_total();
+	});
+
 	$("#bill_type").on("change", function()
 	{
 		var type_id = $(this).val();
 		if(type_id == 2)
 		{
-			$("#vat_total, #subtotal_div").show();
+			$("#vat_total, #subtotal_div, #perception_total").show();
 			var inputs = $(".items_container .row_price").toArray();
 			$.each(inputs, function() {
 				var _input = $(this);
@@ -100,7 +109,7 @@ $(function() {
 		}
 		else
 		{
-			$("#vat_total, #subtotal_div").hide();
+			$("#vat_total, #subtotal_div, #perception_total").hide();
 			var inputs = $(".items_container .row_price").toArray();
 			$.each(inputs, function() {
 				var _input = $(this);

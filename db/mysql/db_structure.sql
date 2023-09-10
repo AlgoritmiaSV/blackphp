@@ -138,8 +138,7 @@ CREATE TABLE `app_option_values` (
   `value_key` varchar(32) NOT NULL COMMENT 'Clave del valor',
   `value_label` tinytext NOT NULL COMMENT 'Etiqueta del valor',
   PRIMARY KEY (`option_value_id`),
-  UNIQUE KEY `value_key` (`value_key`),
-  KEY `option_value_option` (`option_id`),
+  UNIQUE KEY `unique_option_value_key` (`option_id`,`value_key`),
   CONSTRAINT `option_value_option` FOREIGN KEY (`option_id`) REFERENCES `app_options` (`option_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Valores posibles para selectores en las preferencias';
 /*!40101 SET character_set_client = @saved_cs_client */;

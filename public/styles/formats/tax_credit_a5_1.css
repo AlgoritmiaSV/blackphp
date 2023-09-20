@@ -15,12 +15,13 @@
 	position: relative;
 	width: 14.8cm;
 	height: 20cm;
+	font-size: 12pt;
 }
 
 .tax_credit_date
 {
 	position: absolute;
-	top: 4.2cm;
+	top: 4.1cm;
 	left: 8.2cm;
 }
 
@@ -73,13 +74,19 @@
 
 .tax_credit_items {
 	position: absolute;
-	top: 8.6cm;
+	top: 8.7cm;
 	left: 0.7cm;
+}
+
+.tax_credit_items, .tax_credit_items td
+{
+	border-collapse: collapse;
+	border: 0px;
 }
 
 .tax_credit_items tr, .tax_credit_totals tr
 {
-	height: 0.52cm;
+	height: 0.5cm;
 }
 
 td.column_quantity
@@ -90,14 +97,18 @@ td.column_quantity
 
 td.column_description
 {
-	width: 5.7cm;
+	width: 5cm;
 }
 
+td.column_price
+{
+	width: 1.9cm;
+}
 
 td.column_description span
 {
 	display: block;
-	width: 5.7cm;
+	width: 5cm;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
@@ -105,13 +116,12 @@ td.column_description span
 
 td.column_space
 {
-	width: 2.7cm;
+	width: 2cm;
 }
 
 td.colum_total
 {
-	width: 1.5cm;
-	padding: 0cm 0.3cm 0cm 0cm;
+	width: 2.5cm;
 }
 
 table.tax_credit_totals {

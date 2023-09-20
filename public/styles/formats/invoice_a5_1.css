@@ -15,6 +15,7 @@
 	position: relative;
 	width: 14.8cm;
 	height: 20cm;
+	font-size: 12pt;
 }
 
 .invoice_date
@@ -57,6 +58,12 @@
 	left: 0.7cm;
 }
 
+.invoice_items, .invoice_items td
+{
+	border-collapse: collapse;
+	border: 0px;
+}
+
 .invoice_items tr
 {
 	height: 0.58cm;
@@ -70,13 +77,13 @@ td.column_quantity
 
 td.column_description
 {
-	width: 5.9cm;
+	width: 4.9cm;
 }
 
 td.column_description span
 {
 	display: block;
-	width: 5.9cm;
+	width: 4.9cm;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
@@ -84,18 +91,17 @@ td.column_description span
 
 td.column_price
 {
-	width: 1cm;
+	width: 2cm;
 }
 
 td.column_total
 {
-	width: 2.3cm;
-	padding: 0cm 0.5cm 0cm 0cm;
+	width: 2cm;
 }
 
 td.column_space
 {
-	width: 1cm;
+	width: 1.2cm;
 }
 
 table.invoice_totals

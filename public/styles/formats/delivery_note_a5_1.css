@@ -15,6 +15,7 @@
 	position: relative;
 	width: 14.8cm;
 	height: 20cm;
+	font-size: 12pt;
 }
 
 .delivery_note_date
@@ -49,6 +50,12 @@
 	position: absolute;
 	top: 6.8cm;
 	left: 0.7cm;
+}
+
+.delivery_note_items, .delivery_note_items td
+{
+	border-collapse: collapse;
+	border: 0px;
 }
 
 .delivery_note_items tr

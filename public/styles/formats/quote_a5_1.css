@@ -15,6 +15,7 @@
 	position: relative;
 	width: 14.8cm;
 	height: 20cm;
+	font-size: 12pt;
 }
 
 .quote_date
@@ -49,6 +50,12 @@
 	position: absolute;
 	top: 6.8cm;
 	left: 0.7cm;
+}
+
+.quote_items, .quote_items td
+{
+	border-collapse: collapse;
+	border: 0px;
 }
 
 .quote_items tr

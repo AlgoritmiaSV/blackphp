@@ -384,6 +384,17 @@ tr:hover .action_icon
 	overflow: hidden;
 }
 
+/* Activar checkboxes en tablas, filas y columnas */
+.check_table, .check_row
+{
+	text-decoration: none;
+}
+
+.check_table:hover, .check_row:hover
+{
+	text-decoration: underline;
+}
+
 @media screen and (max-width: 799px)
 {
 	.form_entry label:not(.switch)

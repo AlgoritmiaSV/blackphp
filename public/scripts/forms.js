@@ -1207,4 +1207,37 @@ $(function()
 		td_active = $(this).closest("td");
 		td_active.addClass("td_active");
 	});
+
+	/**
+	 * Activar o desacrivar tablas, columnas o filas completas
+	 */
+	$(".check_table").on("click", function(e)
+	{
+		e.preventDefault();
+		var table_id = $(this).data("table");
+		if(!table_id)
+		{
+			return false;
+		}
+		var checked = ($(this).data("status") == undefined || $(this).data("status") == "checked");
+		$(this).data("status", checked ? "unchecked" : "checked");
+
+		$("#" + table_id).find("input:checkbox:not(:disabled)").each(function() {
+			$(this).attr("checked", !checked);
+		});
+		$("#" + table_id).find(".check_row").each(function() {
+			$(this).data("status", checked ? "unchecked" : "checked");
+		});
+	});
+
+	$(".check_row").on("click", function(e)
+	{
+		e.preventDefault();
+		var checked = ($(this).data("status") == undefined || $(this).data("status") == "checked");
+		$(this).data("status", checked ? "unchecked" : "checked");
+
+		$(this).closest("tr").find("input:checkbox:not(:disabled)").each(function() {
+			$(this).attr("checked", !checked);
+		});
+	});
 });

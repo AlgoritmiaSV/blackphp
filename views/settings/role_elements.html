@@ -1,8 +1,8 @@
 <div>
-	<label>{{ module_name }}</label>
+	<a href="#" class="check_table" data-table="table_{{ module_id }}">{{ module_name }}</a>
 </div>
 <div>
-	<table class="details_table">
+	<table class="details_table" id="table_{{ module_id }}">
 		<thead>
 			<tr>
 				<th>_(Element)</th>
@@ -15,7 +15,9 @@
 		<tbody>
 			[[ elements ]]
 			<tr>
-				<td data-label="_(Element)">{{ element_name }}</td>
+				<td data-label="_(Element)">
+					<a href="#" class="check_row">{{ element_name }}</a>
+				</td>
 				<td class="radio_td smallest_cell" data-label="_(Read)">
 					<div class="checkbox_container radio_inline">
 						<label>

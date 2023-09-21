@@ -129,6 +129,7 @@ class Installation extends Controller
 				}
 			}
 			unset($element);
+			$this->view->data["module_id"] = $module->getModuleId();
 			$this->view->data["module_name"] = _($module->getModuleName());
 			$this->view->data["elements"] = $elements;
 			$role_elements .= $this->view->render("installation/role_elements", true);

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-01 20:38-0600\n"
-"PO-Revision-Date: 2023-05-25 08:58+UTC-6\n"
+"PO-Revision-Date: 2023-09-21 13:46+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: it_IT\n"
@@ -67,6 +67,9 @@ msgstr "Consente di configurare le informazioni generali dell'attività/società
 
 msgid "Allows you to manage users and permissions for each user"
 msgstr "Consente di gestire gli utenti e le autorizzazioni per ciascun utente"
+
+msgid "and"
+msgstr "e"
 
 msgid "App info"
 msgstr "Informazioni sull'app"
@@ -160,6 +163,9 @@ msgstr "Data e ora"
 
 msgid "day"
 msgstr "giorno"
+
+msgid "days"
+msgstr "giorni"
 
 msgid "December"
 msgstr "Dicembre"
@@ -287,6 +293,9 @@ msgstr "ora"
 msgid "Hour"
 msgstr "Ora"
 
+msgid "hours"
+msgstr "ore"
+
 msgid "If you don't have a configuration file, request one now!"
 msgstr "Se non hai un file di configurazione, richiedine uno ora!"
 
@@ -368,6 +377,9 @@ msgstr "Menù"
 msgid "minute"
 msgstr "minuto"
 
+msgid "minutes"
+msgstr "minuti"
+
 msgid "Modules"
 msgstr "Moduli"
 
@@ -376,6 +388,9 @@ msgstr "Lunedì"
 
 msgid "month"
 msgstr "Mese"
+
+msgid "months"
+msgstr "mesi"
 
 msgid "My account"
 msgstr "Il mio account"
@@ -487,6 +502,9 @@ msgstr "Ricerca"
 
 msgid "second"
 msgstr "secondo"
+
+msgid "seconds"
+msgstr "secondi"
 
 msgid "Select"
 msgstr "Selezionare"
@@ -635,6 +653,9 @@ msgstr "Bianco - Nessun menu"
 msgid "year"
 msgstr "Anno"
 
+msgid "years"
+msgstr "anni"
+
 msgid "You are creating a new company account. For this action you need to have an account as an installer"
 msgstr "Stai creando un nuovo account aziendale. Per questa azione è necessario disporre di un account come installatore"
 
@@ -664,4 +685,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 214 messages translated.
+# 221 messages translated.

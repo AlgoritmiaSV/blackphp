@@ -190,11 +190,7 @@ class date_utilities
 		$string = "";
 		if($ago->y > 0)
 		{
-			$string = $ago->y . " " . _("year");
-			if($ago->y != 1)
-			{
-				$string .= "s";
-			}
+			$string = $ago->y . " " . ($ago->y == 1 ? _("year") : _("years"));
 		}
 		if($ago->m > 0 || $string != "")
 		{
@@ -202,11 +198,7 @@ class date_utilities
 			{
 				$string .= ", ";
 			}
-			$string .= $ago->m . " " . _("month");
-			if($ago->m != 1)
-			{
-				$string .= "es";
-			}
+			$string .= $ago->m . " " . ($ago->m == 1 ? _("month") : _("months"));
 		}
 		if($ago->d > 0 || $string != "")
 		{
@@ -214,11 +206,7 @@ class date_utilities
 			{
 				$string .= ", ";
 			}
-			$string .= $ago->d . " " . _("day");
-			if($ago->d != 1)
-			{
-				$string .= "s";
-			}
+			$string .= $ago->d . " " . ($ago->d == 1 ? _("day") : _("days"));
 		}
 		if($ago->h > 0 || $string != "")
 		{
@@ -226,11 +214,7 @@ class date_utilities
 			{
 				$string .= ", ";
 			}
-			$string .= $ago->h . " " . _("hour");
-			if($ago->h != 1)
-			{
-				$string .= "s";
-			}
+			$string .= $ago->h . " " . ($ago->h == 1 ? _("hour") : _("hours"));
 		}
 		if($ago->i > 0 || $string != "")
 		{
@@ -238,21 +222,13 @@ class date_utilities
 			{
 				$string .= ", ";
 			}
-			$string .= $ago->i . " " . _("minute");
-			if($ago->i != 1)
-			{
-				$string .= "s";
-			}
+			$string .= $ago->i . " " . ($ago->i == 1 ? _("minute") : _("minutes"));
 		}
 		if($string != "")
 		{
-			$string .= " y ";
+			$string .= " " . _("and") . " ";
 		}
-		$string .= $ago->s . " " . _("second");
-		if($ago->s != 1)
-		{
-			$string .= "s";
-		}
+		$string .= $ago->s . " " . ($ago->s == 1 ? _("second") : _("seconds"));
 		return $string;
 	}
 
@@ -275,11 +251,7 @@ class date_utilities
 		$string = "";
 		if($ago->y > 0)
 		{
-			$string = ($text ? text_utilities::number_to_text($ago->y) : $ago->y) . " año";
-			if($ago->y != 1)
-			{
-				$string .= "s";
-			}
+			$string = ($text ? text_utilities::number_to_text($ago->y) : $ago->y) . " " . ($ago->y == 1 ? _("year") : _("years"));
 		}
 		if($ago->y < 5)
 		{
@@ -289,11 +261,7 @@ class date_utilities
 				{
 					$string .= ", ";
 				}
-				$string .= $ago->m . " mes";
-				if($ago->m != 1)
-				{
-					$string .= "es";
-				}
+				$string .= $ago->m . " " . ($ago->m == 1 ? _("month") : _("months"));
 			}
 			if($ago->y == 0 && $ago->m < 12)
 			{
@@ -303,11 +271,7 @@ class date_utilities
 					{
 						$string .= ", ";
 					}
-					$string .= $ago->d . " día";
-					if($ago->d != 1)
-					{
-						$string .= "s";
-					}
+					$string .= $ago->d . " " . ($ago->d == 1 ? _("day") : _("days"));
 				}
 			}
 		}

@@ -28,14 +28,14 @@
 .quote_address
 {
 	position: absolute;
-	top: 4.8cm;
+	top: 4.7cm;
 	left: 2.5cm;
 }
 
 .quote_customer
 {
 	position: absolute;
-	top: 4.1cm;
+	top: 4cm;
 	left: 2.5cm;
 }
 
@@ -60,7 +60,7 @@
 
 .quote_items tr
 {
-	height: 0.706cm;
+	height: 0.757cm;
 }
 
 td.column_quantity
@@ -71,13 +71,13 @@ td.column_quantity
 
 td.column_description
 {
-	width: 6.5cm;
+	width: 6.2cm;
 }
 
 td.column_description span
 {
 	display: block;
-	width: 6.4cm;
+	width: 6.2cm;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
@@ -85,14 +85,14 @@ td.column_description span
 
 td.column_price
 {
-	width: 1.2cm;
-	padding: 0cm 0.5cm 0cm 0cm;
+	width: 2cm;
+	padding: 0cm;
 }
 
 td.column_total
 {
-	width: 1.7cm;
-	padding: 0cm 0.5cm 0cm 0cm;
+	width: 2.2cm;
+	padding: 0cm;
 }
 
 table.quote_totals

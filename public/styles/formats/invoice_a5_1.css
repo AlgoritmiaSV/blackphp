@@ -15,7 +15,6 @@
 	position: relative;
 	width: 14.8cm;
 	height: 20cm;
-	font-size: 12pt;
 }
 
 .invoice_date
@@ -66,7 +65,7 @@
 
 .invoice_items tr
 {
-	height: 0.58cm;
+	height: 0.628cm;
 }
 
 td.column_quantity
@@ -101,7 +100,7 @@ td.column_total
 
 td.column_space
 {
-	width: 1.2cm;
+	width: 1.4cm;
 }
 
 table.invoice_totals

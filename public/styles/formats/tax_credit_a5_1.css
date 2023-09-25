@@ -15,7 +15,6 @@
 	position: relative;
 	width: 14.8cm;
 	height: 20cm;
-	font-size: 12pt;
 }
 
 .tax_credit_date
@@ -28,14 +27,14 @@
 .tax_credit_address
 {
 	position: absolute;
-	top: 5.4cm;
+	top: 5.3cm;
 	left: 2.7cm;
 }
 
 .tax_credit_customer
 {
 	position: absolute;
-	top: 4.8cm;
+	top: 4.7cm;
 	left: 2cm;
 }
 
@@ -49,7 +48,7 @@
 .tax_credit_nrc
 {
 	position: absolute;
-	top: 6.5cm;
+	top: 6.3cm;
 	left: 9.1cm;
 }
 
@@ -63,7 +62,7 @@
 .tax_credit_activity
 {
 	position: absolute;
-	top: 7.1cm;
+	top: 7cm;
 	left: 8.8cm;
 }
 
@@ -86,7 +85,7 @@
 
 .tax_credit_items tr, .tax_credit_totals tr
 {
-	height: 0.5cm;
+	height: 0.555cm;
 }
 
 td.column_quantity
@@ -116,7 +115,7 @@ td.column_description span
 
 td.column_space
 {
-	width: 2cm;
+	width: 2.3cm;
 }
 
 td.colum_total

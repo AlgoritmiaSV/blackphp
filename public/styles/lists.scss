@@ -94,6 +94,11 @@
 	background-color: $dv_tr_h_bg;
 }
 
+.currency_cell
+{
+	min-width: 64px;
+}
+
 .currency_symbol
 {
 	float: left;

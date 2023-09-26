@@ -46,7 +46,7 @@
 
 .ui-accordion .ui-accordion-content
 {
-	padding: 10px;
+	padding: 0px;
 }
 
 @media screen and (max-width: 799px)

@@ -363,11 +363,6 @@ tr:hover .action_icon
 	width: 300px;
 }
 
-.form_foot button:not(.delete_button)
-{
-	margin-left: 7px;
-}
-
 .logo_preview_container
 {
 	position: relative;
@@ -492,6 +487,17 @@ tr:hover .action_icon
 		display: block;
 		width: auto;
 	}
+
+	.button_group
+	{
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.button_group:not(:first-child)
+	{
+		margin-top: 10px;
+	}
 }
 
 @media screen and (min-width: 800px)
@@ -507,4 +513,9 @@ tr:hover .action_icon
 		border-radius: 5px;
 		background-color: $input_bg;
 	}
+	
+	.form_foot button:not(.delete_button)
+	{
+		margin-left: 7px;
+	}	
 }

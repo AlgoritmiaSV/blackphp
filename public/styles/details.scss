@@ -229,11 +229,6 @@
 	max-width: 100%;
 }
 
-.details_foot button:not(.delete_button)
-{
-	margin-left: 7px;
-}
-
 .data_sheet_table
 {
 	border: $dsheet_table_border;
@@ -280,4 +275,12 @@
 .no_break
 {
 	page-break-inside: avoid;
+}
+
+@media screen and (min-width: 801px)
+{
+	.details_foot button:not(.delete_button)
+	{
+		margin-left: 7px;
+	}	
 }

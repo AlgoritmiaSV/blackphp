@@ -492,6 +492,8 @@ tr:hover .action_icon
 	{
 		display: flex;
 		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 10px;
 	}
 
 	.button_group:not(:first-child)

@@ -56,23 +56,25 @@
 		<!-- /edited -->
 	</div>
 	<div class="details_foot no_print">
-		<!-- no_self -->
-		<button class="delete_button red_button" data-url="{{ module }}/delete_user" data-next="{{ module }}/Users">
-			<img src="public/images/outline/delete.png" class="x-small_icon">
-			_(Delete)
-		</button>
-		<!-- /no_self -->
-		<button class="blue_button link_button" data-href="{{ module }}/EditUser/{{ user_id }}/">
-			<img src="public/images/outline/edit.png" class="x-small_icon">
-			_(Edit)
-		</button>
-		<button class="blue_button print_button" data-print=".details_body">
-			<img src="public/images/outline/print.png" class="x-small_icon">
-			_(Print)
-		</button>
-		<button class="blue_button pdf_button" data-content=".details_body">
-			<img src="public/images/outline/pdf.png" class="x-small_icon">
-			PDF
-		</button>
+		<span class="button_group">
+			<!-- no_self -->
+			<button class="delete_button red_button" data-url="{{ module }}/delete_user" data-next="{{ module }}/Users">
+				<img src="public/images/outline/delete.png" class="x-small_icon">
+				_(Delete)
+			</button>
+			<!-- /no_self -->
+			<button class="blue_button link_button" data-href="{{ module }}/EditUser/{{ user_id }}/">
+				<img src="public/images/outline/edit.png" class="x-small_icon">
+				_(Edit)
+			</button>
+			<button class="blue_button print_button" data-print=".details_body">
+				<img src="public/images/outline/print.png" class="x-small_icon">
+				_(Print)
+			</button>
+			<button class="blue_button pdf_button" data-content=".details_body">
+				<img src="public/images/outline/pdf.png" class="x-small_icon">
+				PDF
+			</button>
+		</span>
 	</div>
 </div>

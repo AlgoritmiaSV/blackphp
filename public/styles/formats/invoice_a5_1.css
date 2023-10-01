@@ -15,12 +15,13 @@
 	position: relative;
 	width: 14.8cm;
 	height: 20cm;
+	margin: 3mm 0mm 0mm 1mm;
 }
 
 .invoice_date
 {
 	position: absolute;
-	top: 3.7cm;
+	top: 3.6cm;
 	left: 9.6cm;
 }
 

@@ -1,4 +1,4 @@
-$(function() {
+start_calc_consumption = function() {
 	$(".current").on("change", function() {
 		tr = $(this).closest("tr");
 		var previous_value = parseInt(tr.find(".previous").text());
@@ -26,4 +26,4 @@ $(function() {
 			consumption_span.text(consumption);
 		}
 	});
-});
+};

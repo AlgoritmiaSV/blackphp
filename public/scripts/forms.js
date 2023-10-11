@@ -133,6 +133,10 @@ $(function()
 					}
 				}
 			});
+			if(typeof("start_calc_consumption") == "function")
+			{
+				start_calc_consumption();
+			}
 			$(".current").trigger("change");
 		}
 

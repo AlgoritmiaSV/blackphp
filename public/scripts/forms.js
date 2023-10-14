@@ -517,7 +517,7 @@ $(function()
 				});
 				_tr.find(".row_total").find("span").text("0.00");
 				_tr.find(".delete_row_icon").on("click", delete_row_click);
-				$(".delete_row_icon").css({
+				tbody.find(".delete_row_icon").css({
 					"visibility":"visible"
 				});
 				_tr.find(".complete_value").text("");
@@ -780,9 +780,10 @@ $(function()
 					tbody.find(".row_number").each(function() {
 						$(this).val(row_number++);
 					});
+					row_count = tbody.find("tr").length;
 					if(row_count < 2)
 					{
-						$(".delete_row_icon").css({
+						tbody.find(".delete_row_icon").css({
 							"visibility":"hidden"
 						});
 					}
@@ -876,7 +877,7 @@ $(function()
 		_tr.find(".row_total").find("span").text("0.00");
 		_tr.find(".delete_row_icon").click(delete_row_click);
 		_tr.find(".clearable").text("");
-		$(".delete_row_icon").css({
+		tbody.find(".delete_row_icon").css({
 			"visibility":"visible"
 		});
 		_tr.find(".complete_value").text("");

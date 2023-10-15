@@ -108,10 +108,6 @@ $(function()
 							_tr.find("div." + v_index).text(v_value);
 						});
 					
-						if(value.pres_id)
-						{
-							_tr.find(".pres_id").val(value.pres_id);
-						}
 						calc_row_total(_tr);
 						container.append(_tr);
 						_tr.find("input").first().trigger("focus");
@@ -133,7 +129,7 @@ $(function()
 					}
 				}
 			});
-			if(typeof("start_calc_consumption") == "function")
+			if(typeof(start_calc_consumption) == "function")
 			{
 				start_calc_consumption();
 			}

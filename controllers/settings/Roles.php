@@ -66,7 +66,7 @@ trait Roles
 		}
 		$this->view->data["role_elements"] = $role_elements;
 
-		$this->view->data["content"] = $this->view->render("settings/role_edit", true);
+		$this->view->data["content"] = $this->view->render("settings/role_form", true);
 		$this->view->render('main');
 	}
 
@@ -114,7 +114,7 @@ trait Roles
 		}
 		$this->view->data["role_elements"] = $role_elements;
 
-		$this->view->data["content"] = $this->view->render("settings/role_edit", true);
+		$this->view->data["content"] = $this->view->render("settings/role_form", true);
 		$this->view->render('main');
 	}
 

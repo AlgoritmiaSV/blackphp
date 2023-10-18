@@ -49,7 +49,7 @@ trait Users
 			->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"] .= $this->view->render("modules", true);
 		}
-		$this->view->data["content"] = $this->view->render("settings/user_edit", true);
+		$this->view->data["content"] = $this->view->render("settings/user_form", true);
 		$this->view->render('main');
 	}
 
@@ -84,7 +84,7 @@ trait Users
 			->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"] .= $this->view->render("modules", true);
 		}
-		$this->view->data["content"] = $this->view->render("settings/user_edit", true);
+		$this->view->data["content"] = $this->view->render("settings/user_form", true);
 		$this->view->render('main');
 	}
 

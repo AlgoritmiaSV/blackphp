@@ -1133,7 +1133,11 @@ $(function()
 	/* Search by local_code and barcode */
 	function search_by_code()
 	{
-		var local_code = $(this).val().toLowerCase();
+		var local_code = $(this).val().toLowerCase().trim();
+		if(local_code == "")
+		{
+			return false;
+		}
 		local_code = local_code.replace("\r", "");
 		var list_input = $(this).closest("tr").find(".list_input");
 		var items = json[list_input.data("source")];

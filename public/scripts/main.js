@@ -3,6 +3,9 @@
 	By: Edwin Fajardo
 	Date-Time: 2019-06-21 22:36
 */
+// Variables globales para todos los scripts
+content_height = 200;
+
 $(function() {
 	content_height = $(window).height() - $("#main_header").outerHeight() - $("#main_footer").outerHeight();
 	if($(".list_options").length)

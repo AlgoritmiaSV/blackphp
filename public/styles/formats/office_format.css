@@ -1,0 +1,35 @@
+/**
+ * Impresiones de facturas en hojas de tamaño Oficio 8.5x13
+ * Formato 1
+ */
+ .office_area
+ {
+	 width: 21.59cm;
+	 height: 33cm;
+	 margin: 0px;
+	 padding: 0px !important;
+ }
+ 
+ .office_container
+ {
+	 position: relative;
+	 width: 21.59cm;
+	 height: 32cm;
+	 font-size: 12pt;
+ }
+ 
+ .quote_customer
+ {
+	 position: absolute;
+	 top: 4cm;
+	 left: 2.5cm;
+ }
+ 
+ @media screen {
+	 .office_area
+	 {
+		 border: 2px dashed #999999;
+		 margin: 0px auto;
+	 }
+ }
+ 

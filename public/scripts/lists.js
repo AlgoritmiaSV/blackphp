@@ -291,8 +291,23 @@ $( function()
 				});
 				history.back();
 			});
-			$(".link_button").on("click", function() {
+			_div.find(".link_button").on("click", function() {
 				window.open($(this).data("href"), "_top");
+			});
+			_div.find(".alert_button").on("click", function() {
+				var alert_href = $(this).data("href");
+				$.jAlert({
+					'title': $(this).data("title") || false,
+					'theme': $(this).data("theme") || "blue",
+					'iframe': alert_href,
+					'size': {
+						"height": content_height + "px",
+						"width": "100%"
+					},
+					'iframeHeight': (content_height - 41) + "px",
+					'noPadContent':true
+				});
+				return false;
 			});
 			_div.find(".print_button").on("click", function() {
 				print_header = null;

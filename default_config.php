@@ -43,6 +43,13 @@ define('DB_USER', 'bphpuser');
  */
 define('DB_PASS', 'x/p-29B%&ELYr.6A');
 
+/**
+ * Prefijo de la base de datos
+ * 
+ * Prefijo que se agregará a cada tabla y vista de la base de datos
+ */
+define('DB_PREFIX', '');
+
 ################################ OTRAS CONFIGURACIONES
 /**
  * Estado del sistema

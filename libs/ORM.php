@@ -564,17 +564,17 @@ trait ORM
 				{
 					if(count($value) == 3)
 					{
-						$join .= "LEFT JOIN $value[0] ON $table_name.$value[1] = $value[0].$value[2] ";
+						$join .= "LEFT JOIN " . DB_PREFIX . "$value[0] ON $table_name.$value[1] = " . DB_PREFIX . "$value[0].$value[2] ";
 					}
 					elseif(count($value) == 2)
 					{
 						if(strpos($value[1], ".") !== false)
 						{
-							$join .= "LEFT JOIN $value[0] ON $value[1] ";
+							$join .= "LEFT JOIN " . DB_PREFIX . "$value[0] ON $value[1] ";
 						}
 						else
 						{
-							$join .= "LEFT JOIN $value[0] ON $table_name.$value[1] = $value[0].$value[1] ";
+							$join .= "LEFT JOIN " . DB_PREFIX . "$value[0] ON $table_name.$value[1] = " . DB_PREFIX . "$value[0].$value[1] ";
 						}
 					}
 				}
@@ -1018,7 +1018,7 @@ trait ORM
 		$query = self::select("$table_name.*, $table_name.$id AS element_id, $table_name.$text AS description");
 		if(self::$_timestamps)
 		{
-			$query->select("creator.user_name AS creator_name, editor.user_name AS editor_name")->join("users AS creator", "$table_name.creation_user = creator.user_id")->join("users AS editor", "$table_name.edition_user = editor.user_id");
+			$query->select("creator.user_name AS creator_name, editor.user_name AS editor_name")->join(DB_PREFIX . "users AS creator", "$table_name.creation_user = creator.user_id")->join(DB_PREFIX . "users AS editor", "$table_name.edition_user = editor.user_id");
 		}
 		if(self::$_deleted_status === 0)
 		{

@@ -55,7 +55,7 @@ trait ActivityLog
 		$from .= " 00:00:00";
 		$to = $_POST["options"]["to"] ?? Date("Y-m-d");
 		$to .= " 23:59:59";
-		$items = userLogsModel::select("user_logs.*", "users.user_name", "app_elements.singular_name", "app_elements.element_gender", "app_elements.unique_element")
+		$items = userLogsModel::select(userLogsModel::fields("*"), usersModel::fields("user_name"), appElementsModel::fields("singular_name", "element_gender", "unique_element"))
 			->join("users", "user_id")
 			->join("app_elements", "element_id")
 			->where("date_time", ">=", $from)

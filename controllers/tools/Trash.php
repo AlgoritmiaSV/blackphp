@@ -48,7 +48,7 @@ trait Trash
 	 * Cargar tabla de elementos eliminados
 	 * 
 	 * Devuelve, en formato JSON o en un archivo Excel, la lista de usuarios.
-	 * @param string $response El modo de respuiesta (JSON o Excel)
+	 * @param string $response El modo de respuesta (JSON o Excel)
 	 * 
 	 * @return void
 	 */
@@ -63,7 +63,12 @@ trait Trash
 		$element = appElementsModel::findBy("element_key", $type);
 		$element_name = _($element->getElementName());
 		$title = sprintf(_("Deleted %s"), $element_name);
-		$model = lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $element->getTableName())))) . "Model";
+		$table_name = $element->getTableName();
+		if(strlen(DB_PREFIX) > 0)
+		{
+			$table_name = substr($table_name, strlen(DB_PREFIX));
+		}
+		$model = lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $table_name)))) . "Model";
 		$query = new $model;
 		$items = $query->list_deleted($from, $to);
 		foreach($items as &$item)

@@ -1135,6 +1135,39 @@ trait ORM
 			$string = substr($string, 0, $size);
 		}
 	}
+
+	################ Otras utilidades de las clases
+	/**
+	 * Campos
+	 * 
+	 * Devuelve un string conteniendo un conjunto de campos separados por comas, unidos al nombre de la tabla correspondiente
+	 * a la clase. Por ejemplo: la llamada usersModel('username', 'password'), debería devolver: 'users.username, users.password'.
+	 * Esto es muy útil cuando se usan prefijos en la base de datos, y en ese caso, el nombre de la tabla no se corresponde con
+	 * el nombre de la clase. De esa manera se evita llamar directamente el nombre de la tabla desde el método select.
+	 * 
+	 * @return string Cada uno de los campos separados por comas
+	 */
+	public static function fields()
+	{
+		$fieldNames = func_get_args();
+		$class = new static();
+		$result = "";
+		foreach($fieldNames as $name)
+		{
+			if($name == "*" || property_exists($class, $name))
+			{
+				if(strlen($result) > 0)
+				{
+					$result .= (", " . self::$_table_name . "." . $name);
+				}
+				else
+				{
+					$result = self::$_table_name . "." . $name;
+				}
+			}
+		}
+		return $result;
+	}
 }
 
 /**

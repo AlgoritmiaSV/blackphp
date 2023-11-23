@@ -49,7 +49,8 @@ trait Preferences
 		$this->check_permissions("update", "preferences");
 		$data = $_POST;
 		$data["success"] = false;
-		entityOptionsModel::where("option_id IN (SELECT option_id FROM app_options WHERE option_type = 1)")->update(Array("option_value" => 0));
+		$app_options = appOptionsModel::select("option_id")->where("option_type", 1)->getAll();
+		entityOptionsModel::whereIn(array_column($app_options, "option_id"), "option_id")->update(Array("option_value" => 0));
 		foreach($_POST as $key => $value)
 		{
 			$option = appOptionsModel::where("option_key", $key)->get();

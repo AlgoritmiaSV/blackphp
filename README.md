@@ -5,7 +5,9 @@ Framework PHP para creación rápida de sistemas basados en PHP.
 
 Descripción
 -----------
+
 **BlackPHP** es una estructura de proyecto pensado para el despliegue rápido de aplicaciones PHP basadas en la arquitectura MVC (Modelo-Vista-Controlador) que requiera lo siguiente:
+
 - Autenticación de usuarios.
 - Funcionamiento para varias entidades (empresas) desde un mismo servidor.
 - Control de actividades y permisos por usuario.
@@ -14,6 +16,7 @@ Descripción
 - Soporte para conexión en bases de datos MySQL y SQL Server.
 
 Asimismo, **BlackPHP** viene acompañado de una serie de utilidades para la línea de comandos de Linux, que está disponible en [BlackPHP Updater](https://github.com/RedTeleinformatica/BlackPHPUpdater). El actualizador le ayudará a:
+
 - Generar de manera rápida los modelos partiendo del generador ORM.
 - Revisar los scripts, tanto HTML coo PHP para validar la disponibilidad en varios idiomas.
 - Revisión de los recursos, a fin de determinar qué recursos ya no son necesarios en el script.
@@ -23,10 +26,11 @@ Asimismo, **BlackPHP** viene acompañado de una serie de utilidades para la lín
 
 Se pueden encontrar algunas muestras de proyectos basados en BlackPHP en [apps.rti.li](https://apps.rti.li).
 
-Para crear proyectos basados en BlackPHP, puede encontrar una guía rápida aquí: 
+Para crear proyectos basados en BlackPHP, puede encontrar una guía rápida aquí:
 
 Dependencias
 ------------
+
 Se utilizan los recursos siguientes:
 
 | Dependencia | Versión | Copyright | Enlace | Tipo de licencia |
@@ -46,6 +50,7 @@ Se utilizan los recursos siguientes:
 
 El equipo desarrollador
 -----------------------
+
 _En El Salvador:_  
 > Ing. Edwin Ernesto Fajardo Valenzuela  
 

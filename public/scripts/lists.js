@@ -415,9 +415,12 @@ $( function()
 				if($(this).is(".date_input"))
 				{
 					$(this).data("value", $(this).val());
-					$(this).val($.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate")));
+					url.options[$(this).data("identifier")] = $.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate"));
 				}
-				url.options[$(this).data("identifier")] = $(this).val();
+				else
+				{
+					url.options[$(this).data("identifier")] = $(this).val();
+				}
 				goto_url();
 			});
 		}

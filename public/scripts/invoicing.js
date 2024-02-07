@@ -163,4 +163,27 @@ $(function() {
 			$("#change_input").val('');
 		}
 	});
+
+	$("#customer_selector").on("change", function() {
+		var object_data = $(this).select2("data")[0];
+		var bill_type = $("#bill_type").val();
+		if(object_data.customer_nrc && bill_type != 2)
+		{
+			$("#bill_type").val(2);
+			$("#bill_type").trigger("change");
+		}
+		if(!object_data.customer_nrc && bill_type == 2)
+		{
+			var no_ccf = 0;
+			$.each(json.bill_types, function() {
+				if(this.id != 2)
+				{
+					no_ccf = this.id;
+					return false;
+				}
+			})
+			$("#bill_type").val(no_ccf);
+			$("#bill_type").trigger("change");
+		}
+	});
 });

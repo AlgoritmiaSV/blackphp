@@ -21,6 +21,23 @@ trait Preferences
 			$fields = entityOptionsModel::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 2)->getAllArray();
 			$selectors = entityOptionsModel::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 3)->getAllArray();
 			$numbers = entityOptionsModel::join("app_options", "option_id")->where("module_id", $module["module_id"])->where("option_type", 4)->getAllArray();
+			foreach($switches as &$item)
+			{
+				$item["option_description"] = _($item["option_description"]);
+			}
+			foreach($fields as &$item)
+			{
+				$item["option_description"] = _($item["option_description"]);
+			}
+			foreach($selectors as &$item)
+			{
+				$item["option_description"] = _($item["option_description"]);
+			}
+			foreach($numbers as &$item)
+			{
+				$item["option_description"] = _($item["option_description"]);
+			}
+			unset($item);
 			if(count($switches) + count($fields) + count($selectors) + count($numbers) > 0)
 			{
 				$this->view->data["switches"] = $switches;

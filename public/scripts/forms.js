@@ -906,7 +906,8 @@ $(function()
 
 	$(".add_entry_button").on("click", function() {
 		var container = $($(this).data("container"));
-		var last_entry = container.find(".form_entry").last();
+		var entry_container = $(this).data("entry") || ".form_entry";
+		var last_entry = container.find(entry_container).last();
 		last_entry.find(".data_selector").each(function() {
 			$(this).data("value", $(this).val());
 			$(this).select2("destroy");
@@ -915,7 +916,7 @@ $(function()
 		container.append(entry);
 
 		/* Prepare entry */
-		entry.find(".entry_count").text(container.find(".form_entry").length);
+		entry.find(".entry_count").text(container.find(entry_container).length);
 		entry.find("input").first().trigger("focus");
 		entry.find("input, select, textarea").val('');
 		entry.find(".date_input").each(set_date_picker);

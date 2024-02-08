@@ -84,18 +84,7 @@ trait ORM
 	{
 		if(self::$_db == null)
 		{
-			if(DB_TYPE == 'sqlsrv')
-			{
-				self::$_db = new PDO(DB_TYPE.':Server='.DB_HOST.','.DB_PORT.';Database='.DB_NAME, DB_USER, DB_PASS);
-				self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				# self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
-			}
-			else
-			{
-				self::$_db = new PDO(DB_TYPE.':host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME, DB_USER, DB_PASS);
-				self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
-			}
+			self::$_db = DB::connect();
 		}
 	}
 
@@ -1186,6 +1175,43 @@ class DB
 
 	private static $_soft_delete = false;
 
+	/**
+	 * Conectar
+	 * 
+	 * Conecta a la base de datos y mantiene el recurso durante toda la ejecución del script a fin de que todas las clases
+	 * usen el mismo recurso y evitar que haya múltiples conexiones
+	 * 
+	 * @return PDO Objeto PDO de la conexión
+	 */
+	public static function connect()
+	{
+		if(self::$_db == null)
+		{
+			if(DB_TYPE == 'sqlsrv')
+			{
+				self::$_db = new PDO(DB_TYPE.':Server='.DB_HOST.','.DB_PORT.';Database='.DB_NAME, DB_USER, DB_PASS);
+				self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				# self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
+			}
+			else
+			{
+				self::$_db = new PDO(DB_TYPE.':host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME, DB_USER, DB_PASS);
+				self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
+			}
+		}
+		return self::$_db;
+	}
+
+	/**
+	 * FROM tabla
+	 * 
+	 * Permite hacer consultas directamente a tablas antes de que hayan sido generadas las clases respectivas
+	 * 
+	 * @param string $table_name El nombre de la tabla a consultar
+	 * 
+	 * @return object Un objeto de la clase DB
+	*/
 	public static function from($table_name)
 	{
 		if(empty(self::$_table_name))

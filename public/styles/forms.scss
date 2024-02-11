@@ -199,6 +199,27 @@ tr:hover .action_icon
 	display: none;
 }
 
+/* Tablas al pie de los formularios */
+
+.foot_table
+{
+	margin: 10px 0px 0px 0px;
+}
+
+.foot_table .cell
+{
+	padding: 2px;
+	border: 1px solid #d9d9d9;
+	border-radius: 3px;
+}
+
+.foot_table .notes
+{
+	width: -webkit-fill-available;
+	width: -moz-available;
+	width: fill-available;
+}
+
 .total_entry
 {
 	text-align: right;

@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.11.4-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: blackphp
 -- ------------------------------------------------------
--- Server version	10.11.4-MariaDB-1~deb12u1
+-- Server version	10.11.6-MariaDB-0+deb12u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;

@@ -1068,6 +1068,7 @@ trait ORM
 		{
 			return new static();
 		}
+		$list = array_filter($list);
 		if(count($list) == 0)
 		{
 			return self::where($field . " IN (NULL)");
@@ -1101,6 +1102,7 @@ trait ORM
 		{
 			return new static();
 		}
+		$list = array_filter($list);
 		if(count($list) == 0)
 		{
 			return new static();

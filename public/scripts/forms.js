@@ -1246,4 +1246,41 @@ $(function()
 			$(this).attr("checked", !checked);
 		});
 	});
+
+	// Carga asíncrona de selectores de forma jerárquica
+	$(".parent_selector").on("change", function() {
+		var child = $("#" + $(this).data("child"));
+		var parent_value = $(this).val();
+		var source = child.data("source");
+		child.val(0).trigger("change");
+		child.find("option").not(":first").remove();
+
+		var current_module = "index";
+		if(url.module != null && url.module != "")
+		{
+			current_module = url.module;
+		}
+	
+		$.ajax({
+			method: "POST",
+			url: current_module + "/" + source + "/",
+			data: {"parent_value": parent_value},
+			dataType: "json"
+		})
+		.done(function(result) {
+			$.each(result, function() {
+				var option = new Option(this.text, this.id);
+				child.append(option);
+			});
+			var language = $("html").first().attr("lang");
+			var select_params = {
+				dropdownAutoWidth: true,
+				placeholder: child.data("placeholder") || "",
+				width: child.data("width") || "fit-content",
+				language: language,
+				minimumResultsForSearch: Infinity
+			}
+			child.select2(select_params);
+		});
+	});
 });

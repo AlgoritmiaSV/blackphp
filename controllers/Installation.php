@@ -93,12 +93,6 @@ class Installation extends Controller
 		$this->installer_required();
 		$this->view->data["title"] = _("Role and user");
 		$this->view->standard_form();
-		if(Session::get("authorization_code") == null)
-		{
-			$this->view->data["content"] = $this->view->render("installation/install_login", true);
-			$this->view->render('main');
-			return;
-		}
 		if(Session::get("user_id") == null)
 		{
 			$this->view->restrict[] = "inside_installation";
@@ -144,12 +138,6 @@ class Installation extends Controller
 		$this->installer_required();
 		$this->view->data["title"] = _("Menu");
 		$this->view->standard_form();
-		if(Session::get("authorization_code") == null)
-		{
-			$this->view->data["content"] = $this->view->render("installation/install_login", true);
-			$this->view->render('main');
-			return;
-		}
 		$modules = appModulesModel::orderBy("default_order")->getAllArray();
 		$this->view->data["modules"] = "";
 		foreach($modules as $module)

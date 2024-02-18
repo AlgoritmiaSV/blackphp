@@ -58,7 +58,8 @@ CREATE TABLE `app_installers` (
   `installer_email` varchar(64) NOT NULL COMMENT 'Correo electrónico',
   `creation_time` datetime NOT NULL COMMENT 'Hora y fecha de creación',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Eliminado, inactivo, activo',
-  PRIMARY KEY (`installer_id`)
+  PRIMARY KEY (`installer_id`),
+  UNIQUE KEY `unique_nickname` (`installer_nickname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Instaladores del sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 

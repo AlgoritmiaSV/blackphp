@@ -60,4 +60,11 @@ define('DB_PREFIX', '');
  * aviso de Sistema en Mantenimiento.
  */
 define('SYSTEM_STATUS', 'PRODUCTION');
+
+/**
+ * Creación de entidades
+ * Permite configurar el sistema para permitir, o no, nuevas entidades.
+ * Valores aceptados: OPEN, CLOSE
+ */
+define('CREATE_ENTITY', 'OPEN');
 ?>

@@ -470,6 +470,9 @@ msgstr "Fornito a"
 msgid "Read"
 msgstr "Leggere"
 
+msgid "Registration of more entities is not allowed"
+msgstr "Non è consentita la registrazione di più enti"
+
 msgid "role"
 msgstr "ruolo"
 
@@ -685,4 +688,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 221 messages translated.
+# 222 messages translated.

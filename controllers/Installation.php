@@ -804,6 +804,17 @@ class Installation extends Controller
 	 */
 	protected function installer_required($type = 'html')
 	{
+		# Validar si el sistema permite el registro de nuevas entidades
+		if(Session::get("entity/entity_id") == null && CREATE_ENTITY != "OPEN")
+		{
+			$this->view->data["title"] = _("Installation");
+			$this->view->standard_error();
+			$this->view->data["nav"] = "";
+			$this->view->data["content"] = $this->view->render("installation/closed", true);
+			$this->view->render('main');
+			exit();
+		}
+
 		if(Session::get("installer_id") == null)
 		{
 			if($type == 'json')

@@ -530,7 +530,7 @@ body
 	padding: 0px;
 }
 
-button
+button:not(.select2-selection__clear)
 {
 	font-family: "Verdana V2 V1", Verdana, Geneva, Sans-Serif;
 	font-size: 10pt;

@@ -29,6 +29,10 @@ function build_selectors()
 				width: selector.data("width") || "fit-content",
 				language: language
 			}
+			if(selector.data("placeholder") && !selector.attr("required"))
+			{
+				select_params.allowClear = true;
+			}
 			if(selector.data("search") == "none")
 			{
 				select_params.minimumResultsForSearch = Infinity;

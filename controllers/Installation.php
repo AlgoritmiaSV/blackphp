@@ -498,7 +498,7 @@ class Installation extends Controller
 		{
 			#New installation
 			#Check subdomain
-			$reserved_subdomains = Array("www", "master", "admin", "installer", "negkit", "fayrasystems", "system", "sistema", "administrador", "administrator", "redteleinformatica", "local", "blackphp");
+			$reserved_subdomains = Array("www", "master", "admin", "installer", "system", "sistema", "administrador", "administrator", "algoritmiasv", "local", "blackphp");
 			if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
 			{
 				if(empty($data["subdomain"]))

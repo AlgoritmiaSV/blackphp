@@ -15,7 +15,7 @@ Descripción
 - Aplicaciones en varios idiomas.
 - Soporte para conexión en bases de datos MySQL y SQL Server.
 
-Asimismo, **BlackPHP** viene acompañado de una serie de utilidades para la línea de comandos de Linux, que está disponible en [BlackPHP Updater](https://github.com/RedTeleinformatica/BlackPHPUpdater). El actualizador le ayudará a:
+Asimismo, **BlackPHP** viene acompañado de una serie de utilidades para la línea de comandos de Linux, que está disponible en [Github](https://github.com/AlgoritmiaSV/BlackPHPUpdater). El actualizador le ayudará a:
 
 - Generar de manera rápida los modelos partiendo del generador ORM.
 - Revisar los scripts, tanto HTML coo PHP para validar la disponibilidad en varios idiomas.
@@ -58,7 +58,7 @@ _En Costa Rica:_
 > Ing. Eddys Eduardo Galeano García
 
 Para mayor información, visite:  
-[Red Teleinformática](https://www.redteleinformatica.com)
+[Algoritmia SV](https://www.algoritmia.sv)
 
 Edwin Fajardo  
 [www.edwinfajardo.com](https://www.edwinfajardo.com)

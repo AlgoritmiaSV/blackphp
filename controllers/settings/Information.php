@@ -60,7 +60,7 @@ trait Information
 			$this->view->data[$key] = $item;
 		}
 		$this->view->data["dependencies"] = [
-			["name" => "BlackPHP (Framework)", "version" => "1.0.0", "authors" => "Red Teleinform&aacute;tica", "link" => "https://github.com/RedTeleinformatica/BlackPHP", "license" => "MIT License"],
+			["name" => "BlackPHP (Framework)", "version" => "1.0.0", "authors" => "Red Teleinform&aacute;tica", "link" => "https://github.com/AlgoritmiaSV/BlackPHP", "license" => "MIT License"],
 				["name" => "Chart.js", "version" => "3.8.0", "authors" => "&copy;2014-2022 Chart.js Contributors", "link" => "https://www.chartjs.org", "license" => "MIT License"],
 			["name" => "chartjs-plugin-datalabels", "version" => "2.0.0", "authors" => "chartjs-plugin-datalabels contributors", "link" => "https://chartjs-plugin-datalabels.netlify.app", "license" => "MIT License"],
 			["name" => "Image Uploader", "version" => "1.2.3", "authors" => "Christian Bayer", "link" => "https://github.com/christianbayer/image-uploader", "license" => "MIT License"],

@@ -1,2 +1,1 @@
-Creación de proyectos basados en BlackPHP
-=========================================
+# Creación de proyectos basados en BlackPHP

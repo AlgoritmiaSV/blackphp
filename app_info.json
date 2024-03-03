@@ -1,8 +1,8 @@
 {
   "system_name": "BlackPHP",
   "version": "1.0",
-  "number": "575",
-  "last_update": "2024-02-19 11:53:41",
+  "number": "581",
+  "last_update": "2024-03-02 21:42:40",
   "copyright": {
     "year": "2022- 2024",
     "author": "Edwin Fajardo",
@@ -29,5 +29,6 @@
       "name": "Messenger",
       "link": "https://m.me/ingEdwinFajardo"
     }
-  ]
+  ],
+  "user_manual": "https://manuales.algoritmia.sv/blackphp/"
 }

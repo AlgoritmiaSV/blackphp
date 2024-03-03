@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2024-02-08 09:41+UTC-6\n"
+"PO-Revision-Date: 2024-03-02 20:02+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
 "Language: es_ES\n"
@@ -626,6 +626,9 @@ msgstr "usuario"
 msgid "User details"
 msgstr "Detalle de usuario"
 
+msgid "User manual"
+msgstr "Manual de usuario"
+
 msgid "Users"
 msgstr "Usuarios"
 
@@ -688,4 +691,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 222 messages translated.
+# 223 messages translated.

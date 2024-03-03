@@ -46,6 +46,7 @@ class Controller
 			Session::set("system", $system);
 		}
 		$this->view->data["system_name"] = $system["system_name"];
+		$this->view->data["user_manual"] = $system["user_manual"];
 		if(isset($system["copyright"]))
 		{
 			foreach($system["copyright"] as $key => $value)

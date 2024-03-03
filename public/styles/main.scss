@@ -119,6 +119,7 @@
 	background-color: $main_nav_bg;
 	width: $main_nav_width;
 	font-size: 9pt;
+	position: relative;
 }
 
 #main_nav a
@@ -162,6 +163,15 @@
 	padding: 10px;
 	text-align: center;
 	width: $main_title_span_width;
+}
+
+#nav_foot
+{
+	position: absolute;
+	bottom: 0px;
+	width: -webkit-fill-available;
+	width: -moz-available;
+	width: fill-available;
 }
 
 #title_bar_nav
@@ -900,7 +910,7 @@ input:checked + .slider:before
 	{
 		display: none;
 		width: 100%;
-		height: 100%;
+		height: calc(100% - 50px);
 		position: absolute;
 		z-index: 1010;
 	}

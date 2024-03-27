@@ -24,11 +24,14 @@ class availableMethodsModel
 	/** @var string $method_icon Ícono del método en el menú */
 	private $method_icon;
 
-	/** @var string $method_description Descripción del método */
-	private $method_description;
-
 	/** @var int $default_order Orden por defecto */
 	private $default_order;
+
+	/** @var int $element_id Elemento al que requiere permisos */
+	private $element_id;
+
+	/** @var int $permissions Tipo de permisos requeridos */
+	private $permissions;
 
 	/** @var int $status Estado 0:inactivo, 1:activo */
 	private $status;
@@ -65,7 +68,7 @@ class availableMethodsModel
 	private static $_soft_delete = true;
 
 	/** @var int|null $_deleted_status Valor a asignar en caso de borrado suave. */
-	private static $_deleted_status = 0;
+	private static $_deleted_status = null;
 
 	/**
 	 * Constructor de la clase
@@ -138,17 +141,6 @@ class availableMethodsModel
 		$this->method_icon = $value === null ? null : (string)$value;
 	}
 
-	public function getMethodDescription()
-	{
-		return $this->method_description;
-	}
-
-	public function setMethodDescription($value)
-	{
-		self::validateStringSize($value, 255);
-		$this->method_description = $value === null ? null : (string)$value;
-	}
-
 	public function getDefaultOrder()
 	{
 		return $this->default_order;
@@ -157,6 +149,26 @@ class availableMethodsModel
 	public function setDefaultOrder($value)
 	{
 		$this->default_order = $value === null ? null : (int)$value;
+	}
+
+	public function getElementId()
+	{
+		return $this->element_id;
+	}
+
+	public function setElementId($value)
+	{
+		$this->element_id = $value === null ? null : (int)$value;
+	}
+
+	public function getPermissions()
+	{
+		return $this->permissions;
+	}
+
+	public function setPermissions($value)
+	{
+		$this->permissions = $value === null ? null : (int)$value;
 	}
 
 	public function getStatus()

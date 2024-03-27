@@ -21,12 +21,6 @@ class availableModulesModel
 	/** @var string $module_icon Ícono del módulo en el menú */
 	private $module_icon;
 
-	/** @var string $module_key Tecla de acceso rápido */
-	private $module_key;
-
-	/** @var string $module_description Descripción del módulo */
-	private $module_description;
-
 	/** @var int $default_order Orden por defecto */
 	private $default_order;
 
@@ -120,28 +114,6 @@ class availableModulesModel
 	{
 		self::validateStringSize($value, 32);
 		$this->module_icon = $value === null ? null : (string)$value;
-	}
-
-	public function getModuleKey()
-	{
-		return $this->module_key;
-	}
-
-	public function setModuleKey($value)
-	{
-		self::validateStringSize($value, 1);
-		$this->module_key = $value === null ? null : (string)$value;
-	}
-
-	public function getModuleDescription()
-	{
-		return $this->module_description;
-	}
-
-	public function setModuleDescription($value)
-	{
-		self::validateStringSize($value, 255);
-		$this->module_description = $value === null ? null : (string)$value;
 	}
 
 	public function getDefaultOrder()

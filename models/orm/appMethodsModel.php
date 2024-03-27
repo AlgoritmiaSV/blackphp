@@ -24,9 +24,6 @@ class appMethodsModel
 	/** @var string $method_icon Ícono del método en el menú */
 	private $method_icon;
 
-	/** @var string $method_description Descripción del método */
-	private $method_description;
-
 	/** @var int $default_order Orden por defecto */
 	private $default_order;
 
@@ -124,17 +121,6 @@ class appMethodsModel
 	{
 		self::validateStringSize($value, 32);
 		$this->method_icon = $value === null ? null : (string)$value;
-	}
-
-	public function getMethodDescription()
-	{
-		return $this->method_description;
-	}
-
-	public function setMethodDescription($value)
-	{
-		self::validateStringSize($value, 255);
-		$this->method_description = $value === null ? null : (string)$value;
 	}
 
 	public function getDefaultOrder()

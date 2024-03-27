@@ -93,7 +93,6 @@ CREATE TABLE `app_methods` (
   `method_name` varchar(32) NOT NULL COMMENT 'Nombre del método',
   `method_url` varchar(32) NOT NULL COMMENT 'URL del método (Nombre de la función PHP)',
   `method_icon` varchar(32) NOT NULL COMMENT 'Ícono del método en el menú',
-  `method_description` tinytext NOT NULL COMMENT 'Descripción del método',
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
   `element_id` smallint(6) DEFAULT NULL COMMENT 'Elemento al que requiere permisos',
   `permissions` tinyint(4) NOT NULL COMMENT 'Tipo de permisos requeridos',
@@ -118,8 +117,6 @@ CREATE TABLE `app_modules` (
   `module_name` varchar(32) NOT NULL COMMENT 'Nombre del módulo',
   `module_url` varchar(32) NOT NULL COMMENT 'URL del módulo',
   `module_icon` varchar(32) NOT NULL COMMENT 'Ícono del módulo en el menú',
-  `module_key` char(1) NOT NULL COMMENT 'Tecla de acceso rápido',
-  `module_description` tinytext NOT NULL COMMENT 'Descripción del módulo',
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo',
   PRIMARY KEY (`module_id`)
@@ -209,8 +206,9 @@ SET character_set_client = utf8;
   1 AS `method_name`,
   1 AS `method_url`,
   1 AS `method_icon`,
-  1 AS `method_description`,
   1 AS `default_order`,
+  1 AS `element_id`,
+  1 AS `permissions`,
   1 AS `status`,
   1 AS `method_order`,
   1 AS `id`,
@@ -232,8 +230,6 @@ SET character_set_client = utf8;
   1 AS `module_name`,
   1 AS `module_url`,
   1 AS `module_icon`,
-  1 AS `module_key`,
-  1 AS `module_description`,
   1 AS `default_order`,
   1 AS `status`,
   1 AS `entity_id`,
@@ -627,7 +623,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
-/*!50001 VIEW `available_methods` AS select `am`.`method_id` AS `method_id`,`am`.`module_id` AS `module_id`,`am`.`method_name` AS `method_name`,`am`.`method_url` AS `method_url`,`am`.`method_icon` AS `method_icon`,`am`.`method_description` AS `method_description`,`am`.`default_order` AS `default_order`,`am`.`status` AS `status`,`im`.`method_order` AS `method_order`,`am`.`method_id` AS `id`,`am`.`method_name` AS `label`,`im`.`entity_id` AS `entity_id`,`um`.`user_id` AS `user_id` from (((`app_methods` `am` join `user_methods` `um`) join `entity_methods` `im`) join `users` `u`) where `um`.`method_id` = `am`.`method_id` and `um`.`status` = 1 and `im`.`method_id` = `am`.`method_id` and `im`.`status` = 1 and `u`.`entity_id` = `im`.`entity_id` and `u`.`user_id` = `um`.`user_id` */;
+/*!50001 VIEW `available_methods` AS select `am`.`method_id` AS `method_id`,`am`.`module_id` AS `module_id`,`am`.`method_name` AS `method_name`,`am`.`method_url` AS `method_url`,`am`.`method_icon` AS `method_icon`,`am`.`default_order` AS `default_order`,`am`.`element_id` AS `element_id`,`am`.`permissions` AS `permissions`,`am`.`status` AS `status`,`im`.`method_order` AS `method_order`,`am`.`method_id` AS `id`,`am`.`method_name` AS `label`,`im`.`entity_id` AS `entity_id`,`um`.`user_id` AS `user_id` from (((`user_methods` `um` left join `app_methods` `am` on(`um`.`method_id` = `am`.`method_id`)) left join `users` `u` on(`u`.`user_id` = `um`.`user_id`)) left join `entity_methods` `im` on(`im`.`method_id` = `am`.`method_id` and `u`.`entity_id` = `im`.`entity_id`)) where `um`.`status` = 1 and `im`.`status` = 1 */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -640,12 +636,12 @@ CREATE TABLE `users` (
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb3 */;
-/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
-/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`module_key` AS `module_key`,`m`.`module_description` AS `module_description`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` left join `app_modules` `m` on(`m`.`module_id` = `em`.`module_id`)) left join `user_modules` `um` on(`um`.`module_id` = `m`.`module_id` and `um`.`status` = 1)) left join `users` `u` on(`u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id`)) where `em`.`status` = 1 order by `em`.`module_order` */;
+/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` left join `app_modules` `m` on(`m`.`module_id` = `em`.`module_id`)) left join `user_modules` `um` on(`um`.`module_id` = `m`.`module_id` and `um`.`status` = 1)) left join `users` `u` on(`u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id`)) where `em`.`status` = 1 order by `em`.`module_order` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

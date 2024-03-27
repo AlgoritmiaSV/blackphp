@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2024-03-02 20:02+UTC-6\n"
+"PO-Revision-Date: 2024-03-26 19:10+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
-"Language-Team: Red Teleinformática <info@redteleinformatica.com>\n"
+"Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,9 +44,6 @@ msgstr "registro de actividades"
 msgid "Activity log"
 msgstr "Registro de actividades"
 
-msgid "Activity log on each element for each user"
-msgstr "Registro de actividades en cada elemento, por cada usuario"
-
 msgid "Admin user"
 msgstr "Usuario administrador"
 
@@ -55,18 +52,6 @@ msgstr "Administrador"
 
 msgid "Administrator role"
 msgstr "Rol administrador"
-
-msgid "Allows to manage roles and permissions for each role"
-msgstr "Permite administrar roles y permisos para cada rol"
-
-msgid "Allows to set and modify optional system parameters in the company"
-msgstr "Permite establecer y modificar parámetros opcionales del sistema en la empresa"
-
-msgid "Allows you to configure the general information of the business/company"
-msgstr "Permite configurar la información general del negocio/empresa"
-
-msgid "Allows you to manage users and permissions for each user"
-msgstr "Permite gestionar usuarios y los permisos para cada usuario"
 
 msgid "and"
 msgstr "y"
@@ -184,9 +169,6 @@ msgstr "Eliminado el"
 
 msgid "Deleted by"
 msgstr "Eliminado por"
-
-msgid "Deleted elements"
-msgstr "Elementos eliminados"
 
 msgid "Dependence"
 msgstr "Dependencia"
@@ -533,9 +515,6 @@ msgstr "Mostrando del 0 al 0 de 0 resultados"
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "Mostrando del _START_ al _END_ de _TOTAL_ resultados"
 
-msgid "Shows system information: Version, contact and technical support"
-msgstr "Muestra la información del sistema: Versión, contacto y soporte técnico"
-
 msgid "Slogan"
 msgstr "Eslogan"
 
@@ -691,4 +670,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 223 messages translated.
+# 216 messages translated.

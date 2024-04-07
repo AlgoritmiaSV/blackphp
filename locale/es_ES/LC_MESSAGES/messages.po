@@ -1,7 +1,7 @@
 # PACK OF SPANISH LANGUAGE FOR BLACKPHP
-# Copyright (C)2022-2024 Red Teleinformática
+# Copyright (C)2022-2024 Algoritmia SV
 # This file is distributed under the same license as the PACKAGE BlackPHP.
-# Edwin Fajardo <contacto@edwinfajardo.com>, 2022.
+# Edwin Fajardo <contacto@edwinfajardo.com>.
 #
 #, fuzzy
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2024-03-26 19:10+UTC-6\n"
+"PO-Revision-Date: 2024-04-06 19:37+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: es_ES\n"
@@ -575,6 +575,9 @@ msgstr "Para comenzar, pegue el archivo de configuración en la carpeta de insta
 msgid "To keep the old password, leave the fields empty"
 msgstr "Para conservar la contrase&ntilde;a anterior, deje los campos vac&iacute;os"
 
+msgid "Too many failed attempts, try again in five minutes"
+msgstr "Demasiados intentos fallidos, intente de nuevo en cinco minutos"
+
 msgid "Tools"
 msgstr "Herramientas"
 
@@ -670,4 +673,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 216 messages translated.
+# 217 messages translated.

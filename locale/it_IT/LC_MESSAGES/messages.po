@@ -1,7 +1,7 @@
 # PACK OF ITALIAN LANGUAGE FOR BLACKPHP
-# Copyright (C)2022-2024 Red Teleinformática
+# Copyright (C)2022-2024 Algoritmia SV
 # This file is distributed under the same license as the PACKAGE BlackPHP.
-# Edwin Fajardo <contacto@edwinfajardo.com>, 2022.
+# Edwin Fajardo <contacto@edwinfajardo.com>.
 #
 #, fuzzy
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-01 20:38-0600\n"
-"PO-Revision-Date: 2024-03-26 19:10+UTC-6\n"
+"PO-Revision-Date: 2024-04-06 19:37+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: it_IT\n"
@@ -575,6 +575,9 @@ msgstr "Per iniziare, incolla il file di configurazione nella cartella di instal
 msgid "To keep the old password, leave the fields empty"
 msgstr "Per mantenere la vecchia password lasciare i campi vuoti"
 
+msgid "Too many failed attempts, try again in five minutes"
+msgstr "Troppi tentativi falliti, riprova tra cinque minuti"
+
 msgid "Tools"
 msgstr "Utensili"
 
@@ -670,4 +673,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 216 messages translated.
+# 217 messages translated.

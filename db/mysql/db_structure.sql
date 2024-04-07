@@ -380,6 +380,25 @@ CREATE TABLE `entity_options` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `login_attemps`
+--
+
+DROP TABLE IF EXISTS `login_attemps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `login_attemps` (
+  `attemp_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
+  `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
+  `date_time` datetime NOT NULL COMMENT 'Hora y fecha',
+  `browser_id` int(11) NOT NULL COMMENT 'ID del navegador',
+  `ip_address` varchar(15) NOT NULL COMMENT 'Dirección IP',
+  PRIMARY KEY (`attemp_id`),
+  KEY `login_attemps_user` (`user_id`),
+  CONSTRAINT `login_attemps_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Intentos fallidos de inicio de sesión';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `role_elements`
 --
 

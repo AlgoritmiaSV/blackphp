@@ -245,6 +245,12 @@ class usersModel
 		$this->status = $value === null ? null : (int)$value;
 	}
 
+	public function loginAttemps()
+	{
+		loginAttempsModel::flush();
+		return loginAttempsModel::where("user_id", $this->user_id);
+	}
+
 	public function userLogs()
 	{
 		userLogsModel::flush();

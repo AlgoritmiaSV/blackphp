@@ -92,14 +92,56 @@ class User extends Controller
 			return;
 		}
 		$user = usersModel::findBy("nickname", $_POST["nickname"]);
-		if($user->exists() && empty($user->getPasswordHash()) && md5($_POST["password"]) == $user->getPassword())
+
+		if(!$user->exists())
+		{
+			$data["title"] = "Error";
+			$data["message"] = _("Bad user or password");
+			$data["theme"] = "red";
+			$this->json($data);
+			return;
+		}
+
+		# Verificar número de intentos fallidos en el último minuto
+		$date_time = Date("Y-m-d H:i:s", time() - 300);
+		$attemps = loginAttempsModel::where("user_id", $user->getUserId())->where("date_time", ">=", $date_time)->count();
+		if($attemps >= 3)
+		{
+			$data["title"] = "Error";
+			$data["message"] = _("Too many failed attempts, try again in five minutes");
+			$data["theme"] = "red";
+			$this->json($data);
+			return;
+		}
+
+		if(empty($user->getPasswordHash()) && md5($_POST["password"]) == $user->getPassword())
 		{
 			$user->set([
 				"password_hash" => password_hash($_POST["password"], PASSWORD_BCRYPT),
 				"password" => "HASH"
 			])->save();
 		}
-		if($user->exists() && password_verify($_POST["password"], $user->getPasswordHash()))
+
+		# Obtener la dirección IP y el navegador
+		$now = Date("Y-m-d H:i:s");
+		$user_agent = $_SERVER['HTTP_USER_AGENT'];
+		$ipv4 = $this->getRealIP();
+		$browser = browsersModel::where("user_agent", $user_agent)->get();
+		if(!$browser->exists())
+		{
+			$parser = new UserAgentParser();
+			$ua = $parser->parse($user_agent);
+			$browser->set([
+				"user_agent" => $user_agent,
+				"browser_name" => $ua->browser(),
+				"browser_version" => $ua->browserVersion(),
+				"platform" => $ua->platform(),
+				"creation_user" => $user->getUserId(),
+				"creation_time" => $now
+			])->save();
+		}
+
+		if(password_verify($_POST["password"], $user->getPasswordHash()))
 		{
 			$data["reload"] = true;
 
@@ -120,25 +162,6 @@ class User extends Controller
 				$theme = appThemesModel::find($user->getThemeId());
 				Session::set("theme_id", $theme->getThemeId());
 				Session::set("theme_url", $theme->getThemeUrl());
-			}
-
-			# Obtener la dirección IP y el navegador
-			$now = Date("Y-m-d H:i:s");
-			$user_agent = $_SERVER['HTTP_USER_AGENT'];
-			$ipv4 = $this->getRealIP();
-			$browser = browsersModel::where("user_agent", $user_agent)->get();
-			if(!$browser->exists())
-			{
-				$parser = new UserAgentParser();
-				$ua = $parser->parse($user_agent);
-				$browser->set([
-					"user_agent" => $user_agent,
-					"browser_name" => $ua->browser(),
-					"browser_version" => $ua->browserVersion(),
-					"platform" => $ua->platform(),
-					"creation_user" => $user->getUserId(),
-					"creation_time" => $now
-				])->save();
 			}
 
 			# Guardar un registro del inicio de sesión
@@ -164,6 +187,13 @@ class User extends Controller
 		}
 		else
 		{
+			$login_attemp = new loginAttempsModel();
+			$login_attemp->set([
+				"user_id" => $user->getUserId(),
+				"date_time" => $now,
+				"browser_id" => $browser->getBrowserId(),
+				"ip_address" => $ipv4
+			])->save();
 			$data["title"] = "Error";
 			$data["message"] = _("Bad user or password");
 			$data["theme"] = "red";

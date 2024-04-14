@@ -21,12 +21,6 @@ class appInstallersModel
 	/** @var string $installer_name Nombre del instalador */
 	private $installer_name;
 
-	/** @var string $installer_phone Teléfono */
-	private $installer_phone;
-
-	/** @var string $installer_email Correo electrónico */
-	private $installer_email;
-
 	/** @var string $creation_time Hora y fecha de creación */
 	private $creation_time;
 
@@ -108,28 +102,6 @@ class appInstallersModel
 	{
 		self::validateStringSize($value, 128);
 		$this->installer_name = $value === null ? null : (string)$value;
-	}
-
-	public function getInstallerPhone()
-	{
-		return $this->installer_phone;
-	}
-
-	public function setInstallerPhone($value)
-	{
-		self::validateStringSize($value, 16);
-		$this->installer_phone = $value === null ? null : (string)$value;
-	}
-
-	public function getInstallerEmail()
-	{
-		return $this->installer_email;
-	}
-
-	public function setInstallerEmail($value)
-	{
-		self::validateStringSize($value, 64);
-		$this->installer_email = $value === null ? null : (string)$value;
 	}
 
 	public function getCreationTime()

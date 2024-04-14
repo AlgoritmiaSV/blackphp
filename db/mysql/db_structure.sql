@@ -54,8 +54,6 @@ CREATE TABLE `app_installers` (
   `installer_nickname` varchar(32) NOT NULL COMMENT 'Usuario',
   `installer_password` char(60) NOT NULL COMMENT 'Resumen de contraseña',
   `installer_name` varchar(128) NOT NULL COMMENT 'Nombre del instalador',
-  `installer_phone` varchar(16) NOT NULL COMMENT 'Teléfono',
-  `installer_email` varchar(64) NOT NULL COMMENT 'Correo electrónico',
   `creation_time` datetime NOT NULL COMMENT 'Hora y fecha de creación',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Eliminado, inactivo, activo',
   PRIMARY KEY (`installer_id`),

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-01 20:38-0600\n"
-"PO-Revision-Date: 2024-04-06 19:37+UTC-6\n"
+"PO-Revision-Date: 2024-04-14 00:51+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: it_IT\n"
@@ -347,12 +347,6 @@ msgstr "Marzo"
 msgid "May"
 msgstr "Maggio"
 
-msgid "Member and founder of"
-msgstr "Membro e fondatore di"
-
-msgid "member of"
-msgstr "membro di"
-
 msgid "Menu"
 msgstr "Menù"
 
@@ -673,4 +667,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 217 messages translated.
+# 215 messages translated.

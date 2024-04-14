@@ -4,7 +4,7 @@
  * Incorporado el 2020-04-12 23:20
  * 
  * @author Edwin Fajardo
- * @copyright 2022 Red Teleinformática
+ * @copyright 2022-2024 Algoritmia SV
  * @see https://www.edwinfajardo.com
  */
 

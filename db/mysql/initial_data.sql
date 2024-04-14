@@ -37,7 +37,7 @@ UNLOCK TABLES;
 LOCK TABLES `app_installers` WRITE;
 /*!40000 ALTER TABLE `app_installers` DISABLE KEYS */;
 INSERT INTO `app_installers` VALUES
-(1,'admin','$2y$10$9LarkKwQGYEAPBxnrCkB/.YvyCBqEwbasYZK/vPrTjY1NmPWb0qlW','Instalador','(503) 77197466','contacto@edwinfajardo.com','2023-04-04 08:05:24',1);
+(1,'admin','$2y$10$9LarkKwQGYEAPBxnrCkB/.YvyCBqEwbasYZK/vPrTjY1NmPWb0qlW','Instalador','2023-04-04 08:05:24',1);
 /*!40000 ALTER TABLE `app_installers` ENABLE KEYS */;
 UNLOCK TABLES;
 

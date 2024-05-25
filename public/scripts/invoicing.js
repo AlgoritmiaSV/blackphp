@@ -23,6 +23,11 @@ function calc_row_total(_input)
 function calc_bill_total()
 {
 	var bill_total = 0;
+	if($(".row_total").length == 0)
+	{
+		$("#paid_amount_input").trigger("change");
+		return false;
+	}
 	$(".row_total").each(function() {
 		var row_total = parseFloat($(this).find("span").text());
 		if(!isNaN(row_total))

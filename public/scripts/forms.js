@@ -327,6 +327,10 @@ $(function()
 						{
 							location.reload();
 						}
+						if(json.go_back_after)
+						{
+							history.back();
+						}
 						if(json.print_after)
 						{
 							$(".form_body").printThis();

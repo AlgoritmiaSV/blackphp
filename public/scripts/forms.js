@@ -311,6 +311,7 @@ $(function()
 			'processData': false,
 			'contentType': false
 		};
+		formDataToJSON(form_data);
 		$.ajax(ajax_options)
 		.done(function(json) {
 			if(json.message)
@@ -1292,3 +1293,26 @@ $(function()
 		});
 	});
 });
+
+function formDataToJSON(form_data)
+{
+	const f = Array.from(form_data);
+	const obj = f.reduce((o, [k, v]) =>
+	{
+		let a = v, b, i,
+		m = k.split('['),
+		n = m[0],
+		l = m.length;
+		if (l > 1)
+		{
+			a = b = o[n] || [];
+			for (i = 1; i < l; i++)
+			{
+				m[i] = (m[i].split(']')[0] || b.length) * 1;
+				b = b[m[i]] = ((i + 1) == l) ? v : b[m[i]] || [];
+			}
+		}
+		return { ...o, [n]: a };
+	}, {});
+	console.log(obj);
+}

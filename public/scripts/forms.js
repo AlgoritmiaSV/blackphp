@@ -55,6 +55,12 @@ function build_selectors()
 
 $(function()
 {
+	// Obtener el identificador de envío de formulario, y asignar cero en caso de que no exista
+	if(localStorage.getItem("submissionId") === null)
+	{
+		localStorage.setItem("submissionId", "0");
+	}
+
 	new_item_row = $(".item_row").first().clone(true);
 	json = [];
 
@@ -276,6 +282,16 @@ $(function()
 			$(this).val($.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate")));
 		});
 		var form_data = new FormData(this);
+
+		//Agregar identificador de envío al formulario
+		if($(this).hasClass("localStorageForm"))
+		{
+			var submissionId = parseInt(localStorage("submissionId"));
+			form_data.append("submissionId", submissionId);
+			submissionId++;
+			localStorage.setItem("submissionId", submissionId.toString());
+		}
+
 		first_input = $(this).find("input").first();
 		div_sending = $(this).siblings(".sending");
 		div_success = $(this).siblings(".success");
@@ -311,7 +327,6 @@ $(function()
 			'processData': false,
 			'contentType': false
 		};
-		formDataToJSON(form_data);
 		$.ajax(ajax_options)
 		.done(function(json) {
 			if(json.message)
@@ -1314,5 +1329,54 @@ function formDataToJSON(form_data)
 		}
 		return { ...o, [n]: a };
 	}, {});
-	console.log(obj);
+	return obj;
+}
+
+function JSONToFormData(json)
+{
+	$.each(json, function(index, item)
+	{
+		if(Array.isArray(item))
+		{
+			$.each(item, function(i_index, i_value)
+			{
+				console.log(index+"[]:", i_value);
+			})
+		}
+		else
+		{
+			console.log(index + ":" + item);
+		}
+	});
+}
+
+function saveToLocalStorage(formData)
+{
+	var json = formDataToJSON(formData);
+	var savedForms = localStorage.getItem("forms");
+	if(savedForms == null)
+	{
+		savedForms = [];
+	}
+	else
+	{
+		savedForms = JSON.parse(savedForms);
+	}
+	savedForms[savedForms.length] = json;
+}
+
+function removeFromLocalStorage(submissionId)
+{
+	var savedForms = localStorage.getItem("forms");
+	if(savedForms == null)
+	{
+		return false;
+	}
+	savedForms = JSON.parse(savedForms);
+	var index = savedForms.findIndex(x => x.submissionId == submissionId);
+	if(index > -1)
+	{
+		savedForms.splice(index, 1);
+		localStorage.setItem("forms", JSON.stringify(savedForms));
+	}
 }

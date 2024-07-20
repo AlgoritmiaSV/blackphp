@@ -80,7 +80,7 @@ class User extends Controller
 	 * 
 	 * @return void
 	 */
-	public function test_login()
+	public function TestLogin()
 	{
 		$data = Array("session" => false);
 		if(empty($_POST["nickname"]))
@@ -102,7 +102,7 @@ class User extends Controller
 			return;
 		}
 
-		# Verificar número de intentos fallidos en el último minuto
+		# Verificar número de intentos fallidos en los últimos cinco minutos
 		$date_time = Date("Y-m-d H:i:s", time() - 300);
 		$attemps = loginAttempsModel::where("user_id", $user->getUserId())->where("date_time", ">=", $date_time)->count();
 		if($attemps >= 3)
@@ -240,37 +240,38 @@ class User extends Controller
 	 * 
 	 * @return void
 	 */
-	public function save_my_account()
+	public function SaveMyAccount()
 	{
 		$this->session_required("json");
-		$data = $_POST;
-		$data["success"] = false;
+		$response = ["success" => false];
 		$user = usersModel::find(Session::get("user_id"));
-		if($data["theme_id"] != Session::get("theme_id"))
+		if($_POST["theme_id"] != Session::get("theme_id"))
 		{
-			$user->setThemeId($data["theme_id"]);
-			$theme = appThemesModel::find($data["theme_id"]);
+			$user->setThemeId($_POST["theme_id"]);
+			$theme = appThemesModel::find($_POST["theme_id"]);
 			Session::set("theme_id", $theme->getThemeId());
 			Session::set("theme_url", $theme->getThemeUrl());
 		}
-		if($data["locale"] != Session::get("locale"))
+		if($_POST["locale"] != Session::get("locale"))
 		{
-			$user->setLocale($data["locale"]);
-			Session::set("locale", $data["locale"]);
-			Session::set("lang", explode("_", $data["locale"])[0]);
+			$user->setLocale($_POST["locale"]);
+			Session::set("locale", $_POST["locale"]);
+			Session::set("lang", explode("_", $_POST["locale"])[0]);
 		}
-		if($data["user_name"] != Session::get("user_name"))
+		if($_POST["user_name"] != Session::get("user_name"))
 		{
-			$user->setUserName($data["user_name"]);
-			Session::set("user_name", $data["user_name"]);
+			$user->setUserName($_POST["user_name"]);
+			Session::set("user_name", $_POST["user_name"]);
 		}
 		$user->save();
-		$data["reload_after"] = true;
-		$data["success"] = true;
-		$data["title"] = _("Success");
-		$data["message"] = _("Changes have been saved");
-		$data["theme"] = "green";
-		$this->json($data);
+		$response["success"] = true;
+		$response += [
+			"reload_after" => true,
+			"title" => _("Success"),
+			"message" => _("Changes have been saved"),
+			"theme" => "green"
+		];
+		$this->json($response);
 	}
 
 	/**
@@ -280,37 +281,42 @@ class User extends Controller
 	 * 
 	 * @return void
 	 */
-	public function change_password()
+	public function ChangePassword()
 	{
 		$this->session_required("json");
-		$data = $_POST;
-		$data["success"] = false;
+		$response = ["success" => false];
 		$user = usersModel::find(Session::get("user_id"));
 		if(md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash()))
 		{
-			$data["title"] = "Error";
-			$data["message"] = _("Incorrect password");
-			$data["theme"] = "red";
-			$this->json($data);
+			$response += [
+				"title" => "Error",
+				"message" => _("Incorrect password"),
+				"theme" => "red"
+			];
+			$this->json($response);
 			return;
 		}
-		if($data["new_password"] != $data["confirm_password"])
+		if($_POST["new_password"] != $_POST["confirm_password"])
 		{
-			$data["title"] = "Error";
-			$data["message"] = _("Passwords do not match");
-			$data["theme"] = "red";
-			$this->json($data);
+			$response += [
+				"title" => "Error",
+				"message" => _("Passwords do not match"),
+				"theme" => "red"
+			];
+			$this->json($response);
 			return;
 		}
 		$user->setPassword("HASH");
 		$user->setPasswordHash(password_hash($_POST["new_password"], PASSWORD_BCRYPT));
 		$user->save();
-		$data["reload_after"] = true;
-		$data["success"] = true;
-		$data["title"] = _("Success");
-		$data["message"] = _("Changes have been saved");
-		$data["theme"] = "green";
-		$this->json($data);
+		$response["success"] = true;
+		$response += [
+			"reload_after" => true,
+			"title" => _("Success"),
+			"message" => _("Changes have been saved"),
+			"theme" => "green"
+		];
+		$this->json($response);
 	}
 }
 ?>

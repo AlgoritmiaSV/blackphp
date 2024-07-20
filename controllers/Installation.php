@@ -40,7 +40,7 @@ class Installation extends Controller
 	 */
 	public function index($subdomain = "")
 	{
-		$this->installer_required();
+		$this->InstallerRequired();
 		$this->view->data["title"] = _("Installation");
 		$this->view->standard_form();
 		$this->view->data["subdomain"] = $subdomain;
@@ -64,7 +64,7 @@ class Installation extends Controller
 	 * 
 	 * @return void
 	 */
-	function getStarted() 
+	function GetStarted()
 	{
 		$this->view->data["title"] = _("Start");
 		$this->view->standard_error();
@@ -90,7 +90,7 @@ class Installation extends Controller
 
 	public function RoleAndUser()
 	{
-		$this->installer_required();
+		$this->InstallerRequired();
 		$this->view->data["title"] = _("Role and user");
 		$this->view->standard_form();
 		if(Session::get("user_id") == null)
@@ -135,7 +135,7 @@ class Installation extends Controller
 
 	public function Menu()
 	{
-		$this->installer_required();
+		$this->InstallerRequired();
 		$this->view->data["title"] = _("Menu");
 		$this->view->standard_form();
 		$modules = appModulesModel::orderBy("default_order")->getAllArray();
@@ -170,7 +170,7 @@ class Installation extends Controller
 	 */
 	function AppInfo() 
 	{
-		$this->installer_required();
+		$this->InstallerRequired();
 		$this->view->data["title"] = _("App info");
 		$this->view->standard_error();
 		$this->view->data["text"] = file_get_contents("app_info.json");
@@ -187,7 +187,7 @@ class Installation extends Controller
 	 */
 	function SessionData() 
 	{
-		$this->installer_required();
+		$this->InstallerRequired();
 		$this->view->data["title"] = _("Session data");
 		$this->view->standard_error();
 		$this->view->data["text"] = json_encode($_SESSION, JSON_PRETTY_PRINT);
@@ -204,7 +204,7 @@ class Installation extends Controller
 	 */
 	public function PHPInfo()
 	{
-		$this->installer_required();
+		$this->InstallerRequired();
 		$this->view->data["title"] = _("PHP info");
 		$this->view->standard_details();
 		$this->view->data["content_id"] = "php_info";
@@ -221,7 +221,7 @@ class Installation extends Controller
 	 */
 	function Summary() 
 	{
-		$this->installer_required();
+		$this->InstallerRequired();
 		$this->view->data["title"] = _("Summary");
 		$this->view->standard_error();
 		/** Directorio inicial */
@@ -344,7 +344,7 @@ class Installation extends Controller
 
 	public function ErrorLog()
 	{
-		$this->installer_required();
+		$this->InstallerRequired();
 		$this->view->data["title"] = _("Error log");
 		$this->view->standard_error();
 		$text = "No errors found!";
@@ -432,33 +432,36 @@ class Installation extends Controller
 	 * 
 	 * @return void
 	 */
-	public function test_authorization()
+	public function TestAuthorization()
 	{
-		$data = $_POST;
-		$data["success"] = false;
-		if(empty($data["nickname"]) || empty($data["password"]))
+		$response = ["success" => false];
+		if(empty($_POST["nickname"]) || empty($_POST["password"]))
 		{
-			$data["title"] = "Error";
-			$data["message"] = _("Enter your installer user and password");
-			$data["theme"] = "red";
-			$this->json($data);
+			$response += [
+				"title" => "Error",
+				"message" => _("Enter your installer user and password"),
+				"theme" => "red"
+			];
+			$this->json($response);
 			return;
 		}
-		$installer = appInstallersModel::where("installer_nickname", $data["nickname"])->get();
-		if(password_verify($data["password"], $installer->getInstallerPassword()))
+		$installer = appInstallersModel::where("installer_nickname", $_POST["nickname"])->get();
+		if(password_verify($_POST["password"], $installer->getInstallerPassword()))
 		{
 			Session::set("authorization_code", true);
 			Session::set("installer_id", $installer->getInstallerId());
-			$data["reload"] = true;
+			$response["reload"] = true;
 		}
 		else
 		{
-			$data["title"] = "Error";
-			$data["message"] = _("Bad user or password");
-			$data["theme"] = "red";
-			$data["no_reset"] = true;
+			$response += [
+				"title" => "Error",
+				"message" => _("Bad user or password"),
+				"theme" => "red",
+				"no_reset" => true
+			];
 		}
-		$this->json($data);
+		$this->json($response);
 	}
 
 	public function php_info_loader()
@@ -486,10 +489,9 @@ class Installation extends Controller
 	 * 
 	 * @return void
 	 */
-	public function save_entity()
+	public function SaveEntity()
 	{
-		$data = $_POST;
-		$data["success"] = false;
+		$response = [ "success" => false ];
 		$now = Date("Y-m-d H:i:s");
 		$today = Date("Y-m-d");
 		#Check session type
@@ -501,31 +503,35 @@ class Installation extends Controller
 			$reserved_subdomains = Array("www", "master", "admin", "installer", "system", "sistema", "administrador", "administrator", "algoritmiasv", "local", "blackphp");
 			if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
 			{
-				if(empty($data["subdomain"]))
+				if(empty($_POST["subdomain"]))
 				{
-					$data["title"] = "Error";
-					$data["message"] = _("No subdomain chosen");
-					$data["theme"] = "red";
-					$this->json($data);
+					$response += [
+						"title" => "Error",
+						"message" => _("No subdomain chosen"),
+						"theme" => "red"
+					];
+					$this->json($response);
 					return;
 				}
 			}
-			$entity = entitiesModel::where("entity_subdomain", $data["subdomain"])->get()->toArray();
-			if(isset($entity["entity_id"]) || in_array($data["subdomain"], $reserved_subdomains))
+			$entity = entitiesModel::where("entity_subdomain", $_POST["subdomain"])->get()->toArray();
+			if(isset($entity["entity_id"]) || in_array($_POST["subdomain"], $reserved_subdomains))
 			{
-				$data["title"] = "Error";
-				$data["message"] = sprintf(_("The subdomain %s is not available"), $data["subdomain"]);
-				$data["theme"] = "red";
-				$this->json($data);
+				$response += [
+					"title" => "Error",
+					"message" => sprintf(_("The subdomain %s is not available"), $_POST["subdomain"]),
+					"theme" => "red"
+				];
+				$this->json($response);
 				return;
 			}
 		}
 
 		$entity = entitiesModel::find($this->entity_id);
-		$subdomain = empty($data["subdomain"]) ? $entity->getEntitySubdomain() : $data["subdomain"];
+		$subdomain = empty($_POST["subdomain"]) ? $entity->getEntitySubdomain() : $_POST["subdomain"];
 		if(empty($entity->getEntityId()))
 		{
-			$entity->set(Array(
+			$entity->set([
 				"entity_subdomain" => $subdomain,
 				"entity_date" => $today,
 				"entity_begin" => $today,
@@ -533,22 +539,24 @@ class Installation extends Controller
 				"creation_time" => $now,
 				"edition_installer" => Session::get("installer_id"),
 				"installer_edition_time" => $now
-			));
+			]);
 		}
-		$entity->set(Array(
-			"entity_name" => $data["entity_name"],
-			"app_name" => empty($data["app_name"]) ? ucfirst($subdomain) : $data["app_name"],
-			"entity_slogan" => $data["entity_slogan"],
+		$entity->set([
+			"entity_name" => $_POST["entity_name"],
+			"app_name" => empty($_POST["app_name"]) ? ucfirst($subdomain) : $_POST["app_name"],
+			"entity_slogan" => $_POST["entity_slogan"],
 			"edition_user" => Session::get("user_id") == null ? 0 : Session::get("user_id"),
 			"user_edition_time" => $now
-		));
+		]);
 		$entity->save();
 		if(empty($entity->getEntityId()))
 		{
-			$data["title"] = "Error";
-			$data["message"] = _("Failed to create the entity");
-			$data["theme"] = "red";
-			$this->json($data);
+			$response += [
+				"title" => "Error",
+				"message" => _("Failed to create the entity"),
+				"theme" => "red"
+			];
+			$this->json($response);
 			return;
 		}
 
@@ -578,30 +586,38 @@ class Installation extends Controller
 		}
 
 		#Finish and response
-		$data["success"] = true;
-		$data["title"] = _("Success");
-		$data["message"] = _("Installation completed successfully");
-		$data["theme"] = "green";
-		$data["no_reset"] = true;
+		$response["success"] = true;
+		$response += [
+			"title" => _("Success"),
+			"message" => _("Installation completed successfully"),
+			"theme" => "green",
+			"no_reset" => true
+		];
 		if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
 		{
 			$protocol = "http";
 			if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
 				$protocol .= "s";
 			}
-			$data["redirect_after"] = $protocol . "://" . str_replace("installer", $data["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/RoleAndUser/";
+			$response["redirect_after"] = $protocol . "://" . str_replace("installer", $_POST["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/RoleAndUser/";
 		}
 		else
 		{
-			$data["reload_after"] = true;
+			$response["reload_after"] = true;
 		}
-		$this->json($data);
+		$this->json($response);
 	}
 
-	public function save_role_and_user()
+	/**
+	 * Guardar rol y usuario
+	 * 
+	 * Guarda los datos del rol con sus permisos respectivos, y los datos del usuario administrador
+	 * 
+	 * @return void
+	 */
+	public function SaveRoleAndUser()
 	{
-		$data = $_POST;
-		$data["success"] = false;
+		$response = ["success" => false];
 		$now = Date("Y-m-d H:i:s");
 		$today = Date("Y-m-d");
 
@@ -647,45 +663,54 @@ class Installation extends Controller
 			])->save();
 		}
 		roleElementsModel::where("role_id", $role->getRoleId())->whereNotIn(array_keys($elements), "element_id")->update(["status" => 0]);
-		$data["elements"] = $elements;
+		# $data["elements"] = $elements;
 
 		#Save default user
-		$user = usersModel::find($data["admin_user"]);
+		$user = usersModel::find($_POST["admin_user"]);
 
 		$user->set(Array(
 			"entity_id" => $entity->getEntityId(),
-			"user_name" => $data["user_name"],
-			"nickname" => $data["nickname"],
-			"password" => empty($data["password"]) ? $user->getPassword() : "HASH",
-			"password_hash" => empty($data["password"]) ? $user->getPasswordHash() : password_hash($_POST["password"], PASSWORD_BCRYPT),
+			"user_name" => $_POST["user_name"],
+			"nickname" => $_POST["nickname"],
+			"password" => empty($_POST["password"]) ? $user->getPassword() : "HASH",
+			"password_hash" => empty($_POST["password"]) ? $user->getPasswordHash() : password_hash($_POST["password"], PASSWORD_BCRYPT),
 			"role_id" => $role->getRoleId(),
 			"theme_id" => 1
 		))->save();
 		$entity->setAdminUser($user->getUserId());
 		$entity->save();
 
-		#Finish and response
-		$data["success"] = true;
-		$data["title"] = _("Success");
-		$data["message"] = _("Installation completed successfully");
-		$data["theme"] = "green";
-		$data["no_reset"] = true;
+		# Finalizando y enviando respuesta
+		$response["success"] = true;
+		$response += [
+			"title" => _("Success"),
+			"message" => _("Installation completed successfully"),
+			"theme" => "green",
+			"no_reset" => true
+		];
 		if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
 		{
 			$protocol = "http";
 			if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
 				$protocol .= "s";
 			}
-			$data["redirect_after"] = $protocol . "://" . str_replace("installer", $data["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/Menu/";
+			$response["redirect_after"] = $protocol . "://" . str_replace("installer", $_POST["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/Menu/";
 		}
 		else
 		{
-			$data["reload_after"] = true;
+			$response["reload_after"] = true;
 		}
-		$this->json($data);
+		$this->json($response);
 	}
 
-	public function save_menu()
+	/**
+	 * Guardar Menú
+	 * 
+	 * Guarda la inforación de los ítems del menú que estarán disponibles para el usuario administrador.
+	 * 
+	 * @return void
+	 */
+	public function SaveMenu()
 	{
 		$data = $_POST;
 		$data["success"] = false;
@@ -802,7 +827,7 @@ class Installation extends Controller
 	 * 
 	 * @param string $type Tipo de respuesta esperada (html, internal o JSON)
 	 */
-	protected function installer_required($type = 'html')
+	protected function InstallerRequired($type = 'html')
 	{
 		# Validar si el sistema permite el registro de nuevas entidades
 		if(Session::get("entity/entity_id") == null && CREATE_ENTITY != "OPEN")
@@ -819,13 +844,13 @@ class Installation extends Controller
 		{
 			if($type == 'json')
 			{
-				$this->json(Array(
+				$this->json([
 					"success" => false,
 					"error" => true,
 					"message" => _("You are not logged in"),
 					"title" => "Error",
 					"theme" => "red"
-				));
+				]);
 			}
 			elseif($type == 'internal')
 			{

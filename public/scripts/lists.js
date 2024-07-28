@@ -3,6 +3,10 @@
 #	By: Edwin Fajardo
 #	Date-time: 2020-06-18 13:17
 */
+
+/**
+ * Extensión de JQuery para construir un formulatio partiendo de un objeto
+ */
 jQuery(function($) { $.extend({
 	form: function(url, data, method) {
 		if (method == null) method = 'POST';
@@ -45,14 +49,21 @@ jQuery(function($) { $.extend({
 		return form.appendTo('body');
 	}
 }); });
+
 $( function()
 {
 	if(window.jspdf != null)
 	{
 		window.jsPDF = window.jspdf.jsPDF;
 	}
-	/* Data viewer */
-	$(".data_viewer").each(function() {
+
+	/** 
+	 * Data viewer
+	 * 
+	 * Carga de contenido de tablas a través de peticiones generales
+	 */
+	$(".data_viewer").each(function()
+	{
 		load_table($(this).attr("id"));
 	});
 

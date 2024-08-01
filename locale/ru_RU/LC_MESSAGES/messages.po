@@ -1,0 +1,676 @@
+# PACK OF RUSSIAN LANGUAGE FOR BLACKPHP
+# Copyright (C)2022-2024 Algoritmia SV
+# This file is distributed under the same license as the PACKAGE BlackPHP.
+# Edwin Fajardo <contacto@edwinfajardo.com>.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BlackPHP 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-31 09:52-0600\n"
+"PO-Revision-Date: 2024-08-01 00:22+UTC-6\n"
+"Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
+"Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "About %s"
+msgstr "O %s"
+
+msgid "About BlackPHP"
+msgstr "O BlackPHP"
+
+msgid "Accept"
+msgstr "Принимать"
+
+msgid "activate to sort column ascending"
+msgstr "активировать для сортировки столбцов по возрастанию"
+
+msgid "activate to sort column descending"
+msgstr "активировать для сортировки столбцов по убыванию"
+
+msgid "Activity description"
+msgstr "Описание деятельности"
+
+msgid "activity log"
+msgstr "журнал активности"
+
+msgid "Activity log"
+msgstr "Журнал активности"
+
+msgid "Admin user"
+msgstr "Администратор пользователя"
+
+msgid "Administrator"
+msgstr "Администратор"
+
+msgid "Administrator role"
+msgstr "Роль администратора"
+
+msgid "and"
+msgstr "и"
+
+msgid "App info"
+msgstr "Информация о приложении"
+
+msgid "App name"
+msgstr "Имя приложения"
+
+msgid "April"
+msgstr "Апрель"
+
+msgid "August"
+msgstr "Август"
+
+msgid "Authors"
+msgstr "Авторы"
+
+msgid "Bad request"
+msgstr "Плохой запрос"
+
+msgid "Bad user or password"
+msgstr "Неверный пользователь или пароль"
+
+msgid "Black - Lateral menu"
+msgstr "Черный - Боковое меню"
+
+msgid "Blue - Lateral menu"
+msgstr "Синий - Боковое меню"
+
+msgid "Blue - Top menu"
+msgstr "Синий - Верхнее меню"
+
+msgid "Browser"
+msgstr "Браузер"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Change password"
+msgstr "Изменить пароль"
+
+msgid "Changes have been saved"
+msgstr "Изменения были сохранены"
+
+msgid "Choose an option"
+msgstr "Выберите опцию"
+
+msgid "Click here"
+msgstr "Кликните сюда"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Complete name"
+msgstr "Полное имя"
+
+msgid "Confirm new password"
+msgstr "подтвердите новый пароль"
+
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
+msgid "Contact and technical support"
+msgstr "Контакты и техническая поддержка"
+
+msgid "Continue"
+msgstr "Продолжать"
+
+msgid "Create"
+msgstr "Создавать"
+
+msgid "created"
+msgstr "созданный"
+
+msgid "Created at"
+msgstr "Создано"
+
+msgid "Created by"
+msgstr "Создано"
+
+msgid "Current password"
+msgstr "Текущий пароль"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Date and time"
+msgstr "Дата и время"
+
+msgid "day"
+msgstr "день"
+
+msgid "days"
+msgstr "дней"
+
+msgid "December"
+msgstr "Декабрь"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "deleted"
+msgstr "удален"
+
+msgid "Deleted %s"
+msgstr "Удалено %s"
+
+msgid "Deleted at"
+msgstr "Удалено"
+
+msgid "Deleted by"
+msgstr "Удалено"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Edit role"
+msgstr "Изменить роль"
+
+msgid "Edit user"
+msgstr "Сменить пользователя"
+
+msgid "English"
+msgstr "Английский"
+
+msgid "Entity"
+msgstr "Компания"
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "Error!"
+msgstr "Ошибка!"
+
+msgid "Failed to load page"
+msgstr "Не удалось загрузить страницу"
+
+msgid "Failed to save"
+msgstr "Не удалось сохранить"
+
+msgid "February"
+msgstr "Февраль"
+
+msgid "For inquiries and technical support, write to us on WhatsApp"
+msgstr "По вопросам и технической поддержке пишите нам на WhatsApp"
+
+msgid "Friday"
+msgstr "Пятница"
+
+msgid "Give access to"
+msgstr "Предоставить доступ к"
+
+msgid "Go back"
+msgstr "Возвращаться"
+
+msgid "Green - Lateral menu"
+msgstr "Зеленый - Боковое меню"
+
+msgid "Home"
+msgstr "Начинать"
+
+msgid "hour"
+msgstr "час"
+
+msgid "Hour"
+msgstr "Час"
+
+msgid "hours"
+msgstr "часы"
+
+msgid "If you don't have a configuration file, request one now!"
+msgstr "Если у вас нет файла конфигурации, запросите его сейчас!"
+
+msgid "Incorrect password"
+msgstr "неверный пароль"
+
+msgid "Installation completed successfully"
+msgstr "Установка успешно завершена"
+
+msgid "Italian"
+msgstr "Итальянский"
+
+msgid "January"
+msgstr "Январь"
+
+msgid "July"
+msgstr "Июль"
+
+msgid "June"
+msgstr "Июнь"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Last update"
+msgstr "Последнее обновление"
+
+msgid "Loading"
+msgstr "Загрузка"
+
+msgid "Log in"
+msgstr "Авторизоваться"
+
+msgid "Log out"
+msgstr "Выйти"
+
+msgid "Logging in"
+msgstr "Вход в систему"
+
+msgid "March"
+msgstr "Март"
+
+msgid "May"
+msgstr "Май"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "minute"
+msgstr "минута"
+
+msgid "minutes"
+msgstr "минут"
+
+msgid "Modules"
+msgstr "Модули"
+
+msgid "Monday"
+msgstr "Понедельник"
+
+msgid "month"
+msgstr "месяц"
+
+msgid "months"
+msgstr "месяцы"
+
+msgid "My account"
+msgstr "Мой счет"
+
+msgid "My name"
+msgstr "Мое имя"
+
+msgid "New password"
+msgstr "Новый пароль"
+
+msgid "New role"
+msgstr "Новая роль"
+
+msgid "New user"
+msgstr "Новый пользователь"
+
+msgid "Next"
+msgstr "Следующий"
+
+msgid "Nickname"
+msgstr "Псевдоним"
+
+msgid "No data available in table"
+msgstr "Данные отсутствуют в таблице"
+
+msgid "No matching records found"
+msgstr "Совпадающих записей не найдено"
+
+msgid "No records found!"
+msgstr "Записей не найдено!"
+
+msgid "No subdomain chosen"
+msgstr "Субдомен не выбран"
+
+msgid "Not authorized"
+msgstr "Не разрешено"
+
+msgid "November"
+msgstr "Ноябрь"
+
+msgid "October"
+msgstr "Октябрь"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Passwords do not match"
+msgstr "Пароли не совпадают"
+
+msgid "Permissions"
+msgstr "Разрешения"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Please, select an element type from the list"
+msgstr "Пожалуйста, выберите тип элемента из списка"
+
+msgid "Russian"
+msgstr "Русский"
+
+msgid "September"
+msgstr "Сентябрь"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Spanish"
+msgstr "Испанский"
+
+msgid "Start"
+msgstr "Начинать"
+
+msgid "Success"
+msgstr "Успех"
+
+msgid "Sunday"
+msgstr "Воскресенье"
+
+msgid "System"
+msgstr "Система"
+
+msgid "System information"
+msgstr "Системная информация"
+
+msgid "System under maintenance"
+msgstr "Система на обслуживании"
+
+msgid "Technical support"
+msgstr "Техническая поддержка"
+
+msgid "Thanks for waiting"
+msgstr "Спасибо за ожидание"
+
+msgid "The nickname already exists!"
+msgstr "Никнейм уже существует!"
+
+msgid "There are active users in this role"
+msgstr "В этой роли есть активные пользователи"
+
+msgid "This method will be available very soon"
+msgstr "Этот метод будет доступен очень скоро"
+
+msgid "This system makes use of the following resources"
+msgstr "Эта система использует следующие ресурсы"
+
+msgid "Thursday"
+msgstr "Четверг"
+
+msgid "To get started, paste the config file into the program's installation folder"
+msgstr "Для начала вставьте файл конфигурации в папку установки программы"
+
+msgid "To keep the old password, leave the fields empty"
+msgstr "Чтобы сохранить старый пароль, оставьте поля пустыми"
+
+msgid "Too many failed attempts, try again in five minutes"
+msgstr "Слишком много неудачных попыток, попробуйте еще раз через пять минут"
+
+msgid "Tools"
+msgstr "Инструменты"
+
+msgid "trash"
+msgstr "корзина"
+
+msgid "Trash"
+msgstr "Корзина"
+
+msgid "Tuesday"
+msgstr "Вторник"
+
+msgid "Type a word for search"
+msgstr "Введите слово для поиска"
+
+# 134 messages translated.
+
+#msgid "at"
+#msgstr ""
+
+#msgid "Dependence"
+#msgstr ""
+
+#msgid "Dependences"
+#msgstr ""
+
+#msgid "Description"
+#msgstr ""
+
+#msgid "Display theme"
+#msgstr ""
+
+#msgid "Element"
+#msgstr ""
+
+#msgid "Element ID"
+#msgstr ""
+
+#msgid "Enter your installer user and password"
+#msgstr ""
+
+#msgid "entity data"
+#msgstr ""
+
+#msgid "Entity data"
+#msgstr ""
+
+#msgid "Entity logo"
+#msgstr ""
+
+#msgid "Entity name"
+#msgstr ""
+
+#msgid "Error log"
+#msgstr ""
+
+#msgid "Export to Excel"
+#msgstr ""
+
+#msgid "Failed to create the entity"
+#msgstr ""
+
+#msgctxt "female"
+#msgid "a"
+#msgstr ""
+
+#msgctxt "female"
+#msgid "an"
+#msgstr ""
+
+#msgid "Filter"
+#msgstr ""
+
+#msgid "filtered from _MAX_ total entries"
+#msgstr ""
+
+#msgid "First"
+#msgstr ""
+
+#msgid "From"
+#msgstr ""
+
+#msgid "In construction"
+#msgstr ""
+
+#msgid "Installation"
+#msgstr ""
+
+#msgid "It's time to start!"
+#msgstr ""
+
+#msgid "Last"
+#msgstr ""
+
+#msgid "Last edition by"
+#msgstr ""
+
+#msgid "Last login"
+#msgstr ""
+
+#msgid "Last sessions"
+#msgstr ""
+
+#msgid "License type"
+#msgstr ""
+
+#msgctxt "male"
+#msgid "a"
+#msgstr ""
+
+#msgctxt "male"
+#msgid "an"
+#msgstr ""
+
+#msgid "PHP info"
+#msgstr ""
+
+#msgid "preferences"
+#msgstr ""
+
+#msgid "Preferences"
+#msgstr ""
+
+#msgid "Previous"
+#msgstr ""
+
+#msgid "Print"
+#msgstr ""
+
+#msgid "Provided to"
+#msgstr ""
+
+#msgid "Read"
+#msgstr ""
+
+#msgid "Registration of more entities is not allowed"
+#msgstr ""
+
+#msgid "role"
+#msgstr ""
+
+#msgid "Role"
+#msgstr ""
+
+#msgid "Role and user"
+#msgstr ""
+
+#msgid "Role details"
+#msgstr ""
+
+#msgid "Role name"
+#msgstr ""
+
+#msgid "Roles"
+#msgstr ""
+
+#msgid "%s ago"
+#msgstr ""
+
+#msgid "Saturday"
+#msgstr ""
+
+#msgid "Save"
+#msgstr ""
+
+#msgid "Saving"
+#msgstr ""
+
+#msgid "Search"
+#msgstr ""
+
+#msgid "second"
+#msgstr ""
+
+#msgid "seconds"
+#msgstr ""
+
+#msgid "Select"
+#msgstr ""
+
+#msgid "Server date"
+#msgstr ""
+
+#msgid "Session data"
+#msgstr ""
+
+#msgid "Showing 0 to 0 of 0 entries"
+#msgstr ""
+
+#msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+#msgstr ""
+
+#msgid "Show _MENU_ entries"
+#msgstr ""
+
+#msgid "Slogan"
+#msgstr ""
+
+#msgid "Summary"
+#msgstr ""
+
+#msgid "The subdomain %s is not available"
+#msgstr ""
+
+#msgctxt "time"
+#msgid "on"
+#msgstr ""
+
+#msgid "to"
+#msgstr ""
+
+#msgid "Update"
+#msgstr ""
+
+#msgid "updated"
+#msgstr ""
+
+#msgid "user"
+#msgstr ""
+
+#msgid "User"
+#msgstr ""
+
+#msgid "User details"
+#msgstr ""
+
+#msgid "User manual"
+#msgstr ""
+
+#msgid "Users"
+#msgstr ""
+
+#msgid "Version"
+#msgstr ""
+
+#msgid "We are sorry! The system is under maintenance"
+#msgstr ""
+
+#msgid "We are sorry! We could not find the requested method"
+#msgstr ""
+
+#msgid "We are sorry! You do not have permissions to access this method"
+#msgstr ""
+
+#msgid "Website"
+#msgstr ""
+
+#msgid "Wednesday"
+#msgstr ""
+
+#msgid "Welcome to %s!"
+#msgstr ""
+
+#msgid "White - Without lateral menu"
+#msgstr ""
+
+#msgid "year"
+#msgstr ""
+
+#msgid "years"
+#msgstr ""
+
+#msgid "You are creating a new company account. For this action you need to have an account as an installer"
+#msgstr ""
+
+#msgid "You are not logged in"
+#msgstr ""
+
+#msgid "You do not have permissions to perform this operation"
+#msgstr ""

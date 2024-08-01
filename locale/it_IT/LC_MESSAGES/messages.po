@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-01 20:38-0600\n"
-"PO-Revision-Date: 2024-05-01 09:41+UTC-6\n"
+"PO-Revision-Date: 2024-07-31 14:37+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: it_IT\n"
@@ -470,6 +470,9 @@ msgstr "Nome del ruolo"
 msgid "Roles"
 msgstr "Ruoli"
 
+msgid "Russian"
+msgstr "Russo"
+
 msgid "Saturday"
 msgstr "Sabato"
 
@@ -670,4 +673,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 216 messages translated.
+# 217 messages translated.

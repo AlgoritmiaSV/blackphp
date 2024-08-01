@@ -50,7 +50,8 @@ LOCK TABLES `app_locales` WRITE;
 INSERT INTO `app_locales` VALUES
 (1,'en','en_US','English'),
 (2,'es','es_ES','Spanish'),
-(3,'it','it_IT','Italian');
+(3,'it','it_IT','Italian'),
+(4,'ru','ru_RU','Russian');
 /*!40000 ALTER TABLE `app_locales` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -689,6 +689,7 @@ $(function()
 	});
 
 	/* Delete */
+	/* Cambiar esta parte por un change_status genérico */
 	delete_button_click = function()
 	{
 		deletion_url = $(this).data("url");
@@ -756,6 +757,7 @@ $(function()
 		.always(function() {
 		});	
 	}
+	/* Fin de Cambiar esta parte por un change_status genérico */
 
 	$(".reload_button").on("click", function() {
 		location.reload();
@@ -1307,6 +1309,86 @@ $(function()
 			child.select2(select_params);
 		});
 	});
+
+	/* Procedimiento genérico para cambio de estados */
+	change_status_click = function()
+	{
+		change_status_url = $(this).data("url");
+		change_status_next = $(this).data("next");
+		var action = $(this).data("action");
+		$.jAlert({
+			'title': "Confirmar",
+			'content': "¿Confirma que desea " + action + " este registro?",
+			'theme': "yellow",
+			'autofocus': '.jalert_cancel',
+			'btns': [
+				{'text':'Confirmar', 'closeAlert':true, 'theme': 'black', 'class': 'jalert_accept', 'onClick': change_status},
+				{'text':'Cancelar', 'closeAlert':true, 'theme': 'gray', 'class': 'jalert_cancel'}]
+		});
+	}
+
+	$(".change_status_button").on("click", change_status_click);
+
+	function change_status()
+	{
+		$.ajax({
+			method: "POST",
+			url: change_status_url,
+			data: url,
+			dataType: "json"
+		})
+		.done(function(status_data) {
+			if(status_data.changed)
+			{
+				$.jAlert({
+					'title': status_data.title || "Success",
+					'content': status_data.message || "Status changed succesfully!",
+					'theme': "blue",
+					'autofocus': '.jalert_accept',
+					'btns': [
+						{'text': status_data.accept || 'OK', 'closeAlert':true, 'theme': 'blue', 'class': 'jalert_accept', 'onClick': function() {
+							window.open(change_status_next, "_top");
+						}}]
+				});
+			}
+			else if(status_data.message)
+			{
+				$.jAlert({
+					'title': status_data.title || "Message",
+					'content': status_data.message,
+					'theme': status_data.theme || "red",
+					'autofocus': '.jalert_accept',
+					'btns': [
+						{'text':status_data.accept||'OK', 'closeAlert':true, 'theme': status_data.theme || "red", 'class': 'jalert_accept'}]
+				});
+			}
+			else
+			{
+				$.jAlert({
+					'title': "Error",
+					'content': "Failed to change status.",
+					'theme': "red",
+					'autofocus': '.jalert_accept',
+					'btns': [
+						{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
+				});
+			}
+		})
+		.fail(function()
+		{
+			$.jAlert({
+				'title': "Error",
+				'content': "Failed to change status.",
+				'theme': "red",
+				'autofocus': '.jalert_accept',
+				'btns': [
+					{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
+			});
+		})
+		.always(function() {
+		});	
+	}
+	/* Fin de procedimiento genérico para cambio de estados */
 });
 
 function formDataToJSON(form_data)

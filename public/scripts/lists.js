@@ -363,6 +363,10 @@ $( function()
 			{
 				$(".delete_button").on("click", delete_button_click);
 			}
+			if($(".change_status_button").length)
+			{
+				$(".change_status_button").on("click", change_status_click);
+			}
 			//Show data viewer
 			_div.find(".data_viewer").show();
 

@@ -117,7 +117,14 @@ $(function()
 							_tr.find("span." + v_index).text(v_value);
 							_tr.find("div." + v_index).text(v_value);
 						});
-					
+
+						// Solución teporal para editar cotizaciones y ventas
+						if(value.data_sale_price && value.data_nvat_price)
+						{
+							_tr.find(".sale_price").attr("data-sale_price", value.data_sale_price);
+							_tr.find(".sale_price").attr("data-nvat_price", value.data_nvat_price);
+						}
+				
 						calc_row_total(_tr);
 						container.append(_tr);
 						_tr.find("input").first().trigger("focus");

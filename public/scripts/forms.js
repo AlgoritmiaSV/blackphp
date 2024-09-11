@@ -382,6 +382,11 @@ $(function()
 			{
 				location.reload();
 			}
+			else if(json.print_container != null)
+			{
+				$(".print_number").html(json.print_number);
+				$(json.print_container).printThis();
+			}
 			else
 			{
 				fail(div_error);

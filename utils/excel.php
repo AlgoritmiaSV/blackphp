@@ -36,7 +36,7 @@ class excel
 			$j = 0;
 			foreach ($fields as $k)
 			{
-				$v = empty($content[$i][$k]) ? "" : $content[$i][$k];
+				$v = $content[$i][$k] ?? "";
 				if(strlen($v) > 100)
 				{
 					$maxWidth[$j] = 50;

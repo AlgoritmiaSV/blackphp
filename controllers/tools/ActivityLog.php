@@ -29,7 +29,7 @@ trait ActivityLog
 			"print_title" => _("Activity log")
 		]);
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$this->view->data["print_header"] = $this->view->render("print_header", true);
+		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
 		$this->view->data["from"] = implode("/", array_reverse(explode("-", $options["from"])));
 		$this->view->data["to"] = implode("/", array_reverse(explode("-", $options["to"])));
 		$this->view->data["content"] = $this->view->render("tools/activity_log", true);

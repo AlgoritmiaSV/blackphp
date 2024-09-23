@@ -15,7 +15,7 @@ trait Roles
 		$this->view->standard_list();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["print_title"] = _("Roles");
-		$this->view->data["print_header"] = $this->view->render("print_header", true);
+		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
 		$this->view->data["content"] = $this->view->render("settings/role_list", true);
 		$this->view->render('main');
 	}
@@ -222,7 +222,7 @@ trait Roles
 
 		$this->userActions($role);
 		$this->view->data["print_title"] = _("Role details");
-		$this->view->data["print_header"] = $this->view->render("print_header", true);
+		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
 		if($mode == "standalone")
 		{
 			$this->view->data["title"] = _("Role details");

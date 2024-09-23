@@ -15,7 +15,7 @@ trait Users
 		$this->view->standard_list();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["print_title"] = _("Users");
-		$this->view->data["print_header"] = $this->view->render("print_header", true);
+		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
 		$this->view->data["content"] = $this->view->render("settings/user_list", true);
 		$this->view->render('main');
 	}
@@ -191,7 +191,7 @@ trait Users
 			$this->view->restrict[] = "no_self";
 		}
 		$this->view->data["print_title"] = _("User details");
-		$this->view->data["print_header"] = $this->view->render("print_header", true);
+		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
 		if($mode == "standalone")
 		{
 			$this->view->data["title"] = _("User details");

@@ -90,6 +90,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `app_option_values` WRITE;
 /*!40000 ALTER TABLE `app_option_values` DISABLE KEYS */;
+INSERT INTO `app_option_values` VALUES
+(1,1,'default_header','By default');
 /*!40000 ALTER TABLE `app_option_values` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,6 +101,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `app_options` WRITE;
 /*!40000 ALTER TABLE `app_options` DISABLE KEYS */;
+INSERT INTO `app_options` VALUES
+(1,3,'page_header','Page header',NULL,'default_header');
 /*!40000 ALTER TABLE `app_options` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -18,7 +18,7 @@ trait Trash
 			"print_title" => _("Trash")
 		]);
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$this->view->data["print_header"] = $this->view->render("print_header", true);
+		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
 		$args = func_get_args();
 		$options = Array();
 		for($i = 1; $i < func_num_args(); $i = $i + 2)

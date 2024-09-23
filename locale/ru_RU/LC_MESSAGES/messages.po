@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2024-08-05 21:15+UTC-6\n"
+"PO-Revision-Date: 2024-09-22 10:27+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -344,6 +344,9 @@ msgstr "Выйти"
 msgid "Logging in"
 msgstr "Вход в систему"
 
+msgid "Main module"
+msgstr "Основной модуль"
+
 msgid "March"
 msgstr "Март"
 
@@ -412,6 +415,9 @@ msgstr "Ноябрь"
 
 msgid "October"
 msgstr "Октябрь"
+
+msgid "Page header"
+msgstr "Шапка страницы"
 
 msgid "Password"
 msgstr "Пароль"
@@ -673,4 +679,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 217 messages translated.
+# 219 messages translated.

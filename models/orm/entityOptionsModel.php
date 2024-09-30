@@ -9,8 +9,8 @@ class entityOptionsModel
 {
 	use ORM;
 
-	/** @var int $eoption_id Llave primaria */
-	private $eoption_id;
+	/** @var int $entity_option_id Llave primaria */
+	private $entity_option_id;
 
 	/** @var int $entity_id ID de la entidad */
 	private $entity_id;
@@ -21,20 +21,11 @@ class entityOptionsModel
 	/** @var string $option_value Valor de la opción */
 	private $option_value;
 
-	/** @var int $creation_user - */
-	private $creation_user;
-
-	/** @var string $creation_time - */
-	private $creation_time;
-
 	/** @var int $edition_user - */
 	private $edition_user;
 
 	/** @var string $edition_time - */
 	private $edition_time;
-
-	/** @var int $status - */
-	private $status;
 
 
 	/** @var string $_table_name Nombre de la tabla */
@@ -44,13 +35,13 @@ class entityOptionsModel
 	private static $_table_type = "BASE TABLE";
 
 	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "eoption_id";
+	private static $_primary_key = "entity_option_id";
 
 	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = true;
+	private static $_timestamps = false;
 
 	/** @var bool $_soft_delete La tabla soporta borrado suave */
-	private static $_soft_delete = true;
+	private static $_soft_delete = false;
 
 	/** @var int|null $_deleted_status Valor a asignar en caso de borrado suave. */
 	private static $_deleted_status = 0;
@@ -66,18 +57,17 @@ class entityOptionsModel
 	{
 		if($default)
 		{
-			$this->status = 1;
 		}
 	}
 
-	public function getEoptionId()
+	public function getEntityOptionId()
 	{
-		return $this->eoption_id;
+		return $this->entity_option_id;
 	}
 
-	public function setEoptionId($value)
+	public function setEntityOptionId($value)
 	{
-		$this->eoption_id = $value === null ? null : (int)$value;
+		$this->entity_option_id = $value === null ? null : (int)$value;
 	}
 
 	public function getEntityId()
@@ -111,26 +101,6 @@ class entityOptionsModel
 		$this->option_value = $value === null ? null : (string)$value;
 	}
 
-	public function getCreationUser()
-	{
-		return $this->creation_user;
-	}
-
-	public function setCreationUser($value)
-	{
-		$this->creation_user = $value === null ? null : (int)$value;
-	}
-
-	public function getCreationTime()
-	{
-		return $this->creation_time;
-	}
-
-	public function setCreationTime($value)
-	{
-		$this->creation_time = $value === null ? null : (string)$value;
-	}
-
 	public function getEditionUser()
 	{
 		return $this->edition_user;
@@ -149,16 +119,6 @@ class entityOptionsModel
 	public function setEditionTime($value)
 	{
 		$this->edition_time = $value === null ? null : (string)$value;
-	}
-
-	public function getStatus()
-	{
-		return $this->status;
-	}
-
-	public function setStatus($value)
-	{
-		$this->status = $value === null ? null : (int)$value;
 	}
 }
 ?>

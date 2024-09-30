@@ -109,8 +109,14 @@ trait Preferences
 		{
 			$option = appOptionsModel::where("option_key", $key)->get();
 			$entity_option = $option->entityOptions()->get();
-			$entity_option->setOptionValue($value);
-			$entity_option->save();
+			if($entity_option->getOptionValue() != $value)
+			{
+				$entity_option->set([
+					"option_value" => $value,
+					"edition_user" => Session::get("user_id"),
+					"edition_time" => Date("Y-m-d H:i:s")
+				])->save();
+			}
 		}
 		$this->setUserLog("update", "preferences");
 

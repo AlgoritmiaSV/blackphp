@@ -16,6 +16,22 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `app_catalogs`
+--
+
+DROP TABLE IF EXISTS `app_catalogs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `app_catalogs` (
+  `table_name` varchar(64) NOT NULL COMMENT 'Nombre de la tabla',
+  `field_name` varchar(64) NOT NULL COMMENT 'Nombre del campo',
+  `field_value` int(11) NOT NULL COMMENT 'Opción/Valor',
+  `description` varchar(255) NOT NULL COMMENT 'Descripción',
+  PRIMARY KEY (`table_name`,`field_name`,`field_value`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Catálogo de posibles valores en campos de estado';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `app_elements`
 --
 
@@ -360,16 +376,13 @@ DROP TABLE IF EXISTS `entity_options`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entity_options` (
-  `eoption_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
+  `entity_option_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la entidad',
   `option_id` int(11) NOT NULL COMMENT 'ID de la opción',
   `option_value` varchar(255) NOT NULL COMMENT 'Valor de la opción',
-  `creation_user` int(11) NOT NULL,
-  `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`eoption_id`),
+  PRIMARY KEY (`entity_option_id`),
   KEY `eoption_entity` (`entity_id`),
   KEY `eoption_option` (`option_id`),
   CONSTRAINT `eoption_entity` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,

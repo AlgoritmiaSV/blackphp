@@ -15,6 +15,15 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Dumping data for table `app_catalogs`
+--
+
+LOCK TABLES `app_catalogs` WRITE;
+/*!40000 ALTER TABLE `app_catalogs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `app_catalogs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `app_elements`
 --
 

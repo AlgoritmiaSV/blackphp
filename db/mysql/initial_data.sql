@@ -20,6 +20,25 @@
 
 LOCK TABLES `app_catalogs` WRITE;
 /*!40000 ALTER TABLE `app_catalogs` DISABLE KEYS */;
+INSERT INTO `app_catalogs` VALUES
+('entities','status',0,'Deleted'),
+('entities','status',1,'Active'),
+('entity_methods','status',0,'Deleted'),
+('entity_methods','status',1,'Active'),
+('entity_modules','status',0,'Deleted'),
+('entity_modules','status',1,'Active'),
+('roles','status',0,'Deleted'),
+('roles','status',1,'Active'),
+('role_elements','status',0,'Deleted'),
+('role_elements','status',1,'Active'),
+('users','status',0,'Deleted'),
+('users','status',1,'Active'),
+('user_methods','status',0,'Deleted'),
+('user_methods','status',1,'Active'),
+('user_modules','status',0,'Deleted'),
+('user_modules','status',1,'Active'),
+('user_recovery','status',0,'Deleted'),
+('user_recovery','status',1,'Active');
 /*!40000 ALTER TABLE `app_catalogs` ENABLE KEYS */;
 UNLOCK TABLES;
 

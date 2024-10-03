@@ -108,7 +108,8 @@ $( function()
 								"width": "100%"
 							},
 							'iframeHeight': (content_height - 41) + "px",
-							'noPadContent':true
+							'noPadContent':true,
+							'onClose': $(this).data("reload") ? function(alert) { location.reload(); } : function(alert) { return false; }
 						});
 					}
 				});

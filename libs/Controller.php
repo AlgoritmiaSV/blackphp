@@ -428,6 +428,16 @@ class Controller
 		{
 			$this->view->restrict[] = "edited";
 		}
+		if(isset($element["printing_user"]) && $element["printing_user"] != 0)
+		{
+			$printing_user = usersModel::find($element["printing_user"]);
+			$this->view->data["pr_user_name"] = $printing_user->getUserName();
+			$this->view->data["pr_time"] = date_utilities::sql_date_to_string($element["printing_time"], true);
+		}
+		else
+		{
+			$this->view->restrict[] = "printed";
+		}
 	}
 
 	/**

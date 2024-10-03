@@ -405,6 +405,11 @@ tr:hover .action_icon
 	text-decoration: underline;
 }
 
+.button_group form
+{
+	display: inline-block;
+}
+
 @media screen and (max-width: 799px)
 {
 	.form_entry label:not(.switch)

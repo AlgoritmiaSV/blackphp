@@ -385,7 +385,21 @@ $(function()
 			else if(json.print_container != null)
 			{
 				$(".print_number").html(json.print_number);
-				$(json.print_container).printThis();
+				print_header = null;
+				if($(".print_header").length)
+				{
+					print_header = $(".print_header").html();
+				}
+				print_footer = null;
+				if($(".print_footer").length)
+				{
+					print_footer = $(".print_footer").html();
+				}
+				$(json.print_container).printThis({
+					'loadCSS': $(this).data("css") || "",
+					'header': print_header,
+					'footer': print_footer
+				});
 			}
 			else
 			{

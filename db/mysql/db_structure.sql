@@ -184,7 +184,7 @@ CREATE TABLE `app_options` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `AppOptionAfterInsert` AFTER INSERT ON `app_options` FOR EACH ROW INSERT INTO entity_options SELECT NULL, entity_id, NEW.option_id, NEW.default_value, 0, NOW(), 0, NOW(), 1 FROM entities */;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `AppOptionAfterInsert` AFTER INSERT ON `app_options` FOR EACH ROW INSERT INTO entity_options SELECT NULL, entity_id, NEW.option_id, NEW.default_value, 0, NOW() FROM entities */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -315,7 +315,7 @@ CREATE TABLE `entities` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `EntityAfterInsert` AFTER INSERT ON `entities` FOR EACH ROW INSERT INTO entity_options SELECT NULL, NEW.entity_id, option_id, default_value, 0, now(), 0, now(), 1 FROM app_options */;;
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER `EntityAfterInsert` AFTER INSERT ON `entities` FOR EACH ROW INSERT INTO entity_options SELECT NULL, NEW.entity_id, option_id, default_value, 0, now() FROM app_options */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;

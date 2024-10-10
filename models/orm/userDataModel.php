@@ -77,7 +77,7 @@ class userDataModel
 	private static $_soft_delete = true;
 
 	/** @var int|null $_deleted_status Valor a asignar en caso de borrado suave. */
-	private static $_deleted_status = null;
+	private static $_deleted_status = 0;
 
 	/**
 	 * Constructor de la clase

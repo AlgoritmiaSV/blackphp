@@ -628,13 +628,12 @@ CREATE TABLE `users` (
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `entity_nickname` (`entity_id`,`nickname`,`status`) USING BTREE,
-  UNIQUE KEY `entity_email` (`entity_id`,`email`,`status`) USING BTREE,
   KEY `theme_id` (`theme_id`),
   KEY `user_role` (`role_id`),
-  CONSTRAINT `user_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `user_entity` (`entity_id`),
+  CONSTRAINT `user_entity` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `user_theme` FOREIGN KEY (`theme_id`) REFERENCES `app_themes` (`theme_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Usuarios';

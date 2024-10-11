@@ -21,6 +21,12 @@
 LOCK TABLES `app_catalogs` WRITE;
 /*!40000 ALTER TABLE `app_catalogs` DISABLE KEYS */;
 INSERT INTO `app_catalogs` VALUES
+('app_installers','status',0,'Deleted'),
+('app_installers','status',1,'Active'),
+('app_methods','status',0,'Deleted'),
+('app_methods','status',1,'Active'),
+('app_modules','status',0,'Deleted'),
+('app_modules','status',1,'Active'),
 ('entities','status',0,'Deleted'),
 ('entities','status',1,'Active'),
 ('entity_methods','status',0,'Deleted'),

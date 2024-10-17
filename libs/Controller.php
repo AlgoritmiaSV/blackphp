@@ -133,6 +133,7 @@ class Controller
 			{
 				# Primera entidad de la tabla
 				$entity = entitiesModel::first()->toArray();
+				Session::set("server_name", "localhost");
 			}
 			else
 			{
@@ -157,6 +158,7 @@ class Controller
 						return;
 					}
 				}
+				Session::set("server_name", $_SERVER["SERVER_NAME"]);
 			}
 
 			# Moneda

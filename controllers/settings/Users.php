@@ -330,5 +330,23 @@ trait Users
 		$this->setUserLog("delete", "users", $user->getUserId());
 		$this->json($data);
 	}
+
+	public function CloseSessions($userId)
+	{
+		$serverName = $_SERVER["SERVER_NAME"];
+		$activeSession = $_SESSION;
+		$ectiveSessionId = session_id();
+		$path = session_save_path();
+		$files = glob($path . "/sess*");
+		foreach($files as $file)
+		{
+			session_decode(file_get_contents($file));
+			if($_SESSION["server_name"] == $serverName && !empty($_SESSION["user_id"]) && $userId == $_SESSION["user_id"])
+			{
+				unlink($file);
+			}
+		}
+		$_SESSION = $activeSession;
+	}
 }
 ?>

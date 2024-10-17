@@ -357,6 +357,7 @@ $( function()
 			_div.find(".filter_button").on("click", function() {
 				$(".action_filter").toggle("slow");
 			});
+			_div.find("form").on("submit", form_on_submit);
 			$(".open_dialog_button").on("click", function() {
 				$("#" + $(this).data("dialog")).dialog("open");
 			});

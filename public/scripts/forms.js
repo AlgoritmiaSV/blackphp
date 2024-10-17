@@ -266,7 +266,7 @@ $(function()
 	//Flag to prevent duplicate submission 
 	duplicate = false;
 
-	$("form").on("submit", function(e){
+	form_on_submit = function(e){
 		e.preventDefault();
 		if(duplicate)
 		{
@@ -419,7 +419,8 @@ $(function()
 				}
 			});
 		});
-	});
+	}
+	$("form").on("submit", form_on_submit);
 
 	$("form .cancel_button").on("click", function() {
 		var reset_location = $(this).closest("form").data("reset");

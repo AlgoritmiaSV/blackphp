@@ -595,12 +595,14 @@ $(function()
 	function build_autocomplete(element = $("body"))
 	{
 		element.find(".list_input").each(function() {
-			var labeled_source = json[$(this).data("source")].map(function (item) {
+			var list_input = $(this);
+			var labeled_source = json[list_input.data("source")].map(function (item) {
 				if(item.label == null)
 					item.label = item.text; 
 				return item;
 			});
-			$(this).autocomplete({
+			var list_format = list_input.data("list_format") || "label";
+			list_input.autocomplete({
 				source: labeled_source,
 				select: function( event, ui ) {
 					if(ui.item.id || ui.item.local_code)
@@ -651,7 +653,27 @@ $(function()
 				},
 				autoFocus: true
 			});
-			$(this).on("click", function() {
+			if(list_format == "label_and_quantity")
+			{
+				list_input.data("ui-autocomplete")._renderItem = function (ul, item)
+				{
+					var li = $(document.createElement("li"));
+					var a = $(document.createElement("a"));
+					a.css('display', 'block');
+					a.html(item.label);
+					var span = $(document.createElement("span"));
+					span.css({
+						'display': 'inline-block',
+						'float': 'right',
+						'padding-left': '2px'
+					});
+					span.html(item.quantity);
+					span.appendTo(a);
+					a.appendTo(li);
+					return li.appendTo(ul);
+				};
+			}
+			list_input.on("click", function() {
 				$(this).trigger("select");
 			});
 		});

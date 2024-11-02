@@ -24,6 +24,7 @@ class Controller
 	 * 5) Se verifica la sesión del usuario, y se envían los datos a la vista.
 	 * 6) Se elige la entidad, y se establece el directorio, el logo y las restricciones de dicha entidad.
 	 * 7) Se establece un tema por defecto
+	 * 8) Se establece el ajuste de texto en las tablas
 	 */
 	protected $view;
 	protected $system_name;
@@ -240,6 +241,9 @@ class Controller
 			$this->view->data["theme_id"] = $theme->getThemeId();
 			$this->view->data["theme_url"] = $theme->getThemeUrl();
 		}
+
+		#8 Ajuste del texto en tablas
+		$this->view->data["table_text_wrapping"] = Session::get("options/table_text_wrapping");
 	}
 
 	/**

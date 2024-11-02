@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2024-09-22 10:27+UTC-6\n"
+"PO-Revision-Date: 2024-11-02 15:17+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: es_ES\n"
@@ -551,6 +551,9 @@ msgstr "Sistema en mantenimiento"
 msgid "Technical support"
 msgstr "Soporte técnico"
 
+msgid "Text wrapping in tables"
+msgstr "Ajuste de texto en las tablas"
+
 msgid "Thanks for waiting"
 msgstr "Gracias por esperar"
 
@@ -679,4 +682,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 219 messages translated.
+# 220 messages translated.

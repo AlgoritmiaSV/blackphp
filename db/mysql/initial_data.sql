@@ -125,7 +125,9 @@ UNLOCK TABLES;
 LOCK TABLES `app_option_values` WRITE;
 /*!40000 ALTER TABLE `app_option_values` DISABLE KEYS */;
 INSERT INTO `app_option_values` VALUES
-(1,1,'default_header','By default');
+(1,1,'default_header','By default'),
+(2,2,'table_ellipsis','Ellipsis'),
+(3,2,'table_full_text','Full text');
 /*!40000 ALTER TABLE `app_option_values` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +138,8 @@ UNLOCK TABLES;
 LOCK TABLES `app_options` WRITE;
 /*!40000 ALTER TABLE `app_options` DISABLE KEYS */;
 INSERT INTO `app_options` VALUES
-(1,3,'page_header','Page header',NULL,'default_header');
+(1,3,'page_header','Page header',NULL,'default_header'),
+(2,3,'table_text_wrapping','Text wrapping in tables',NULL,'table_ellipsis');
 /*!40000 ALTER TABLE `app_options` ENABLE KEYS */;
 UNLOCK TABLES;
 

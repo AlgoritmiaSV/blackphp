@@ -1194,12 +1194,14 @@ $(function()
 		}
 		local_code = local_code.replace("\r", "");
 		var list_input = $(this).closest("tr").find(".list_input");
+		var complete_value = $(this).closest("tr").find(".complete_value");
 		var items = json[list_input.data("source")];
 		$.each(items, function(index, value) {
 			if((value.local_code.toLowerCase() == local_code || value.barcode.toLowerCase() == local_code) && parseInt(value.pres_id) == 0)
 			{
 				list_input.val(value.element_name);
 				list_input.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item:value});
+				complete_value.html(value.element_name);
 			}
 		});
 	}

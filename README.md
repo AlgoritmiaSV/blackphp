@@ -52,10 +52,8 @@ El equipo desarrollador
 -----------------------
 
 _En El Salvador:_  
-> Ing. Edwin Ernesto Fajardo Valenzuela  
-
-_En Costa Rica:_
-> Ing. Eddys Eduardo Galeano García
+> Edwin Ernesto Fajardo Valenzuela  
+> Cristian Emilio Carías Palacios
 
 Para mayor información, visite:  
 [Algoritmia SV](https://www.algoritmia.sv)

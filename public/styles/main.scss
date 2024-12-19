@@ -655,6 +655,13 @@ textarea
 	transform: rotate(45deg);
 }
 
+/* Checkboxes dentro de los resultados */
+.total_entry > .checkbox_container
+{
+	display: inline-block !important;
+	width: 145px;
+}
+
 /* Radio buttons */
 /* Customize the label (the container) */
 .radio_container

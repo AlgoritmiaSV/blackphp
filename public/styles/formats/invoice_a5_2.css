@@ -15,7 +15,7 @@
      position: relative;
      width: 14.8cm;
      height: 20cm;
-     margin: 5mm 0mm 0mm 1mm;
+     margin: 6mm 0mm 0mm 3mm;
  }
  
  .invoice_date
@@ -37,6 +37,10 @@
      position: absolute;
      top: 4.3cm;
      left: 2.9cm;
+     max-width: 5cm;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
  }
  
  .invoice_nit_dui

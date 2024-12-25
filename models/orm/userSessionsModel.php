@@ -9,8 +9,8 @@ class userSessionsModel
 {
 	use ORM;
 
-	/** @var int $usession_id ID de la tabla */
-	private $usession_id;
+	/** @var int $session_id Llave primaria */
+	private $session_id;
 
 	/** @var int $user_id ID del usuario */
 	private $user_id;
@@ -35,7 +35,7 @@ class userSessionsModel
 	private static $_table_type = "BASE TABLE";
 
 	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "usession_id";
+	private static $_primary_key = "session_id";
 
 	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
 	private static $_timestamps = false;
@@ -60,14 +60,14 @@ class userSessionsModel
 		}
 	}
 
-	public function getUsessionId()
+	public function getSessionId()
 	{
-		return $this->usession_id;
+		return $this->session_id;
 	}
 
-	public function setUsessionId($value)
+	public function setSessionId($value)
 	{
-		$this->usession_id = $value === null ? null : (int)$value;
+		$this->session_id = $value === null ? null : (int)$value;
 	}
 
 	public function getUserId()

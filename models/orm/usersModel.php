@@ -269,10 +269,10 @@ class usersModel
 		return userModulesModel::where("user_id", $this->user_id);
 	}
 
-	public function userRecovery()
+	public function userRecoveryCodes()
 	{
-		userRecoveryModel::flush();
-		return userRecoveryModel::where("user_id", $this->user_id);
+		userRecoveryCodesModel::flush();
+		return userRecoveryCodesModel::where("user_id", $this->user_id);
 	}
 
 	public function userSessions()

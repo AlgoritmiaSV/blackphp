@@ -330,14 +330,14 @@ DROP TABLE IF EXISTS `entity_methods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entity_methods` (
-  `emethod_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `entity_method_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la empresa',
   `method_id` int(11) NOT NULL COMMENT 'ID del método',
   `method_order` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Orden en el que aoparecerá el método en el menú',
   `creation_time` datetime NOT NULL,
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`emethod_id`),
+  PRIMARY KEY (`entity_method_id`),
   UNIQUE KEY `comp_method` (`entity_id`,`method_id`),
   KEY `method_id` (`method_id`),
   CONSTRAINT `cmethod_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -353,14 +353,14 @@ DROP TABLE IF EXISTS `entity_modules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entity_modules` (
-  `emodule_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `entity_module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la empresa',
   `module_id` int(11) NOT NULL COMMENT 'ID del módulo',
   `module_order` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Ubicación del módulo en el menú',
   `creation_time` datetime NOT NULL,
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`emodule_id`),
+  PRIMARY KEY (`entity_module_id`),
   KEY `comp_id` (`entity_id`),
   KEY `module_id` (`module_id`),
   CONSTRAINT `cmodule_company` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -518,7 +518,7 @@ DROP TABLE IF EXISTS `user_methods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_methods` (
-  `umethod_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `user_method_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
   `method_id` int(11) NOT NULL COMMENT 'ID del método',
   `creation_user` int(11) NOT NULL,
@@ -526,7 +526,7 @@ CREATE TABLE `user_methods` (
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`umethod_id`),
+  PRIMARY KEY (`user_method_id`),
   UNIQUE KEY `unique_user_method` (`user_id`,`method_id`),
   KEY `umethod_method` (`method_id`),
   KEY `umethod_user` (`user_id`),
@@ -543,7 +543,7 @@ DROP TABLE IF EXISTS `user_modules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_modules` (
-  `umodule_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `user_module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `module_id` int(11) NOT NULL COMMENT 'ID del módulo',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
   `creation_user` int(11) NOT NULL,
@@ -551,7 +551,7 @@ CREATE TABLE `user_modules` (
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`umodule_id`),
+  PRIMARY KEY (`user_module_id`),
   UNIQUE KEY `unique_user_module` (`module_id`,`user_id`),
   KEY `module_id` (`module_id`),
   KEY `user_id` (`user_id`),
@@ -561,23 +561,23 @@ CREATE TABLE `user_modules` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `user_recovery`
+-- Table structure for table `user_recovery_codes`
 --
 
-DROP TABLE IF EXISTS `user_recovery`;
+DROP TABLE IF EXISTS `user_recovery_codes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_recovery` (
-  `urecovery_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
+CREATE TABLE `user_recovery_codes` (
+  `recovery_code_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
-  `urecovery_code` char(32) NOT NULL COMMENT 'Código de recuperación',
+  `recovery_code` char(32) NOT NULL COMMENT 'Código de recuperación',
   `expiration_time` datetime NOT NULL COMMENT 'Fecha y hora de vencimiento',
   `creation_user` int(11) NOT NULL,
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`urecovery_id`),
+  PRIMARY KEY (`recovery_code_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `urecovery_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Recuperación de cuentas de usuario';
@@ -591,13 +591,13 @@ DROP TABLE IF EXISTS `user_sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_sessions` (
-  `usession_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `session_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
   `branch_id` int(11) DEFAULT NULL COMMENT 'Sucursal en la que inició sesión',
   `ip_address` varchar(15) NOT NULL COMMENT 'Dirección IP desde donde se conecta',
   `browser_id` int(11) DEFAULT NULL COMMENT 'Navegador que usa',
   `date_time` datetime NOT NULL COMMENT 'Fecha y hora',
-  PRIMARY KEY (`usession_id`),
+  PRIMARY KEY (`session_id`),
   KEY `user_id` (`user_id`),
   KEY `browser_id` (`browser_id`),
   KEY `usession_branch` (`branch_id`),

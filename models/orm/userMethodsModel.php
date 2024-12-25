@@ -9,8 +9,8 @@ class userMethodsModel
 {
 	use ORM;
 
-	/** @var int $umethod_id ID de la tabla */
-	private $umethod_id;
+	/** @var int $user_method_id Llave primaria */
+	private $user_method_id;
 
 	/** @var int $user_id ID del usuario */
 	private $user_id;
@@ -41,7 +41,7 @@ class userMethodsModel
 	private static $_table_type = "BASE TABLE";
 
 	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "umethod_id";
+	private static $_primary_key = "user_method_id";
 
 	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
 	private static $_timestamps = true;
@@ -67,14 +67,14 @@ class userMethodsModel
 		}
 	}
 
-	public function getUmethodId()
+	public function getUserMethodId()
 	{
-		return $this->umethod_id;
+		return $this->user_method_id;
 	}
 
-	public function setUmethodId($value)
+	public function setUserMethodId($value)
 	{
-		$this->umethod_id = $value === null ? null : (int)$value;
+		$this->user_method_id = $value === null ? null : (int)$value;
 	}
 
 	public function getUserId()

@@ -9,8 +9,8 @@ class entityModulesModel
 {
 	use ORM;
 
-	/** @var int $emodule_id ID de la tabla */
-	private $emodule_id;
+	/** @var int $entity_module_id Llave primaria */
+	private $entity_module_id;
 
 	/** @var int $entity_id ID de la empresa */
 	private $entity_id;
@@ -38,7 +38,7 @@ class entityModulesModel
 	private static $_table_type = "BASE TABLE";
 
 	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "emodule_id";
+	private static $_primary_key = "entity_module_id";
 
 	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
 	private static $_timestamps = false;
@@ -65,14 +65,14 @@ class entityModulesModel
 		}
 	}
 
-	public function getEmoduleId()
+	public function getEntityModuleId()
 	{
-		return $this->emodule_id;
+		return $this->entity_module_id;
 	}
 
-	public function setEmoduleId($value)
+	public function setEntityModuleId($value)
 	{
-		$this->emodule_id = $value === null ? null : (int)$value;
+		$this->entity_module_id = $value === null ? null : (int)$value;
 	}
 
 	public function getEntityId()

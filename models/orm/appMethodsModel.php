@@ -169,6 +169,12 @@ class appMethodsModel
 		return entityMethodsModel::where("method_id", $this->method_id);
 	}
 
+	public function roleMethods()
+	{
+		roleMethodsModel::flush();
+		return roleMethodsModel::where("method_id", $this->method_id);
+	}
+
 	public function userMethods()
 	{
 		userMethodsModel::flush();

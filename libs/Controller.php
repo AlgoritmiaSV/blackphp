@@ -325,18 +325,18 @@ class Controller
 			if(!empty($module))
 			{
 				$module = appModulesModel::findBy("module_url", $module);
-				$perms = userModulesModel::where("module_id", $module->getModuleId())->where("user_id", Session::get("user_id"))->get();
-				if(empty($perms->getUmoduleId()))
+				$perms = roleModulesModel::where("module_id", $module->getModuleId())->where("role_id", Session::get("role_id"))->get();
+				if(empty($perms->getRoleModuleId()))
 				{
 					if($type == 'json')
 					{
-						$this->json(Array(
+						$this->json([
 							"success" => false,
 							"error" => true,
 							"message" => _("You do not have permissions to perform this operation"),
 							"title" => "Error",
 							"theme" => "red"
-						));
+						]);
 					}
 					else
 					{
@@ -353,13 +353,13 @@ class Controller
 		}
 		if($type == 'json')
 		{
-			$this->json(Array(
+			$this->json([
 				"success" => false,
 				"error" => true,
 				"message" => _("You are not logged in"),
 				"title" => "Error",
 				"theme" => "red"
-			));
+			]);
 		}
 		elseif($type == 'internal')
 		{

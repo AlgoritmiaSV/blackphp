@@ -148,6 +148,12 @@ class appModulesModel
 		return entityModulesModel::where("module_id", $this->module_id);
 	}
 
+	public function roleModules()
+	{
+		roleModulesModel::flush();
+		return roleModulesModel::where("module_id", $this->module_id);
+	}
+
 	public function userModules()
 	{
 		userModulesModel::flush();

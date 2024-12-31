@@ -30,8 +30,8 @@ class availableModulesModel
 	/** @var int $entity_id ID de la empresa */
 	private $entity_id;
 
-	/** @var int $user_id ID de la tabla */
-	private $user_id;
+	/** @var int $role_id Llave primaria */
+	private $role_id;
 
 	/** @var int $module_order Ubicación del módulo en el menú */
 	private $module_order;
@@ -68,7 +68,7 @@ class availableModulesModel
 		{
 			$this->module_id = 0;
 			$this->status = 1;
-			$this->user_id = 0;
+			$this->role_id = 0;
 			$this->module_order = 1;
 		}
 	}
@@ -146,14 +146,14 @@ class availableModulesModel
 		$this->entity_id = $value === null ? null : (int)$value;
 	}
 
-	public function getUserId()
+	public function getRoleId()
 	{
-		return $this->user_id;
+		return $this->role_id;
 	}
 
-	public function setUserId($value)
+	public function setRoleId($value)
 	{
-		$this->user_id = $value === null ? null : (int)$value;
+		$this->role_id = $value === null ? null : (int)$value;
 	}
 
 	public function getModuleOrder()

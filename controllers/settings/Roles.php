@@ -119,6 +119,38 @@ trait Roles
 	}
 
 	/**
+	 * Editar menú del rol
+	 * 
+	 * Muestra la lista de módulos y métodos asignables al menú correspondiente al rol
+	 * que se está modificando.
+	 * @param int $role_id ID del rol a modificar
+	 * 
+	 * @return void
+	 */
+	public function EditRoleMenu($role_id)
+	{
+		$this->check_permissions("update", "roles");
+		$this->view->data["title"] = _("Menu");
+		$this->view->standard_form();
+		$this->view->data["nav"] = $this->view->render("main/nav", true);
+		$modules = availableModulesModel::where("role_id", Session::get("role_id"))->orderBy("module_order")->getAllArray();
+		$this->view->data["modules"] = "";
+		foreach($modules as $module)
+		{
+			foreach($module as $key => $item)
+			{
+				$this->view->data[$key] = $item;
+			}
+			$this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
+			->where("module_id", $module["module_id"])
+			->orderBy("method_order")->getAllArray();
+			$this->view->data["modules"] .= $this->view->render("modules", true);
+		}
+		$this->view->data["content"] = $this->view->render("settings/role_menu_form", true);
+		$this->view->render('main');
+	}
+
+	/**
 	 * Detalles del rol
 	 * 
 	 * Muestra una hoja con los datos del rol y sus respectivos permisos.
@@ -284,16 +316,67 @@ trait Roles
 		$data["title"] = _("Success");
 		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
+		$data["redirect_after"] = $this->module . "/EditRoleMenu/" . $role->getRoleId() . "/";
 		if(!empty($_POST["role_id"]))
 		{
-			$data["no_reset"] = true;
+			# $data["no_reset"] = true;
 			$this->setUserLog("update", "roles", $role->getRoleId());
 		}
 		else
 		{
-			$data["reload_after"] = true;
+			# $data["reload_after"] = true;
 			$this->setUserLog("create", "roles", $role->getRoleId());
 		}
+		$this->json($data);
+	}
+
+	/**
+	 * Guardar menú del rol
+	 * 
+	 * Guarda cada uno de los módulos y los métodos asignados a un rol.
+	 * 
+	 * @return void
+	 */
+	public function SaveRoleMenu()
+	{
+		$this->check_permissions(empty($_POST["role_id"]) ? "create" : "update", "roles");
+		$data = Array("success" => false);
+
+		if($_POST["role_id"] != Session::get("role_id"))
+		{
+			# Acceso a los módulos
+			roleModulesModel::where("role_id", $_POST["role_id"])->whereNotIn($_POST["modules"], "module_id")->update(["status" => 0]);
+			foreach($_POST["modules"] as $module_id)
+			{
+				roleModulesModel::where("role_id", $_POST["role_id"])
+					->where("module_id", $module_id)
+					->where("status", ">=", 0)
+					->get()->set([
+						"module_id" => $module_id,
+						"role_id" => $_POST["role_id"],
+						"status" => 1
+					])->save();
+			}
+
+			# Acceso a los métodos
+			roleMethodsModel::where("role_id", $_POST["role_id"])->whereNotIn($_POST["methods"], "method_id")->update(["status" => 0]);
+			foreach($_POST["methods"] as $method_id)
+			{
+				roleMethodsModel::where("role_id", $_POST["role_id"])
+					->where("method_id", $method_id)
+					->where("status", ">=", 0)
+					->get()->set(Array(
+						"method_id" => $method_id,
+						"role_id" => $_POST["role_id"],
+						"status" => 1
+					))->save();
+			}
+		}
+		$data["success"] = true;
+		$data["title"] = _("Success");
+		$data["message"] = _("Changes have been saved");
+		$data["theme"] = "green";
+		$data["reload_after"] = true;
 		$this->json($data);
 	}
 

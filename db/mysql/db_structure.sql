@@ -228,7 +228,7 @@ SET character_set_client = utf8;
   1 AS `id`,
   1 AS `label`,
   1 AS `entity_id`,
-  1 AS `user_id` */;
+  1 AS `role_id` */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -247,7 +247,7 @@ SET character_set_client = utf8;
   1 AS `default_order`,
   1 AS `status`,
   1 AS `entity_id`,
-  1 AS `user_id`,
+  1 AS `role_id`,
   1 AS `module_order` */;
 SET character_set_client = @saved_cs_client;
 
@@ -432,6 +432,54 @@ CREATE TABLE `role_elements` (
   CONSTRAINT `role_element_element` FOREIGN KEY (`element_id`) REFERENCES `app_elements` (`element_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `role_element_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Cada uno de los permisos de un rol';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `role_methods`
+--
+
+DROP TABLE IF EXISTS `role_methods`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_methods` (
+  `role_method_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL,
+  `method_id` int(11) NOT NULL,
+  `creation_user` int(11) NOT NULL,
+  `creation_time` datetime NOT NULL,
+  `edition_user` int(11) NOT NULL,
+  `edition_time` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`role_method_id`),
+  UNIQUE KEY `unique_role_method` (`role_id`,`method_id`),
+  KEY `role_method_method` (`method_id`),
+  CONSTRAINT `role_method_method` FOREIGN KEY (`method_id`) REFERENCES `app_methods` (`method_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `role_method_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Métodos habilitados por rol';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `role_modules`
+--
+
+DROP TABLE IF EXISTS `role_modules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_modules` (
+  `role_module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
+  `role_id` int(11) NOT NULL,
+  `module_id` int(11) NOT NULL,
+  `creation_user` int(11) NOT NULL,
+  `creation_time` datetime NOT NULL,
+  `edition_user` int(11) NOT NULL,
+  `edition_time` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`role_module_id`),
+  UNIQUE KEY `unique_role_module` (`role_id`,`module_id`),
+  KEY `role_mosule_module` (`module_id`),
+  CONSTRAINT `role_module_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `role_mosule_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Módulos habilitados para cada rol';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -652,7 +700,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
-/*!50001 VIEW `available_methods` AS select `am`.`method_id` AS `method_id`,`am`.`module_id` AS `module_id`,`am`.`method_name` AS `method_name`,`am`.`method_url` AS `method_url`,`am`.`method_icon` AS `method_icon`,`am`.`default_order` AS `default_order`,`am`.`element_id` AS `element_id`,`am`.`permissions` AS `permissions`,`am`.`status` AS `status`,`im`.`method_order` AS `method_order`,`am`.`method_id` AS `id`,`am`.`method_name` AS `label`,`im`.`entity_id` AS `entity_id`,`um`.`user_id` AS `user_id` from (((`user_methods` `um` left join `app_methods` `am` on(`um`.`method_id` = `am`.`method_id`)) left join `users` `u` on(`u`.`user_id` = `um`.`user_id`)) left join `entity_methods` `im` on(`im`.`method_id` = `am`.`method_id` and `u`.`entity_id` = `im`.`entity_id`)) where `um`.`status` = 1 and `im`.`status` = 1 */;
+/*!50001 VIEW `available_methods` AS select `am`.`method_id` AS `method_id`,`am`.`module_id` AS `module_id`,`am`.`method_name` AS `method_name`,`am`.`method_url` AS `method_url`,`am`.`method_icon` AS `method_icon`,`am`.`default_order` AS `default_order`,`am`.`element_id` AS `element_id`,`am`.`permissions` AS `permissions`,`am`.`status` AS `status`,`im`.`method_order` AS `method_order`,`am`.`method_id` AS `id`,`am`.`method_name` AS `label`,`im`.`entity_id` AS `entity_id`,`rm`.`role_id` AS `role_id` from (((`role_methods` `rm` left join `app_methods` `am` on(`rm`.`method_id` = `am`.`method_id`)) left join `roles` `r` on(`r`.`role_id` = `rm`.`role_id`)) left join `entity_methods` `im` on(`im`.`method_id` = `am`.`method_id` and `r`.`entity_id` = `im`.`entity_id`)) where `rm`.`status` = 1 and `im`.`status` = 1 */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -670,7 +718,7 @@ CREATE TABLE `users` (
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
-/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`em`.`entity_id` AS `entity_id`,`u`.`user_id` AS `user_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` left join `app_modules` `m` on(`m`.`module_id` = `em`.`module_id`)) left join `user_modules` `um` on(`um`.`module_id` = `m`.`module_id` and `um`.`status` = 1)) left join `users` `u` on(`u`.`entity_id` = `em`.`entity_id` and `u`.`user_id` = `um`.`user_id`)) where `em`.`status` = 1 order by `em`.`module_order` */;
+/*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`em`.`entity_id` AS `entity_id`,`r`.`role_id` AS `role_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` left join `app_modules` `m` on(`m`.`module_id` = `em`.`module_id`)) left join `role_modules` `rm` on(`rm`.`module_id` = `m`.`module_id` and `rm`.`status` = 1)) left join `roles` `r` on(`r`.`entity_id` = `em`.`entity_id` and `r`.`role_id` = `rm`.`role_id`)) where `em`.`status` = 1 order by `em`.`module_order` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

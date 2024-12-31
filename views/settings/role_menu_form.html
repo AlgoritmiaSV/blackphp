@@ -1,0 +1,43 @@
+<div class="content_viewer">
+	<div class="form_content medium_form">
+		<form action="SaveRoleMenu" data-reset="{{ module }}/Roles">
+			<div class="form_title">
+				_(Edit role)
+				<a class="close_form" href="#"><img src="public/images/close.png"></a>
+			</div>
+			<div class="form_body">
+				<input type="hidden" name="role_id" class="update_input">
+				<!-- no_self -->
+				<div>
+					<label>_(Give access to):</label>
+					{{ modules }}
+				</div>
+				<!-- /no_self -->
+			</div>
+			<div class="form_foot">
+				<span class="button_group">
+					<button class="blue_button" type="submit">
+						<img src="public/images/outline/save.png" class="x-small_icon">
+						_(Save)
+					</button>
+					<button class="grey_button cancel_button" type="reset">
+						<img src="public/images/outline/cancel.png" class="x-small_icon">
+						_(Cancel)
+					</button>
+				</span>
+			</div>
+		</form>
+		<div class="sending">
+			<img src="public/images/loading.gif" class="small_icon">
+			<span>_(Saving)...</span>
+		</div>
+		<div class="error">
+			<img src="public/images/error.png" class="small_icon">
+			<span>_(Failed to save)</span>
+		</div>
+		<div class="success">
+			<img src="public/images/success.png" class="small_icon">
+			<span>_(Success)</span>
+		</div>
+	</div>
+</div>

@@ -36,19 +36,6 @@ trait Users
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->restrict[] = "edition";
-		$modules = availableModulesModel::where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
-		$this->view->data["modules"] = "";
-		foreach($modules as $module)
-		{
-			foreach($module as $key => $item)
-			{
-				$this->view->data[$key] = $item;
-			}
-			$this->view->data["methods"] = availableMethodsModel::where("user_id", Session::get("user_id"))
-			->where("module_id", $module["module_id"])
-			->orderBy("method_order")->getAllArray();
-			$this->view->data["modules"] .= $this->view->render("modules", true);
-		}
 		$this->view->data["content"] = $this->view->render("settings/user_form", true);
 		$this->view->render('main');
 	}
@@ -71,19 +58,6 @@ trait Users
 			$this->view->restrict[] = "no_self";
 		}
 		$this->view->restrict[] = "creation";
-		$modules = availableModulesModel::where("user_id", Session::get("user_id"))->orderBy("module_order")->getAllArray();
-		$this->view->data["modules"] = "";
-		foreach($modules as $module)
-		{
-			foreach($module as $key => $item)
-			{
-				$this->view->data[$key] = $item;
-			}
-			$this->view->data["methods"] = availableMethodsModel::where("user_id", Session::get("user_id"))
-			->where("module_id", $module["module_id"])
-			->orderBy("method_order")->getAllArray();
-			$this->view->data["modules"] .= $this->view->render("modules", true);
-		}
 		$this->view->data["content"] = $this->view->render("settings/user_form", true);
 		$this->view->render('main');
 	}
@@ -269,7 +243,7 @@ trait Users
 			$this->setUserLog("create", "users", $user->getUserId());
 		}
 
-		$user_id = $user->getUserId();
+		/*$user_id = $user->getUserId();
 		if($user_id != Session::get("user_id"))
 		{
 			#Module access
@@ -299,7 +273,7 @@ trait Users
 						"status" => 1
 					))->save();
 			}
-		}
+		}*/
 		$data["success"] = true;
 		$data["title"] = _("Success");
 		$data["message"] = _("Changes have been saved");

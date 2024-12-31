@@ -45,7 +45,7 @@ class Settings extends Controller
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$module = appModulesModel::findBy("module_url", $this->module);
 		$this->view->data["title"] = _($module->getModuleName());
-		$this->view->data["methods"] = availableMethodsModel::where("user_id", Session::get("user_id"))
+		$this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
 		->where("module_id", $module->getModuleId())
 		->orderBy("method_order")->getAllArray();
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
@@ -170,6 +170,19 @@ class Settings extends Controller
 					->where("is_updatable", 1)->getAll();
 				$data["check"]["delete"] = appElementsModel::select("element_id AS id")
 					->where("is_deletable", 1)->getAll();
+			}
+		}
+		if($_POST["method"] == "EditRoleMenu")
+		{
+			$role = rolesModel::find($_POST["id"]);
+			if($role->exists())
+			{
+				$data["update"] = $role->toArray();
+				$data["check"] = Array();
+				$data["check"]["modules"] = roleModulesModel::select("module_id AS id")
+					->where("role_id", $_POST["id"])->getAll();
+				$data["check"]["methods"] = roleMethodsModel::select("method_id AS id")
+					->where("role_id", $_POST["id"])->getAll();
 			}
 		}
 		$this->json($data);

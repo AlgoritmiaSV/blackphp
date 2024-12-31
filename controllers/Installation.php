@@ -712,10 +712,10 @@ class Installation extends Controller
 	 */
 	public function SaveMenu()
 	{
-		$data = $_POST;
-		$data["success"] = false;
+		$result = ["success" => false];
 		$now = Date("Y-m-d H:i:s");
 		$today = Date("Y-m-d");
+
 		#Check session type
 		$entity_id = $this->entity_id;
 		if($entity_id == null)
@@ -725,99 +725,105 @@ class Installation extends Controller
 
 		$entity = entitiesModel::find($this->entity_id);
 
-		#Set modules
+		# Configurar los módulos de la entidad
 		$i = 0;
-		entityModulesModel::where("entity_id", $entity->getEntityId())->whereNotIn($data["modules"], "module_id")->update(Array("status" => 0));
-		foreach($data["modules"] as $module_id)
+		entityModulesModel::where("entity_id", $entity->getEntityId())->whereNotIn($_POST["modules"], "module_id")->update(["status" => 0]);
+		foreach($_POST["modules"] as $module_id)
 		{
 			$i++;
 			$module = entityModulesModel::where("module_id", $module_id)->where("entity_id", $entity->getEntityId())->where("status", ">=", 0)->get();
-			if(empty($module->getEmoduleId()))
+			if(empty($module->getEntityModuleId()))
 			{
-				$module->set(Array(
+				$module->set([
 					"entity_id" => $entity->getEntityId(),
 					"module_id" => $module_id,
 					"creation_time" => $now,
-				));
+				]);
 			}
-			$module->set(Array(
+			$module->set([
 				"module_order" => $i,
 				"edition_time" => $now,
 				"status" => 1
-			))->save();
+			])->save();
 		}
 
-		#Set methods
-		entityMethodsModel::where("entity_id", $entity->getEntityId())->whereNotIn($data["methods"], "method_id")->update(Array("status" => 0));
+		# Configuración de métodos de la entidad
+		entityMethodsModel::where("entity_id", $entity->getEntityId())->whereNotIn($_POST["methods"], "method_id")->update(["status" => 0]);
 		$i = 0;
-		foreach($data["methods"] as $method_id)
+		foreach($_POST["methods"] as $method_id)
 		{
 			$i++;
 			$method = entityMethodsModel::where("method_id", $method_id)->where("entity_id", $entity->getEntityId())->where("status", ">=", 0)->get();
-			if(empty($method->getEmethodId()))
+			if(empty($method->getEntityMethodId()))
 			{
-				$method->set(Array(
+				$method->set([
 					"entity_id" => $entity->getEntityId(),
 					"method_id" => $method_id,
 					"creation_time" => $now,
-				));
+				]);
 			}
-			$method->set(Array(
+			$method->set([
 				"method_order" => $i,
 				"edition_time" => $now,
 				"status" => 1
-			))->save();
+			])->save();
 		}
 
 		$user = usersModel::find($entity->getAdminUser());
-		#Set user modules permissions
+
+		# Configuración de íconos del rol de administrador
 		if($user->getUserId() != Session::get("user_id"))
 		{
-			#Set modules
-			userModulesModel::where("user_id", $user->getUserId())->whereNotIn($data["modules"], "module_id")->update(Array("status" => 0));
-			foreach($data["modules"] as $module_id)
+			# Módulos del rol administrador
+			roleModulesModel::where("role_id", $entity->getAdminRole())->whereNotIn($_POST["modules"], "module_id")->update(["status" => 0]);
+			foreach($_POST["modules"] as $module_id)
 			{
-				$module = userModulesModel::where("module_id", $module_id)->where("user_id", $user->getUserId())->where("status", ">=", 0)->get();
-				$module->set(Array(
+				$module = roleModulesModel::where("module_id", $module_id)->where("role_id", $entity->getAdminRole())->where("status", ">=", 0)->get();
+				$module->set([
 					"module_id" => $module_id,
-					"user_id" => $user->getUserId(),
+					"role_id" => $entity->getAdminRole(),
 					"status" => 1
-				))->save();
+				])->save();
 			}
 
-			#Set methods
-			userMethodsModel::where("user_id", $user->getUserId())->whereNotIn($data["methods"], "method_id")->update(Array("status" => 0));
-			foreach($data["methods"] as $method_id)
+			# Métodos del rol administrador
+			roleMethodsModel::where("role_id", $entity->getAdminRole())->whereNotIn($_POST["methods"], "method_id")->update(["status" => 0]);
+			foreach($_POST["methods"] as $method_id)
 			{
-				$method = userMethodsModel::where("method_id", $method_id)->where("user_id", $user->getUserId())->where("status", ">=", 0)->get();
-				$method->set(Array(
-					"user_id" => $user->getUserId(),
+				$method = roleMethodsModel::where("method_id", $method_id)->where("role_id", $entity->getAdminRole())->where("status", ">=", 0)->get();
+				$method->set([
+					"role_id" => $entity->getAdminRole(),
 					"method_id" => $method_id,
 					"status" => 1
-				))->save();
+				])->save();
 			}
 		}
-		#Finish and response
-		$data["success"] = true;
-		$data["title"] = _("Success");
-		$data["message"] = _("Installation completed successfully");
-		$data["theme"] = "green";
-		$data["no_reset"] = true;
+
+		# Preparación de respuesta
+		$result = [
+			"success" => true,
+			"title" => _("Success"),
+			"message" => _("Installation completed successfully"),
+			"theme" => "green",
+			"no_reset" => true
+		];
 		if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
 		{
 			$protocol = "http";
 			if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
 				$protocol .= "s";
 			}
-			$data["redirect_after"] = $protocol . "://" . str_replace("installer", $data["subdomain"], $_SERVER["SERVER_NAME"]);
+			$result["redirect_after"] = $protocol . "://" . str_replace("installer", $result["subdomain"], $_SERVER["SERVER_NAME"]);
 		}
 		else
 		{
-			$data["reload_after"] = true;
+			$result["reload_after"] = true;
 		}
-		#Close installer session
+
+		# Cerrar sesión del instalador
 		Session::destroy();
-		$this->json($data);
+
+		$this->json($result);
 	}
 
 	/**

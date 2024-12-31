@@ -174,7 +174,7 @@ class User extends Controller
 			])->save();
 
 			# Cargar los módulos a la sesión actual
-			Session::set("modules", availableModulesModel::where("user_id", $user->getUserId())->orderBy("module_order")->getAllArray());
+			Session::set("modules", availableModulesModel::where("role_id", $user->getRoleId())->orderBy("module_order")->getAllArray());
 
 			# Cargar los permisos del usuario
 			$permissions = Array();

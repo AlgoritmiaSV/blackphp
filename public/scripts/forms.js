@@ -384,7 +384,12 @@ $(function()
 			}
 			else if(json.print_container != null)
 			{
-				$(".print_number").html(json.print_number);
+				if(json.print_data != null)
+				{
+					$.each(json.print_data, function(index, value) {
+						$("." + index).html(value)
+					});
+				}
 				print_header = null;
 				if($(".print_header").length)
 				{
@@ -400,6 +405,7 @@ $(function()
 					'header': print_header,
 					'footer': print_footer
 				});
+				reset_last_form(json);
 			}
 			else
 			{

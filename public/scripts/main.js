@@ -191,6 +191,7 @@ $(function() {
 	{
 		$(this).removeClass("hasDatepicker");
 		$(this).removeAttr("id");
+		$(this).attr("autocomplete", "off");
 		var options = {
 			dateFormat: $(this).data("format") || "dd/mm/yy",
 			monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Deciembre" ],

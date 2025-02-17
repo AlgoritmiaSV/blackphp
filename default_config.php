@@ -67,4 +67,11 @@ define('SYSTEM_STATUS', 'PRODUCTION');
  * Valores aceptados: OPEN, CLOSE
  */
 define('CREATE_ENTITY', 'OPEN');
+
+/**
+ * Carpeta privada
+ * Ubicación de archivos sensibles de las entidades. Se recomienda una ubicación
+ * no accesible al público.
+ */
+define('PRIVATE_FOLDER', 'entities/');
 ?>

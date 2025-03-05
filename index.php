@@ -60,7 +60,7 @@ function site_autoload($class)
 	{
 		require "models/orm/$class.php";
 	}
-	else
+	elseif(file_exists('controllers/' . $class .".php"))
 	{
 		require 'controllers/' . $class .".php";
 	}

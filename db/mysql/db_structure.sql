@@ -1,8 +1,9 @@
--- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
+/*M!999999\- enable the sandbox mode */ 
+-- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: blackphp
 -- ------------------------------------------------------
--- Server version	10.11.6-MariaDB-0+deb12u1
+-- Server version	10.11.11-MariaDB-0+deb12u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +22,7 @@
 
 DROP TABLE IF EXISTS `app_catalogs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_catalogs` (
   `table_name` varchar(64) NOT NULL COMMENT 'Nombre de la tabla',
   `field_name` varchar(64) NOT NULL COMMENT 'Nombre del campo',
@@ -37,7 +38,7 @@ CREATE TABLE `app_catalogs` (
 
 DROP TABLE IF EXISTS `app_elements`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_elements` (
   `element_id` smallint(6) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `element_key` varchar(32) NOT NULL COMMENT 'Clave del elemento',
@@ -64,7 +65,7 @@ CREATE TABLE `app_elements` (
 
 DROP TABLE IF EXISTS `app_installers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_installers` (
   `installer_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `installer_nickname` varchar(32) NOT NULL COMMENT 'Usuario',
@@ -83,7 +84,7 @@ CREATE TABLE `app_installers` (
 
 DROP TABLE IF EXISTS `app_locales`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_locales` (
   `locale_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria de idioma regional',
   `language_code` char(2) NOT NULL COMMENT 'Código de idioma en ISO 639-1',
@@ -100,7 +101,7 @@ CREATE TABLE `app_locales` (
 
 DROP TABLE IF EXISTS `app_methods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_methods` (
   `method_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `module_id` int(11) NOT NULL COMMENT 'ID del módulo',
@@ -125,7 +126,7 @@ CREATE TABLE `app_methods` (
 
 DROP TABLE IF EXISTS `app_modules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_modules` (
   `module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `module_name` varchar(32) NOT NULL COMMENT 'Nombre del módulo',
@@ -143,7 +144,7 @@ CREATE TABLE `app_modules` (
 
 DROP TABLE IF EXISTS `app_option_values`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_option_values` (
   `option_value_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `option_id` int(11) NOT NULL COMMENT 'ID de la opción',
@@ -161,7 +162,7 @@ CREATE TABLE `app_option_values` (
 
 DROP TABLE IF EXISTS `app_options`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_options` (
   `option_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `option_type` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Tipo de variable: 1: Booleana; 2: Valor',
@@ -197,7 +198,7 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `app_themes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_themes` (
   `theme_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `theme_name` varchar(32) NOT NULL COMMENT 'Nombre del tema',
@@ -213,7 +214,7 @@ CREATE TABLE `app_themes` (
 DROP TABLE IF EXISTS `available_methods`;
 /*!50001 DROP VIEW IF EXISTS `available_methods`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `available_methods` AS SELECT
  1 AS `method_id`,
   1 AS `module_id`,
@@ -238,7 +239,7 @@ SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `available_modules`;
 /*!50001 DROP VIEW IF EXISTS `available_modules`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `available_modules` AS SELECT
  1 AS `module_id`,
   1 AS `module_name`,
@@ -257,7 +258,7 @@ SET character_set_client = @saved_cs_client;
 
 DROP TABLE IF EXISTS `browsers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `browsers` (
   `browser_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `user_agent` varchar(255) NOT NULL COMMENT 'Cadena completa User Agent enviada por el navegador',
@@ -277,7 +278,7 @@ CREATE TABLE `browsers` (
 
 DROP TABLE IF EXISTS `entities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entities` (
   `entity_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `entity_name` varchar(64) NOT NULL COMMENT 'Nombre de la empresa',
@@ -328,7 +329,7 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `entity_methods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entity_methods` (
   `entity_method_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la empresa',
@@ -351,7 +352,7 @@ CREATE TABLE `entity_methods` (
 
 DROP TABLE IF EXISTS `entity_modules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entity_modules` (
   `entity_module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la empresa',
@@ -374,7 +375,7 @@ CREATE TABLE `entity_modules` (
 
 DROP TABLE IF EXISTS `entity_options`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entity_options` (
   `entity_option_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la entidad',
@@ -396,7 +397,7 @@ CREATE TABLE `entity_options` (
 
 DROP TABLE IF EXISTS `login_attemps`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `login_attemps` (
   `attemp_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
@@ -415,7 +416,7 @@ CREATE TABLE `login_attemps` (
 
 DROP TABLE IF EXISTS `role_elements`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role_elements` (
   `role_element_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `role_id` int(11) NOT NULL COMMENT 'ID del rol',
@@ -440,7 +441,7 @@ CREATE TABLE `role_elements` (
 
 DROP TABLE IF EXISTS `role_methods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role_methods` (
   `role_method_id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL,
@@ -464,7 +465,7 @@ CREATE TABLE `role_methods` (
 
 DROP TABLE IF EXISTS `role_modules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role_modules` (
   `role_module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `role_id` int(11) NOT NULL,
@@ -488,7 +489,7 @@ CREATE TABLE `role_modules` (
 
 DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la entidad',
@@ -511,7 +512,7 @@ CREATE TABLE `roles` (
 DROP TABLE IF EXISTS `user_data`;
 /*!50001 DROP VIEW IF EXISTS `user_data`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `user_data` AS SELECT
  1 AS `user_id`,
   1 AS `entity_id`,
@@ -538,7 +539,7 @@ SET character_set_client = @saved_cs_client;
 
 DROP TABLE IF EXISTS `user_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_logs` (
   `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la entidad',
@@ -564,7 +565,7 @@ CREATE TABLE `user_logs` (
 
 DROP TABLE IF EXISTS `user_methods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_methods` (
   `user_method_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
@@ -589,7 +590,7 @@ CREATE TABLE `user_methods` (
 
 DROP TABLE IF EXISTS `user_modules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_modules` (
   `user_module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `module_id` int(11) NOT NULL COMMENT 'ID del módulo',
@@ -614,7 +615,7 @@ CREATE TABLE `user_modules` (
 
 DROP TABLE IF EXISTS `user_recovery_codes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_recovery_codes` (
   `recovery_code_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
@@ -637,7 +638,7 @@ CREATE TABLE `user_recovery_codes` (
 
 DROP TABLE IF EXISTS `user_sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_sessions` (
   `session_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
@@ -660,7 +661,7 @@ CREATE TABLE `user_sessions` (
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla',
   `entity_id` int(11) NOT NULL COMMENT 'ID de la empresa',

@@ -150,6 +150,9 @@ class User extends Controller
 				Session::set($key, $value);
 			}
 
+			# Guardar en la sesión el identificador del equipo del usuario
+			Session::set("blackphp_device_code", $_POST["blackphp_device_code"]);
+
 			# Cargar el idioma del usuario
 			if(!empty($user->getLocale()))
 			{

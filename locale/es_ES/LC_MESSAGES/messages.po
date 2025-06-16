@@ -1,5 +1,5 @@
 # PACK OF SPANISH LANGUAGE FOR BLACKPHP
-# Copyright (C)2022-2024 Algoritmia SV
+# Copyright (C)2022-2025 Algoritmia SV
 # This file is distributed under the same license as the PACKAGE BlackPHP.
 # Edwin Fajardo <contacto@edwinfajardo.com>.
 #
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2024-11-02 15:17+UTC-6\n"
+"PO-Revision-Date: 2025-06-16 08:15+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: es_ES\n"
@@ -295,6 +295,9 @@ msgstr "Instalación"
 
 msgid "Installation completed successfully"
 msgstr "La instalación se completó con éxito"
+
+msgid "Invalid subdomain"
+msgstr "Subdominio inválido"
 
 msgid "It's time to start!"
 msgstr "¡Es hora de iniciar!"
@@ -682,4 +685,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 220 messages translated.
+# 221 messages translated.

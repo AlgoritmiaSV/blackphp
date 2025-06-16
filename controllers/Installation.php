@@ -41,9 +41,21 @@ class Installation extends Controller
 	public function index($subdomain = "")
 	{
 		$this->InstallerRequired();
+		$this->view->data["subdomain"] = $subdomain;
+
+		# Validación de nombre de subdominio
+		if(!empty($subdomain) && !preg_match('/^[a-z][a-z0-9]{0,15}$/', $subdomain))
+		{
+			$this->view->data["title"] = _("Installation");
+			$this->view->standard_error();
+			$this->view->data["nav"] = "";
+			$this->view->data["content"] = $this->view->render("installation/invalid_subdomain", true);
+			$this->view->render('main');
+			exit();
+		}
+
 		$this->view->data["title"] = _("Installation");
 		$this->view->standard_form();
-		$this->view->data["subdomain"] = $subdomain;
 		if(Session::get("user_id") == null)
 		{
 			$this->view->restrict[] = "inside_installation";

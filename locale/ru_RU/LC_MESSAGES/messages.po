@@ -1,5 +1,5 @@
 # PACK OF RUSSIAN LANGUAGE FOR BLACKPHP
-# Copyright (C)2022-2024 Algoritmia SV
+# Copyright (C)2022-2025 Algoritmia SV
 # This file is distributed under the same license as the PACKAGE BlackPHP.
 # Edwin Fajardo <contacto@edwinfajardo.com>.
 #
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2024-11-02 15:17+UTC-6\n"
+"PO-Revision-Date: 2025-06-16 08:15+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -295,6 +295,9 @@ msgstr "Монтаж"
 
 msgid "Installation completed successfully"
 msgstr "Установка успешно завершена"
+
+msgid "Invalid subdomain"
+msgstr "Неверный поддомен"
 
 msgid "It's time to start!"
 msgstr "Пришло время начать!"
@@ -682,4 +685,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 220 messages translated.
+# 221 messages translated.

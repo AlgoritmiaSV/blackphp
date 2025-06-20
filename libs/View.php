@@ -228,7 +228,8 @@ class View
 			'node_modules/jspdf/dist/jspdf.umd.min.js',
 			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'external/js/jquery.jqpagination.min.js',
-			'scripts/bpscript.min.js'
+			'scripts/bpscript.min.js',
+			'scripts/tables.js'
 		]);
 		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
 		if(file_exists($select2_lang))

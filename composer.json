@@ -1,6 +1,12 @@
 {
+    "name": "algoritmiasv/blackphp",
+    "description": "BlackPHP - Framework para sistemas basados en PHP",
+    "type": "project",
+    "license": "MIT",
     "require": {
         "phpoffice/phpspreadsheet": "^4.1",
         "donatj/phpuseragentparser": "^1.10"
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

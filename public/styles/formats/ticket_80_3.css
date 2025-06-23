@@ -1,0 +1,30 @@
+/**
+	Estilos para impresión de tickets
+	By: Edwin Fajardo
+	Date-Time: 2021-10-13 09:58
+*/
+
+@page
+{
+	margin: 0px;
+}
+
+.ticket_area
+{
+	font-size: 9pt;
+	padding: 10px;
+}
+
+.ticket_area table
+{
+	font-size: 9pt;
+}
+
+@media screen {
+	.ticket_area
+	{
+		max-width: 350px;
+		margin: 0px auto;
+		border: 2px dashed #999999;
+	}
+}

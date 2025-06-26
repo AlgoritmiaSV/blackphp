@@ -911,7 +911,7 @@ $(function()
 		}
 		else if(object_data.next != null)
 		{
-			code_input.val("" + object_data.category_prefix + object_data.next + object_data.category_suffix);
+			code_input.val("" + (object_data.category_prefix || "") + object_data.next + (object_data.category_suffix || ""));
 		}
 	});
 

@@ -229,7 +229,7 @@
 			}
 			if(strlen($number) != $formats[$format]["size"])
 			{
-				if($format == "nrc")
+				if($format == "nrc" && strlen($number) > 1)
 				{
 					$formats[$format]["format"] = (strlen($number) - 1) . "-1";
 				}

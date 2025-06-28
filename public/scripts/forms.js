@@ -336,6 +336,13 @@ $(function()
 		};
 		$.ajax(ajax_options)
 		.done(function(json) {
+			// Equivalencias de colores (jAlert) e íconos (SweetAlert)
+			const icons = {
+				"green": "success",
+				"red": "error",
+				"yellow": "warning",
+				"blue": "info"
+			}
 			if(json.message)
 			{
 				Swal.fire({
@@ -343,7 +350,7 @@ $(function()
 					'html': json.message,
 					//'theme': json.theme,
 					//'autofocus': '.jalert_accept',
-					'icon': json.theme == "green" ? "success" : (json.theme == "red" ? "error" : "info"),
+					'icon': (icons[json.theme] || "info"),
 					'didDestroy': function() {
 						first_input.focus();
 						if(json.reload_after)

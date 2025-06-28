@@ -132,6 +132,10 @@ $(function() {
 			{
 				$("#bill_number").val(object_data.next);
 			}
+			else
+			{
+				$("#bill_number").val("");
+			}
 			if(object_data.max_items)
 			{
 				$(".items_container").data("max_items", object_data.max_items);

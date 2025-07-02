@@ -44,7 +44,7 @@ class Installation extends Controller
 		$this->view->data["subdomain"] = $subdomain;
 
 		# Validación de nombre de subdominio
-		if(!empty($subdomain) && !preg_match('/^[a-z][a-z0-9]{0,15}$/', $subdomain))
+		if(!empty($subdomain) && !preg_match('/^[a-z][a-z0-9]{0,30}$/', $subdomain))
 		{
 			$this->view->data["title"] = _("Installation");
 			$this->view->standard_error();

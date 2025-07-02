@@ -197,6 +197,10 @@
 
 		public static function format(&$number, $format = "")
 		{
+			if(empty($number))
+			{
+				return $number;
+			}
 			$formats = Array(
 				"dui" => Array(
 					"size" => 9,

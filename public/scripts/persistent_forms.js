@@ -17,45 +17,53 @@ function generateUUIDv4()
 	);
 }
 
-$(function() {
-	var stored_module = localStorage.getItem("module");
-	var stored_method = localStorage.getItem("method");
-	var device_code = localStorage.getItem("blackphp_device_code");
-	if(device_code == null)
-	{
+document.addEventListener("DOMContentLoaded", function ()
+{
+	const stored_module = localStorage.getItem("module");
+	const stored_method = localStorage.getItem("method");
+	let device_code = localStorage.getItem("blackphp_device_code");
+
+	if (!device_code) {
 		device_code = generateUUIDv4();
 		localStorage.setItem("blackphp_device_code", device_code);
 	}
-	if(stored_module != url.module || stored_method != url.method)
-	{
+
+	if (stored_module !== url.module || stored_method !== url.method) {
 		localStorage.clear();
 		localStorage.setItem("blackphp_device_code", device_code);
 	}
+
 	localStorage.setItem("module", url.module);
 	localStorage.setItem("method", url.method);
 
 	// Se agregan como persistentes, todos los inputs y textareas que estén dentro
 	// de un contenedor de la clase .form_content, y también de forma individual
 	// a todos los inputs de la clase .persistent_input
-	$(".form_content input, .form_content textarea, .persistent_input").each(function() {
-		var name = $(this).attr("name");
-		var value = localStorage.getItem(name);
-		if(value)
-		{
-			$(this).val(value);
+	const inputs = document.querySelectorAll(".form_content input, .form_content textarea, .persistent_input");
+
+	inputs.forEach(function (el){
+		const name = el.getAttribute("name");
+		if (!name) return;
+
+		const value = localStorage.getItem(name);
+		if (value !== null){
+			el.value = value;
 		}
-		$(this).on("change", function() {
-			var name = $(this).attr("name");
-			if(name && name.indexOf("[") < 0)
-			{
-				localStorage.setItem(name, $(this).val());
+
+		el.addEventListener("change", function (){
+			const key = el.getAttribute("name");
+			if (key && !key.includes("[")) {
+				localStorage.setItem(key, el.value);
 			}
 		});
 	});
-	$(".form_content form").on("submit", function()
-	{
-		var device_code = localStorage.getItem("blackphp_device_code");
-		localStorage.clear();
-		localStorage.setItem("blackphp_device_code", device_code);
+
+	const forms = document.querySelectorAll(".form_content form");
+	forms.forEach(form => {
+		form.addEventListener("submit", function () {
+			const code = localStorage.getItem("blackphp_device_code");
+			localStorage.clear();
+			localStorage.setItem("blackphp_device_code", code);
+		});
 	});
 });

@@ -324,7 +324,7 @@ trait ORM
 	 * 
 	 * Elimina el elemento. Si la propiedad $soft_delete es verdadera, entonces actualiza el estado.
 	 * 
-	 * En el caso de un borrado suave, para que las llaves únicas (UNIQUE KEY) no tengan conflicto
+	 * En el caso de un borrado lógico, para que las llaves únicas (UNIQUE KEY) no tengan conflicto
 	 * con los campos eliminados, se recomientda permitir valores nulos en el estado de las tablas
 	 * que contengan llaves únicas (Aplica para MySQL).
 	 * Por ejemplo: Se desea eliminar el registro de usuario con user_name = juan; pero user_name es

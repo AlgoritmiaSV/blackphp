@@ -210,7 +210,12 @@ class Controller
 			$this->store_dir = "entities/local/";
 		}
 		$this->view->data["entity_dir"] = $this->store_dir;
-		$logo = glob($this->store_dir . "logo.*")[0];
+		$logoSufix = Session::get("branch/branch_id") ?? "";
+		$logo = glob($this->store_dir . "logo" . $logoSufix . ".*")[0];
+		if(empty($logo))
+		{
+			$logo = glob($this->store_dir . "logo.*")[0];
+		}
 		if(empty($logo))
 		{
 			$logo = "public/images/default_image.png";

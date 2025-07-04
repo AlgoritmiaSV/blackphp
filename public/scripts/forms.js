@@ -1478,7 +1478,7 @@ function formDataToJSON(form_data)
 	return obj;
 }
 
-function JSONToFormData(json)
+/*function JSONToFormData(json)
 {
 	$.each(json, function(index, item)
 	{
@@ -1494,7 +1494,7 @@ function JSONToFormData(json)
 			console.log(index + ":" + item);
 		}
 	});
-}
+}*/
 
 function saveToLocalStorage(formData)
 {

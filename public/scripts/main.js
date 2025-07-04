@@ -5,6 +5,7 @@
 */
 // Variables globales para todos los scripts
 content_height = 200;
+url = {};
 
 $(function() {
 	content_height = $(window).height() - $("#main_header").outerHeight() - $("#main_footer").outerHeight();

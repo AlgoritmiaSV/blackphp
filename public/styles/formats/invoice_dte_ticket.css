@@ -20,6 +20,16 @@
 	font-size: 8pt;
 }
 
+.ticket_qr
+{
+	width: 3.5cm;
+}
+
+.total_cell
+{
+	min-width: 50px;
+}
+
 @media screen {
 	.ticket_area
 	{

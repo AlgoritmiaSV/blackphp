@@ -369,6 +369,10 @@ $( function()
 			{
 				$(".change_status_button").on("click", change_status_click);
 			}
+			if($(".file_downloader").length && typeof(FileDownloader) == "function")
+			{
+				FileDownloader();
+			}
 			//Show data viewer
 			_div.find(".data_viewer").show();
 

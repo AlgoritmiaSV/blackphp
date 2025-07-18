@@ -70,6 +70,14 @@ $(function()
 		action_module = url.module;
 	}
 
+	/** Cuando en la página sólo hay unformulario, y éste tiene una propiedad data-module
+	 * Se establecerá action_module en ese parámetro
+	 */
+	if($("#main_content form").length == 1 && $("#main_content form").data("module") != null)
+	{
+		action_module = $("#main_content form").data("module");
+	}
+
 	$("#main_content").has(".form_content").addClass("form_main_content");
 
 	/* Get form data */

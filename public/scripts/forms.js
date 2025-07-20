@@ -764,7 +764,7 @@ $(function()
 	{
 		deletion_url = $(this).data("url");
 		deletion_next = $(this).data("next");
-		$.jAlert({
+		/*$.jAlert({
 			'title': "Confirmar",
 			'content': "¿Confirma que desea borrar este registro?",
 			'theme': "red",
@@ -772,6 +772,19 @@ $(function()
 			'btns': [
 				{'text':'Confirmar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept', 'onClick': delete_entry},
 				{'text':'Cancelar', 'closeAlert':true, 'theme': 'gray', 'class': 'jalert_cancel'}]
+		});*/
+		Swal.fire({
+			title: "Confirmar",
+			text: "¿Está seguro de que de que desea eliminar este registro?",
+			showCancelButton: true,
+			confirmButtonText: "Sí",
+			cancelButtonText: "No",
+			icon:"warning"
+		}).then((result) => {
+			if (result.isConfirmed)
+			{
+				delete_entry();
+			}
 		});
 	}
 
@@ -788,7 +801,7 @@ $(function()
 		.done(function(deletion_data) {
 			if(deletion_data.deleted)
 			{
-				$.jAlert({
+				/*$.jAlert({
 					'title': deletion_data.title || "Success",
 					'content': deletion_data.message || "Deleted succesfully!",
 					'theme': "blue",
@@ -797,6 +810,14 @@ $(function()
 						{'text': deletion_data.accept || 'OK', 'closeAlert':true, 'theme': 'blue', 'class': 'jalert_accept', 'onClick': function() {
 							window.open(deletion_next, "_top");
 						}}]
+				});*/
+				Swal.fire({
+					title: deletion_data.title || "Success",
+					text: deletion_data.message || "Deleted succesfully!",
+					icon: "success",
+					didClose: function() {
+						window.open(deletion_next, "_top");
+					}
 				});
 			}
 			else if(deletion_data.message)

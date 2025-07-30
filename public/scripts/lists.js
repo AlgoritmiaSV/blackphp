@@ -92,6 +92,13 @@ $( function()
 					});
 					$("#" + table_id + " tbody").append(tr);
 				});
+
+				// Preprocess table data once
+				$(".data_viewer tbody tr").not(".template").each(function () {
+					let searchableText = $(this).text().toLowerCase();
+					$(this).data("searchable", searchableText);
+				});
+
 				$("#" + table_id + " tbody tr").on("click", function() {
 					if($(this).data("href"))
 					{
@@ -401,6 +408,7 @@ $( function()
 
 	if($(".data_viewer").length)
 	{
+		/*
 		$(".data_search").on("keyup", function() {
 			var string_value = $(this).val();
 			$(".data_viewer tbody tr").not(".template").each(function() {
@@ -420,6 +428,18 @@ $( function()
 					$(this).hide();
 				}
 			});
+		});
+		*/
+		let searchTimeout;
+		$(".data_search").on("input", function () {
+			clearTimeout(searchTimeout);
+			let query = $(this).val().trim().toLowerCase();
+
+			searchTimeout = setTimeout(function () {
+			$(".data_viewer tbody tr").not(".template").each(function () {
+				$(this).toggle($(this).data("searchable").includes(query));
+			});
+			}, 150); // Adjust delay to balance responsiveness
 		});
 	}
 

@@ -64,7 +64,38 @@ $( function()
 	 */
 	$(".data_viewer").each(function()
 	{
-		load_table($(this).attr("id"));
+		let tableId = $(this).attr("id");
+		if($(this).data("loadmode") == "lazzy")
+		{
+			currentPage = 1;
+			maxPages = 1;
+			emptyTable = true;
+			LazzyLoadTable(tableId);
+
+			const div = document.querySelector('.content_viewer');
+			scrollEvent = null;
+
+			div.addEventListener('scroll', function ()
+			{
+				const isAtBottom = div.scrollHeight - div.scrollTop <= div.clientHeight + 1;
+
+				scrollEvent = setTimeout(() => {
+					clearTimeout(scrollEvent);
+					console.log('div.scrollHeight: '+div.scrollHeight+'- div.scrollTop: ' + div.scrollTop + ' <= div.clientHeight: ' + div.clientHeight);
+				}, 1000);
+
+				if (isAtBottom && currentPage < maxPages)
+				{
+					console.log('Reached the bottom of the div!');
+					currentPage++;
+					LazzyLoadTable(tableId);
+				}
+			});
+		}
+		else
+		{
+			load_table(tableId);
+		}
 	});
 
 	function load_table(table_id)
@@ -152,6 +183,115 @@ $( function()
 			}
 			_table.show();
 			if(empty_table)
+			{
+				$(".empty_table_message").show();
+			}
+			if(!_table.data("type"))
+			{
+				_table.floatThead({
+					'scrollContainer': true
+				});
+			}
+
+			/** Relleno con celdas vacías */
+			var void_tr = _template.replaceAll(/\{\{[A-Za-z0-9_]+\}\}/g, "");
+			void_tr = $(void_tr);
+			void_tr.find("td").html("&nbsp;");
+			void_tr.addClass("void_tr");
+			while(_table.outerHeight() + 45 < content_height)
+			{
+				$("#" + table_id + " tbody").append(void_tr.clone());
+			}
+
+			/* Fill content outside table after load */
+			if(data.load_after)
+			{
+				$.each(data.load_after, function(index, value) {
+					$("." + index).text(value);
+				});
+			}
+		})
+		.fail(function() {
+			$("div.loading_error").show();
+		})
+		.always(function() {
+			$("div.loading_data").hide();
+		});
+	}
+
+	function LazzyLoadTable(table_id)
+	{
+		var _table = $("#" + table_id);
+		var _template = _table.find(".template").clone().removeClass("template").prop("outerHTML");
+		let current_url = structuredClone(url);
+		current_url.page = currentPage;
+		$.ajax({
+			method: "POST",
+			url: current_url.module + "/" + table_id + "_loader/",
+			data: current_url,
+			dataType: "json"
+		})
+		.done(function(data) {
+			if(data.content != null)
+			{
+				if(data.content.length > 0)
+				{
+					emptyTable = false;
+				}
+				$.each(data.content, function(index, value) {
+					var tr = _template;
+					$.each(value, function(e_index, e_value) {
+						tr = tr.replace(new RegExp("{{" + e_index + "}}", 'g'), e_value);
+					});
+					$("#" + table_id + " tbody").append(tr);
+				});
+
+				// Preprocess table data once
+				$(".data_viewer tbody tr").not(".template").each(function () {
+					let searchableText = $(this).text().toLowerCase();
+					$(this).data("searchable", searchableText);
+				});
+
+				$("#" + table_id + " tbody tr").on("click", function() {
+					if($(this).data("href"))
+					{
+						location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
+					}
+					else if($(this).data("alert"))
+					{
+						$.jAlert({
+							'title': $(this).data("title") || false,
+							'theme': $(this).data("theme") || "blue",
+							'iframe': $(this).data("alert"),
+							'size': {
+								"height": content_height + "px",
+								"width": "100%"
+							},
+							'iframeHeight': (content_height - 41) + "px",
+							'noPadContent':true,
+							'onClose': $(this).data("reload") ? function(alert) { location.reload(); } : function(alert) { return false; }
+						});
+					}
+				});
+				if(data.foot)
+				{
+					$.each(data.foot, function(index, value) {
+						tr = $("#" + table_id + " tfoot").html();
+						tr = tr.replace(new RegExp("{{" + index + "}}", 'g'), value);
+						$("#" + table_id + " tfoot").html(tr);
+					});
+				}
+			}
+			if(data.found_rows != null)
+			{
+				maxPages = Math.ceil(data.found_rows / 200);
+			}
+			else
+			{
+				maxPages = 1;
+			}
+			_table.show();
+			if(emptyTable)
 			{
 				$(".empty_table_message").show();
 			}

@@ -813,16 +813,17 @@ trait ORM
 	 * @return object Una instancia de la misma clase
 	 */
 
-	public static function addCounter($field = "num")
+	public static function addCounter($field = "num", $start = 0)
 	{
 		self::init();
+		$start = intval($start);
 		if(DB_TYPE == "sqlsrv")
 		{
 			self::$_extra_select .= ", ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS $field";
 		}
 		else
 		{
-			$sth = self::$_db->prepare("SET @row_number = 0");
+			$sth = self::$_db->prepare("SET @row_number = $start");
 			$sth->execute();
 			self::$_extra_select .= ", (@row_number:=@row_number + 1) AS $field";
 		}

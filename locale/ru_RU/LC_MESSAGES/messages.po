@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2025-06-16 08:15+UTC-6\n"
+"PO-Revision-Date: 2025-08-10 12:07+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -91,6 +91,9 @@ msgstr "Синий - Верхнее меню"
 
 msgid "Browser"
 msgstr "Браузер"
+
+msgid "By default"
+msgstr "По умолчанию"
 
 msgid "Cancel"
 msgstr "Отмена"
@@ -197,6 +200,9 @@ msgstr "Элемент"
 msgid "Element ID"
 msgstr "ID элемента"
 
+msgid "Ellipsis"
+msgstr "Многоточие"
+
 msgid "English"
 msgstr "Английский"
 
@@ -259,6 +265,9 @@ msgstr "Пятница"
 
 msgid "From"
 msgstr "От"
+
+msgid "Full text"
+msgstr "Полный текст"
 
 msgid "Give access to"
 msgstr "Предоставить доступ к"
@@ -685,4 +694,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 221 messages translated.
+# 224 messages translated.

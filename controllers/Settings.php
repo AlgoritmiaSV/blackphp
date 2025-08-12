@@ -62,130 +62,175 @@ class Settings extends Controller
 	 */
 	public function load_form_data()
 	{
-		$data = Array();
-		if($_POST["method"] == "Entity")
+		$result = [];
+		switch($_POST["method"])
 		{
-			$data["update"] = entitiesModel::find($this->entity_id)->toArray();
+			case "Entity":
+				$result = $this->LoadEntityForm();
+				break;
+			case "NewUser":
+			case "EditUser":
+				$result = $this->LoadUserForm();
+				break;
+			case "Preferences":
+				$result = $this->LoadPreferencesForm();
+				break;
+			case "NewRole":
+			case "EditRole":
+				$result = $this->LoadRoleForm();
+				break;
+			case "EditRoleMenu":
+				$result = $this->LoadRoleMenuForm();
+				break;
 		}
-		if($_POST["method"] == "NewUser" || $_POST["method"] == "EditUser")
+		$this->json($result);
+	}
+
+	private function LoadEntityForm()
+	{
+		$result = [
+			"update" => entitiesModel::find($this->entity_id)->toArray()
+		];
+		return $result;
+	}
+
+	private function LoadPreferencesForm()
+	{
+		$result = [
+			"update" => []
+		];
+		$options = entityOptionsModel::join("app_options", "option_id")->getAll();
+		foreach($options as $option)
 		{
-			# Cargando roles asignables
-			$roles = rolesModel::getAll();
-			$asignables = [];
-			$permissions = Session::get("permissions");
-			$data["asign"] = Array();
-			foreach($roles as $role)
+			$result["update"][$option["option_key"]] = $option["option_value"];
+		}
+
+		$optionValues = appOptionValuesModel::join("app_options", "option_id")->getAll();
+		foreach($optionValues as $value)
+		{
+			if(!isset($result[$value["option_key"]]))
 			{
-				$elements = roleElementsModel::join("app_elements", "element_id")->where("role_id", $role->getRoleId())->getAll();
-				$asignable = true;
-				foreach($elements as $element)
+				$result[$value["option_key"]] = [];
+			}
+			$result[$value["option_key"]][] = [
+				"id" => $value["value_key"],
+				"text" => _($value["value_label"])
+			];
+		}
+		return $result;
+	}
+
+	private function LoadRoleForm()
+	{
+		$result = [
+			"check" => []
+		];
+		$role = rolesModel::find($_POST["id"]);
+		if($role->exists())
+		{
+			$result["update"] = $role->toArray();
+			$read = [];
+			$create = [];
+			$update = [];
+			$delete = [];
+			$elements = roleElementsModel::where("role_id", $role->getRoleId())->getAll();
+			foreach($elements as &$element)
+			{
+				if((intval($element->getPermissions()) & 8) != 0)
 				{
-					$test = intval($element["permissions"]) & intval($permissions[$element["element_key"]]);
-					if($permissions[$element["element_key"]] < $test)
-					{
-						$asignable = false;
-					}
-					$data["asign"][] = $test;
+					$read[] = ["id" => $element->getElementId()];
 				}
-				if($asignable)
+				if((intval($element->getPermissions()) & 4) != 0)
 				{
-					$asignables[] = $role->getRoleId();
+					$create[] = ["id" => $element->getElementId()];
+				}
+				if((intval($element->getPermissions()) & 2) != 0)
+				{
+					$update[] = ["id" => $element->getElementId()];
+				}
+				if((intval($element->getPermissions()) & 1) != 0)
+				{
+					$delete[] = ["id" => $element->getElementId()];
 				}
 			}
-			$data["roles"] = rolesModel::whereIn($asignables)->list();
+			unset($element);
+			$result["check"]["read"] = $read;
+			$result["check"]["create"] = $create;
+			$result["check"]["update"] = $update;
+			$result["check"]["delete"] = $delete;
 		}
+		else
+		{
+			$result["check"]["read"] = appElementsModel::select("element_id AS id")->getAll();
+			$result["check"]["create"] = appElementsModel::select("element_id AS id")
+				->where("is_creatable", 1)->getAll();
+			$result["check"]["update"] = appElementsModel::select("element_id AS id")
+				->where("is_updatable", 1)->getAll();
+			$result["check"]["delete"] = appElementsModel::select("element_id AS id")
+				->where("is_deletable", 1)->getAll();
+		}
+		return $result;
+	}
+
+	private function LoadRoleMenuForm()
+	{
+		$result = [];
+		$role = rolesModel::find($_POST["id"]);
+		if($role->exists())
+		{
+			$result = [
+				"update" => $role->toArray(),
+				"check" => [
+					"modules" => roleModulesModel::select("module_id AS id")
+					->where("role_id", $_POST["id"])->getAll(),
+					"methods" => roleMethodsModel::select("method_id AS id")
+					->where("role_id", $_POST["id"])->getAll()
+				]
+			];
+		}
+		return $result;
+	}
+
+	private function LoadUserForm()
+	{
+		# Cargando roles asignables
+		$roles = rolesModel::getAll();
+		$asignables = [];
+		$permissions = Session::get("permissions");
+		$result = [
+			"asign" => []
+		];
+		foreach($roles as $role)
+		{
+			$elements = roleElementsModel::join("app_elements", "element_id")
+				->where("role_id", $role->getRoleId())->getAll();
+			$asignable = true;
+			foreach($elements as $element)
+			{
+				$test = intval($element["permissions"]) & intval($permissions[$element["element_key"]]);
+				if($permissions[$element["element_key"]] < $test)
+				{
+					$asignable = false;
+				}
+				$result["asign"][] = $test;
+			}
+			if($asignable)
+			{
+				$asignables[] = $role->getRoleId();
+			}
+		}
+		$result["roles"] = rolesModel::whereIn($asignables)->list();
 		if($_POST["method"] == "EditUser")
 		{
-			$data["update"] = usersModel::find($_POST["id"])->toArray();
-			$data["check"] = Array();
-			$data["check"]["modules"] = userModulesModel::select("module_id AS id")
-				->where("user_id", $_POST["id"])->getAll();
-			$data["check"]["methods"] = userMethodsModel::select("method_id AS id")
-				->where("user_id", $_POST["id"])->getAll();
+			$result["update"] = usersModel::find($_POST["id"])->toArray();
+			$result["check"] = [
+				"modules" => userModulesModel::select("module_id AS id")
+					->where("user_id", $_POST["id"])->getAll(),
+				"methods" => userMethodsModel::select("method_id AS id")
+					->where("user_id", $_POST["id"])->getAll()
+			];
 		}
-		if($_POST["method"] == "Preferences")
-		{
-			$options = entityOptionsModel::join("app_options", "option_id")->getAll();
-			$data["update"] = Array();
-			foreach($options as $option)
-			{
-				$data["update"][$option["option_key"]] = $option["option_value"];
-			}
-
-			$optionValues = appOptionValuesModel::join("app_options", "option_id")->getAll();
-			foreach($optionValues as $value)
-			{
-				if(!isset($data[$value["option_key"]]))
-				{
-					$data[$value["option_key"]] = [];
-				}
-				$data[$value["option_key"]][] = [
-					"id" => $value["value_key"],
-					"text" => $value["value_label"]
-				];
-			}
-		}
-		if($_POST["method"] == "NewRole" || $_POST["method"] == "EditRole")
-		{
-			$role = rolesModel::find($_POST["id"]);
-			if($role->exists())
-			{
-				$data["update"] = $role->toArray();
-				$read = [];
-				$create = [];
-				$update = [];
-				$delete = [];
-				$elements = roleElementsModel::where("role_id", $role->getRoleId())->getAll();
-				foreach($elements as &$element)
-				{
-					if((intval($element->getPermissions()) & 8) != 0)
-					{
-						$read[] = ["id" => $element->getElementId()];
-					}
-					if((intval($element->getPermissions()) & 4) != 0)
-					{
-						$create[] = ["id" => $element->getElementId()];
-					}
-					if((intval($element->getPermissions()) & 2) != 0)
-					{
-						$update[] = ["id" => $element->getElementId()];
-					}
-					if((intval($element->getPermissions()) & 1) != 0)
-					{
-						$delete[] = ["id" => $element->getElementId()];
-					}
-					$data["check"]["read"] = $read;
-					$data["check"]["create"] = $create;
-					$data["check"]["update"] = $update;
-					$data["check"]["delete"] = $delete;
-				}
-				unset($element);
-			}
-			else
-			{
-				$data["check"]["read"] = appElementsModel::select("element_id AS id")->getAll();
-				$data["check"]["create"] = appElementsModel::select("element_id AS id")
-					->where("is_creatable", 1)->getAll();
-				$data["check"]["update"] = appElementsModel::select("element_id AS id")
-					->where("is_updatable", 1)->getAll();
-				$data["check"]["delete"] = appElementsModel::select("element_id AS id")
-					->where("is_deletable", 1)->getAll();
-			}
-		}
-		if($_POST["method"] == "EditRoleMenu")
-		{
-			$role = rolesModel::find($_POST["id"]);
-			if($role->exists())
-			{
-				$data["update"] = $role->toArray();
-				$data["check"] = Array();
-				$data["check"]["modules"] = roleModulesModel::select("module_id AS id")
-					->where("role_id", $_POST["id"])->getAll();
-				$data["check"]["methods"] = roleMethodsModel::select("method_id AS id")
-					->where("role_id", $_POST["id"])->getAll();
-			}
-		}
-		$this->json($data);
+		return $result;
 	}
 }
 ?>

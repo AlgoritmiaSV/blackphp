@@ -249,7 +249,11 @@ $(function() {
 	});
 
 	/* Tabs */
-	$( "#tabs" ).accordion({
+
+	$("#tabs").tabs();
+
+	/* Accordion */
+	$( "#accordion" ).accordion({
 		collapsible: true,
 		heightStyle: "content",
 		activate: function() {

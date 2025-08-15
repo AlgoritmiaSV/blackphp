@@ -46,6 +46,11 @@ function calc_bill_total()
 		}
 		$("#total").val(format_number(bill_total * 1.13 + perception));
 	}
+	else if(parseInt($("#bill_type").val()) == 101)
+	{
+		$("#party").val(format_number(bill_total * 0.05));
+		$("#total").val(format_number(bill_total * 1.05));
+	}
 	else
 	{
 		$("#total").val(format_number(bill_total));

@@ -1396,8 +1396,11 @@ $(function()
 				dropdownAutoWidth: true,
 				placeholder: child.data("placeholder") || "",
 				width: child.data("width") || "fit-content",
-				language: language,
-				minimumResultsForSearch: Infinity
+				language: language
+			}
+			if(child.data("search") == "none")
+			{
+				select_params.minimumResultsForSearch = Infinity;
 			}
 			child.select2(select_params);
 		});

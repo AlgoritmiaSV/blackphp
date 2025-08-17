@@ -130,7 +130,11 @@ $(function() {
 				}
 			});
 		}
-		var object_data = $(this).select2("data")[0];
+		let object_data = null;
+		if($(this).hasClass("select2-hidden-accessible"))
+		{
+			object_data = $(this).select2("data")[0];
+		}
 		if(object_data)
 		{
 			if(object_data.next)

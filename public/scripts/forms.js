@@ -415,10 +415,14 @@ $(function()
 				{
 					print_footer = $(".print_footer").html();
 				}
-				$(json.print_container).printThis({
+				let printContainer = $(json.print_container);
+				printContainer.printThis({
 					'loadCSS': $(this).data("css") || "",
 					'header': print_header,
-					'footer': print_footer
+					'footer': print_footer,
+					'afterPrint': printContainer.data("afterprint") == "reload" ? function() {
+						location.reload();
+					} : null
 				});
 				reset_last_form(json);
 			}

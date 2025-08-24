@@ -48,8 +48,20 @@ function calc_bill_total()
 	}
 	else if(parseInt($("#bill_type").val()) == 101)
 	{
-		$("#party").val(format_number(bill_total * 0.05));
-		$("#total").val(format_number(bill_total * 1.05));
+		let taxed = 0;
+		$(".items_container tr").each(function() {
+			if($(this).find(".party").val() == 1)
+			{
+				let row_total_cell = $(this).find(".row_total");
+				let row_total = parseFloat(row_total_cell.find("span").text());
+				if(!isNaN(row_total))
+				{
+					taxed += row_total;
+				}
+			}
+		});
+		$("#party").val(format_number(taxed * 0.05));
+		$("#total").val(format_number(bill_total + taxed * 0.05));
 	}
 	else
 	{

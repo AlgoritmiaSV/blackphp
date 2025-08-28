@@ -390,10 +390,14 @@ trait Roles
 	public function delete_role()
 	{
 		$this->check_permissions("delete", "roles");
-		$data = Array("deleted" => false);
 		if(empty($_POST["id"]))
 		{
-			$this->json($data);
+			$this->json([
+				"deleted" => false,
+				"title" => _("Error"),
+				"message" => _("Bad request"),
+				"theme" => "red"
+			]);
 			return;
 		}
 		$role = rolesModel::find($_POST["id"]);
@@ -409,9 +413,13 @@ trait Roles
 			return;
 		}
 		$affected = $role->delete();
-		$data["deleted"] = $affected > 0;
 		$this->setUserLog("delete", "roles", $role->getRoleId());
-		$this->json($data);
+		$this->json([
+			"deleted" => $affected > 0,
+			"title" => _("Success"),
+			"message" => _("Deleted successfully"),
+			"theme" => "green"
+		]);
 	}
 }
 ?>

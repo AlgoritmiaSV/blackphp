@@ -292,17 +292,25 @@ trait Users
 	public function delete_user()
 	{
 		$this->check_permissions("delete", "users");
-		$data = Array("deleted" => false);
 		if(empty($_POST["id"]))
 		{
-			$this->json($data);
+			$this->json([
+			"deleted" => false,
+			"title" => _("Error"),
+			"message" => _("Bad request"),
+			"theme" => "red"
+		]);
 			return;
 		}
 		$user = usersModel::find($_POST["id"]);
 		$affected = $user->delete();
-		$data["deleted"] = $affected > 0;
 		$this->setUserLog("delete", "users", $user->getUserId());
-		$this->json($data);
+		$this->json([
+			"deleted" => $affected > 0,
+			"title" => _("Success"),
+			"message" => _("Deleted successfully"),
+			"theme" => "green"
+		]);
 	}
 
 	public function CloseSessions($userId)

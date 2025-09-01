@@ -14,7 +14,8 @@ function build_selectors()
 		{
 			selector.data("width", "100%");
 		}
-		if(json[selector.data("source")] != null)
+		let data = json[selector.data("source")];
+		if( data != null)
 		{
 			if(selector.data("search") != "none" || selector.data("default") == "none")
 			{
@@ -23,7 +24,7 @@ function build_selectors()
 			}
 			var language = $("html").first().attr("lang");
 			var select_params = {
-				data: json[selector.data("source")],
+				data: data,
 				dropdownAutoWidth: true,
 				placeholder: selector.data("placeholder") || "",
 				width: selector.data("width") || "fit-content",
@@ -36,6 +37,19 @@ function build_selectors()
 			if(selector.data("search") == "none")
 			{
 				select_params.minimumResultsForSearch = Infinity;
+			}
+			if(data[0] && data[0].description)
+			{
+				select_params.templateResult = function(itemData) {
+					let htmlItem = $(document.createElement("div"));
+					htmlItem.html(itemData.text);
+					let description = $(document.createElement("div"));
+					description.addClass("item-description");
+					description.html(itemData.description);
+					description.appendTo(htmlItem);
+					return htmlItem;
+				}
+				select_params.escapeMarkup = function(m) {return m;}
 			}
 			selector.select2(select_params);
 			if(selector.data("value") != null)

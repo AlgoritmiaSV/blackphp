@@ -415,6 +415,13 @@ tr:hover .action_icon
 	margin-left: 2px;
 }
 
+/* Descripción de items en selectores */
+.item-description
+{
+	color: #666666;
+	font-size: small;
+}
+
 @media screen and (max-width: 799px)
 {
 	.form_entry label:not(.switch)

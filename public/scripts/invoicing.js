@@ -1,4 +1,5 @@
 bill_type = 1;
+calculate_retention = false;
 
 function calc_row_total(_input)
 {
@@ -37,6 +38,13 @@ function calc_bill_total()
 	});
 	$("#subtotal").val(format_number(bill_total));
 	$("#iva").val(format_number(bill_total * 0.13));
+	let netSale = bill_type == 2 ? bill_total : bill_total / 1.13;
+	let retention = 0;
+	if(calculate_retention)
+	{
+		retention = netSale / 100;
+		$("#retention").val(format_number(retention));
+	}
 	if(parseInt($("#bill_type").val()) == 2)
 	{
 		var perception = parseFloat($("#perception").val());
@@ -214,6 +222,16 @@ $(function() {
 			})
 			$("#bill_type").val(no_ccf);
 			$("#bill_type").trigger("change");
+		}
+		if(object_data.retention_agent && object_data.retention_agent == 1)
+		{
+			$("#retention_field").show();
+			calculate_retention = true;
+		}
+		else
+		{
+			$("#retention_field").hide();
+			calculate_retention = false;
 		}
 	});
 });

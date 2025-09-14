@@ -40,7 +40,8 @@ function calc_bill_total()
 	$("#iva").val(format_number(bill_total * 0.13));
 	let netSale = bill_type == 2 ? bill_total : bill_total / 1.13;
 	let retention = 0;
-	if(calculate_retention)
+	let operation_total = 0;
+	if(calculate_retention && bill_total > 100)
 	{
 		retention = netSale / 100;
 		$("#retention").val(format_number(retention));
@@ -52,7 +53,7 @@ function calc_bill_total()
 		{
 			perception = 0;
 		}
-		$("#total").val(format_number(bill_total * 1.13 + perception));
+		operation_total = bill_total * 1.13 + perception;
 	}
 	else if(parseInt($("#bill_type").val()) == 101)
 	{
@@ -69,12 +70,14 @@ function calc_bill_total()
 			}
 		});
 		$("#party").val(format_number(taxed * 0.05));
-		$("#total").val(format_number(bill_total + taxed * 0.05));
+		operation_total = bill_total + taxed * 0.05;
 	}
 	else
 	{
-		$("#total").val(format_number(bill_total));
+		operation_total = bill_total;
 	}
+	$("#total").val(format_number(operation_total));
+	$("#total_to_pay").val(format_number(operation_total - retention));
 	$("#paid_amount_input").trigger("change");
 }
 
@@ -189,7 +192,7 @@ $(function() {
 	/* Calculate change */
 	$("#paid_amount_input").on("change", function() {
 		var payment = parseFloat($(this).val());
-		var total = $("#total").val();
+		var total = $("#total_to_pay").val();
 		total = parseFloat(total.replace(",",""));
 		var change = payment - total;
 		if(!isNaN(change))

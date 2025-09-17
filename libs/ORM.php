@@ -1113,6 +1113,16 @@ trait ORM
 		return self::where($field . " NOT IN ($objects)");
 	}
 
+	/**
+	 * Where Match Against
+	 */
+	public static function whereMatch($fields, $query)
+	{
+		self::$_extra_select .= ", MATCH($fields) AGAINST('$query') AS relevance";
+
+		return self::where("MATCH($fields) AGAINST('$query' IN BOOLEAN MODE)")->orderBy("relevance", "DESC");
+	}
+
 	################ Validación de datos
 	/**
 	 * Validar tamaño de cadenas

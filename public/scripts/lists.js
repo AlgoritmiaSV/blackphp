@@ -50,6 +50,8 @@ jQuery(function($) { $.extend({
 	}
 }); });
 
+let query = '';
+
 $( function()
 {
 	if(window.jspdf != null)
@@ -88,7 +90,7 @@ $( function()
 				{
 					console.log('Reached the bottom of the div!');
 					currentPage++;
-					LazzyLoadTable(tableId);
+					LazzyLoadTable(tableId, query);
 				}
 			});
 		}
@@ -219,12 +221,13 @@ $( function()
 		});
 	}
 
-	function LazzyLoadTable(table_id)
+	function LazzyLoadTable(table_id, query = '')
 	{
 		var _table = $("#" + table_id);
 		var _template = _table.find(".template").clone().removeClass("template").prop("outerHTML");
 		let current_url = structuredClone(url);
 		current_url.page = currentPage;
+		current_url.query = query;
 		$.ajax({
 			method: "POST",
 			url: current_url.module + "/" + table_id + "_loader/",
@@ -294,6 +297,10 @@ $( function()
 			if(emptyTable)
 			{
 				$(".empty_table_message").show();
+			}
+			else
+			{
+				$(".empty_table_message").hide();
 			}
 			if(!_table.data("type"))
 			{
@@ -571,15 +578,36 @@ $( function()
 		});
 		*/
 		let searchTimeout;
-		$(".data_search").on("input", function () {
+		$(".data_search").on("input", function ()
+		{
 			clearTimeout(searchTimeout);
-			let query = $(this).val().trim().toLowerCase();
+			query = $(this).val().trim().toLowerCase();
 
-			searchTimeout = setTimeout(function () {
-			$(".data_viewer tbody tr").not(".template").each(function () {
-				$(this).toggle($(this).data("searchable").includes(query));
-			});
-			}, 150); // Adjust delay to balance responsiveness
+			if ($(this).data("searchmode") === 'lazzy')
+			{
+				searchTimeout = setTimeout(function ()
+				{
+					$(".data_viewer tbody tr").not(".template").each(function () {
+						$(this).remove();
+					});
+					const firstTable = document.querySelector('table.data_viewer:not(.floatThead-table)');
+					const viewerId = firstTable ? firstTable.id : null;
+
+					currentPage = 1;
+					maxPages = 1;
+					emptyTable = true;
+					LazzyLoadTable(viewerId, query);
+				}, 150); // Adjust delay to balance responsiveness
+			}
+			else
+			{
+				searchTimeout = setTimeout(function ()
+				{
+					$(".data_viewer tbody tr").not(".template").each(function () {
+						$(this).toggle($(this).data("searchable").includes(query));
+					});
+				}, 150); // Adjust delay to balance responsiveness
+			}
 		});
 	}
 

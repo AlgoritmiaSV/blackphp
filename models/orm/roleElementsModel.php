@@ -49,10 +49,10 @@ class roleElementsModel
 	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
 	private static $_timestamps = true;
 
-	/** @var bool $_soft_delete La tabla soporta borrado suave */
+	/** @var bool $_soft_delete La tabla soporta borrado lógico */
 	private static $_soft_delete = true;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado suave. */
+	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
 	private static $_deleted_status = 0;
 
 	/**

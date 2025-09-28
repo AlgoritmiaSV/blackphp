@@ -172,6 +172,7 @@ class User extends Controller
 			$session->set([
 				"user_id" => $user->getUserId(),
 				"ip_address" => $ipv4,
+				"device_code" => $_POST["blackphp_device_code"],
 				"browser_id" => $browser->getBrowserId(),
 				"date_time" => $now
 			])->save();

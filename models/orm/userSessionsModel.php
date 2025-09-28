@@ -18,6 +18,9 @@ class userSessionsModel
 	/** @var int $branch_id Sucursal en la que inició sesión */
 	private $branch_id;
 
+	/** @var string $device_code Código de dispositivo */
+	private $device_code;
+
 	/** @var string $ip_address Dirección IP desde donde se conecta */
 	private $ip_address;
 
@@ -88,6 +91,17 @@ class userSessionsModel
 	public function setBranchId($value)
 	{
 		$this->branch_id = $value === null ? null : (int)$value;
+	}
+
+	public function getDeviceCode()
+	{
+		return $this->device_code;
+	}
+
+	public function setDeviceCode($value)
+	{
+		self::validateStringSize($value, 36);
+		$this->device_code = $value === null ? null : (string)$value;
 	}
 
 	public function getIpAddress()

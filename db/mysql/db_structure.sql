@@ -643,6 +643,7 @@ CREATE TABLE `user_sessions` (
   `session_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
   `branch_id` int(11) DEFAULT NULL COMMENT 'Sucursal en la que inició sesión',
+  `device_code` char(36) DEFAULT NULL COMMENT 'Código de dispositivo',
   `ip_address` varchar(15) NOT NULL COMMENT 'Dirección IP desde donde se conecta',
   `browser_id` int(11) DEFAULT NULL COMMENT 'Navegador que usa',
   `date_time` datetime NOT NULL COMMENT 'Fecha y hora',

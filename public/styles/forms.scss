@@ -422,6 +422,15 @@ tr:hover .action_icon
 	font-size: small;
 }
 
+/* Input para buscar */
+.search_input
+{
+	padding: 7px;
+	border-radius: 3px;
+	margin: 0px 5px 0px 0px;
+	width: 200px;
+}
+
 @media screen and (max-width: 799px)
 {
 	.form_entry label:not(.switch)

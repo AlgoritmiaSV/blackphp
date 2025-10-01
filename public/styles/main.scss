@@ -493,8 +493,18 @@
 	text-decoration: none;
 	background-color: $small_button_bg;
 	border-radius: 3px;
-	padding: 3px;
+	padding: 4px;
 	vertical-align: bottom;
+}
+
+.small_button:hover
+{
+	background-color: $checkbox_h_bg;
+}
+
+.small_button img
+{
+	float: left;
 }
 
 .small_button span

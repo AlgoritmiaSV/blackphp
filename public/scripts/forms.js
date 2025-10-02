@@ -1503,6 +1503,14 @@ $(function()
 		});	
 	}
 	/* Fin de procedimiento genérico para cambio de estados */
+
+	/* Botones para agregar parámetros en URL */
+	$(".route_button").on("click", function() {
+		$(this).parent().find("input, select").each(function() {
+			url.options[$(this).data("identifier")] = $(this).val();
+		});
+		goto_url();
+	});
 });
 
 function formDataToJSON(form_data)

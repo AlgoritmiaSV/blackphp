@@ -182,9 +182,9 @@ class Settings extends Controller
 				"update" => $role->toArray(),
 				"check" => [
 					"modules" => roleModulesModel::select("module_id AS id")
-					->where("role_id", $_POST["id"])->getAll(),
+						->where("role_id", $_POST["id"])->getAll(),
 					"methods" => roleMethodsModel::select("method_id AS id")
-					->where("role_id", $_POST["id"])->getAll()
+						->where("role_id", $_POST["id"])->getAll()
 				]
 			];
 		}

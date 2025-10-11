@@ -714,11 +714,11 @@ $( function()
 	{
 		if(url.method == null)
 		{
-			url.method = "listar";
+			url.method = "Index";
 		}
 		var href = url.module + "/" + url.method + "/";
 		$.each(url.options, function(key, value) {
-			if(value != null && value != 0)
+			if(value != null && value != 0 && value != "0")
 			{
 				href += key + "/" + value + "/";
 			}

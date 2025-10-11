@@ -931,11 +931,11 @@ $(function()
 	{
 		if(url.method == null)
 		{
-			url.method = "listar";
+			url.method = "Index";
 		}
 		href = url.module + "/" + url.method + "/";
 		$.each(url.options, function(key, value) {
-			if(value != null)
+			if(value != null && value != 0 && value != '0')
 			{
 				href += key + "/" + value + "/";
 			}
@@ -1510,6 +1510,25 @@ $(function()
 			url.options[$(this).data("identifier")] = $(this).val();
 		});
 		goto_url();
+	});
+
+	/** Comportamiento para formularios externos */
+	$('.external_input').keypress(function(e)
+	{
+		if (e.which == 13)
+		{
+			e.preventDefault();
+			$($(this).data("input")).val($(this).val());
+			$($(this).data("form")).submit();
+		}
+	});
+	$('.external_input').on("change", function(e)
+	{
+		$($(this).data("input")).val($(this).val());
+	});
+	$('.external_submit').on("click", function(e)
+	{
+		$($(this).data("form")).submit();
 	});
 });
 

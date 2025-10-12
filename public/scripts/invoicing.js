@@ -70,7 +70,12 @@ function calc_bill_total()
 			}
 		});
 		$("#party").val(format_number(taxed * 0.05));
-		operation_total = bill_total + taxed * 0.05;
+		let penalty = $("#penalty").val();
+		if(isNaN(penalty) || penalty == "")
+		{
+			penalty = 0;
+		}
+		operation_total = bill_total + taxed * 0.05 + Number(penalty);
 	}
 	else
 	{

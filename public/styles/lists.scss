@@ -181,3 +181,20 @@
 		max-width: 200px;
 	}
 }
+
+@media print {
+	table tfoot
+	{
+		display: table-row-group;
+	}
+
+	@page
+	{
+		@bottom-center
+		{
+			content: "Página " counter(page) " de " counter(pages);
+			font-size: 10pt;
+			color: #666;
+		}
+	}
+}

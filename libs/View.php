@@ -372,6 +372,7 @@ class View
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
 			'node_modules/select2/dist/js/select2.min.js',
+			'scripts/menu.js',
 			'scripts/bpscript.min.js'
 		]);
 		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';

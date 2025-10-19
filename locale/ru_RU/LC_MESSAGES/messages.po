@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2025-08-26 17:51+UTC-6\n"
+"PO-Revision-Date: 2025-10-18 12:39+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -506,6 +506,9 @@ msgstr "Сохранение"
 msgid "Search"
 msgstr "Поиск"
 
+msgid "Search in menu"
+msgstr "Поиск в меню"
+
 msgid "second"
 msgstr "секунда"
 
@@ -697,4 +700,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 225 messages translated.
+# 226 messages translated.

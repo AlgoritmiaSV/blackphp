@@ -56,6 +56,13 @@
 	font-size: 9pt;
 }
 
+.menu_search
+{
+	padding: 10px;
+	border-radius: 5px;
+	width: -webkit-fill-available;
+}
+
 .menu_title
 {
 	background-color: lavender;

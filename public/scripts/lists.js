@@ -527,6 +527,13 @@ $( function()
 			{
 				FileDownloader();
 			}
+
+			// Buscador en menú
+			if(typeof(menuSearchEvent) == "function")
+			{
+				menuSearchEvent();
+			}
+
 			//Show data viewer
 			_div.find(".data_viewer").show();
 

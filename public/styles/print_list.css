@@ -18,3 +18,20 @@
 	margin: 1.5cm 1cm;
 	size: landscape;
 }
+
+@media print {
+	table tfoot
+	{
+		display: table-row-group;
+	}
+
+	@page
+	{
+		@bottom-center
+		{
+			content: "Página " counter(page) " de " counter(pages);
+			font-size: 10pt;
+			color: #666;
+		}
+	}
+}

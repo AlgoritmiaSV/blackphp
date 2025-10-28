@@ -69,13 +69,14 @@ function calc_bill_total()
 				}
 			}
 		});
-		$("#party").val(format_number(taxed * 0.05));
+		const party = Math.round(100 * taxed * 0.05) / 100;
+		$("#party").val(party.toFixed(2));
 		let penalty = $("#penalty").val();
 		if(isNaN(penalty) || penalty == "")
 		{
 			penalty = 0;
 		}
-		operation_total = bill_total + taxed * 0.05 + Number(penalty);
+		operation_total = Math.round(100 * (bill_total + party + Number(penalty))) / 100;
 	}
 	else
 	{

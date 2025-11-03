@@ -620,16 +620,6 @@ $(function()
 		}
 	}
 
-	format_number = function(str)
-	{
-		var n = new Number(str);
-		var myObj = {
-			style: "currency",
-			currency: "USD"
-		}
-		return n.toLocaleString("en-US", myObj).slice(1).replace(",", "");
-	}
-
 	/* Autocomplete */
 	function build_autocomplete(element = $("body"))
 	{

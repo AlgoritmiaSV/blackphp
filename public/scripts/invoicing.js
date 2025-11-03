@@ -1,6 +1,16 @@
 bill_type = 1;
 calculate_retention = false;
 
+function format_number(str)
+{
+	const n = new Number(str);
+	const myObj = {
+		style: "currency",
+		currency: "USD"
+	}
+	return n.toLocaleString("en-US", myObj).slice(1).replace(",", "");
+}
+
 function calc_row_total(_input)
 {
 	var row_quantity = _input.closest("tr").find(".row_quantity").val();
@@ -69,8 +79,12 @@ function calc_bill_total()
 				}
 			}
 		});
-		const party = Math.round(100 * taxed * 0.05) / 100;
-		$("#party").val(party.toFixed(2));
+		let party = 0;
+		if(includeInReceipt["party"])
+		{
+			party = Math.round(100 * taxed * 0.05) / 100;
+			$("#party").val(party.toFixed(2));
+		}
 		let penalty = $("#penalty").val();
 		if(isNaN(penalty) || penalty == "")
 		{

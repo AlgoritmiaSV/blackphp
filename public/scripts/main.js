@@ -197,6 +197,8 @@ $(function() {
 			dateFormat: $(this).data("format") || "dd/mm/yy",
 			monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ],
 			dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ],
+			changeYear: true,
+			yearRange: "-15:+10",
 		};
 		if($(this).data("min"))
 		{

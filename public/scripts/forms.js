@@ -1256,7 +1256,7 @@ $(function()
 		$(this).imageReader();
 	});
 
-	/* Search by local_code and barcode */
+	/* Buscar por código */
 	function search_by_code()
 	{
 		var local_code = $(this).val().toLowerCase().trim();
@@ -1269,7 +1269,10 @@ $(function()
 		var complete_value = $(this).closest("tr").find(".complete_value");
 		var items = json[list_input.data("source")];
 		$.each(items, function(index, value) {
-			if((value.local_code.toLowerCase() == local_code || value.barcode.toLowerCase() == local_code) && parseInt(value.pres_id) == 0)
+			if((value.local_code?.toLowerCase() == local_code ||
+				value.barcode?.toLowerCase() == local_code ||
+				value.tax_code?.toLowerCase() == local_code)
+				&& parseInt(value.pres_id || "0") == 0)
 			{
 				list_input.val(value.element_name);
 				list_input.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item:value});

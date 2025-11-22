@@ -1224,7 +1224,20 @@ $(function()
 	{
 		if($(this).val().length > 0)
 		{
-			$(this).siblings(".complete_value").text($(this).val());
+			// Separación de código del resto del texto
+
+			let complete_text = $(this).val().trim();
+
+			// Regex: capture leading digits and the rest of the text
+			let match = complete_text.match(/^\d+\s+(.*)$/);
+
+			if (match)
+			{
+				complete_text = match[1];
+			}
+
+			// Fin de separación de código
+			$(this).siblings(".complete_value").html(complete_text);
 			$(this).siblings(".complete_value").css("display", "block");
 			$(this).hide();
 		}
@@ -1274,9 +1287,29 @@ $(function()
 				value.tax_code?.toLowerCase() == local_code)
 				&& parseInt(value.pres_id || "0") == 0)
 			{
-				list_input.val(value.element_name);
+				list_input.val(value.text);
 				list_input.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item:value});
-				complete_value.html(value.element_name);
+
+				// Separación de código del resto del texto
+
+				let complete_text = value.text.trim();
+
+				// Regex: capture leading digits and the rest of the text
+				let match = complete_text.match(/^\d+\s+(.*)$/);
+
+				if (match)
+				{
+					complete_text = match[1];
+				}
+
+				complete_value.html(complete_text);
+				// Fin de separación de código
+
+				if(list_input.hasClass("partial_value"))
+				{
+					list_input.hide();
+					complete_value.show();
+				}
 			}
 		});
 	}

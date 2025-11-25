@@ -32,6 +32,7 @@
 	body
 	{
 		background-color:#ffffff;
+		max-width: 11in;
 	}
 
 	h3
@@ -64,7 +65,8 @@
 	#main_content
 	{
 		padding: 0px;
-		overflow:auto;
+		overflow: auto;
+		width: 100%;
 	}
 
 	.form_content

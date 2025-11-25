@@ -740,7 +740,15 @@ $( function()
 	});
 
 	/* Print button */
-	$(".print_button").on("click", function() {
+	$(".print_button").on("click", function()
+	{
+		// Imprimit todo si no viene definido en data-print
+		if($(this).data("print") == null)
+		{
+			window.print();
+			return false;
+		}
+
 		/* Destroy floatThead to avoid conficts with printThis */
 		if($(".data_viewer").length > 0)
 		{

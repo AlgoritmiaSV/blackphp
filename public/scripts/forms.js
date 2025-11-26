@@ -138,6 +138,7 @@ $(function()
 							_tr.find("select." + v_index).data("value", v_value);
 							_tr.find("span." + v_index).text(v_value);
 							_tr.find("div." + v_index).text(v_value);
+							_tr.find('input:checkbox.' + v_index).attr("checked", true);
 						});
 
 						// Solución teporal para editar cotizaciones y ventas

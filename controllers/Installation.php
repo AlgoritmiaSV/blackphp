@@ -1,4 +1,10 @@
 <?php
+
+foreach(glob("controllers/installation/*") as $file)
+{
+	include $file;
+}
+
 /**
  * Instalación
  * 
@@ -12,6 +18,8 @@
  */
 class Installation extends Controller
 {
+	use Users;
+	
 	/**
 	 * Constructor de la clase de instalación
 	 * 

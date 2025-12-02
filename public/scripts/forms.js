@@ -141,7 +141,7 @@ $(function()
 							_tr.find('input:checkbox.' + v_index).attr("checked", true);
 						});
 
-						// Solución teporal para editar cotizaciones y ventas
+						// Solución temporal para editar cotizaciones y ventas
 						if(value.data_sale_price && value.data_nvat_price)
 						{
 							_tr.find(".sale_price").attr("data-sale_price", value.data_sale_price);
@@ -160,6 +160,12 @@ $(function()
 						_tr.find(".partial_value").on("change", partial_change);
 						/* Generics */
 						_tr.find(".row_generics").text("");
+
+						/** Cálculo de períodos */
+						if(typeof(calculatePeriod) == 'function')
+						{
+							calculatePeriod();
+						}
 					});
 					if(row_count > 1)
 					{

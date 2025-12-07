@@ -140,7 +140,11 @@ trait Users
 		}
 		$user = userDataModel::findBy("user_id", $user_id)->toArray();
 		$this->view->data = array_merge($this->view->data, $user);
-		$sessions = userSessionsModel::join("browsers", "browser_id")->where("user_sessions.user_id", $user_id)->orderBy("date_time", "DESC")->addCounter("item")->get(10);
+		$sessions = userSessionsModel::join("browsers", "browser_id")
+			->where("user_sessions.user_id", $user_id)
+			->orderBy("date_time", "DESC")
+			->addCounter("item")
+			->get(10);
 		foreach($sessions as $key => $session)
 		{
 			$time = strtotime($session["date_time"]);
@@ -215,10 +219,10 @@ trait Users
 
 		$user_id = 0;
 		$user = usersModel::find($_POST["user_id"])
-			->set(Array(
+			->set([
 				"user_name" => $_POST["user_name"],
 				"nickname" => $_POST["nickname"]
-			));
+			]);
 		if(!empty($_POST["password"]))
 		{
 			$user->setPassword("HASH");

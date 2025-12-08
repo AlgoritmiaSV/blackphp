@@ -90,7 +90,12 @@ function calc_bill_total()
 		{
 			penalty = 0;
 		}
-		operation_total = Math.round(100 * (bill_total + party + Number(penalty))) / 100;
+		let interest = $("#interest").val();
+		if(isNaN(interest) || interest == "")
+		{
+			interest = 0;
+		}
+		operation_total = Math.round(100 * (bill_total + party + Number(penalty) + Number(interest))) / 100;
 	}
 	else
 	{

@@ -25,9 +25,9 @@ class Resources extends Controller
 
 	public function keep_alive()
 	{
-		$this->json(Array(
-			"alive" => true
-		));
+		$this->json([
+			"alive" => Session::get("user_id") != null
+		]);
 	}
 
 	public function age_calculation($date)

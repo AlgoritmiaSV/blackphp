@@ -33,7 +33,14 @@ function calc_row_total(_input)
 
 function calc_bill_total()
 {
-	var bill_total = 0;
+	let bill_total = 0;
+	let taxed = 0;
+	let exempt = 0;
+	bill_type = parseInt($("#bill_type").val());
+	if(isNaN(bill_type))
+	{
+		bill_type = 0;
+	}
 	if($(".row_total").length == 0)
 	{
 		$("#paid_amount_input").trigger("change");
@@ -46,28 +53,48 @@ function calc_bill_total()
 			bill_total += row_total;
 		}
 	});
+
+	// Cálculo separado de valores gravados y exentos
+	if(bill_type >= 1 && bill_type <= 3)
+	{
+		$(".items_container tr").each(function() {
+			let row_total_cell = $(this).find(".row_total");
+			let row_total = parseFloat(row_total_cell.find("span").text());
+			if(!isNaN(row_total))
+			{
+				if($(this).find(".vat_exempt").val() == 0)
+				{
+					taxed += row_total;
+				}
+				else
+				{
+					exempt += row_total;
+				}
+			}
+		});
+	}
+
 	$("#subtotal").val(format_number(bill_total));
-	$("#iva").val(format_number(bill_total * 0.13));
-	let netSale = bill_type == 2 ? bill_total : bill_total / 1.13;
+	let vat = taxed * 0.13;
+	$("#iva").val(format_number(vat));
 	let retention = 0;
 	let operation_total = 0;
 	if(calculate_retention && bill_total > 100)
 	{
-		retention = netSale / 100;
+		retention = taxed / 100;
 		$("#retention").val(format_number(retention));
 	}
-	if(parseInt($("#bill_type").val()) == 2)
+	if(bill_type == 2)
 	{
 		var perception = parseFloat($("#perception").val());
 		if(perception == "" || isNaN(perception))
 		{
 			perception = 0;
 		}
-		operation_total = bill_total * 1.13 + perception;
+		operation_total = bill_total + vat + perception;
 	}
-	else if(parseInt($("#bill_type").val()) == 101)
+	else if(bill_type == 101)
 	{
-		let taxed = 0;
 		$(".items_container tr").each(function() {
 			if($(this).find(".party").val() == 1)
 			{

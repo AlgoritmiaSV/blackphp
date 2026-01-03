@@ -166,10 +166,17 @@ $(function() {
 			if(json.alive)
 			{
 				connection_fails = 0;
+				if (document.querySelectorAll("#login_form").length > 0)
+				{
+					location.reload();
+				}
 			}
 			else
 			{
-				location.reload();
+				if (document.querySelectorAll("#login_form").length == 0 && url.module != "Installation")
+				{
+					location.reload();
+				}
 			}
 		})
 		.fail(function() {

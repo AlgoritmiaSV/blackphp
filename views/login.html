@@ -1,12 +1,12 @@
 	<div id="login">
 		<!--div class="title">_(Log in)</div-->
-		<form action="TestLogin" class="table" data-module="User">
+		<form id="login_form" action="TestLogin" class="table" data-module="User">
 			<div class="entry cell">
 				<input type="hidden" name="blackphp_device_code" class="persistent_input">
-				<input id="user_input" type="text" name="nickname" placeholder="_(User)" required>
+				<input type="text" name="nickname" placeholder="_(User)" required>
 			</div>
 			<div class="entry cell">
-				<input id="pass_input" class="password_input" type="password" name="password" placeholder="_(Password)" required>
+				<input class="password_input" type="password" name="password" placeholder="_(Password)" required>
 			</div>
 			<div class="entry cell">
 				<button class="blue_button" type="submit" id="login_button">

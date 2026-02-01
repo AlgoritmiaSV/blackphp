@@ -50,6 +50,24 @@ define('DB_PASS', 'x/p-29B%&ELYr.6A');
  */
 define('DB_PREFIX', '');
 
+################################ LICENCIA DE USO DEL SOFTWARE
+/**
+ * Servidor de administración de licencias
+ * 
+ * URL del servidor administrador de licencias.
+ */
+define('LICENSE_SERVER', null);
+
+/**
+ * Usuario al quien es acreditada la licencia
+ */
+define('LICENSE_USER', null);
+
+/**
+ * Contraseña para comprobación de licencia
+ */
+define('LICENSE_PWD', null);
+
 ################################ OTRAS CONFIGURACIONES
 /**
  * Estado del sistema

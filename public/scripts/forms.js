@@ -1423,7 +1423,14 @@ $(function()
 		var parent_value = $(this).val();
 		var source = child.data("source");
 		child.val(0).trigger("change");
-		child.find("option").not(":first").remove();
+		if(child.data("resetmode") == "full")
+		{
+			child.find("option").remove();
+		}
+		else
+		{
+			child.find("option").not(":first").remove();
+		}
 
 		var current_module = "index";
 		if(url.module != null && url.module != "")

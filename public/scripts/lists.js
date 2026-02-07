@@ -133,7 +133,7 @@ $( function()
 				});
 
 				$("#" + table_id + " tbody tr").on("click", function() {
-					if($(this).data("href"))
+					if($(this).data("href") && (!$(this).data("alert") || window.innerWidth < 700))
 					{
 						location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
 					}

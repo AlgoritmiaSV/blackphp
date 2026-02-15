@@ -301,7 +301,10 @@ trait Roles
 		}
 		foreach($elements as $element_id => $permissions)
 		{
-			$role_element = roleElementsModel::where("role_id", $role->getRoleId())->where("element_id", $element_id)->get();
+			$role_element = roleElementsModel::where("role_id", $role->getRoleId())
+				->where("element_id", $element_id)
+				->where("status", ">=", 0)
+				->get();
 			$role_element->set([
 				"role_id" => $role->getRoleId(),
 				"element_id" => $element_id,

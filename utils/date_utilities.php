@@ -310,7 +310,7 @@ class date_utilities
 		while($from <= $to)
 		{
 			$month_name = _(self::$months[$month - 1]);
-			$list[] = Array("id" => $from, "text" => $month_name . " " . $year);
+			$list[] = Array("id" => $from, "text" => ucfirst($month_name) . " " . $year);
 			if($month == 12)
 			{
 				$year++;
@@ -320,7 +320,7 @@ class date_utilities
 		}
 		if($desc)
 		{
-			$list = array_reverse($list, true);
+			$list = array_reverse($list);
 		}
 		return $list;
 	}

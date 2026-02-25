@@ -30,6 +30,9 @@ class usersModel
 	/** @var string $password_hash Hash de la contraseña */
 	private $password_hash;
 
+	/** @var string $password_changed Fecha y hora de cambio de contraseña */
+	private $password_changed;
+
 	/** @var int $theme_id Tema de visualización del usuario */
 	private $theme_id;
 
@@ -162,6 +165,16 @@ class usersModel
 	{
 		self::validateStringSize($value, 60);
 		$this->password_hash = $value === null ? null : (string)$value;
+	}
+
+	public function getPasswordChanged()
+	{
+		return $this->password_changed;
+	}
+
+	public function setPasswordChanged($value)
+	{
+		$this->password_changed = $value === null ? null : (string)$value;
 	}
 
 	public function getThemeId()

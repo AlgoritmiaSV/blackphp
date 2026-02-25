@@ -1,5 +1,5 @@
 # PACK OF RUSSIAN LANGUAGE FOR BLACKPHP
-# Copyright (C)2022-2025 Algoritmia SV
+# Copyright (C)2022-2026 Algoritmia SV
 # This file is distributed under the same license as the PACKAGE BlackPHP.
 # Edwin Fajardo <contacto@edwinfajardo.com>.
 #
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2025-10-18 12:39+UTC-6\n"
+"PO-Revision-Date: 2026-02-25 00:50+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -437,6 +437,21 @@ msgstr "Шапка страницы"
 msgid "Password"
 msgstr "Пароль"
 
+msgid "Password must be at least 6 characters long"
+msgstr "Пароль должен содержать не менее 6 символов"
+
+msgid "Password must include at least one digit"
+msgstr "Пароль должен содержать хотя бы одну цифру"
+
+msgid "Password must include at least one lowercase letter"
+msgstr "Пароль должен содержать хотя бы одну строчную букву"
+
+msgid "Password must include at least one special character"
+msgstr "Пароль должен содержать хотя бы один специальный символ"
+
+msgid "Password must include at least one uppercase letter"
+msgstr "Пароль должен содержать хотя бы одну заглавную букву"
+
 msgid "Passwords do not match"
 msgstr "Пароли не совпадают"
 
@@ -700,4 +715,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 226 messages translated.
+# 231 messages translated.

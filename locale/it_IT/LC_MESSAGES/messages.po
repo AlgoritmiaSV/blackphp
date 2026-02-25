@@ -1,5 +1,5 @@
 # PACK OF ITALIAN LANGUAGE FOR BLACKPHP
-# Copyright (C)2022-2025 Algoritmia SV
+# Copyright (C)2022-2026 Algoritmia SV
 # This file is distributed under the same license as the PACKAGE BlackPHP.
 # Edwin Fajardo <contacto@edwinfajardo.com>.
 #
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-01 20:38-0600\n"
-"PO-Revision-Date: 2025-10-18 12:39+UTC-6\n"
+"PO-Revision-Date: 2026-02-25 00:50+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: it_IT\n"
@@ -437,6 +437,21 @@ msgstr "Intestazione della pagina"
 msgid "Password"
 msgstr "Password"
 
+msgid "Password must be at least 6 characters long"
+msgstr "La password deve contenere almeno 6 caratteri"
+
+msgid "Password must include at least one digit"
+msgstr "La password deve includere almeno una cifra"
+
+msgid "Password must include at least one lowercase letter"
+msgstr "La password deve includere almeno una lettera minuscola"
+
+msgid "Password must include at least one special character"
+msgstr "La password deve includere almeno un carattere speciale"
+
+msgid "Password must include at least one uppercase letter"
+msgstr "La password deve includere almeno una lettera maiuscola"
+
 msgid "Passwords do not match"
 msgstr "Le passwords non corrispondono"
 
@@ -700,4 +715,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 226 messages translated.
+# 231 messages translated.

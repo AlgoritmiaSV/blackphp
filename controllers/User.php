@@ -46,30 +46,55 @@ class User extends Controller
 	 */
 	public function load_form_data()
 	{
-		$data = Array();
-		if($_POST["method"] == "MyAccount")
+		$result = [];
+		switch($_POST["method"])
 		{
-			$data["themes"] = appThemesModel::list();
-			foreach($data["themes"] as &$theme)
-			{
-				$theme["text"] = _($theme["text"]);
-			}
-			unset($theme);
-			$data["locales"] = appLocalesModel::list("locale_code", "locale_name");
-			foreach($data["locales"] as &$locale)
-			{
-				$locale["text"] = _($locale["text"]);
-			}
-			unset($locale);
-			$user = usersModel::find(Session::get("user_id"));
-			$data["update"] = Array(
-				"theme_id" => Session::get("theme_id"),
-				"locale" => Session::get("locale"),
-				"user_name" => $user->getUserName(),
-				"nickname" => $user->getNickname()
-			);
+			case "MyAccount":
+				$result = $this->LoadMyAccountForm();
+				break;
+			case "SetNewPassword":
+				$result = $this->LoadNewPasswordForm();
+				break;
 		}
-		$this->json($data);
+		$this->json($result);
+	}
+
+	private function LoadMyAccountForm()
+	{
+		$result = [];
+		$result["themes"] = appThemesModel::list();
+		foreach($result["themes"] as &$theme)
+		{
+			$theme["text"] = _($theme["text"]);
+		}
+		unset($theme);
+		$result["locales"] = appLocalesModel::list("locale_code", "locale_name");
+		foreach($result["locales"] as &$locale)
+		{
+			$locale["text"] = _($locale["text"]);
+		}
+		unset($locale);
+		$user = usersModel::find(Session::get("user_id"));
+		$result["update"] = [
+			"theme_id" => Session::get("theme_id"),
+			"locale" => Session::get("locale"),
+			"user_name" => $user->getUserName(),
+			"nickname" => $user->getNickname()
+		];
+		return $result;
+	}
+
+	private function LoadNewPasswordForm()
+	{
+		$user = usersModel::find(Session::get("password_user_id"));
+		$result = [
+			"update" => [
+				"user_id" => $user->getUserId(),
+				"nickname" => $user->getNickName(),
+				"user_name" => $user->getUserName()
+			]
+		];
+		return $result;
 	}
 
 	/**
@@ -82,7 +107,7 @@ class User extends Controller
 	 */
 	public function TestLogin()
 	{
-		$data = Array("session" => false);
+		$data = ["session" => false];
 		if(empty($_POST["nickname"]))
 		{
 			$data["title"] = "Error";
@@ -107,7 +132,7 @@ class User extends Controller
 		$attemps = loginAttempsModel::where("user_id", $user->getUserId())->where("date_time", ">=", $date_time)->count();
 		if($attemps >= 3)
 		{
-			$data["title"] = "Error";
+			$data["title"] = _("Error");
 			$data["message"] = _("Too many failed attempts, try again in five minutes");
 			$data["theme"] = "red";
 			$this->json($data);
@@ -143,6 +168,19 @@ class User extends Controller
 
 		if(password_verify($_POST["password"], $user->getPasswordHash()))
 		{
+			# Verificar si la contraseña ha sido cambiada en los últimos noventa días
+			$passwordChanged = new DateTime($user->getPasswordChanged());
+			$threshold = new DateTime();
+			$threshold->sub(new DateInterval('P90D'));
+			if ($passwordChanged < $threshold)
+			{
+				Session::set("password_user_id", $user->getUserId());
+				$data["next"] = "/User/SetNewPassword/";
+				$this->json($data);
+				return;
+			}
+
+			# Continuar con el inicio normal de la sesión
 			$data["reload"] = true;
 
 			# Cargar los datos del usuario a la sesión actual
@@ -198,7 +236,7 @@ class User extends Controller
 				"browser_id" => $browser->getBrowserId(),
 				"ip_address" => $ipv4
 			])->save();
-			$data["title"] = "Error";
+			$data["title"] = _("Error");
 			$data["message"] = _("Bad user or password");
 			$data["theme"] = "red";
 		}
@@ -215,9 +253,10 @@ class User extends Controller
 	 */
 	public function logout()
 	{
-		$data = Array("session" => false);
 		Session::destroy();
-		$this->json($data);
+		$this->json([
+			"session" => false
+		]);
 	}
 
 	/**
@@ -321,6 +360,131 @@ class User extends Controller
 			"theme" => "green"
 		];
 		$this->json($response);
+	}
+
+	public function SetNewPassword()
+	{
+		if(Session::get("password_user_id") == null)
+		{
+			header("Location: /");
+			return;
+		}
+		$this->view->data["title"] = _("Change password");
+		$this->view->standard_form();
+		$this->view->data["nav"] = "";
+		$this->view->data["content"] = $this->view->render("user/change_password", true);
+		$this->view->render('main');
+	}
+
+	public function SaveNewPassword()
+	{
+		$result = [];
+
+		# El usuario no existe
+		$user = usersModel::find($_POST["user_id"]);
+		if(!$user->exists())
+		{
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
+				"message" => _("Bad request"),
+				"theme" => "red"
+			]);
+			return;
+		}
+
+		# La contraseña actual es incorrecta
+		if(md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash()))
+		{
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
+				"message" => _("Incorrect password"),
+				"theme" => "red"
+			]);
+			return;
+		}
+
+		# Las contraseñas no coinciden
+		if($_POST["new_password"] != $_POST["confirm_password"])
+		{
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
+				"message" => _("Passwords do not match"),
+				"theme" => "red"
+			]);
+			return;
+		}
+
+		# No puede ser la misma contraseña anterior
+
+		# Validar contraseña
+		$validate = $this->ValidatePassword($_POST["new_password"]);
+		if($validate !== true)
+		{
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
+				"message" => implode("<br>", $validate),
+				"theme" => "red"
+			]);
+			return;
+		}
+
+		$user->set([
+			"password" => "HASH",
+			"password_hash" => password_hash($_POST["new_password"], PASSWORD_BCRYPT),
+			"password_changed" => Date("Y-m-d H:i:s")
+		]);
+		$user->save();
+		Session::unset("password_user_id");
+
+		$this->json([
+			"success" => true,
+			"redirect_after" => "/",
+			"title" => _("Success"),
+			"message" => _("Changes have been saved"),
+			"theme" => "green"
+		]);
+	}
+
+	private function ValidatePassword($password)
+	{
+		$errors = [];
+		# Debe contener al menos seis caracteres e incluir al menos:
+		# - Seis caracteres de longitud
+		# - Una letra minúscula
+		# - Una letra mayúscula
+		# - Un número
+		# - Un caracter no alfanumérico
+
+		// Minimum length check
+		if (strlen($password) < 6) {
+			$errors[] = _("Password must be at least 6 characters long");
+		}
+
+		// Pattern checks
+		if (!preg_match('/[a-z]/', $password)) {
+			$errors[] = _("Password must include at least one lowercase letter");
+		}
+		if (!preg_match('/[A-Z]/', $password)) {
+			$errors[] = _("Password must include at least one uppercase letter");
+		}
+		if (!preg_match('/[0-9]/', $password)) {
+			$errors[] = _("Password must include at least one digit");
+		}
+		if (!preg_match('/[^a-zA-Z0-9]/', $password)) {
+			$errors[] = _("Password must include at least one special character");
+		}
+
+		// If no errors, return true
+		if (empty($errors)) {
+			return true;
+		}
+
+		// Otherwise return the list of errors
+		return $errors;
 	}
 }
 ?>

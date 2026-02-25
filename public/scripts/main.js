@@ -173,7 +173,7 @@ $(function() {
 			}
 			else
 			{
-				if (document.querySelectorAll("#login_form").length == 0 && url.module != "Installation")
+				if (document.querySelectorAll("#login_form").length == 0 && url.module != "Installation" && !(url.module == "User" && url.method == "SetNewPassword"))
 				{
 					location.reload();
 				}

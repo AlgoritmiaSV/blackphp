@@ -227,11 +227,13 @@ trait Users
 		{
 			$user->setPassword("HASH");
 			$user->setPasswordHash(password_hash($_POST["password"], PASSWORD_BCRYPT));
+			$user->setPasswordChanged(Date("Y-m-d H:i:s"));
 		}
 		if(empty($user->getPassword()))
 		{
 			$user->setPassword("");
 			$user->setPasswordHash("");
+			$user->setPasswordChanged(Date("Y-m-d H:i:s"));
 		}
 		if(!empty($_POST["role_id"]))
 		{
@@ -247,37 +249,6 @@ trait Users
 			$this->setUserLog("create", "users", $user->getUserId());
 		}
 
-		/*$user_id = $user->getUserId();
-		if($user_id != Session::get("user_id"))
-		{
-			#Module access
-			userModulesModel::where("user_id", $user_id)->whereNotIn($_POST["modules"], "module_id")->update(Array("status" => 0));
-			foreach($_POST["modules"] as $module_id)
-			{
-				userModulesModel::where("user_id", $user_id)
-					->where("module_id", $module_id)
-					->where("status", ">=", 0)
-					->get()->set(Array(
-						"module_id" => $module_id,
-						"user_id" => $user_id,
-						"status" => 1
-					))->save();
-			}
-
-			#Method access
-			userMethodsModel::where("user_id", $user_id)->whereNotIn($_POST["methods"], "method_id")->update(Array("status" => 0));
-			foreach($_POST["methods"] as $method_id)
-			{
-				userMethodsModel::where("user_id", $user_id)
-					->where("method_id", $method_id)
-					->where("status", ">=", 0)
-					->get()->set(Array(
-						"method_id" => $method_id,
-						"user_id" => $user_id,
-						"status" => 1
-					))->save();
-			}
-		}*/
 		$data["success"] = true;
 		$data["title"] = _("Success");
 		$data["message"] = _("Changes have been saved");

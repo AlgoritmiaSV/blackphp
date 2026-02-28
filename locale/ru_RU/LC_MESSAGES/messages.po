@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2026-02-25 00:50+UTC-6\n"
+"PO-Revision-Date: 2026-02-26 22:51+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -263,6 +263,9 @@ msgstr "Первый"
 msgid "For inquiries and technical support, write to us on WhatsApp"
 msgstr "По вопросам и технической поддержке пишите нам на WhatsApp"
 
+msgid "For your security, we will ask you to change your password every ninety days"
+msgstr "целях вашей безопасности мы будем просить вас менять пароль каждые 90 дней"
+
 msgid "Friday"
 msgstr "Пятница"
 
@@ -431,6 +434,18 @@ msgstr "Ноябрь"
 msgid "October"
 msgstr "Октябрь"
 
+msgid "One digit"
+msgstr "Одну цифру"
+
+msgid "One lowercase letter"
+msgstr "Одну строчную букву"
+
+msgid "One special character"
+msgstr "Один специальный символ"
+
+msgid "One uppercase letter"
+msgstr "Одну заглавную букву"
+
 msgid "Page header"
 msgstr "Шапка страницы"
 
@@ -439,6 +454,9 @@ msgstr "Пароль"
 
 msgid "Password must be at least 6 characters long"
 msgstr "Пароль должен содержать не менее 6 символов"
+
+msgid "Password must contain at least"
+msgstr "Ваш пароль должен содержать как минимум"
 
 msgid "Password must include at least one digit"
 msgstr "Пароль должен содержать хотя бы одну цифру"
@@ -695,6 +713,9 @@ msgstr "вы не авторизованы"
 msgid "You do not have permissions to perform this operation"
 msgstr "У вас нет прав на выполнение этой операции"
 
+msgid "You must change your password"
+msgstr "Вам необходимо сменить пароль"
+
 msgctxt "female"
 msgid "a"
 msgstr ""
@@ -715,4 +736,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 231 messages translated.
+# 238 messages translated.

@@ -47,16 +47,28 @@ class User extends Controller
 	public function load_form_data()
 	{
 		$result = [];
-		switch($_POST["method"])
+		if(Session::get("user_id") == null && $_POST["method"] != "SetNewPassword")
 		{
-			case "MyAccount":
-				$result = $this->LoadMyAccountForm();
-				break;
-			case "SetNewPassword":
-				$result = $this->LoadNewPasswordForm();
-				break;
+			$result = $this->LoadLoginForm();
+		}
+		else
+		{
+			switch($_POST["method"])
+			{
+				case "MyAccount":
+					$result = $this->LoadMyAccountForm();
+					break;
+				case "SetNewPassword":
+					$result = $this->LoadNewPasswordForm();
+					break;
+			}
 		}
 		$this->json($result);
+	}
+
+	private function LoadLoginForm()
+	{
+		return [];
 	}
 
 	private function LoadMyAccountForm()
@@ -74,6 +86,7 @@ class User extends Controller
 			$locale["text"] = _($locale["text"]);
 		}
 		unset($locale);
+
 		$user = usersModel::find(Session::get("user_id"));
 		$result["update"] = [
 			"theme_id" => Session::get("theme_id"),
@@ -331,35 +344,47 @@ class User extends Controller
 		$user = usersModel::find(Session::get("user_id"));
 		if(md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash()))
 		{
-			$response += [
+			$this->json([
+				
 				"title" => "Error",
 				"message" => _("Incorrect password"),
 				"theme" => "red"
-			];
-			$this->json($response);
+			]);
 			return;
 		}
 		if($_POST["new_password"] != $_POST["confirm_password"])
 		{
-			$response += [
-				"title" => "Error",
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
 				"message" => _("Passwords do not match"),
 				"theme" => "red"
-			];
-			$this->json($response);
+			]);
 			return;
 		}
+
+		$validate = $this->ValidatePassword($_POST["password"]);
+		if($validate !== true)
+		{
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
+				"message" => implode("<br>", $validate),
+				"theme" => "red"
+			]);
+			return;
+		}
+
 		$user->setPassword("HASH");
 		$user->setPasswordHash(password_hash($_POST["new_password"], PASSWORD_BCRYPT));
 		$user->save();
-		$response["success"] = true;
-		$response += [
+		$this->json([
+			"success" => true,
 			"reload_after" => true,
 			"title" => _("Success"),
 			"message" => _("Changes have been saved"),
 			"theme" => "green"
-		];
-		$this->json($response);
+		]);
 	}
 
 	public function SetNewPassword()

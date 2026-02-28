@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2026-02-25 00:50+UTC-6\n"
+"PO-Revision-Date: 2026-02-26 22:40+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: es_ES\n"
@@ -263,6 +263,9 @@ msgstr "Primera"
 msgid "For inquiries and technical support, write to us on WhatsApp"
 msgstr "Para consultas y soporte técnico, escríbenos en WhatsApp"
 
+msgid "For your security, we will ask you to change your password every ninety days"
+msgstr "Por tu seguridad, te pediremos que cambies tu contraseña cada noventa días"
+
 msgid "Friday"
 msgstr "Viernes"
 
@@ -431,6 +434,18 @@ msgstr "noviembre"
 msgid "October"
 msgstr "octubre"
 
+msgid "One digit"
+msgstr "Un número"
+
+msgid "One lowercase letter"
+msgstr "Una letra minúscula"
+
+msgid "One special character"
+msgstr "Un carácter especial"
+
+msgid "One uppercase letter"
+msgstr "Una letra mayúscula"
+
 msgid "Page header"
 msgstr "Encabezado de página"
 
@@ -439,6 +454,9 @@ msgstr "Contrase&ntilde;a"
 
 msgid "Password must be at least 6 characters long"
 msgstr "La contraseña debe ser de al menos 6 caracteres"
+
+msgid "Password must contain at least"
+msgstr "La contraseña debe contener al menos"
 
 msgid "Password must include at least one digit"
 msgstr "La contraseña debe incluir al menos un número"
@@ -695,6 +713,9 @@ msgstr "No ha iniciado sesión"
 msgid "You do not have permissions to perform this operation"
 msgstr "No tiene permisos para realizar esta operación"
 
+msgid "You must change your password"
+msgstr "Debes cambiar tu contraseña"
+
 msgctxt "female"
 msgid "a"
 msgstr "una"
@@ -715,4 +736,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 231 messages translated.
+# 238 messages translated.

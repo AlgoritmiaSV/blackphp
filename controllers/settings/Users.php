@@ -198,10 +198,14 @@ trait Users
 	public function save_user()
 	{
 		$this->check_permissions(empty($_POST["user_id"]) ? "create" : "update", "users");
-		$data = Array("success" => false);
 		if(empty($_POST["user_name"]))
 		{
-			$this->json($data);
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
+				"message" => _("Bad request"),
+				"theme" => "red"
+			]);
 			return;
 		}
 
@@ -210,10 +214,12 @@ trait Users
 			->where("user_id", "!=", $_POST["user_id"])->get();
 		if(!empty($test->getUserId()))
 		{
-			$data["title"] = "Error";
-			$data["message"] = _("The nickname already exists!");
-			$data["theme"] = "red";
-			$this->json($data);
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
+				"message" => _("The nickname already exists!"),
+				"theme" => "red"
+			]);
 			return;
 		}
 
@@ -225,6 +231,17 @@ trait Users
 			]);
 		if(!empty($_POST["password"]))
 		{
+			$validate = $this->ValidatePassword($_POST["password"]);
+			if($validate !== true)
+			{
+				$this->json([
+					"success" => false,
+					"title" => _("Error"),
+					"message" => implode("<br>", $validate),
+					"theme" => "red"
+				]);
+				return;
+			}
 			$user->setPassword("HASH");
 			$user->setPasswordHash(password_hash($_POST["password"], PASSWORD_BCRYPT));
 			$user->setPasswordChanged(Date("Y-m-d H:i:s"));
@@ -249,12 +266,13 @@ trait Users
 			$this->setUserLog("create", "users", $user->getUserId());
 		}
 
-		$data["success"] = true;
-		$data["title"] = _("Success");
-		$data["message"] = _("Changes have been saved");
-		$data["theme"] = "green";
-		$data["reload_after"] = true;
-		$this->json($data);
+		$this->json([
+			"success" => true,
+			"title" => _("Success"),
+			"message" => _("Changes have been saved"),
+			"theme" => "green",
+			"reload_after" => true
+		]);
 	}
 
 	/**
@@ -304,6 +322,44 @@ trait Users
 			}
 		}
 		$_SESSION = $activeSession;
+	}
+
+	private function ValidatePassword($password)
+	{
+		$errors = [];
+		# Debe contener al menos seis caracteres e incluir al menos:
+		# - Seis caracteres de longitud
+		# - Una letra minúscula
+		# - Una letra mayúscula
+		# - Un número
+		# - Un caracter no alfanumérico
+
+		// Minimum length check
+		if (strlen($password) < 6) {
+			$errors[] = _("Password must be at least 6 characters long");
+		}
+
+		// Pattern checks
+		if (!preg_match('/[a-z]/', $password)) {
+			$errors[] = _("Password must include at least one lowercase letter");
+		}
+		if (!preg_match('/[A-Z]/', $password)) {
+			$errors[] = _("Password must include at least one uppercase letter");
+		}
+		if (!preg_match('/[0-9]/', $password)) {
+			$errors[] = _("Password must include at least one digit");
+		}
+		if (!preg_match('/[^a-zA-Z0-9]/', $password)) {
+			$errors[] = _("Password must include at least one special character");
+		}
+
+		// If no errors, return true
+		if (empty($errors)) {
+			return true;
+		}
+
+		// Otherwise return the list of errors
+		return $errors;
 	}
 }
 ?>

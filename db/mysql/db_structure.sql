@@ -285,7 +285,6 @@ CREATE TABLE `entities` (
   `entity_slogan` varchar(128) NOT NULL COMMENT 'Eslogan de la empresa',
   `admin_role` int(11) DEFAULT NULL COMMENT 'Rol administrador',
   `admin_user` int(11) DEFAULT NULL COMMENT 'Usuario principal (Superadministrador)',
-  `entity_date` date NOT NULL COMMENT 'Fecha actual de operaciones (En caso que difiera del sistema)',
   `entity_begin` date NOT NULL COMMENT 'Fecha de inicio de las operaciones',
   `entity_subdomain` varchar(32) DEFAULT NULL COMMENT 'Subdominio (Para funcionamiento en línea)',
   `app_name` varchar(32) NOT NULL DEFAULT 'BlackPHP' COMMENT 'Nombre de la App para instalación como PWA',

@@ -97,7 +97,6 @@ trait Entity
 		{
 			$entity->set([
 				"entity_subdomain" => $subdomain,
-				"entity_date" => $today,
 				"entity_begin" => $today,
 				"creation_installer" => Session::get("installer_id"),
 				"creation_time" => $now,

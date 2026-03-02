@@ -24,9 +24,6 @@ class entitiesModel
 	/** @var int $admin_user Usuario principal (Superadministrador) */
 	private $admin_user;
 
-	/** @var string $entity_date Fecha actual de operaciones (En caso que difiera del sistema) */
-	private $entity_date;
-
 	/** @var string $entity_begin Fecha de inicio de las operaciones */
 	private $entity_begin;
 
@@ -145,16 +142,6 @@ class entitiesModel
 	public function setAdminUser($value)
 	{
 		$this->admin_user = $value === null ? null : (int)$value;
-	}
-
-	public function getEntityDate()
-	{
-		return $this->entity_date;
-	}
-
-	public function setEntityDate($value)
-	{
-		$this->entity_date = $value === null ? null : (string)$value;
 	}
 
 	public function getEntityBegin()

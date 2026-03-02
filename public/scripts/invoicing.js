@@ -81,7 +81,7 @@ function calc_bill_total()
 	let operation_total = 0;
 	if(calculate_retention && bill_total > 100)
 	{
-		retention = taxed / 100;
+		retention = taxed / (bill_type == 2 ? 100 : 113);
 		$("#retention").val(format_number(retention));
 	}
 	if(bill_type == 2)

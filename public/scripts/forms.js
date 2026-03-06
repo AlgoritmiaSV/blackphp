@@ -67,6 +67,49 @@ function build_selectors()
 	building_entry_selector = false;
 }
 
+/**
+ * JSON de items de tablas de detalle.
+ * 
+ * Solución al problema de máxima cantidad de campos en FormData. Se seriaizan únicamente
+ * las tablas detalle que contienen el atributo data-field
+ */
+function buildItemsJSON()
+{
+	// Find all tbody containers
+	const containers = document.querySelectorAll("tbody.items_container[data-field]");
+
+	containers.forEach(container => {
+		const hiddenFieldId = container.getAttribute("data-field");
+		const hiddenField = document.getElementById(hiddenFieldId);
+		const rows = container.querySelectorAll("tr");
+		const data = [];
+
+		rows.forEach(tr => {
+			const rowObj = {};
+			const fields = tr.querySelectorAll("input[data-name], select[data-name], textarea[data-name]");
+
+			fields.forEach(field => {
+				const key = field.getAttribute("data-name");
+				let value;
+
+				if (field.tagName.toLowerCase() === "select") {
+					value = field.value;
+				} else {
+					value = field.value;
+				}
+
+				rowObj[key] = value;
+			});
+
+			data.push(rowObj);
+		});
+
+		if (hiddenField) {
+			hiddenField.value = JSON.stringify(data);
+		}
+	});
+}
+
 $(function()
 {
 	// Obtener el identificador de envío de formulario, y asignar cero en caso de que no exista
@@ -313,10 +356,14 @@ $(function()
 			return false;
 		}
 		var action = $(this).attr("action") || "save";
+
+		// Preparando valores
 		$(this).find(".date_input").each(function() {
 			$(this).data("value", $(this).val());
 			$(this).val($.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate")));
 		});
+		buildItemsJSON();
+		
 		var form_data = new FormData(this);
 
 		//Agregar identificador de envío al formulario

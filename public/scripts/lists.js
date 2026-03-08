@@ -98,6 +98,7 @@ $( function()
 		{
 			load_table(tableId);
 		}
+		updateFooterColspan(tableId);
 	});
 
 	function load_table(table_id)
@@ -715,6 +716,34 @@ $( function()
 	$(".filter_button").on("click", function() {
 		$(".action_filter").toggle("slow");
 	});
+
+	/**
+	 * Footer de una columna
+	 * 
+	 * Calcular colspan en footer de una sola columna.
+	 */
+	function updateFooterColspan(tableId)
+	{
+		const table = document.getElementById(tableId);
+		if (!table) return;
+
+		// Count only visible <th> or <td> in the first row (header row is typical)
+		const headerCells = table.querySelectorAll("thead tr th, thead tr td");
+		let visibleCount = 0;
+
+		headerCells.forEach(cell => {
+			const style = window.getComputedStyle(cell);
+			if (style.display !== "none") {
+				visibleCount++;
+			}
+		});
+
+		// Update the footer cell colspan
+		const footerCell = table.querySelector(".one_column_footer");
+		if (footerCell) {
+			footerCell.colSpan = visibleCount;
+		}
+	}
 
 	/* Go To URL */
 	function goto_url()

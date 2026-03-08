@@ -41,7 +41,8 @@ trait Roles
 		$modules = appModulesModel::getAll();
 		foreach($modules as $module)
 		{
-			$elements = appElementsModel::where("module_id", $module->getModuleId())->getAllArray();
+			$elements = appElementsModel::where("module_id", $module->getModuleId())
+				->getAllArray();
 			foreach($elements as &$element)
 			{
 				$element["element_name"] = _($element["element_name"]);
@@ -180,14 +181,18 @@ trait Roles
 	public function role_table_loader($response = "JSON")
 	{
 		$this->check_permissions("read", "roles");
-		$data = Array();
 		$roles = rolesModel::getAllArray();
 		foreach($roles as &$role)
 		{
 			$role["users"] = usersModel::where("role_id", $role["role_id"])->count();
 		}
 		unset($role);
-		$data["content"] = $roles;
+		$data = [
+			"content" => $roles,
+			"foot" => [
+				"totalRecords" => count($roles)
+			]
+		];
 		if($response == "Excel")
 		{
 			$data["title"] = _("Roles");

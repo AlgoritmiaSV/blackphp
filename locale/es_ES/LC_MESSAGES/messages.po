@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2026-02-26 22:40+UTC-6\n"
+"PO-Revision-Date: 2026-03-07 23:47+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: es_ES\n"
@@ -503,6 +503,9 @@ msgstr "Proporcionado a"
 msgid "Read"
 msgstr "Leer"
 
+msgid "records"
+msgstr "registros"
+
 msgid "Registration of more entities is not allowed"
 msgstr "No se permite registrar más entidades"
 
@@ -736,4 +739,4 @@ msgctxt "time"
 msgid "on"
 msgstr "el"
 
-# 238 messages translated.
+# 239 messages translated.

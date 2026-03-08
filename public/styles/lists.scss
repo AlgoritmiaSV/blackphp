@@ -46,6 +46,8 @@
 {
 	background-color: $dv_tfoot_bg;
 	font-weight: bold;
+	position: sticky;
+	bottom: 0;
 }
 
 .data_viewer thead th

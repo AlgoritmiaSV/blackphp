@@ -93,18 +93,22 @@ trait Users
 	public function user_table_loader($response = "JSON")
 	{
 		$this->check_permissions("read", "users");
-		$data = Array();
 		$users = userDataModel::getAllArray();
-		foreach($users as $key => $user)
+		foreach($users as &$user)
 		{
-			$users[$key]["last_login"] = "";
 			if(!empty($user["last_login"]))
 			{
 				$last_login = new DateTime($user["last_login"]);
-				$users[$key]["last_login"] = $last_login->format("d/m/Y h:ia");
+				$user["last_login"] = $last_login->format("d/m/Y h:ia");
 			}
 		}
-		$data["content"] = $users;
+		unset($user);
+		$data = [
+			"content" => $users,
+			"foot" => [
+				"totalRecords" => count($users)
+			]
+		];
 		if($response == "Excel")
 		{
 			$data["title"] = _("Users");
@@ -288,11 +292,11 @@ trait Users
 		if(empty($_POST["id"]))
 		{
 			$this->json([
-			"deleted" => false,
-			"title" => _("Error"),
-			"message" => _("Bad request"),
-			"theme" => "red"
-		]);
+				"deleted" => false,
+				"title" => _("Error"),
+				"message" => _("Bad request"),
+				"theme" => "red"
+			]);
 			return;
 		}
 		$user = usersModel::find($_POST["id"]);

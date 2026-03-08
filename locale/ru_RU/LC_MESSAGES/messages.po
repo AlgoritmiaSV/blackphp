@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2026-03-07 23:47+UTC-6\n"
+"PO-Revision-Date: 2026-03-08 13:28+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -52,6 +52,12 @@ msgstr "Администратор"
 
 msgid "Administrator role"
 msgstr "Роль администратора"
+
+msgid "All elements"
+msgstr "Все элементы"
+
+msgid "All users"
+msgstr "Все пользователи"
 
 msgid "and"
 msgstr "и"
@@ -739,4 +745,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 239 messages translated.
+# 241 messages translated.

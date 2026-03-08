@@ -48,20 +48,27 @@ trait ActivityLog
 	public function log_table_loader($response = "JSON")
 	{
 		$this->check_permissions("read", "logs");
-		$title = "";
-		$items = Array();
-		$type = $_POST["options"]["type"];
-		$from = $_POST["options"]["from"] ?? Date("Y-m-d");
+		$options = $_POST["options"];
+		$type = $options["type"];
+		$from = $options["from"] ?? Date("Y-m-d");
 		$from .= " 00:00:00";
-		$to = $_POST["options"]["to"] ?? Date("Y-m-d");
+		$to = $options["to"] ?? Date("Y-m-d");
 		$to .= " 23:59:59";
-		$items = userLogsModel::select(userLogsModel::fields("*"), usersModel::fields("user_name"), appElementsModel::fields("singular_name", "element_gender", "unique_element"))
+		$logsModel = userLogsModel::select(userLogsModel::fields("*"), usersModel::fields("user_name"), appElementsModel::fields("singular_name", "element_gender", "unique_element"))
 			->join("users", "user_id")
 			->join("app_elements", "element_id")
 			->where("date_time", ">=", $from)
 			->where("date_time", "<=", $to)
-			->orderBy("date_time", "DESC")
-			->getAll();
+			->orderBy("date_time", "DESC");
+		if(!empty($options["user"]))
+		{
+			$logsModel->where("users.user_id", $options["user"]);
+		}
+		if(!empty($options["element"]))
+		{
+			$logsModel->where("app_elements.element_key", $options["element"]);
+		}
+		$items = $logsModel->getAll();
 		$actions = [
 			1 => _("deleted"),
 			2 => _("updated"),
@@ -102,10 +109,15 @@ trait ActivityLog
 		}
 		unset($item);
 
-		$data["content"] = $items;
+		$data = [
+			"content" => $items,
+			"foot" => [
+				"totalRecords" => count($items)
+			]
+		];
 		if($response == "Excel")
 		{
-			$data["title"] = $title;
+			$data["title"] = _("Activity log");
 			$data["headers"] = Array(_("Date and time"), _("Activity description"));
 			$data["fields"] = Array("date_time", "description");
 			excel::create_from_table($data, "Activity_log_" . Date("YmdHis") . ".xlsx");
@@ -114,6 +126,39 @@ trait ActivityLog
 		{
 			$this->json($data);
 		}
+	}
+
+	public function element_filter_loader()
+	{
+		$this->check_permissions("read", "logs");
+		$elements = appElementsModel::where("(is_deletable + is_creatable + is_deletable >= 1)")
+			->list("element_key", "element_name");
+		foreach($elements as &$element)
+		{
+			$element["text"] = _($element["text"]);
+		}
+		unset($element);
+		usort($elements, function($a, $b) {
+			return strcmp($a["text"], $b["text"]);
+		});
+		$this->json([
+			"results" => array_merge(
+				[["id" => 0, "text" => _("All elements")]],
+				$elements
+			)
+		]);
+	}
+
+	public function user_filter_loader()
+	{
+		$this->check_permissions("read", "logs");
+		$this->json([
+			"results" => array_merge(
+				[["id" => 0, "text" => _("All users")]],
+				usersModel::orderBy("text")
+					->list("user_id", "user_name")
+			)
+		]);
 	}
 }
 ?>

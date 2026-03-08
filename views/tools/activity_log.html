@@ -19,6 +19,12 @@
 		<input type="text" class="date_input data_filter" data-identifier="to" value="{{ to }}">
 	</div>
 	<div class="action_filter">
+		<select id="element_filter" class="data_filter" data-search="none" data-default="none" data-placeholder="_(All elements)" data-identifier="element"></select>
+	</div>
+	<div class="action_filter">
+		<select id="user_filter" class="data_filter" data-search="none" data-default="none" data-placeholder="_(All users)" data-identifier="user"></select>
+	</div>
+	<div class="action_filter">
 		<input class="data_search" type="text" placeholder="_(Type a word for search)">
 	</div>
 </div>
@@ -38,7 +44,9 @@
 			</tr>
 		</tbody>
 		<tfoot>
-
+			<tr>
+				<td class="one_column_footer">{{totalRecords}} _(records).</td>
+			</tr>
 		</tfoot>
 	</table>
 	<div class="loading_data">

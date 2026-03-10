@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS `app_catalogs`;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `app_catalogs` (
   `table_name` varchar(64) NOT NULL COMMENT 'Nombre de la tabla',
-  `field_name` varchar(64) NOT NULL COMMENT 'Nombre del campo',
+  `column_name` varchar(64) NOT NULL COMMENT 'Nombre del campo',
   `field_value` int(11) NOT NULL COMMENT 'Opción/Valor',
   `description` varchar(255) NOT NULL COMMENT 'Descripción',
-  PRIMARY KEY (`table_name`,`field_name`,`field_value`)
+  PRIMARY KEY (`table_name`,`column_name`,`field_value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Catálogo de posibles valores en campos de estado';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -72,7 +72,7 @@ CREATE TABLE `app_installers` (
   `installer_password` char(60) NOT NULL COMMENT 'Resumen de contraseña',
   `installer_name` varchar(128) NOT NULL COMMENT 'Nombre del instalador',
   `creation_time` datetime NOT NULL COMMENT 'Hora y fecha de creación',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Eliminado, inactivo, activo',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`installer_id`),
   UNIQUE KEY `unique_nickname` (`installer_nickname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Instaladores del sistema';
@@ -111,7 +111,7 @@ CREATE TABLE `app_methods` (
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
   `element_id` smallint(6) DEFAULT NULL COMMENT 'Elemento al que requiere permisos',
   `permissions` tinyint(4) NOT NULL COMMENT 'Tipo de permisos requeridos',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`method_id`),
   KEY `module_id` (`module_id`),
   KEY `method_element` (`element_id`),
@@ -133,7 +133,7 @@ CREATE TABLE `app_modules` (
   `module_url` varchar(32) NOT NULL COMMENT 'URL del módulo',
   `module_icon` varchar(32) NOT NULL COMMENT 'Ícono del módulo en el menú',
   `default_order` tinyint(4) NOT NULL COMMENT 'Orden por defecto',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado 0:inactivo, 1:activo',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`module_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Todos los módulos disponibles en el sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -295,7 +295,7 @@ CREATE TABLE `entities` (
   `installer_edition_time` datetime NOT NULL,
   `edition_user` int(11) DEFAULT NULL,
   `user_edition_time` datetime DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`entity_id`),
   UNIQUE KEY `comp_subdomain` (`entity_subdomain`),
   KEY `company_creator` (`creation_installer`),
@@ -336,7 +336,7 @@ CREATE TABLE `entity_methods` (
   `method_order` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Orden en el que aoparecerá el método en el menú',
   `creation_time` datetime NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`entity_method_id`),
   UNIQUE KEY `comp_method` (`entity_id`,`method_id`),
   KEY `method_id` (`method_id`),
@@ -359,7 +359,7 @@ CREATE TABLE `entity_modules` (
   `module_order` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Ubicación del módulo en el menú',
   `creation_time` datetime NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`entity_module_id`),
   KEY `comp_id` (`entity_id`),
   KEY `module_id` (`module_id`),
@@ -425,7 +425,7 @@ CREATE TABLE `role_elements` (
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`role_element_id`),
   UNIQUE KEY `unique_role_element` (`role_id`,`element_id`),
   KEY `role_element_element` (`element_id`),
@@ -449,7 +449,7 @@ CREATE TABLE `role_methods` (
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`role_method_id`),
   UNIQUE KEY `unique_role_method` (`role_id`,`method_id`),
   KEY `role_method_method` (`method_id`),
@@ -473,7 +473,7 @@ CREATE TABLE `role_modules` (
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`role_module_id`),
   UNIQUE KEY `unique_role_module` (`role_id`,`module_id`),
   KEY `role_mosule_module` (`module_id`),
@@ -497,7 +497,7 @@ CREATE TABLE `roles` (
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`role_id`),
   KEY `role_entity` (`entity_id`),
   CONSTRAINT `role_entity` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -559,56 +559,6 @@ CREATE TABLE `user_logs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `user_methods`
---
-
-DROP TABLE IF EXISTS `user_methods`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_methods` (
-  `user_method_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
-  `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
-  `method_id` int(11) NOT NULL COMMENT 'ID del método',
-  `creation_user` int(11) NOT NULL,
-  `creation_time` datetime NOT NULL,
-  `edition_user` int(11) NOT NULL,
-  `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`user_method_id`),
-  UNIQUE KEY `unique_user_method` (`user_id`,`method_id`),
-  KEY `umethod_method` (`method_id`),
-  KEY `umethod_user` (`user_id`),
-  CONSTRAINT `umethod_method` FOREIGN KEY (`method_id`) REFERENCES `app_methods` (`method_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `umethod_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Acceso de los usuarios a los métodos de la aplicación';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user_modules`
---
-
-DROP TABLE IF EXISTS `user_modules`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_modules` (
-  `user_module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
-  `module_id` int(11) NOT NULL COMMENT 'ID del módulo',
-  `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
-  `creation_user` int(11) NOT NULL,
-  `creation_time` datetime NOT NULL,
-  `edition_user` int(11) NOT NULL,
-  `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`user_module_id`),
-  UNIQUE KEY `unique_user_module` (`module_id`,`user_id`),
-  KEY `module_id` (`module_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `umodule_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `umodule_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Acceso a los usaurios por módulo';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `user_recovery_codes`
 --
 
@@ -624,7 +574,7 @@ CREATE TABLE `user_recovery_codes` (
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`recovery_code_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `urecovery_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -678,7 +628,7 @@ CREATE TABLE `users` (
   `creation_time` datetime NOT NULL,
   `edition_user` int(11) NOT NULL,
   `edition_time` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Estado: Ver valores en app_catalogs',
   PRIMARY KEY (`user_id`),
   KEY `theme_id` (`theme_id`),
   KEY `user_role` (`role_id`),

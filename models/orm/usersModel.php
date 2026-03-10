@@ -54,7 +54,7 @@ class usersModel
 	/** @var string $edition_time - */
 	private $edition_time;
 
-	/** @var int $status - */
+	/** @var int $status Estado: Ver valores en app_catalogs */
 	private $status;
 
 
@@ -268,18 +268,6 @@ class usersModel
 	{
 		userLogsModel::flush();
 		return userLogsModel::where("user_id", $this->user_id);
-	}
-
-	public function userMethods()
-	{
-		userMethodsModel::flush();
-		return userMethodsModel::where("user_id", $this->user_id);
-	}
-
-	public function userModules()
-	{
-		userModulesModel::flush();
-		return userModulesModel::where("user_id", $this->user_id);
 	}
 
 	public function userRecoveryCodes()

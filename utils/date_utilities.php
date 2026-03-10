@@ -324,5 +324,14 @@ class date_utilities
 		}
 		return $list;
 	}
+
+	public static function month_of_year($month_str, $separator = "/")
+	{
+		$year_month = explode('-', $month_str);
+		$year = intval($year_month[0]);
+		$month = intval($year_month[1]);
+		$month_name = _(self::$months[$month - 1]);
+		return $month_name . $separator . $year;
+	}
 }
 ?>

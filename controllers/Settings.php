@@ -223,12 +223,6 @@ class Settings extends Controller
 		if($_POST["method"] == "EditUser")
 		{
 			$result["update"] = usersModel::find($_POST["id"])->toArray();
-			$result["check"] = [
-				"modules" => userModulesModel::select("module_id AS id")
-					->where("user_id", $_POST["id"])->getAll(),
-				"methods" => userMethodsModel::select("method_id AS id")
-					->where("user_id", $_POST["id"])->getAll()
-			];
 		}
 		return $result;
 	}

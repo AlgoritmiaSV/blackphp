@@ -54,7 +54,7 @@ class entitiesModel
 	/** @var string $user_edition_time - */
 	private $user_edition_time;
 
-	/** @var int $status - */
+	/** @var int $status Estado: Ver valores en app_catalogs */
 	private $status;
 
 

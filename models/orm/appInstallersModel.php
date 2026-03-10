@@ -24,7 +24,7 @@ class appInstallersModel
 	/** @var string $creation_time Hora y fecha de creación */
 	private $creation_time;
 
-	/** @var int $status Eliminado, inactivo, activo */
+	/** @var int $status Estado: Ver valores en app_catalogs */
 	private $status;
 
 

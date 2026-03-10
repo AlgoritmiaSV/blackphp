@@ -33,7 +33,7 @@ class appMethodsModel
 	/** @var int $permissions Tipo de permisos requeridos */
 	private $permissions;
 
-	/** @var int $status Estado 0:inactivo, 1:activo */
+	/** @var int $status Estado: Ver valores en app_catalogs */
 	private $status;
 
 
@@ -173,12 +173,6 @@ class appMethodsModel
 	{
 		roleMethodsModel::flush();
 		return roleMethodsModel::where("method_id", $this->method_id);
-	}
-
-	public function userMethods()
-	{
-		userMethodsModel::flush();
-		return userMethodsModel::where("method_id", $this->method_id);
 	}
 }
 ?>

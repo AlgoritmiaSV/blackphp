@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2026-03-08 13:28+UTC-6\n"
+"PO-Revision-Date: 2026-03-09 17:05+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -34,6 +34,9 @@ msgstr "активировать для сортировки столбцов п
 
 msgid "activate to sort column descending"
 msgstr "активировать для сортировки столбцов по убыванию"
+
+msgid "Active"
+msgstr "Активный"
 
 msgid "Activity description"
 msgstr "Описание деятельности"
@@ -169,6 +172,9 @@ msgstr "Удалить"
 
 msgid "deleted"
 msgstr "удален"
+
+msgid "Deleted"
+msgstr "Удалённый"
 
 msgid "Deleted %s"
 msgstr "Удалено %s"
@@ -358,6 +364,9 @@ msgstr "Тип лицензии"
 
 msgid "Loading"
 msgstr "Загрузка"
+
+msgid "Locked"
+msgstr "Заблокированный"
 
 msgid "Log in"
 msgstr "Авторизоваться"
@@ -745,4 +754,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 241 messages translated.
+# 244 messages translated.

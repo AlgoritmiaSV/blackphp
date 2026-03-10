@@ -33,7 +33,7 @@ class availableMethodsModel
 	/** @var int $permissions Tipo de permisos requeridos */
 	private $permissions;
 
-	/** @var int $status Estado 0:inactivo, 1:activo */
+	/** @var int $status Estado: Ver valores en app_catalogs */
 	private $status;
 
 	/** @var int $method_order Orden en el que aoparecerá el método en el menú */

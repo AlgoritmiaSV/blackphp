@@ -24,7 +24,7 @@ class availableModulesModel
 	/** @var int $default_order Orden por defecto */
 	private $default_order;
 
-	/** @var int $status Estado 0:inactivo, 1:activo */
+	/** @var int $status Estado: Ver valores en app_catalogs */
 	private $status;
 
 	/** @var int $entity_id ID de la empresa */

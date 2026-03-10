@@ -24,7 +24,7 @@ class appModulesModel
 	/** @var int $default_order Orden por defecto */
 	private $default_order;
 
-	/** @var int $status Estado 0:inactivo, 1:activo */
+	/** @var int $status Estado: Ver valores en app_catalogs */
 	private $status;
 
 
@@ -152,12 +152,6 @@ class appModulesModel
 	{
 		roleModulesModel::flush();
 		return roleModulesModel::where("module_id", $this->module_id);
-	}
-
-	public function userModules()
-	{
-		userModulesModel::flush();
-		return userModulesModel::where("module_id", $this->module_id);
 	}
 }
 ?>

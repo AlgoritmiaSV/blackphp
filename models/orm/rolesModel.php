@@ -30,7 +30,7 @@ class rolesModel
 	/** @var string $edition_time - */
 	private $edition_time;
 
-	/** @var int $status - */
+	/** @var int $status Estado: Ver valores en app_catalogs */
 	private $status;
 
 

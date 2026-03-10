@@ -40,14 +40,15 @@ INSERT INTO `app_catalogs` VALUES
 ('roles','status',1,'Active'),
 ('role_elements','status',0,'Deleted'),
 ('role_elements','status',1,'Active'),
+('role_methods','status',0,'Deleted'),
+('role_methods','status',1,'Active'),
+('role_modules','status',0,'Deleted'),
+('role_modules','status',1,'Active'),
 ('users','status',0,'Deleted'),
 ('users','status',1,'Active'),
-('user_methods','status',0,'Deleted'),
-('user_methods','status',1,'Active'),
-('user_modules','status',0,'Deleted'),
-('user_modules','status',1,'Active'),
-('user_recovery','status',0,'Deleted'),
-('user_recovery','status',1,'Active');
+('users','status',2,'Locked'),
+('user_recovery_codes','status',0,'Deleted'),
+('user_recovery_codes','status',1,'Active');
 /*!40000 ALTER TABLE `app_catalogs` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;

@@ -12,8 +12,8 @@ class appCatalogsModel
 	/** @var string $table_name Nombre de la tabla */
 	private $table_name;
 
-	/** @var string $field_name Nombre del campo */
-	private $field_name;
+	/** @var string $column_name Nombre del campo */
+	private $column_name;
 
 	/** @var int $field_value Opción/Valor */
 	private $field_value;
@@ -65,15 +65,15 @@ class appCatalogsModel
 		$this->table_name = $value === null ? null : (string)$value;
 	}
 
-	public function getFieldName()
+	public function getColumnName()
 	{
-		return $this->field_name;
+		return $this->column_name;
 	}
 
-	public function setFieldName($value)
+	public function setColumnName($value)
 	{
 		self::validateStringSize($value, 64);
-		$this->field_name = $value === null ? null : (string)$value;
+		$this->column_name = $value === null ? null : (string)$value;
 	}
 
 	public function getFieldValue()

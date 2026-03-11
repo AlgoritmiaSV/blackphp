@@ -539,27 +539,7 @@ $(function()
 	/* Validations */
 	function validate()
 	{
-		var equal_value = "";
-		var validated = true;
-		$(".equal_value").each(function() {
-			if(equal_value == "")
-			{
-				equal_value = $(this).val();
-			}
-			else if($(this).val() != equal_value)
-			{
-				$.jAlert({
-					'title': "Error",
-					'content': "Las contraseñas no coinciden",
-					'theme': "red",
-					'autofocus': '.jalert_accept',
-					'btns': [
-						{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
-				});
-				validated = false;
-			}
-		});
-		return validated;
+		return true;
 	}
 
 	/* On success */

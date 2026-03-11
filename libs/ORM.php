@@ -1120,7 +1120,8 @@ trait ORM
 	{
 		self::$_extra_select .= ", MATCH($fields) AGAINST('$query') AS relevance";
 
-		return self::where("MATCH($fields) AGAINST('$query' IN BOOLEAN MODE)")->orderBy("relevance", "DESC");
+		return self::where("MATCH($fields) AGAINST('$query' IN BOOLEAN MODE)")
+			->orderBy("relevance", "DESC");
 	}
 
 	################ Validación de datos
@@ -1169,6 +1170,24 @@ trait ORM
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * Catálogo
+	 * 
+	 * Devuelve el catálogo de valores definidos para un campo en la tabla app_catalogs,
+	 * en un arreglo asociativo de la forma {id:"id", text:"text"}.
+	 * Ejemplo de uso: $userStatuses = usersModel::catalog("status");
+	 * 
+	 * @param string $columnName Nombre de la columna de la que se buscará el catálogo de valores
+	 * 
+	 * @return array Un arreglo conteniendo la lista de elementos encontrados.
+	 */
+	public static function catalog($columnName)
+	{
+		return appCatalogsModel::where("table_name", self::$_table_name)
+			->where("column_name", $columnName)
+			->list("field_value", "description");
 	}
 }
 

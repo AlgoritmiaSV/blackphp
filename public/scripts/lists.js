@@ -256,6 +256,7 @@ $( function()
 					$(this).data("searchable", searchableText);
 				});
 
+				$("#" + table_id + " tbody tr").off("click");
 				$("#" + table_id + " tbody tr").on("click", function() {
 					if($(this).data("href"))
 					{

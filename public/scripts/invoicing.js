@@ -58,8 +58,7 @@ function calc_bill_total()
 	if(bill_type >= 1 && bill_type <= 3)
 	{
 		$(".items_container tr").each(function() {
-			let row_total_cell = $(this).find(".row_total");
-			let row_total = parseFloat(row_total_cell.find("span").text());
+			let row_total = parseFloat($(this).find(".row_quantity").val()) * parseFloat($(this).find(".row_price").val());
 			if(!isNaN(row_total))
 			{
 				if($(this).find(".vat_exempt").val() == 0)

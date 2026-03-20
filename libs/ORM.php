@@ -1183,11 +1183,19 @@ trait ORM
 	 * 
 	 * @return array Un arreglo conteniendo la lista de elementos encontrados.
 	 */
-	public static function catalog($columnName)
+	public static function catalog($columnName, $exclude = [])
 	{
-		return appCatalogsModel::where("table_name", self::$_table_name)
-			->where("column_name", $columnName)
-			->list("field_value", "description");
+		$catalogModel =  appCatalogsModel::where("table_name", self::$_table_name)
+			->where("column_name", $columnName);
+		if(is_array($exclude) && count($exclude) > 0)
+		{
+			$catalogModel->whereNotIn($exclude, "field_value");
+		}
+		elseif(is_numeric($exclude))
+		{
+			$catalogModel->where("field_value", "!=", $exclude);
+		}
+		return $catalogModel->list("field_value", "description");
 	}
 }
 

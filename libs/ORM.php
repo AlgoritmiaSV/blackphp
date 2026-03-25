@@ -903,7 +903,13 @@ trait ORM
 			$id = $argv[0];
 			$text = $argv[1];
 		}
-		return self::select($select . "$id AS id, $text AS text")->getAll();
+		$select .= "$id AS id, $text AS text";
+		if($argc == 3)
+		{
+			$description = $argv[2];
+			$select .= ", $description AS description";
+		}
+		return self::select($select)->getAll();
 	}
 
 	/**

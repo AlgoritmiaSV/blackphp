@@ -73,14 +73,17 @@ class User extends Controller
 
 	private function LoadMyAccountForm()
 	{
-		$result = [];
-		$result["themes"] = appThemesModel::list();
+		$result = [
+			"themes" => appThemesModel::list(),
+			"locales" => appLocalesModel::list("locale_code", "locale_name")
+		];
+
 		foreach($result["themes"] as &$theme)
 		{
 			$theme["text"] = _($theme["text"]);
 		}
 		unset($theme);
-		$result["locales"] = appLocalesModel::list("locale_code", "locale_name");
+
 		foreach($result["locales"] as &$locale)
 		{
 			$locale["text"] = _($locale["text"]);
@@ -233,7 +236,9 @@ class User extends Controller
 
 			# Cargar los permisos del usuario
 			$permissions = Array();
-			$elements = roleElementsModel::where("role_id", $user->getRoleId())->join("app_elements", "element_id")->getAll();
+			$elements = roleElementsModel::where("role_id", $user->getRoleId())
+				->join("app_elements", "element_id")
+				->getAll();
 			foreach($elements as $element)
 			{
 				$permissions[$element["element_key"]] = $element["permissions"];
@@ -345,7 +350,7 @@ class User extends Controller
 		if(md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash()))
 		{
 			$this->json([
-				
+				"success" => false,
 				"title" => "Error",
 				"message" => _("Incorrect password"),
 				"theme" => "red"
@@ -363,7 +368,7 @@ class User extends Controller
 			return;
 		}
 
-		$validate = $this->ValidatePassword($_POST["password"]);
+		$validate = $this->ValidatePassword($_POST["new_password"]);
 		if($validate !== true)
 		{
 			$this->json([

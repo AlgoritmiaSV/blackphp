@@ -127,7 +127,7 @@ $(function()
 		action_module = url.module;
 	}
 
-	/** Cuando en la página sólo hay unformulario, y éste tiene una propiedad data-module
+	/** Cuando en la página sólo hay un formulario, y éste tiene una propiedad data-module
 	 * Se establecerá action_module en ese parámetro
 	 */
 	if($("#main_content form").length == 1 && $("#main_content form").data("module") != null)
@@ -164,10 +164,10 @@ $(function()
 						_tr.find(".date_input").each(set_date_picker);
 						_tr.find("input").on("keypress", input_keypress);
 						_tr.find(".row_quantity, .row_price").on("change", function() {
-							calc_row_total($(this));
-							calc_bill_total();
+							// calc_row_total($(this));
+							// calc_bill_total();
 						});
-						_tr.find(".delete_row_icon").on("click", delete_row_click);
+						// _tr.find(".delete_row_icon").on("click", delete_row_click);
 						build_autocomplete(_tr);
 						/* Fill */
 						_tr.find(".row_number").val(row_count);
@@ -191,7 +191,7 @@ $(function()
 							_tr.find(".sale_price").attr("data-nvat_price", value.data_nvat_price);
 						}
 				
-						calc_row_total(_tr);
+						// calc_row_total(_tr);
 						container.append(_tr);
 						_tr.find("input").first().trigger("focus");
 						/* Partial values */
@@ -318,7 +318,7 @@ $(function()
 		/* selectors */
 		build_selectors();
 		build_autocomplete();
-		calc_bill_total();
+		// calc_bill_total();
 		/* Unique selection */
 		$(".unique_selection").on("change", function() {
 			setTimeout(unique_selection, 500);
@@ -632,11 +632,11 @@ $(function()
 				_tr.find(".date_input").each(set_date_picker);
 				_tr.find("input").on("keypress", input_keypress);
 				_tr.find(".row_quantity, .row_price").on("change", function() {
-					calc_row_total($(this));
-					calc_bill_total();
+					// calc_row_total($(this));
+					// calc_bill_total();
 				});
 				_tr.find(".row_total").find("span").text("0.00");
-				_tr.find(".delete_row_icon").on("click", delete_row_click);
+				// _tr.find(".delete_row_icon").on("click", delete_row_click);
 				tbody.find(".delete_row_icon").css({
 					"visibility":"visible"
 				});
@@ -655,7 +655,7 @@ $(function()
 	}
 
 	/* Autocomplete */
-	function build_autocomplete(element = $("body"))
+	build_autocomplete = function(element = $("body"))
 	{
 		element.find(".list_input").each(function() {
 			var list_input = $(this);
@@ -696,8 +696,8 @@ $(function()
 						{
 							_tr.find(".row_quantity").val(1);
 						}
-						calc_row_total(_tr);
-						calc_bill_total();
+						//calc_row_total(_tr);
+						//calc_bill_total();
 						if(ui.item.combo_id)
 						{
 							setTimeout(check_generic, 50, _tr, ui.item.combo_id);
@@ -896,7 +896,7 @@ $(function()
 		location.reload();
 	});
 
-	delete_row_click = function(e) {
+	/* delete_row_click = function(e) {
 		e.preventDefault();
 		delete_button = $(this);
 		tbody = $(this).closest("tbody");
@@ -926,7 +926,7 @@ $(function()
 					}
 					// Others
 					delete_button.closest("tr").remove();
-					calc_bill_total();
+					//calc_bill_total();
 					row_count = 0;
 					tbody.find(".row_count").each(function() {
 						$(this).text(++row_count);
@@ -946,9 +946,9 @@ $(function()
 				{'text':'Cancelar', 'closeAlert':true, 'theme': 'darkgray', 'class': 'jalert_cancel'}
 			]
 		});
-	};
+	}; */
 
-	$(".delete_row_icon").on("click", delete_row_click);
+	// $(".delete_row_icon").on("click", delete_row_click);
 
 	/* Go To URL */
 	function goto_url()
@@ -994,20 +994,20 @@ $(function()
 	});
 
 	/* Agregar filas a una tabla de formulario desde el botón */
-	$(".add_row_button").on("click", function() {
+	/*$(".add_row_button").on("click", function() {
 		var tbody = $($(this).data("tbody"));
 		if(tbody == null)
 		{
 			tbody = $(".items_container").first();
 		}
 
-		/* Comprobación de número de filas */
+		// Comprobación de número de filas
 		var max_items = tbody.data("max_items");
 		if(max_items != null && max_items != 0 && tbody.find("tr").length >= max_items)
 		{
 			return false;
 		}
-		/* Fin de omprobación de número de filas */
+		// Fin de omprobación de número de filas
 
 		var last_tr = tbody.find("tr").last();
 		last_tr.find(".data_selector").each(function() {
@@ -1015,7 +1015,7 @@ $(function()
 		});
 		_tr = last_tr.clone();
 		tbody.append(_tr);
-		/* Prepare row */
+		// Prepare row
 		_tr.find(".row_count").text(tbody.find("tr").length);
 		_tr.find("input").first().focus();
 		_tr.find("input").val('');
@@ -1061,7 +1061,7 @@ $(function()
 		});
 		build_autocomplete(_tr);
 		build_selectors();
-	});
+	});*/
 
 	$(".add_entry_button").on("click", function() {
 		var container = $($(this).data("container"));
@@ -1392,7 +1392,7 @@ $(function()
 	/**
 	 * Control de celdas activas en tablas detalles
 	 */
-	td_active = null;
+	/*td_active = null;
 	$(".details_table tbody td").on("click", function(){
 		if(td_active)
 		{
@@ -1408,7 +1408,7 @@ $(function()
 		}
 		td_active = $(this).closest("td");
 		td_active.addClass("td_active");
-	});
+	});*/
 
 	/**
 	 * Activar o desacrivar tablas, columnas o filas completas
@@ -1619,53 +1619,4 @@ function formDataToJSON(form_data)
 		return { ...o, [n]: a };
 	}, {});
 	return obj;
-}
-
-/*function JSONToFormData(json)
-{
-	$.each(json, function(index, item)
-	{
-		if(Array.isArray(item))
-		{
-			$.each(item, function(i_index, i_value)
-			{
-				console.log(index+"[]:", i_value);
-			})
-		}
-		else
-		{
-			console.log(index + ":" + item);
-		}
-	});
-}*/
-
-function saveToLocalStorage(formData)
-{
-	var json = formDataToJSON(formData);
-	var savedForms = localStorage.getItem("forms");
-	if(savedForms == null)
-	{
-		savedForms = [];
-	}
-	else
-	{
-		savedForms = JSON.parse(savedForms);
-	}
-	savedForms[savedForms.length] = json;
-}
-
-function removeFromLocalStorage(submissionId)
-{
-	var savedForms = localStorage.getItem("forms");
-	if(savedForms == null)
-	{
-		return false;
-	}
-	savedForms = JSON.parse(savedForms);
-	var index = savedForms.findIndex(x => x.submissionId == submissionId);
-	if(index > -1)
-	{
-		savedForms.splice(index, 1);
-		localStorage.setItem("forms", JSON.stringify(savedForms));
-	}
 }

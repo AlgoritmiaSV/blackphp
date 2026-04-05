@@ -86,6 +86,7 @@ $form_td_border: 1px solid #ffffff;
 $form_thead_tr_bg: #4472C4;
 $notes_bg_image: repeating-linear-gradient(#e6e6e6, #e6e6e6 24px, #b9b9b9 24px, #b9b9b9 25px, #e6e6e6 25px);
 @import 'forms.scss';
+@import 'passwords.css';
 
 /* **************** Estilos para vista de detalles embebidas **************** */
 $dt_main_content_bg: linear-gradient(to bottom, #ffffff, #cccccc 20%);

@@ -80,7 +80,7 @@ $(function() {
 	});
 
 	/* Manage click on all links */
-	$("a").not(".link_exclude").on("click", function(e) {
+	$("a").not(".link_exclude").not(".delete_row_icon").on("click", function(e) {
 		e.preventDefault();
 		var href = $(this).attr("href");
 		if(href == "#")

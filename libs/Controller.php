@@ -375,11 +375,7 @@ class Controller
 			$this->view->data["title"] = _("Log in");
 			$this->view->standard_form();
 			$this->view->add("styles", "css", [
-				"styles/login.css",
-				"styles/passwords.css"
-			]);
-			$this->view->add("scripts", "js", [
-				"scripts/passwords.js"
+				"styles/login.css"
 			]);
 			$this->view->data["nav"] = "";
 			$this->view->data["about"] = sprintf(_("About %s"), $this->system_name);

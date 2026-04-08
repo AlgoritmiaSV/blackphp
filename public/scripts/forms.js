@@ -5,8 +5,8 @@
  * @author Edwin Fajardo
  */
 
-building_entry_selector = true;
-function build_selectors()
+// building_entry_selector = true;
+build_selectors = function()
 {
 	$(".data_selector:not(.select2-hidden-accessible)").each(function() {
 		var selector = $(this);
@@ -59,12 +59,12 @@ function build_selectors()
 			}
 		}
 	});
-	if(building_entry_selector)
+/*	if(building_entry_selector)
 	{
 		$("#bill_type").trigger("change");
-	}
+	}*/
 	$(".entry_selector").trigger("change");
-	building_entry_selector = false;
+//	building_entry_selector = false;
 }
 
 /**
@@ -163,10 +163,10 @@ $(function()
 						var _tr = _template.clone(false);
 						_tr.find(".date_input").each(set_date_picker);
 						_tr.find("input").on("keypress", input_keypress);
-						_tr.find(".row_quantity, .row_price").on("change", function() {
+						// _tr.find(".row_quantity, .row_price").on("change", function() {
 							// calc_row_total($(this));
 							// calc_bill_total();
-						});
+						// });
 						// _tr.find(".delete_row_icon").on("click", delete_row_click);
 						build_autocomplete(_tr);
 						/* Fill */
@@ -218,11 +218,11 @@ $(function()
 					}
 				}
 			});
-			if(typeof(start_calc_consumption) == "function")
+			/*if(typeof(start_calc_consumption) == "function")
 			{
 				start_calc_consumption();
 			}
-			$(".current").trigger("change");
+			$(".current").trigger("change");*/
 		}
 
 		/* inputs */
@@ -295,8 +295,8 @@ $(function()
 		/* Form Pagination */
 		if(json.found_rows != null)
 		{
-			var current_page = 0;
-			var page_size = json.page_size || 100;
+			let current_page = 0;
+			let page_size = json.page_size || 100;
 			if(url.options.page == null)
 			{
 				current_page = json.found_rows > 0 ? 1 : 0;
@@ -307,8 +307,11 @@ $(function()
 			}
 			$('.pagination').jqPagination({
 				paged: function(page) {
-					url.options["page"] = page;
-					goto_url();
+					if(page != url.options["page"])
+					{
+						url.options["page"] = page;
+						goto_url();
+					}
 				},
 				max_page: Math.ceil(json.found_rows / page_size),
 				current_page: current_page,
@@ -318,7 +321,14 @@ $(function()
 		/* selectors */
 		build_selectors();
 		build_autocomplete();
+
+		// Calculando totales de las tablas si hubieren
 		// calc_bill_total();
+		if(typeof(PerformTableCalculation) == "function")
+		{
+			setTimeout(PerformTableCalculation, 200);
+		}
+
 		/* Unique selection */
 		$(".unique_selection").on("change", function() {
 			setTimeout(unique_selection, 500);
@@ -375,7 +385,7 @@ $(function()
 			localStorage.setItem("submissionId", submissionId.toString());
 		}
 
-		first_input = $(this).find("input").first();
+		first_input = $(this).find("input").not(".current_page").first();
 		div_sending = $(this).siblings(".sending");
 		div_success = $(this).siblings(".success");
 		div_error = $(this).siblings(".error");
@@ -681,7 +691,7 @@ $(function()
 							_tr.find("select." + v_index).data("value", v_value);
 							_tr.find("span." + v_index).text(v_value);
 						});
-						if(bill_type && bill_type == 2 && url.module == 'Sales')
+						if(url.module == 'Sales' && bill_type == 2)
 						{
 							_tr.find(".sale_price").val(ui.item.nvat_price);
 						}
@@ -698,6 +708,13 @@ $(function()
 						}
 						//calc_row_total(_tr);
 						//calc_bill_total();
+
+						// Cálculo de totales (Solución temporal)
+						if(typeof(PerformTableCalculation) == "function")
+						{
+							setTimeout(PerformTableCalculation, 200);
+						}
+
 						if(ui.item.combo_id)
 						{
 							setTimeout(check_generic, 50, _tr, ui.item.combo_id);
@@ -1164,17 +1181,17 @@ $(function()
 		}
 		hidden_entries.hide();
 		hidden_entries.find("input").each(function() {
-			if(!building_entry_selector)
-			{
+			/*if(!building_entry_selector)
+			{*/
 				$(this).val("");
-			}
+			//}
 			$(this).removeAttr("required");
 		});
 		hidden_entries.find("select").each(function() {
-			if(!building_entry_selector)
-			{
+			/*if(!building_entry_selector)
+			{*/
 				$(this).val("");
-			}
+			//}
 			$(this).removeAttr("required");
 		});
 		visible_entries.show();
@@ -1252,9 +1269,7 @@ $(function()
 	});
 
 	/* Partial and complete values */
-	$(".partial_value").on("blur", partial_blur);
-
-	function partial_blur()
+	partial_blur = function()
 	{
 		if($(this).val().length > 0)
 		{
@@ -1276,9 +1291,10 @@ $(function()
 			$(this).hide();
 		}
 	}
+	$(".partial_value").on("blur", partial_blur);
 
-	$(".complete_value").on("click", complete_click);
-	function complete_click()
+
+	complete_click = function()
 	{
 		var partial_value = $(this).siblings(".partial_value").first();
 		partial_value.show();
@@ -1286,9 +1302,9 @@ $(function()
 		partial_value.trigger("select");
 		$(this).css("display", "none");
 	}
+	$(".complete_value").on("click", complete_click);
 
-	$(".partial_value").on("change", partial_change);
-	function partial_change()
+	partial_change = function()
 	{
 		$(this).siblings(".complete_value").text($(this).val());
 		if($(this).val().length == 0)
@@ -1297,6 +1313,7 @@ $(function()
 			$(this).show();
 		}
 	}
+	$(".partial_value").on("change", partial_change);
 	
 	$(".image-upload").each(function()
 	{
@@ -1304,7 +1321,7 @@ $(function()
 	});
 
 	/* Buscar por código */
-	function search_by_code()
+	search_by_code = function()
 	{
 		var local_code = $(this).val().toLowerCase().trim();
 		if(local_code == "")
@@ -1619,4 +1636,26 @@ function formDataToJSON(form_data)
 		return { ...o, [n]: a };
 	}, {});
 	return obj;
+}
+
+/**
+ * Reasignar eventos
+ * 
+ * Solución temporal para la reasignación de eventos de jQuery desde script no jQuery
+ */
+ReasignEventListeners = function()
+{
+	// Valores parciales
+	$(".partial_value").off("blur");
+	$(".partial_value").on("blur", partial_blur);
+	$(".partial_value").off("change");
+	$(".partial_value").on("change", partial_change);
+
+	// Valores completos
+	$(".complete_value").off("click");
+	$(".complete_value").on("click", complete_click);
+
+	// Búsquedas por código
+	$(".local_code").off("change");
+	$(".local_code").on("change", search_by_code);
 }

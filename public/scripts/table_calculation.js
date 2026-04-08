@@ -64,18 +64,24 @@ document.addEventListener('DOMContentLoaded', function (){
 			// Clone the last row
 			const lastRow = tbody.querySelector("tr:last-child");
 			if (!lastRow) return;
+			// Limpiando select2
+			lastRow.querySelectorAll(".data_selector").forEach(select => {
+				$(select).select2("destroy");
+			});
 
 			const newRow = lastRow.cloneNode(true);
 
 			// Clear inputs and spans
 			newRow.querySelectorAll("input").forEach(input => input.value = "");
 			newRow.querySelectorAll("select").forEach(select => select.value = "");
-			newRow.querySelectorAll("span").forEach(span => span.textContent = "");
+			newRow.querySelectorAll(".clearable").forEach(span => span.textContent = "");
 
 			// Valores completos y parciales
-			newRow.querySelector(".complete_value").textContent = "";
-			newRow.querySelector(".complete_value").style.display = "none";
-			newRow.querySelector(".partial_value").style.display = "initial";
+			newRow.querySelectorAll(".complete_value").forEach(div => {
+				div.textContent = "";
+				div.style.display = "none";
+			});
+			newRow.querySelectorAll(".partial_value").forEach(div => div.style.display = "initial");
 
 			// Append new row
 			tbody.appendChild(newRow);
@@ -95,6 +101,10 @@ document.addEventListener('DOMContentLoaded', function (){
 			{
 				build_selectors();
 			}
+			if(typeof(ReasignEventListeners == "function"))
+			{
+				ReasignEventListeners();
+			}
 		});
 	});
 });
@@ -107,7 +117,9 @@ function PerformTableCalculation()
 
 		// Call row calculation
 		if (rowCalcFn && typeof window[rowCalcFn] === "function") {
-			window[rowCalcFn](e.target.closest("tr"));
+			tbody.querySelectorAll("tr").forEach(tr => {
+				window[rowCalcFn](tr);
+			})
 		}
 
 		// Call table calculation (if defined)

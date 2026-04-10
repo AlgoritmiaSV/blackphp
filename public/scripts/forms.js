@@ -1183,14 +1183,14 @@ $(function()
 		hidden_entries.find("input").each(function() {
 			/*if(!building_entry_selector)
 			{*/
-				$(this).val("");
+				//$(this).val("");
 			//}
 			$(this).removeAttr("required");
 		});
 		hidden_entries.find("select").each(function() {
 			/*if(!building_entry_selector)
 			{*/
-				$(this).val("");
+				//$(this).val("");
 			//}
 			$(this).removeAttr("required");
 		});

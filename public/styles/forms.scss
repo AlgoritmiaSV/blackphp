@@ -77,7 +77,7 @@ tr:hover .action_icon
 
 .details_table input
 {
-	width: calc(100% - 10px);
+	width: calc(100% - 10px) !important;
 	border: 0px;
 	box-shadow: none;
 	outline: 0px;
@@ -253,42 +253,42 @@ tr:hover .action_icon
 	width: 100px;
 }
 
-.form_content table, .form_content td, .form_content th
+.details_table, .details_table td, .details_table th
 {
 	border: $form_td_border;
 	border-collapse: collapse;
 }
 
-.form_content thead tr
+.details_table thead tr
 {
 	background-color: $form_thead_tr_bg;
 	color: #ffffff;
 }
 
-.form_content th
+.details_table th
 {
 	font-size: 8pt;
 	padding: 5px;
 }
 
-.form_content td:not(.select2_td):not(.radio_td)
+.details_table td:not(.select2_td):not(.radio_td)
 {
 	font-size: 10pt;
 	padding: 5px;
 }
 
-.form_content td.select2_td
+.details_table td.select2_td
 {
 	padding: 2px;
 }
 
-.form_content td
+.details_table td
 {
 	position: relative;
 	vertical-align: top;
 }
 
-.form_content table
+.details_table
 {
 	width: 100%;
 	margin: 20px 0px;

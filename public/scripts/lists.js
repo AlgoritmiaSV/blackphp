@@ -59,6 +59,12 @@ $( function()
 		window.jsPDF = window.jspdf.jsPDF;
 	}
 
+	let platform = "Windows";
+	if (navigator.userAgentData) {
+		platform = navigator.userAgentData.platform;
+	}
+
+
 	/** 
 	 * Data viewer
 	 * 
@@ -134,7 +140,7 @@ $( function()
 				});
 
 				$("#" + table_id + " tbody tr").on("click", function() {
-					if($(this).data("href") && (!$(this).data("alert") || window.innerWidth < 700))
+					if($(this).data("href") && (!$(this).data("alert") || platform == "Android"))
 					{
 						location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
 					}

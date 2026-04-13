@@ -47,6 +47,7 @@ class Resources extends Controller
 	 * 
 	 * @return void
 	 */
+	/*
 	public function datatables_language()
 	{
 		$data = Array(
@@ -75,6 +76,7 @@ class Resources extends Controller
 		);
 		$this->json($data);
 	}
+	*/
 
 	public function manifest()
 	{

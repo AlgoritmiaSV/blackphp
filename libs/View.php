@@ -205,8 +205,6 @@ class View
 		$this->add("styles", "css", [
 			'node_modules/jquery-ui-dist/jquery-ui.min.css',
 			'node_modules/jAlert/dist/jAlert.css',
-			'node_modules/datatables.net-dt/css/jquery.dataTables.min.css',
-			'node_modules/datatables.net-responsive-dt/css/responsive.dataTables.min.css',
 			'external/css/select2.css',
 			'external/css/jqpagination.css',
 			'styles/theme.min.css',
@@ -219,13 +217,10 @@ class View
 			'node_modules/jquery/dist/jquery.min.js',
 			'node_modules/jquery-ui-dist/jquery-ui.min.js',
 			'node_modules/jAlert/dist/jAlert.min.js',
-			'node_modules/datatables.net/js/jquery.dataTables.min.js',
-			'node_modules/datatables.net-responsive/js/dataTables.responsive.min.js',
 			'node_modules/select2/dist/js/select2.min.js',
 			'node_modules/print-this/printThis.js',
 			'node_modules/floatthead/dist/jquery.floatThead.min.js',
 			'node_modules/html2canvas/dist/html2canvas.min.js',
-			'node_modules/jspdf/dist/jspdf.umd.min.js',
 			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'external/js/jquery.jqpagination.min.js',
 			'scripts/bpscript.min.js',
@@ -304,7 +299,6 @@ class View
 			'node_modules/select2/dist/js/select2.min.js',
 			'node_modules/print-this/printThis.js',
 			'node_modules/html2canvas/dist/html2canvas.min.js',
-			'node_modules/jspdf/dist/jspdf.umd.min.js',
 			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',
 			'scripts/bpscript.min.js'
 		]);
@@ -336,7 +330,6 @@ class View
 			'node_modules/select2/dist/js/select2.min.js',
 			'node_modules/print-this/printThis.js',
 			'node_modules/html2canvas/dist/html2canvas.min.js',
-			'node_modules/jspdf/dist/jspdf.umd.min.js',
 			'node_modules/chart.js/dist/chart.min.js',
 			'node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js',
 			'node_modules/sweetalert2/dist/sweetalert2.all.min.js',

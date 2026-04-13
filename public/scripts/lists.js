@@ -344,6 +344,7 @@ $( function()
 	}
 
 	/* Data tables */
+	/*
 	$(".data_table").each(function() {
 		load_data_table($(this).attr("id"));
 		$(".content_viewer").css("overflow", "hidden");
@@ -412,14 +413,14 @@ $( function()
 				},
 				dom: 'lrtip'
 			});
-			/* Fill content outside table after load */
+			// Fill content outside table after load
 			if(data.load_after)
 			{
 				$.each(data.load_after, function(index, value) {
 					$("." + index).text(value);
 				});
 			}
-			/* Data serach */
+			// Data serach
 			$(".data_search").on("keyup", function()
 			{
 				dtable.search($(this).val()).draw();
@@ -432,6 +433,7 @@ $( function()
 			$("div.loading_data").hide();
 		});
 	}
+	*/
 
 	/* Content loader */
 	$(".content_loader").each(function() {

@@ -184,7 +184,8 @@ trait Roles
 		$roles = rolesModel::getAllArray();
 		foreach($roles as &$role)
 		{
-			$role["users"] = usersModel::where("role_id", $role["role_id"])->count();
+			$role["users"] = usersModel::where("role_id", $role["role_id"])
+				->count();
 		}
 		unset($role);
 		$data = [
@@ -277,11 +278,40 @@ trait Roles
 		}
 	}
 
-	public function save_role()
+	public function SaveRole()
 	{
 		$this->check_permissions(empty($_POST["role_id"]) ? "create" : "update", "roles");
-		$data = $_POST;
-		$data["success"] = false;
+
+		# Validando que el nombre del rol no esté vacío
+		if(empty($_POST["role_name"]))
+		{
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
+				"message" => _("Bad request"),
+				"theme" => "red"
+			]);
+			return;
+		}
+
+		# Validando roles existentes con el mismo nombre
+		$_POST["role_name"] = trim($_POST["role_name"]);
+		$existingRoleModel = rolesModel::where("role_name", $_POST["role_name"]);
+		if(!empty($_POST["role_id"]))
+		{
+			$existingRoleModel->where("role_id", "!=", $_POST["role_id"]);
+		}
+		$existingRole = $existingRoleModel->get();
+		if($existingRole->exists())
+		{
+			$this->json([
+				"success" => false,
+				"title" => _("Error"),
+				"message" => _("A role with this name already exists"),
+				"theme" => "red"
+			]);
+			return;
+		}
 
 		$role = rolesModel::find($_POST["role_id"]);
 		$role->set([
@@ -320,22 +350,21 @@ trait Roles
 		roleElementsModel::where("role_id", $role->getRoleId())->whereNotIn(array_keys($elements), "element_id")->update(["status" => 0]);
 
 		#Finish and response
-		$data["success"] = true;
-		$data["title"] = _("Success");
-		$data["message"] = _("Changes have been saved");
-		$data["theme"] = "green";
-		$data["redirect_after"] = $this->module . "/EditRoleMenu/" . $role->getRoleId() . "/";
 		if(!empty($_POST["role_id"]))
 		{
-			# $data["no_reset"] = true;
 			$this->setUserLog("update", "roles", $role->getRoleId());
 		}
 		else
 		{
-			# $data["reload_after"] = true;
 			$this->setUserLog("create", "roles", $role->getRoleId());
 		}
-		$this->json($data);
+		$this->json([
+			"success" => true,
+			"title" => _("Success"),
+			"message" => _("Changes have been saved"),
+			"theme" => "green",
+			"redirect_after" => $this->module . "/EditRoleMenu/" . $role->getRoleId() . "/"
+		]);
 	}
 
 	/**

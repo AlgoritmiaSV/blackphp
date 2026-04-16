@@ -92,6 +92,7 @@ class View
 					}
 					$text .= $line;
 				}
+				$text = str_replace("$", "\\$", $text);
 				$template = preg_replace("/\[\[ $key \]\].*\[\[\/ $key \]\]/", $text, $template);
 			}
 		}

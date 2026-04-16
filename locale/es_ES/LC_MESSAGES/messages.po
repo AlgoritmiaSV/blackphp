@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-04 15:17-0600\n"
-"PO-Revision-Date: 2026-03-09 17:05+UTC-6\n"
+"PO-Revision-Date: 2026-04-16 00:00+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: es_ES\n"
@@ -19,6 +19,9 @@ msgstr ""
 
 msgid "%s ago"
 msgstr "Hace %s"
+
+msgid "A role with this name already exists"
+msgstr "Ya existe un rol con este nombre"
 
 msgid "About %s"
 msgstr "Acerca de %s"
@@ -79,9 +82,6 @@ msgstr "a las"
 
 msgid "August"
 msgstr "agosto"
-
-msgid "Authors"
-msgstr "Autores"
 
 msgid "Bad request"
 msgstr "Solicitud incorrecta"
@@ -188,11 +188,11 @@ msgstr "Eliminado por"
 msgid "Deleted successfully"
 msgstr "Eliminado con éxito"
 
-msgid "Dependence"
-msgstr "Dependencia"
-
-msgid "Dependences"
+msgid "Dependencies"
 msgstr "Dependencias"
+
+msgid "Dependency"
+msgstr "Dependencia"
 
 msgid "Description"
 msgstr "Descripción"

@@ -59,21 +59,7 @@ trait Information
 		{
 			$this->view->data[$key] = $item;
 		}
-		$this->view->data["dependencies"] = [
-			["name" => "BlackPHP (Framework)", "version" => "1.0.0", "authors" => "Algoritmia SV", "link" => "https://github.com/AlgoritmiaSV/BlackPHP", "license" => "MIT License"],
-				["name" => "Chart.js", "version" => "3.8.0", "authors" => "&copy;2014-2022 Chart.js Contributors", "link" => "https://www.chartjs.org", "license" => "MIT License"],
-			["name" => "chartjs-plugin-datalabels", "version" => "2.0.0", "authors" => "chartjs-plugin-datalabels contributors", "link" => "https://chartjs-plugin-datalabels.netlify.app", "license" => "MIT License"],
-			["name" => "Image Uploader", "version" => "1.2.3", "authors" => "Christian Bayer", "link" => "https://github.com/christianbayer/image-uploader", "license" => "MIT License"],
-			["name" => "jAlert", "version" => "4.5.1", "authors" => "HTMLGuy, LLC", "link" => "https://htmlguyllc.github.io/jAlert/", "license" => "MIT License"],
-			["name" => "jQuery", "version" => "3.2.1", "authors" => "JS Foundation and other contributors", "link" => "https://jquery.org", "license" => "MIT License"],
-			["name" => "jQuery UI", "version" => "1.12.1", "authors" => "jQuery Foundation and other contributors", "link" => "http://jqueryui.com", "license" => "MIT License"],
-			["name" => "jQuery.floatThead", "version" => "2.2.1", "authors" => "Misha Koryak", "link" => "https://mkoryak.github.io/floatThead/", "license" => "MIT License"],
-			["name" => "jqPagination", "version" => "1.4.1", "authors" => "Ben Everard", "link" => "http://beneverard.github.com/jqPagination", "license" => "GPL v3"],
-			["name" => "printThis", "version" => "1.15.1", "authors" => "Jason Day", "link" => "https://jasonday.github.io/printThis/", "license" => "MIT License"],
-			["name" => "Select2", "version" => "4.0.4", "authors" => "Kevin Brown, Igor Vaynberg, and Select2 contributors", "link" => "https://select2.org/", "license" => "MIT License"],
-			["name" => "PHP User Agent Parser", "version" => "1.6.0", "authors" => "Jesse Donat", "link" => "https://donatstudios.com/PHP-Parser-HTTP_USER_AGENT", "license" => "MIT License"],
-			["name" => "PHP Spread Sheet", "version" => "1.23.0", "authors" => "PhpSpreadsheet Contributors", "link" => "https://phpspreadsheet.readthedocs.io/", "license" => "MIT License"]
-		];
+		$this->view->data["dependencies"] = array_merge($this->getNpmDependencies(), $this->getComposerDependencies());
 		if($mode == "standalone")
 		{
 			$this->view->data["title"] = sprintf(_("About %s"), $this->system_name);
@@ -89,6 +75,60 @@ trait Information
 		{
 			$this->view->render('settings/info_details');
 		}
+	}
+
+	/**
+	 * Read npm dependencies from package.json and package-lock.json
+	 * Returns JSON with: name, version, license
+	 */
+	function getNpmDependencies() {
+		$packageJson = json_decode(file_get_contents('package.json'), true);
+		$lockJson    = json_decode(file_get_contents('package-lock.json'), true);
+
+		$dependencies = [];
+
+		if (!empty($packageJson['dependencies'])) {
+			foreach ($packageJson['dependencies'] as $name => $versionConstraint) {
+				if (isset($lockJson['packages']["node_modules/$name"])) {
+					$pkg = $lockJson['packages']["node_modules/$name"];
+					$dependencies[] = [
+						'name'    => $name,
+						'version' => $pkg['version'] ?? $versionConstraint,
+						'license' => $pkg['license'] ?? 'unknown'
+					];
+				}
+			}
+		}
+
+		return $dependencies;
+	}
+
+	/**
+	 * Read Composer dependencies from composer.json and composer.lock
+	 * Returns JSON with: name, version, license
+	 */
+	function getComposerDependencies() {
+		$composerJson = json_decode(file_get_contents('composer.json'), true);
+		$lockJson     = json_decode(file_get_contents('composer.lock'), true);
+
+		$dependencies = [];
+
+		if (!empty($composerJson['require'])) {
+			foreach ($composerJson['require'] as $name => $versionConstraint) {
+				foreach ($lockJson['packages'] as $pkg) {
+					if ($pkg['name'] === $name) {
+						$dependencies[] = [
+							'name'    => $pkg['name'],
+							'version' => $pkg['version'] ?? $versionConstraint,
+							'license' => !empty($pkg['license']) ? implode(', ', $pkg['license']) : 'unknown'
+						];
+						break;
+					}
+				}
+			}
+		}
+
+		return $dependencies;
 	}
 }
 ?>

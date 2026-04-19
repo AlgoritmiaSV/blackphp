@@ -55,7 +55,6 @@ class Controller
 				$this->view->data["copyright_" . $key] = $value;
 			}
 		}
-		$this->system_name = $system["system_name"];
 
 		#2 Zona horaria por defecto
 		date_default_timezone_set('America/El_Salvador');
@@ -197,7 +196,6 @@ class Controller
 		}
 		$this->entity_id = $entity["entity_id"];
 		$this->entity_subdomain = $entity["entity_subdomain"];
-		$this->entity_name = $entity["entity_name"];
 		$this->view->data["modules"] = Session::get("modules");
 
 		#Directorio y logo
@@ -252,36 +250,6 @@ class Controller
 	}
 
 	/**
-	 * Cargar el modelo
-	 * 
-	 * Método para cargar modelos de forma manual. En este momento, este método no se está utilizando,
-	 * y se eliminará en versiones posteriores.
-	 * 
-	 * @param string $name Nombre del modelo
-	 * @param string $path Ruta donde se encuentra el modelo, por defecto models/
-	 * @param boolean $default_model Si es verdadero, asigna el objeto a $this->model, sino, retorna el objeto
-	 * 
-	 * @return object|void Un objeto de tipo Model, o void
-	 */
-	protected function loadModel($name, $modelPath = 'models/', $default_model = true)
-	{
-		$path = $modelPath . $name.'_model.php';
-		if (file_exists($path))
-		{
-			require_once $path;
-			$modelName = $name . '_Model';
-			if($default_model)
-			{
-				$this->model = new $modelName();
-			}
-			else
-			{
-				return new $modelName();
-			}
-		}
-	}
-
-	/**
 	 * Sistema en mantenimiento
 	 * 
 	 * Muestra un aviso de sistema en mantenimiento, en caso de que la constante
@@ -291,13 +259,13 @@ class Controller
 	{
 		if($type == 'json')
 		{
-			$this->json(Array(
+			$this->json([
 				"success" => false,
 				"error" => true,
 				"message" => _("System under maintenance"),
 				"title" => "Error",
 				"theme" => "red"
-			));
+			]);
 		}
 		elseif($type == 'internal')
 		{
@@ -378,7 +346,7 @@ class Controller
 				"styles/login.css"
 			]);
 			$this->view->data["nav"] = "";
-			$this->view->data["about"] = sprintf(_("About %s"), $this->system_name);
+			$this->view->data["about"] = sprintf(_("About %s"), Session::get("system/system_name"));
 			$this->view->data["content"] = $this->view->render("login", true);
 			$this->view->render('main');
 		}
@@ -581,7 +549,7 @@ class Controller
 					'styles/login.css'
 					));
 				$this->view->data["nav"] = "";
-				$this->view->data["about"] = sprintf(_("About %s"), $this->system_name);
+				$this->view->data["about"] = sprintf(_("About %s"), Session::get("system/system_name"));
 				$this->view->data["content"] = $this->view->render("login", true);
 				$this->view->render('main');
 			}

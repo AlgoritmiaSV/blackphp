@@ -25,12 +25,6 @@ class Bootstrap {
 	private $_controllerPath = 'controllers/';
 
 	/**
-	 * @var string $_modelPath La ruta donde se encuentran los modelos
-	 * Se debe incluir siempre la barra / al final
-	 */
-	private $_modelPath = 'models/';
-
-	/**
 	 * @var string $_errorFile El nombre del fichero con la clase o las clases que manejarán los errores.
 	 */
 	private $_errorFile = 'error.php';
@@ -70,18 +64,6 @@ class Bootstrap {
 	public function setControllerPath($path)
 	{
 		$this->_controllerPath = trim($path, '/') . '/';
-	}
-	
-	/**
-	 * (Optional) Introduci una ruta personalizada para los modelos
-	 * 
-	 * @param string $path Ubicación de los modelos
-	 * 
-	 * @return void
-	 */
-	public function setModelPath($path)
-	{
-		$this->_modelPath = trim($path, '/') . '/';
 	}
 	
 	/**

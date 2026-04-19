@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function (){
 			}
 			if(typeof(ReasignEventListeners == "function"))
 			{
-				ReasignEventListeners();
+				ReasignEventListeners(newRow);
 			}
 		});
 	});

@@ -1643,8 +1643,9 @@ function formDataToJSON(form_data)
  * 
  * Solución temporal para la reasignación de eventos de jQuery desde script no jQuery
  */
-ReasignEventListeners = function()
+ReasignEventListeners = function(row)
 {
+	let tr = $(row);
 	// Valores parciales
 	$(".partial_value").off("blur");
 	$(".partial_value").on("blur", partial_blur);
@@ -1658,4 +1659,6 @@ ReasignEventListeners = function()
 	// Búsquedas por código
 	$(".local_code").off("change");
 	$(".local_code").on("change", search_by_code);
+
+	tr.find(".date_input").each(set_date_picker);
 }

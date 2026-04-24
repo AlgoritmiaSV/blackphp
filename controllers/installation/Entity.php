@@ -165,6 +165,7 @@ trait Entity
 				$protocol .= "s";
 			}
 			$response["redirect_after"] = $protocol . "://" . str_replace("installer", $_POST["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/RoleAndUser/";
+			Session::destroy();
 		}
 		else
 		{

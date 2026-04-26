@@ -17,7 +17,12 @@ foreach(glob("controllers/settings/*") as $file)
 
 class Settings extends Controller
 {
-	use Entity, Preferences, Users, Roles, Information;
+	use Entity;
+	use Information;
+	use Preferences;
+	use Roles;
+	use Users;
+
 	/**
 	 * Constructor de la clase
 	 * 
@@ -68,10 +73,6 @@ class Settings extends Controller
 			case "Entity":
 				$result = $this->LoadEntityForm();
 				break;
-			case "NewUser":
-			case "EditUser":
-				$result = $this->LoadUserForm();
-				break;
 			case "Preferences":
 				$result = $this->LoadPreferencesForm();
 				break;
@@ -82,6 +83,10 @@ class Settings extends Controller
 			case "EditRoleMenu":
 				$result = $this->LoadRoleMenuForm();
 				break;
+			case "NewUser":
+			case "EditUser":
+				$result = $this->LoadUserForm();
+				break;
 		}
 		$this->json($result);
 	}
@@ -89,7 +94,8 @@ class Settings extends Controller
 	private function LoadEntityForm()
 	{
 		$result = [
-			"update" => entitiesModel::find($this->entity_id)->toArray()
+			"update" => entitiesModel::find($this->entity_id)
+				->toArray()
 		];
 		return $result;
 	}
@@ -161,13 +167,46 @@ class Settings extends Controller
 		}
 		else
 		{
-			$result["check"]["read"] = appElementsModel::select("element_id AS id")->getAll();
+			$readable = [];
+			$creatable = [];
+			$updatable = [];
+			$deletable = [];
+
+			foreach(Session::get("permissions") as $key => $value)
+			{
+				if(8 & intval($value))
+				{
+					$readable[] = $key;
+				}
+				if(4 & intval($value))
+				{
+					$creatable[] = $key;
+				}
+				if(2 & intval($value))
+				{
+					$updatable[] = $key;
+				}
+				if(1 & intval($value))
+				{
+					$deletable[] = $key;
+				}
+			}
+
+			$result["check"]["read"] = appElementsModel::select("element_id AS id")
+				->whereIn($readable, "element_key")
+				->getAll();
 			$result["check"]["create"] = appElementsModel::select("element_id AS id")
-				->where("is_creatable", 1)->getAll();
+				->whereIn($creatable, "element_key")
+				->where("is_creatable", 1)
+				->getAll();
 			$result["check"]["update"] = appElementsModel::select("element_id AS id")
-				->where("is_updatable", 1)->getAll();
+				->whereIn($updatable, "element_key")
+				->where("is_updatable", 1)
+				->getAll();
 			$result["check"]["delete"] = appElementsModel::select("element_id AS id")
-				->where("is_deletable", 1)->getAll();
+				->whereIn($deletable, "element_key")
+				->where("is_deletable", 1)
+				->getAll();
 		}
 		return $result;
 	}
@@ -182,9 +221,11 @@ class Settings extends Controller
 				"update" => $role->toArray(),
 				"check" => [
 					"modules" => roleModulesModel::select("module_id AS id")
-						->where("role_id", $_POST["id"])->getAll(),
+						->where("role_id", $_POST["id"])
+						->getAll(),
 					"methods" => roleMethodsModel::select("method_id AS id")
-						->where("role_id", $_POST["id"])->getAll()
+						->where("role_id", $_POST["id"])
+						->getAll()
 				]
 			];
 		}
@@ -203,7 +244,8 @@ class Settings extends Controller
 		foreach($roles as $role)
 		{
 			$elements = roleElementsModel::join("app_elements", "element_id")
-				->where("role_id", $role->getRoleId())->getAll();
+				->where("role_id", $role->getRoleId())
+				->getAll();
 			$asignable = true;
 			foreach($elements as $element)
 			{

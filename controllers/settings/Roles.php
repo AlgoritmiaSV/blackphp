@@ -46,15 +46,20 @@ trait Roles
 			foreach($elements as &$element)
 			{
 				$element["element_name"] = _($element["element_name"]);
-				if($element["is_creatable"] == 0)
+				$permissions = Session::get("permissions/" . $element["element_key"]);
+				if((8 & intval($permissions)) == 0)
+				{
+					$element["readable"] = "disabled";
+				}
+				if($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0)
 				{
 					$element["creatable"] = "disabled";
 				}
-				if($element["is_updatable"] == 0)
+				if($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0)
 				{
 					$element["updatable"] = "disabled";
 				}
-				if($element["is_deletable"] == 0)
+				if($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0)
 				{
 					$element["deletable"] = "disabled";
 				}
@@ -94,15 +99,20 @@ trait Roles
 			foreach($elements as &$element)
 			{
 				$element["element_name"] = _($element["element_name"]);
-				if($element["is_creatable"] == 0)
+				$permissions = Session::get("permissions/" . $element["element_key"]);
+				if((8 & intval($permissions)) == 0)
+				{
+					$element["readable"] = "disabled";
+				}
+				if($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0)
 				{
 					$element["creatable"] = "disabled";
 				}
-				if($element["is_updatable"] == 0)
+				if($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0)
 				{
 					$element["updatable"] = "disabled";
 				}
-				if($element["is_deletable"] == 0)
+				if($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0)
 				{
 					$element["deletable"] = "disabled";
 				}

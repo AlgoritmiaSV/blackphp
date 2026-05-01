@@ -4,6 +4,6 @@ vendor/
 node_modules/
 config.php
 .DS_Store
-db/mysql/historical/*
+db/mysql/history/
 composer.lock
 package-lock.json

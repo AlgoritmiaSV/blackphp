@@ -15,6 +15,8 @@ class excel
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
 
+		$currentRow = 1;
+
 		if(!empty($data["title"]))
 		{
 			$sheet->setCellValue([1, 1], $data["title"]);
@@ -27,21 +29,24 @@ class excel
 			$sheet->getStyle('A1')
 				->getAlignment()
 				->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+			$currentRow += 2;
 		}
 
 		for ($i = 0, $l = sizeof($headers); $i < $l; $i++)
 		{
-			$sheet->setCellValue([$i + 1, 3], $headers[$i]);
+			$sheet->setCellValue([$i + 1, $currentRow], $headers[$i]);
 		}
-		$sheet->getStyle("A3:" . chr(64 + count($headers)) . "3")
+		$sheet->getStyle("A" . $currentRow . ":" . chr(64 + count($headers)) . $currentRow)
 			->getFill()
 			->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
 			->getStartColor()
 			->setARGB('d9d9d9');
 
-		$sheet->getStyle("A3:" . chr(64 + count($headers)) . "3")
+		$sheet->getStyle("A" . $currentRow . ":" . chr(64 + count($headers)) . $currentRow)
 			->getFont()
 			->setBold(true);
+		$currentRow++;
 
 		$maxWidth = Array();
 		$l = sizeof($content);
@@ -55,7 +60,7 @@ class excel
 				{
 					$maxWidth[$j] = 50;
 				}
-				$sheet->setCellValue([$j + 1, $i + 4], $v);
+				$sheet->setCellValue([$j + 1, $i + $currentRow], $v);
 				$j++;
 			}
 		}
@@ -73,7 +78,7 @@ class excel
 				$j++;
 			}
 
-			$sheet->getStyle("A" . ($l + 4) . ":" . chr(64 + count($fields)) . ($l + 4))
+			$sheet->getStyle("A" . ($l + $currentRow) . ":" . chr(64 + count($fields)) . ($l + $currentRow))
 				->getFont()
 				->setBold(true);
 		}

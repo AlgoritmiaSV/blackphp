@@ -171,7 +171,7 @@ CREATE TABLE `app_options` (
   `module_id` int(11) DEFAULT NULL COMMENT 'Módulo en el que se realiza la configuración',
   `default_value` varchar(255) NOT NULL COMMENT 'Valor por defecto de la opción',
   PRIMARY KEY (`option_id`),
-  UNIQUE KEY `unique_key_module` (`option_key`,`module_id`),
+  UNIQUE KEY `unique_option_key` (`option_key`),
   KEY `option_module` (`module_id`),
   CONSTRAINT `option_module` FOREIGN KEY (`module_id`) REFERENCES `app_modules` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Opciones de la aplicación, configurables por entidad';

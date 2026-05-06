@@ -1462,9 +1462,13 @@ $(function()
 
 	// Carga asíncrona de selectores de forma jerárquica
 	$(".parent_selector").on("change", function() {
-		var child = $("#" + $(this).data("child"));
-		var parent_value = $(this).val();
-		var source = child.data("source");
+		let child = $("#" + $(this).data("child"));
+		let parent_value = $(this).val();
+		let source = child.data("source");
+		if(child == null || source == null)
+		{
+			return false;
+		}
 		child.val(0).trigger("change");
 		if(child.data("resetmode") == "full")
 		{

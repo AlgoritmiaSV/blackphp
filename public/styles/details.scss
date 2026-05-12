@@ -243,6 +243,13 @@
 	background-color: $dsheet_tbody_bg;
 }
 
+.data_sheet_table th
+{
+	padding: 10px 5px;
+	border: $dsheet_td_border;
+	background-color: $dsheet_thead_bg;
+}
+
 .data_sheet_table td
 {
 	padding: 10px 5px;

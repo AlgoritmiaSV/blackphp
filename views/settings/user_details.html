@@ -60,7 +60,14 @@
 	<div class="details_foot no_print">
 		<span class="button_group">
 			<!-- no_self -->
-			<button class="delete_button red_button" data-url="{{ module }}/delete_user" data-next="{{ module }}/Users">
+			<button
+				class="delete_button red_button"
+				data-url="{{ module }}/DeleteUser"
+				data-next="{{ module }}/Users"
+				data-confirmation-title="_(Confirm)"
+				data-confirmation-text="_(Are you sure you want to delete this record?)" 
+				data-confirm-button-text="_(Yes)"
+				data-cancel-button-text="_(No)">
 				<img src="public/images/outline/delete.png" class="x-small_icon">
 				_(Delete)
 			</button>

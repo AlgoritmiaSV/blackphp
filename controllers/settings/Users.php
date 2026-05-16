@@ -228,11 +228,11 @@ trait Users
 		}
 
 		$user_id = 0;
-		$user = usersModel::find($_POST["user_id"])
-			->set([
-				"user_name" => $_POST["user_name"],
-				"nickname" => $_POST["nickname"]
-			]);
+		$user = usersModel::find($_POST["user_id"]);
+		$user->set([
+			"user_name" => $_POST["user_name"],
+			"nickname" => $_POST["nickname"]
+		]);
 		if(!empty($_POST["password"]))
 		{
 			$validate = $this->ValidatePassword($_POST["password"]);
@@ -286,10 +286,11 @@ trait Users
 	 * 
 	 * @return void
 	 */
-	public function delete_user()
+	public function DeleteUser()
 	{
 		$this->check_permissions("delete", "users");
-		if(empty($_POST["id"]))
+		$request = http::getRequestData();
+		if(empty($request["id"]))
 		{
 			$this->json([
 				"deleted" => false,
@@ -299,7 +300,7 @@ trait Users
 			]);
 			return;
 		}
-		$user = usersModel::find($_POST["id"]);
+		$user = usersModel::find($request["id"]);
 		$affected = $user->delete();
 		$this->setUserLog("delete", "users", $user->getUserId());
 		$this->json([

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2026-05-11 01:51+UTC-6\n"
+"PO-Revision-Date: 2026-05-15 11:34+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -77,6 +77,9 @@ msgstr "Имя приложения"
 msgid "April"
 msgstr "Апрель"
 
+msgid "Are you sure you want to delete this record?"
+msgstr "Вы уверены, что хотите удалить эту запись?"
+
 msgid "at"
 msgstr ","
 
@@ -124,6 +127,9 @@ msgstr "Закрыть"
 
 msgid "Complete name"
 msgstr "Полное имя"
+
+msgid "Confirm"
+msgstr "Подтвердить"
 
 msgid "Confirm new password"
 msgstr "подтвердите новый пароль"
@@ -431,6 +437,9 @@ msgstr "Следующий"
 msgid "Nickname"
 msgstr "Псевдоним"
 
+msgid "No"
+msgstr "Нет"
+
 msgid "No data available in table"
 msgstr "Данные отсутствуют в таблице"
 
@@ -725,6 +734,9 @@ msgstr "год"
 msgid "years"
 msgstr "года"
 
+msgid "Yes"
+msgstr "Да"
+
 msgid "You are creating a new company account. For this action you need to have an account as an installer"
 msgstr "Вы создаете новую учетную запись компании. Для этого действия вам необходимо иметь учетную запись установщика"
 
@@ -757,4 +769,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 245 messages translated.
+# 249 messages translated.

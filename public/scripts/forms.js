@@ -817,21 +817,12 @@ $(function()
 		$(".data_search").hide();
 	});
 
-	/* Delete */
-	/* Cambiar esta parte por un change_status genérico */
+	/* Delete
+	Cambiar esta parte por un change_status genérico
 	delete_button_click = function()
 	{
 		deletion_url = $(this).data("url");
 		deletion_next = $(this).data("next");
-		/*$.jAlert({
-			'title': "Confirmar",
-			'content': "¿Confirma que desea borrar este registro?",
-			'theme': "red",
-			'autofocus': '.jalert_cancel',
-			'btns': [
-				{'text':'Confirmar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept', 'onClick': delete_entry},
-				{'text':'Cancelar', 'closeAlert':true, 'theme': 'gray', 'class': 'jalert_cancel'}]
-		});*/
 		Swal.fire({
 			title: "Confirmar",
 			text: "¿Está seguro de que de que desea eliminar este registro?",
@@ -860,16 +851,6 @@ $(function()
 		.done(function(deletion_data) {
 			if(deletion_data.deleted)
 			{
-				/*$.jAlert({
-					'title': deletion_data.title || "Success",
-					'content': deletion_data.message || "Deleted succesfully!",
-					'theme': "blue",
-					'autofocus': '.jalert_accept',
-					'btns': [
-						{'text': deletion_data.accept || 'OK', 'closeAlert':true, 'theme': 'blue', 'class': 'jalert_accept', 'onClick': function() {
-							window.open(deletion_next, "_top");
-						}}]
-				});*/
 				Swal.fire({
 					title: deletion_data.title || "Success",
 					text: deletion_data.message || "Deleted succesfully!",
@@ -907,7 +888,8 @@ $(function()
 		.always(function() {
 		});	
 	}
-	/* Fin de Cambiar esta parte por un change_status genérico */
+	
+	Fin de Cambiar esta parte por un change_status genérico */
 
 	$(".reload_button").on("click", function() {
 		location.reload();
@@ -1512,6 +1494,7 @@ $(function()
 	});
 
 	/* Procedimiento genérico para cambio de estados */
+	/*
 	change_status_click = function()
 	{
 		change_status_url = $(this).data("url");
@@ -1589,7 +1572,7 @@ $(function()
 		.always(function() {
 		});	
 	}
-	/* Fin de procedimiento genérico para cambio de estados */
+	Fin de procedimiento genérico para cambio de estados */
 
 	/* Botones para agregar parámetros en URL */
 	$(".route_button").on("click", function() {

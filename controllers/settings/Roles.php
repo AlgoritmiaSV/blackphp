@@ -434,10 +434,11 @@ trait Roles
 	 * 
 	 * @return void
 	 */
-	public function delete_role()
+	public function DeleteRole()
 	{
 		$this->check_permissions("delete", "roles");
-		if(empty($_POST["id"]))
+		$request = http::getRequestData();
+		if(empty($request["id"]))
 		{
 			$this->json([
 				"deleted" => false,
@@ -447,8 +448,11 @@ trait Roles
 			]);
 			return;
 		}
-		$role = rolesModel::find($_POST["id"]);
-		$users = usersModel::where("role_id", $role->getRoleId())->count();
+		$role = rolesModel::find($request["id"]);
+
+		# Validar que el rol no contiene usuarios activos
+		$users = usersModel::where("role_id", $role->getRoleId())
+			->count();
 		if($users > 0)
 		{
 			$this->json([
@@ -459,6 +463,7 @@ trait Roles
 			]);
 			return;
 		}
+		
 		$affected = $role->delete();
 		$this->setUserLog("delete", "roles", $role->getRoleId());
 		$this->json([

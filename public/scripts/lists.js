@@ -525,6 +525,7 @@ $( function()
 			$(".open_dialog_button").on("click", function() {
 				$("#" + $(this).data("dialog")).dialog("open");
 			});
+			/*
 			if($(".delete_button").length)
 			{
 				$(".delete_button").on("click", delete_button_click);
@@ -533,6 +534,7 @@ $( function()
 			{
 				$(".change_status_button").on("click", change_status_click);
 			}
+			*/
 			if($(".file_downloader").length && typeof(FileDownloader) == "function")
 			{
 				FileDownloader();

@@ -88,7 +88,7 @@ class Settings extends Controller
 				$result = $this->LoadUserForm();
 				break;
 		}
-		$this->json($result);
+		http::json($result);
 	}
 
 	private function LoadEntityForm()

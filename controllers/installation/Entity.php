@@ -72,7 +72,7 @@ trait Entity
 						"message" => _("No subdomain chosen"),
 						"theme" => "red"
 					];
-					$this->json($response);
+					http::json($response);
 					return;
 				}
 			}
@@ -86,7 +86,7 @@ trait Entity
 					"message" => sprintf(_("The subdomain %s is not available"), $_POST["subdomain"]),
 					"theme" => "red"
 				];
-				$this->json($response);
+				http::json($response);
 				return;
 			}
 		}
@@ -119,7 +119,7 @@ trait Entity
 				"message" => _("Failed to create the entity"),
 				"theme" => "red"
 			];
-			$this->json($response);
+			http::json($response);
 			return;
 		}
 
@@ -171,7 +171,7 @@ trait Entity
 		{
 			$response["reload_after"] = true;
 		}
-		$this->json($response);
+		http::json($response);
 	}
 }
 ?>

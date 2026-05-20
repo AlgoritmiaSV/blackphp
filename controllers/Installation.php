@@ -332,7 +332,7 @@ class Installation extends Controller
 					->where("is_deletable", 1)->getAll();
 			}
 		}
-		$this->json($data);
+		http::json($data);
 	}
 
 	/**
@@ -353,7 +353,7 @@ class Installation extends Controller
 				"message" => _("Enter your installer user and password"),
 				"theme" => "red"
 			];
-			$this->json($response);
+			http::json($response);
 			return;
 		}
 		$installer = appInstallersModel::where("installer_nickname", $_POST["nickname"])->get();
@@ -372,7 +372,7 @@ class Installation extends Controller
 				"no_reset" => true
 			];
 		}
-		$this->json($response);
+		http::json($response);
 	}
 
 	public function php_info_loader()
@@ -415,7 +415,7 @@ class Installation extends Controller
 		{
 			if($type == 'json')
 			{
-				$this->json([
+				http::json([
 					"success" => false,
 					"error" => true,
 					"message" => _("You are not logged in"),

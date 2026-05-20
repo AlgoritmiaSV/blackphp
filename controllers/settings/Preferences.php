@@ -133,7 +133,7 @@ trait Preferences
 		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
 		$data["no_reset"] = true;
-		$this->json($data);
+		http::json($data);
 	}
 }
 ?>

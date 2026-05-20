@@ -60,7 +60,7 @@ class Tools extends Controller
 
 	public function load_form_data()
 	{
-		$this->json(Array());
+		http::json(Array());
 	}
 }
 ?>

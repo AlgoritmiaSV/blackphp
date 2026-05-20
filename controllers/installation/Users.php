@@ -44,7 +44,7 @@ trait Users
 				"password" => $password
 			];
 		}
-		$this->json($passwords);
+		http::json($passwords);
 	}
 }
 ?>

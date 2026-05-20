@@ -76,7 +76,7 @@ trait Entity
 			}
 			$this->setUserLog("update", "entityData");
 		}
-		$this->json($data);
+		http::json($data);
 	}
 }
 ?>

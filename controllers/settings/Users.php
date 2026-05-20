@@ -118,7 +118,7 @@ trait Users
 		}
 		else
 		{
-			$this->json($data);
+			http::json($data);
 		}
 	}
 
@@ -204,7 +204,7 @@ trait Users
 		$this->check_permissions(empty($_POST["user_id"]) ? "create" : "update", "users");
 		if(empty($_POST["user_name"]))
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => _("Bad request"),
@@ -218,7 +218,7 @@ trait Users
 			->where("user_id", "!=", $_POST["user_id"])->get();
 		if(!empty($test->getUserId()))
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => _("The nickname already exists!"),
@@ -238,7 +238,7 @@ trait Users
 			$validate = $this->ValidatePassword($_POST["password"]);
 			if($validate !== true)
 			{
-				$this->json([
+				http::json([
 					"success" => false,
 					"title" => _("Error"),
 					"message" => implode("<br>", $validate),
@@ -270,7 +270,7 @@ trait Users
 			$this->setUserLog("create", "users", $user->getUserId());
 		}
 
-		$this->json([
+		http::json([
 			"success" => true,
 			"title" => _("Success"),
 			"message" => _("Changes have been saved"),
@@ -292,7 +292,7 @@ trait Users
 		$request = http::getRequestData();
 		if(empty($request["id"]))
 		{
-			$this->json([
+			http::json([
 				"deleted" => false,
 				"title" => _("Error"),
 				"message" => _("Bad request"),
@@ -303,7 +303,7 @@ trait Users
 		$user = usersModel::find($request["id"]);
 		$affected = $user->delete();
 		$this->setUserLog("delete", "users", $user->getUserId());
-		$this->json([
+		http::json([
 			"deleted" => $affected > 0,
 			"title" => _("Success"),
 			"message" => _("Deleted successfully"),

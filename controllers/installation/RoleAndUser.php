@@ -142,7 +142,7 @@ trait RoleAndUser
 		{
 			$response["reload_after"] = true;
 		}
-		$this->json($response);
+		http::json($response);
 	}
 }
 ?>

@@ -46,7 +46,7 @@ class Index extends Controller
 	public function branch_filter_loader()
 	{
 		$data = Array();
-		$this->json($data);
+		http::json($data);
 	}
 
 	/**

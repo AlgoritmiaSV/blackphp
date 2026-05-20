@@ -124,7 +124,7 @@ trait ActivityLog
 		}
 		else
 		{
-			$this->json($data);
+			http::json($data);
 		}
 	}
 
@@ -141,7 +141,7 @@ trait ActivityLog
 		usort($elements, function($a, $b) {
 			return strcmp($a["text"], $b["text"]);
 		});
-		$this->json([
+		http::json([
 			"results" => array_merge(
 				[["id" => 0, "text" => _("All elements")]],
 				$elements
@@ -152,7 +152,7 @@ trait ActivityLog
 	public function user_filter_loader()
 	{
 		$this->check_permissions("read", "logs");
-		$this->json([
+		http::json([
 			"results" => array_merge(
 				[["id" => 0, "text" => _("All users")]],
 				usersModel::orderBy("text")

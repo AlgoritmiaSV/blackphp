@@ -149,7 +149,7 @@ trait Menu
 		# Cerrar sesión del instalador
 		Session::destroy();
 
-		$this->json($result);
+		http::json($result);
 	}
 }
 ?>

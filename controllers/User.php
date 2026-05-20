@@ -63,7 +63,7 @@ class User extends Controller
 					break;
 			}
 		}
-		$this->json($result);
+		http::json($result);
 	}
 
 	private function LoadLoginForm()
@@ -129,7 +129,7 @@ class User extends Controller
 			$data["title"] = "Error";
 			$data["message"] = _("Bad request");
 			$data["theme"] = "red";
-			$this->json($data);
+			http::json($data);
 			return;
 		}
 		$user = usersModel::findBy("nickname", $_POST["nickname"]);
@@ -139,7 +139,7 @@ class User extends Controller
 			$data["title"] = "Error";
 			$data["message"] = _("Bad user or password");
 			$data["theme"] = "red";
-			$this->json($data);
+			http::json($data);
 			return;
 		}
 
@@ -151,7 +151,7 @@ class User extends Controller
 			$data["title"] = _("Error");
 			$data["message"] = _("Too many failed attempts, try again in five minutes");
 			$data["theme"] = "red";
-			$this->json($data);
+			http::json($data);
 			return;
 		}
 
@@ -192,7 +192,7 @@ class User extends Controller
 			{
 				Session::set("password_user_id", $user->getUserId());
 				$data["next"] = "/User/SetNewPassword/";
-				$this->json($data);
+				http::json($data);
 				return;
 			}
 
@@ -258,7 +258,7 @@ class User extends Controller
 			$data["message"] = _("Bad user or password");
 			$data["theme"] = "red";
 		}
-		$this->json($data);
+		http::json($data);
 	}
 
 	/**
@@ -272,7 +272,7 @@ class User extends Controller
 	public function logout()
 	{
 		Session::destroy();
-		$this->json([
+		http::json([
 			"session" => false
 		]);
 	}
@@ -332,7 +332,7 @@ class User extends Controller
 			"message" => _("Changes have been saved"),
 			"theme" => "green"
 		];
-		$this->json($response);
+		http::json($response);
 	}
 
 	/**
@@ -349,7 +349,7 @@ class User extends Controller
 		$user = usersModel::find(Session::get("user_id"));
 		if(md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash()))
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => "Error",
 				"message" => _("Incorrect password"),
@@ -359,7 +359,7 @@ class User extends Controller
 		}
 		if($_POST["new_password"] != $_POST["confirm_password"])
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => _("Passwords do not match"),
@@ -371,7 +371,7 @@ class User extends Controller
 		$validate = $this->ValidatePassword($_POST["new_password"]);
 		if($validate !== true)
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => implode("<br>", $validate),
@@ -383,7 +383,7 @@ class User extends Controller
 		$user->setPassword("HASH");
 		$user->setPasswordHash(password_hash($_POST["new_password"], PASSWORD_BCRYPT));
 		$user->save();
-		$this->json([
+		http::json([
 			"success" => true,
 			"reload_after" => true,
 			"title" => _("Success"),
@@ -414,7 +414,7 @@ class User extends Controller
 		$user = usersModel::find($_POST["user_id"]);
 		if(!$user->exists())
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => _("Bad request"),
@@ -426,7 +426,7 @@ class User extends Controller
 		# La contraseña actual es incorrecta
 		if(md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash()))
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => _("Incorrect password"),
@@ -438,7 +438,7 @@ class User extends Controller
 		# Las contraseñas no coinciden
 		if($_POST["new_password"] != $_POST["confirm_password"])
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => _("Passwords do not match"),
@@ -453,7 +453,7 @@ class User extends Controller
 		$validate = $this->ValidatePassword($_POST["new_password"]);
 		if($validate !== true)
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => implode("<br>", $validate),
@@ -470,7 +470,7 @@ class User extends Controller
 		$user->save();
 		Session::unset("password_user_id");
 
-		$this->json([
+		http::json([
 			"success" => true,
 			"redirect_after" => "/",
 			"title" => _("Success"),

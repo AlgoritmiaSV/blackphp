@@ -213,7 +213,7 @@ trait Roles
 		}
 		else
 		{
-			$this->json($data);
+			http::json($data);
 		}
 	}
 
@@ -295,7 +295,7 @@ trait Roles
 		# Validando que el nombre del rol no esté vacío
 		if(empty($_POST["role_name"]))
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => _("Bad request"),
@@ -314,7 +314,7 @@ trait Roles
 		$existingRole = $existingRoleModel->get();
 		if($existingRole->exists())
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"title" => _("Error"),
 				"message" => _("A role with this name already exists"),
@@ -368,7 +368,7 @@ trait Roles
 		{
 			$this->setUserLog("create", "roles", $role->getRoleId());
 		}
-		$this->json([
+		http::json([
 			"success" => true,
 			"title" => _("Success"),
 			"message" => _("Changes have been saved"),
@@ -424,7 +424,7 @@ trait Roles
 		$data["message"] = _("Changes have been saved");
 		$data["theme"] = "green";
 		$data["reload_after"] = true;
-		$this->json($data);
+		http::json($data);
 	}
 
 	/**
@@ -440,7 +440,7 @@ trait Roles
 		$request = http::getRequestData();
 		if(empty($request["id"]))
 		{
-			$this->json([
+			http::json([
 				"deleted" => false,
 				"title" => _("Error"),
 				"message" => _("Bad request"),
@@ -455,7 +455,7 @@ trait Roles
 			->count();
 		if($users > 0)
 		{
-			$this->json([
+			http::json([
 				"deleted" => false,
 				"title" => _("Error"),
 				"message" => _("There are active users in this role"),
@@ -466,7 +466,7 @@ trait Roles
 		
 		$affected = $role->delete();
 		$this->setUserLog("delete", "roles", $role->getRoleId());
-		$this->json([
+		http::json([
 			"deleted" => $affected > 0,
 			"title" => _("Success"),
 			"message" => _("Deleted successfully"),

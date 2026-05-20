@@ -99,7 +99,7 @@ trait Trash
 		}
 		else
 		{
-			$this->json($data);
+			http::json($data);
 		}
 	}
 
@@ -122,7 +122,7 @@ trait Trash
 		usort($elements, function($a, $b) {
 			return strcmp($a["text"], $b["text"]);
 		});
-		$this->json(Array(
+		http::json(Array(
 			"results" => $elements
 		));
 	}

@@ -251,7 +251,7 @@ class Controller
 	{
 		if($type == 'json')
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"error" => true,
 				"message" => _("System under maintenance"),
@@ -297,7 +297,7 @@ class Controller
 				{
 					if($type == 'json')
 					{
-						$this->json([
+						http::json([
 							"success" => false,
 							"error" => true,
 							"message" => _("You do not have permissions to perform this operation"),
@@ -320,7 +320,7 @@ class Controller
 		}
 		if($type == 'json')
 		{
-			$this->json([
+			http::json([
 				"success" => false,
 				"error" => true,
 				"message" => _("You are not logged in"),
@@ -490,6 +490,9 @@ class Controller
 	/**
 	 * Imprimir un array en formato JSON
 	 * 
+	 * AVISO:
+	 * @deprecated 2.0.873 Este método se eliminará en las versiones siguientes. Use http::json
+	 * 
 	 * Convierte todos los valores nulos a cadenas vacías, y luego, imprime el resultado en formato
 	 * JSON
 	 * @param array $data Arreglo de datos a imprimir
@@ -523,7 +526,7 @@ class Controller
 		{
 			if($response == 'json')
 			{
-				$this->json(Array(
+				http::json(Array(
 					"success" => false,
 					"error" => true,
 					"message" => _("You are not logged in"),
@@ -553,7 +556,7 @@ class Controller
 		{
 			if($response == "json")
 			{
-				$this->json(Array(
+				http::json(Array(
 					"success" => false,
 					"error" => true,
 					"message" => _("You do not have permissions to perform this operation"),

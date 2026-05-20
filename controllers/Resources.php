@@ -25,7 +25,7 @@ class Resources extends Controller
 
 	public function keep_alive()
 	{
-		$this->json([
+		http::json([
 			"alive" => Session::get("user_id") != null
 		]);
 	}
@@ -37,7 +37,7 @@ class Resources extends Controller
 		{
 			$data["age"] = date_utilities::sql_date_to_age($date);
 		}
-		$this->json($data);
+		http::json($data);
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Resources extends Controller
 				"sortDescending" => ": " . _("activate to sort column descending")
 			)
 		);
-		$this->json($data);
+		http::json($data);
 	}
 	*/
 
@@ -87,7 +87,7 @@ class Resources extends Controller
 			$manifest["name"] = $entity["app_name"];
 			$manifest["short_name"] = $entity["app_name"];
 		}
-		$this->json($manifest);
+		http::json($manifest);
 	}
 }
 ?>

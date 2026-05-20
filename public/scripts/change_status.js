@@ -56,7 +56,7 @@ function delete_button_click(e) {
 
 // Event delegation: listen at document level
 document.addEventListener("click", function(e) {
-    if (e.target.closest(".delete_button, .delete_link")) {
+    if (e.target.closest(".delete_button, .delete_link, .change_status_button")) {
         delete_button_click(e);
     }
 });

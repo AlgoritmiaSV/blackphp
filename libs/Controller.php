@@ -132,7 +132,8 @@ class Controller
 			if($this->isIpAddress($_SERVER["SERVER_NAME"]))
 			{
 				# Primera entidad de la tabla
-				$entity = entitiesModel::first()->toArray();
+				$entity = entityDataModel::first()
+					->toArray();
 				Session::set("server_name", "localhost");
 			}
 			else
@@ -142,7 +143,8 @@ class Controller
 				$subdomain = $server_name[0];
 				if($subdomain != "installer")
 				{
-					$entity = entitiesModel::findBy("entity_subdomain", $subdomain)->toArray();
+					$entity = entityDataModel::findBy("entity_subdomain", $subdomain)
+						->toArray();
 					if(!isset($entity["entity_id"]))
 					{
 						$protocol = "http";
@@ -162,26 +164,16 @@ class Controller
 			}
 
 			# Moneda
-			if(!empty($entity["country_iso"]))
-			{
-				$currency = appCurrenciesModel::join("app_countries", "currency_iso")->where("country_iso", $entity["country_iso"])->get();
-				$entity["currency_symbol"] = $currency["symbol"];
-			}
-			else
+			if(empty($entity["currency_symbol"]))
 			{
 				$entity["currency_symbol"] = "$";
 			}
 
-			# Municipio y departamento
-			if(!empty($entity["city_id"]))
-			{
-				$city = appCitiesModel::select("city_name, department_name")->join("app_departments", "department_id")->where("city_id", $entity["city_id"])->get();
-				$entity = array_merge($entity, $city);
-			}
-
 			Session::set("entity", $entity);
 			
-			$option_list = entityOptionsModel::select("option_key", "option_value")->join("app_options", "option_id")->getAll();
+			$option_list = entityOptionsModel::select("option_key", "option_value")
+				->join("app_options", "option_id")
+				->getAll();
 			$options = Array();
 			foreach($option_list as $item)
 			{
@@ -298,7 +290,9 @@ class Controller
 			if(!empty($module))
 			{
 				$module = appModulesModel::findBy("module_url", $module);
-				$perms = roleModulesModel::where("module_id", $module->getModuleId())->where("role_id", Session::get("role_id"))->get();
+				$perms = roleModulesModel::where("module_id", $module->getModuleId())
+					->where("role_id", Session::get("role_id"))
+					->get();
 				if(empty($perms->getRoleModuleId()))
 				{
 					if($type == 'json')

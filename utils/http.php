@@ -85,5 +85,24 @@ class http
 
 		return $data;
 	}
+
+	/**
+	 * Imprimir un array en formato JSON
+	 * 
+	 * Convierte todos los valores nulos a cadenas vacías, y luego, imprime el resultado en formato
+	 * JSON
+	 * @param array $data Arreglo de datos a imprimir
+	 * 
+	 * @return void
+	 */
+	public static function json($data)
+	{
+		array_walk_recursive($data, function(&$item)
+		{
+			$item = $item === null ? "" : $item;
+		});
+		header('Content-type: application/json');
+		echo json_encode($data);
+	}
 }
 ?>

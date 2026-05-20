@@ -343,6 +343,33 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Temporary table structure for view `entity_data`
+--
+
+DROP TABLE IF EXISTS `entity_data`;
+/*!50001 DROP VIEW IF EXISTS `entity_data`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8mb4;
+/*!50001 CREATE VIEW `entity_data` AS SELECT
+ 1 AS `entity_id`,
+  1 AS `entity_name`,
+  1 AS `entity_slogan`,
+  1 AS `admin_role`,
+  1 AS `admin_user`,
+  1 AS `entity_begin`,
+  1 AS `entity_subdomain`,
+  1 AS `app_name`,
+  1 AS `default_locale`,
+  1 AS `creation_installer`,
+  1 AS `creation_time`,
+  1 AS `edition_installer`,
+  1 AS `installer_edition_time`,
+  1 AS `edition_user`,
+  1 AS `user_edition_time`,
+  1 AS `status` */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `entity_methods`
 --
 
@@ -691,6 +718,24 @@ CREATE TABLE `users` (
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 */
 /*!50001 VIEW `available_modules` AS select `m`.`module_id` AS `module_id`,`m`.`module_name` AS `module_name`,`m`.`module_url` AS `module_url`,`m`.`module_icon` AS `module_icon`,`m`.`default_order` AS `default_order`,`m`.`status` AS `status`,`em`.`entity_id` AS `entity_id`,`r`.`role_id` AS `role_id`,`em`.`module_order` AS `module_order` from (((`entity_modules` `em` left join `app_modules` `m` on(`m`.`module_id` = `em`.`module_id`)) left join `role_modules` `rm` on(`rm`.`module_id` = `m`.`module_id` and `rm`.`status` = 1)) left join `roles` `r` on(`r`.`entity_id` = `em`.`entity_id` and `r`.`role_id` = `rm`.`role_id`)) where `em`.`status` = 1 order by `em`.`module_order` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `entity_data`
+--
+
+/*!50001 DROP VIEW IF EXISTS `entity_data`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 */
+/*!50001 VIEW `entity_data` AS select `entities`.`entity_id` AS `entity_id`,`entities`.`entity_name` AS `entity_name`,`entities`.`entity_slogan` AS `entity_slogan`,`entities`.`admin_role` AS `admin_role`,`entities`.`admin_user` AS `admin_user`,`entities`.`entity_begin` AS `entity_begin`,`entities`.`entity_subdomain` AS `entity_subdomain`,`entities`.`app_name` AS `app_name`,`entities`.`default_locale` AS `default_locale`,`entities`.`creation_installer` AS `creation_installer`,`entities`.`creation_time` AS `creation_time`,`entities`.`edition_installer` AS `edition_installer`,`entities`.`installer_edition_time` AS `installer_edition_time`,`entities`.`edition_user` AS `edition_user`,`entities`.`user_edition_time` AS `user_edition_time`,`entities`.`status` AS `status` from `entities` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

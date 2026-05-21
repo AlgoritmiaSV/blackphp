@@ -57,8 +57,7 @@ trait Entity
 		$today = Date("Y-m-d");
 
 		# Validando tipo de sesión
-		$entity_id = $this->entity_id;
-		if($entity_id == null)
+		if(Session::get("entity/entity_id") == null)
 		{
 			# Si es nueva instalación, se valida el dominio
 			$reserved_subdomains = ["www", "installer", "local"];
@@ -91,7 +90,7 @@ trait Entity
 			}
 		}
 
-		$entity = entitiesModel::find($this->entity_id);
+		$entity = entitiesModel::get();
 		$subdomain = empty($_POST["subdomain"]) ? $entity->getEntitySubdomain() : $_POST["subdomain"];
 		if(empty($entity->getEntityId()))
 		{

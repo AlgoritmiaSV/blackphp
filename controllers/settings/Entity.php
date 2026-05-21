@@ -33,7 +33,7 @@ trait Entity
 		if(!empty($_POST["entity_name"]))
 		{
 			$time = Date("Y-m-d H:i:s");
-			$entity = entitiesModel::find($this->entity_id);
+			$entity = entitiesModel::get();
 			$entity->set(Array(
 				"entity_name" => $_POST["entity_name"],
 				"entity_slogan" => $_POST["entity_slogan"],
@@ -57,7 +57,7 @@ trait Entity
 				}
 				else
 				{
-					$dir = "entities/" . $this->entity_subdomain . "/";
+					$dir = "entities/" . Session::get("entity/entity_subdomain") . "/";
 				}
 				$file = $dir . "logo." . $extension;
 				$generic_file = glob($dir . "logo.*");

@@ -33,6 +33,8 @@ class Controller
 		#1 Creación de la vista
 		$this->view = new View();
 		$this->view->data["base_href"] = "/";
+
+		#2 Extrayendo información del sistema
 		$system = Session::get("system");
 		if(empty($system))
 		{
@@ -56,10 +58,10 @@ class Controller
 			}
 		}
 
-		#2 Zona horaria por defecto
+		#3 Zona horaria por defecto
 		date_default_timezone_set('America/El_Salvador');
 
-		#3 Idioma regional (Por defecto = en_US)
+		#4 Idioma regional (Por defecto = en_US)
 		$locale = "en_US";
 		$lang = "en";
 		if(empty(Session::get("locale")))
@@ -98,10 +100,10 @@ class Controller
 		bind_textdomain_codeset("messages", 'UTF-8');
 		textdomain("messages");
 
-		#4 Error reporting
+		#5 Error reporting
 		error_reporting(E_ERROR | E_PARSE);
 
-		#5 Verificación de usuario
+		#6 Verificación de usuario
 		if(Session::get("user_id") != null)
 		{
 			$this->view->data["user_name"] = Session::get("user_name");
@@ -117,19 +119,19 @@ class Controller
 			$this->view->data["user_photo"] = "public/images/user.png";
 		}
 
-		# Sistema en mantenimiento
+		#7 Sistema en mantenimiento
 		if(defined('SYSTEM_STATUS') && SYSTEM_STATUS == 'MAINTENANCE')
 		{
 			$this->maintenance();
 		}
 		
-		#6 Entidad
+		#8 Entidad
 		$entity = Array();
 		$options = Array();
 		if(Session::get("entity") == null)
 		{
 			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
-			if($this->isIpAddress($_SERVER["SERVER_NAME"]))
+			if(http::isIpAddress($_SERVER["SERVER_NAME"]))
 			{
 				# Primera entidad de la tabla
 				$entity = entityDataModel::first()
@@ -145,7 +147,7 @@ class Controller
 				{
 					$entity = entityDataModel::findBy("entity_subdomain", $subdomain)
 						->toArray();
-					if(!isset($entity["entity_id"]))
+					if(empty($entity["entity_id"]))
 					{
 						$protocol = "http";
 						if( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
@@ -186,11 +188,9 @@ class Controller
 			$entity = Session::get("entity");
 			$options = Session::get("options");
 		}
-		$this->entity_id = $entity["entity_id"];
-		$this->entity_subdomain = $entity["entity_subdomain"];
 		$this->view->data["modules"] = Session::get("modules");
 
-		#Directorio y logo
+		# Directorio y logo
 		if(!empty($entity["entity_subdomain"]))
 		{
 			$this->store_dir = "entities/" . $entity["entity_subdomain"] . "/";
@@ -218,7 +218,7 @@ class Controller
 			$this->view->data[$key] = $item;
 		}
 
-		#Restricciones
+		#9 Restricciones
 		foreach($options as $key => $value)
 		{
 			if($value == 0)
@@ -227,7 +227,7 @@ class Controller
 			}
 		}
 
-		#7 Tema por defecto
+		#10 Tema por defecto
 		if(Session::get("theme_id") == null)
 		{
 			$theme = appThemesModel::first();
@@ -237,7 +237,7 @@ class Controller
 			$this->view->data["theme_url"] = $theme->getThemeUrl();
 		}
 
-		#8 Ajuste del texto en tablas
+		#11 Ajuste del texto en tablas
 		$this->view->data["table_text_wrapping"] = Session::get("options/table_text_wrapping");
 	}
 
@@ -455,36 +455,6 @@ class Controller
 			"date_time" => $date_time,
 			"element_link" => $element_link
 		))->save();
-	}
-
-	/**
-	 * Is IP Address
-	 * Verifica si SERVER_NAME es una dirección IP
-	 * 
-	 * @param string $str SERVER_NAME pasado por parámetro
-	 * 
-	 * @return boolean Verdadero si es una IP, falso en caso contrario.
-	 */
-	protected function isIpAddress($str)
-	{
-		$octets = explode(".", $str);
-		if(count($octets) != 4)
-		{
-			return false;
-		}
-		foreach($octets as $octet)
-		{
-			if(!is_numeric($octet))
-			{
-				return false;
-			}
-			$octet = intval($octet);
-			if($octet < 0 || $octet > 255)
-			{
-				return false;
-			}
-		}
-		return true;
 	}
 
 	/**

@@ -279,9 +279,10 @@ class Installation extends Controller
 	public function load_form_data()
 	{
 		$data = [];
-		if($this->entity_id != null)
+		if(Session::get("entity/entity_id") != null)
 		{
-			$entity = entitiesModel::find($this->entity_id)->toArray();
+			$entity = entitiesModel::get()
+				->toArray();
 			$admin_user = usersModel::find($entity["admin_user"])->toArray();
 			$data["update"] = array_merge($entity, $admin_user);
 			$data["check"] = [

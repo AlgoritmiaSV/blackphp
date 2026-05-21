@@ -60,7 +60,7 @@ trait RoleAndUser
 		$today = Date("Y-m-d");
 
 		#Check session type
-		$entity = entitiesModel::find($this->entity_id);
+		$entity = entitiesModel::get();
 
 		# Creación del rol administrador
 		$role = rolesModel::find($entity->getAdminRole());

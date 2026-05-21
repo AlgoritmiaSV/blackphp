@@ -94,7 +94,7 @@ class Settings extends Controller
 	private function LoadEntityForm()
 	{
 		$result = [
-			"update" => entitiesModel::find($this->entity_id)
+			"update" => entitiesModel::get()
 				->toArray()
 		];
 		return $result;

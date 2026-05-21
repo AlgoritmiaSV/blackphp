@@ -158,7 +158,7 @@ trait Users
 		$this->view->data["sessions"] = $sessions;
 
 		#User photo
-		$photo = glob("entities/" . $this->entity_subdomain . "/users/profile_" . $user["user_id"] . ".*");
+		$photo = glob("entities/" . Session::get("entity/entity_subdomain") . "/users/profile_" . $user["user_id"] . ".*");
 		if(count($photo) > 0)
 		{
 			$this->view->data["user_photo"] = $photo[0];

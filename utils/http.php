@@ -104,5 +104,35 @@ class http
 		header('Content-type: application/json');
 		echo json_encode($data);
 	}
+
+	/**
+	 * Is IP Address
+	 * Verifica si SERVER_NAME es una dirección IP
+	 * 
+	 * @param string $str SERVER_NAME pasado por parámetro
+	 * 
+	 * @return boolean Verdadero si es una IP, falso en caso contrario.
+	 */
+	public static function isIpAddress($str)
+	{
+		$octets = explode(".", $str);
+		if(count($octets) != 4)
+		{
+			return false;
+		}
+		foreach($octets as $octet)
+		{
+			if(!is_numeric($octet))
+			{
+				return false;
+			}
+			$octet = intval($octet);
+			if($octet < 0 || $octet > 255)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 }
 ?>

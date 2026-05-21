@@ -43,13 +43,12 @@ trait Menu
 		$today = Date("Y-m-d");
 
 		#Check session type
-		$entity_id = $this->entity_id;
-		if($entity_id == null)
+		if(Session::get("entity/entity_id") == null)
 		{
 			header("Location: /" . $this->module . "/");
 		}
 
-		$entity = entitiesModel::find($this->entity_id);
+		$entity = entitiesModel::get();
 
 		# Configurar los módulos de la entidad
 		$i = 0;

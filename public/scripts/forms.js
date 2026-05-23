@@ -17,7 +17,7 @@ build_selectors = function()
 		let data = json[selector.data("source")];
 		if( data != null)
 		{
-			if(selector.data("search") != "none" || selector.data("default") == "none")
+			if(selector.data("search") || selector.data("default") == "none")
 			{
 				item = $(document.createElement("option"));
 				item.appendTo(selector);
@@ -34,7 +34,7 @@ build_selectors = function()
 			{
 				select_params.allowClear = true;
 			}
-			if(selector.data("search") == "none")
+			if(!selector.data("search"))
 			{
 				select_params.minimumResultsForSearch = Infinity;
 			}
@@ -1485,7 +1485,7 @@ $(function()
 				width: child.data("width") || "fit-content",
 				language: language
 			}
-			if(child.data("search") == "none")
+			if(!child.data("search"))
 			{
 				select_params.minimumResultsForSearch = Infinity;
 			}

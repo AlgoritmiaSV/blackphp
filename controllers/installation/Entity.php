@@ -90,7 +90,7 @@ trait Entity
 			}
 		}
 
-		$entity = entitiesModel::get();
+		$entity = entitiesModel::find(Session::get("entity/entity_id"));
 		$subdomain = empty($_POST["subdomain"]) ? $entity->getEntitySubdomain() : $_POST["subdomain"];
 		if(empty($entity->getEntityId()))
 		{

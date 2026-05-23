@@ -678,12 +678,12 @@ $( function()
 					placeholder: _selector.data("placeholder") || "",
 					width: _selector.data("width") || select_default_width
 				}
-				if(_selector.data("search") != "none" || _selector.data("default") == "none")
+				if(_selector.data("search") || _selector.data("default") == "none")
 				{
 					item = $(document.createElement("option"));
 					item.appendTo(_selector);
 				}
-				if(_selector.data("search") == "none")
+				if(!_selector.data("search"))
 				{
 					select_params.minimumResultsForSearch = Infinity;
 				}

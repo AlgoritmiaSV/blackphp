@@ -29,24 +29,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Export button handler
   const exportBtn = document.querySelector('button[type="button"]');
-  exportBtn.addEventListener("click", function() {
-    // Update JSON with current form values
-    document.querySelectorAll("[data-field]").forEach(input => {
-      const fieldPath = input.getAttribute("data-field");
-      setValueByPath(currentJson, fieldPath, input.value);
+  if (exportBtn) {
+    exportBtn.addEventListener("click", function() {
+      // Update JSON with current form values
+      document.querySelectorAll("[data-field]").forEach(input => {
+        const fieldPath = input.getAttribute("data-field");
+        setValueByPath(currentJson, fieldPath, input.value);
+      });
+
+      // Create downloadable file
+      const blob = new Blob([JSON.stringify(currentJson, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "export.json";
+      a.click();
+
+      URL.revokeObjectURL(url);
     });
-
-    // Create downloadable file
-    const blob = new Blob([JSON.stringify(currentJson, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "export.json";
-    a.click();
-
-    URL.revokeObjectURL(url);
-  });
+  }
 
   // Helper to resolve nested keys like "customer.name"
   function getValueByPath(obj, path) {

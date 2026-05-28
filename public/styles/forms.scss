@@ -456,6 +456,12 @@ tr:hover .action_icon
 	color: #cc0000;
 	text-align: center;
 	font-size: 12pt;
+	background-color: #ffcccc;
+}
+
+.warning_message:empty
+{
+	display: none;
 }
 
 @media screen and (max-width: 799px)

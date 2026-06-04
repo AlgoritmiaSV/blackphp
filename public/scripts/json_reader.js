@@ -9,7 +9,18 @@ document.addEventListener("DOMContentLoaded", function() {
     const reader = new FileReader();
     reader.onload = function(e) {
       try {
-        currentJson = JSON.parse(e.target.result);
+        // ✅ Clean up raw JSON string before parsing
+        let raw = e.target.result;
+
+        // Strip tabs
+        raw = raw.replace(/\t/g, "");
+
+        // Escape unescaped newlines inside quoted strings
+        raw = raw.replace(/"(?:[^"\\]|\\.)*"/g, function(match) {
+          return match.replace(/\r?\n/g, "\\n");
+        });
+
+        currentJson = JSON.parse(raw);
 
         // Populate form fields
         document.querySelectorAll("[data-field]").forEach(input => {

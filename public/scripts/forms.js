@@ -163,11 +163,7 @@ $(function()
 						var _tr = _template.clone(false);
 						_tr.find(".date_input").each(set_date_picker);
 						_tr.find("input").on("keypress", input_keypress);
-						// _tr.find(".row_quantity, .row_price").on("change", function() {
-							// calc_row_total($(this));
-							// calc_bill_total();
-						// });
-						// _tr.find(".delete_row_icon").on("click", delete_row_click);
+
 						build_autocomplete(_tr);
 						/* Fill */
 						_tr.find(".row_number").val(row_count);
@@ -218,11 +214,6 @@ $(function()
 					}
 				}
 			});
-			/*if(typeof(start_calc_consumption) == "function")
-			{
-				start_calc_consumption();
-			}
-			$(".current").trigger("change");*/
 		}
 
 		/* inputs */
@@ -817,137 +808,9 @@ $(function()
 		$(".data_search").hide();
 	});
 
-	/* Delete
-	Cambiar esta parte por un change_status genérico
-	delete_button_click = function()
-	{
-		deletion_url = $(this).data("url");
-		deletion_next = $(this).data("next");
-		Swal.fire({
-			title: "Confirmar",
-			text: "¿Está seguro de que de que desea eliminar este registro?",
-			showCancelButton: true,
-			confirmButtonText: "Sí",
-			cancelButtonText: "No",
-			icon:"warning"
-		}).then((result) => {
-			if (result.isConfirmed)
-			{
-				delete_entry();
-			}
-		});
-	}
-
-	$(".delete_button, .delete_link").on("click", delete_button_click);
-
-	function delete_entry()
-	{
-		$.ajax({
-			method: "POST",
-			url: deletion_url,
-			data: url,
-			dataType: "json"
-		})
-		.done(function(deletion_data) {
-			if(deletion_data.deleted)
-			{
-				Swal.fire({
-					title: deletion_data.title || "Success",
-					text: deletion_data.message || "Deleted succesfully!",
-					icon: "success",
-					didClose: function() {
-						window.open(deletion_next, "_top");
-					}
-				});
-			}
-			else if(deletion_data.message)
-			{
-				$.jAlert({
-					'title': deletion_data.title || "Message",
-					'content': deletion_data.message,
-					'theme': deletion_data.theme || "red",
-					'autofocus': '.jalert_accept',
-					'btns': [
-						{'text':deletion_data.accept||'OK', 'closeAlert':true, 'theme': deletion_data.theme || "red", 'class': 'jalert_accept'}]
-				});
-			}
-			else
-			{
-				$.jAlert({
-					'title': "Error",
-					'content': "Failed to delete.",
-					'theme': "red",
-					'autofocus': '.jalert_accept',
-					'btns': [
-						{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
-				});
-			}
-		})
-		.fail(function() {
-		})
-		.always(function() {
-		});	
-	}
-	
-	Fin de Cambiar esta parte por un change_status genérico */
-
 	$(".reload_button").on("click", function() {
 		location.reload();
 	});
-
-	/* delete_row_click = function(e) {
-		e.preventDefault();
-		delete_button = $(this);
-		tbody = $(this).closest("tbody");
-		row_count = tbody.find("tr").length;
-		if(row_count < 2)
-		{
-			return false;
-		}
-		$.jAlert({
-			'title': "Confirmar",
-			'content': "¿Está seguro de que desea eliminar la fila?",
-			'theme': "red",
-			'autofocus': '.jalert_cancel',
-			'btns': [
-				{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept', 'onClick':function(){
-					// Temporary Solution:
-					// Products
-					product_id = delete_button.closest("tr").find(".product_id").val();
-					if(product_id != null && product_id != "")
-					{
-						removed = delete_button.closest("tr").find(".item_id").val();
-						input = $(document.createElement("input"));
-						input.val(removed);
-						input.attr("name", "removed[]");
-						input.attr("type", "hidden");
-						delete_button.closest("form").append(input);
-					}
-					// Others
-					delete_button.closest("tr").remove();
-					//calc_bill_total();
-					row_count = 0;
-					tbody.find(".row_count").each(function() {
-						$(this).text(++row_count);
-					});
-					row_number = 0;
-					tbody.find(".row_number").each(function() {
-						$(this).val(row_number++);
-					});
-					row_count = tbody.find("tr").length;
-					if(row_count < 2)
-					{
-						tbody.find(".delete_row_icon").css({
-							"visibility":"hidden"
-						});
-					}
-				}},
-				{'text':'Cancelar', 'closeAlert':true, 'theme': 'darkgray', 'class': 'jalert_cancel'}
-			]
-		});
-	}; */
-
-	// $(".delete_row_icon").on("click", delete_row_click);
 
 	/* Go To URL */
 	function goto_url()
@@ -991,76 +854,6 @@ $(function()
 			code_input.val("" + (object_data.category_prefix || "") + object_data.next + (object_data.category_suffix || ""));
 		}
 	});
-
-	/* Agregar filas a una tabla de formulario desde el botón */
-	/*$(".add_row_button").on("click", function() {
-		var tbody = $($(this).data("tbody"));
-		if(tbody == null)
-		{
-			tbody = $(".items_container").first();
-		}
-
-		// Comprobación de número de filas
-		var max_items = tbody.data("max_items");
-		if(max_items != null && max_items != 0 && tbody.find("tr").length >= max_items)
-		{
-			return false;
-		}
-		// Fin de omprobación de número de filas
-
-		var last_tr = tbody.find("tr").last();
-		last_tr.find(".data_selector").each(function() {
-			$(this).select2("destroy");
-		});
-		_tr = last_tr.clone();
-		tbody.append(_tr);
-		// Prepare row
-		_tr.find(".row_count").text(tbody.find("tr").length);
-		_tr.find("input").first().focus();
-		_tr.find("input").val('');
-		_tr.find("textarea").val('');
-		_tr.find(".row_number").val(tbody.find("tr").length - 1);
-		_tr.find(".date_input").each(set_date_picker);
-		_tr.find("input").keypress(input_keypress);
-		_tr.find(".row_price").removeAttr("data-sale_price");
-		_tr.find(".row_price").removeAttr("data-nvat_price");
-		_tr.find(".row_quantity, .row_price").change(function() {
-			calc_row_total($(this));
-			calc_bill_total();
-		});
-		_tr.find(".row_total").find("span").text("0.00");
-		_tr.find(".delete_row_icon").click(delete_row_click);
-		_tr.find(".clearable").text("");
-		tbody.find(".delete_row_icon").css({
-			"visibility":"visible"
-		});
-		_tr.find(".complete_value").text("");
-		_tr.find(".complete_value").click(complete_click);
-		_tr.find(".row_generics").text("");
-		_tr.find(".partial_value").show();
-		_tr.find(".partial_value").blur(partial_blur);
-		_tr.find(".partial_value").change(partial_change);
-		_tr.find(".local_code").change(search_by_code);
-		_tr.find("td").removeClass("td_active");
-		_tr.find("td").on("click", function(){
-			if(td_active)
-			{
-				td_active.removeClass("td_active");
-			}
-			td_active = $(this);
-			td_active.addClass("td_active");
-		});
-		_tr.find("input").on("focus", function(){
-			if(td_active)
-			{
-				td_active.removeClass("td_active");
-			}
-			td_active = $(this).closest("td");
-			td_active.addClass("td_active");
-		});
-		build_autocomplete(_tr);
-		build_selectors();
-	});*/
 
 	$(".add_entry_button").on("click", function() {
 		var container = $($(this).data("container"));
@@ -1389,27 +1182,6 @@ $(function()
 	});
 
 	/**
-	 * Control de celdas activas en tablas detalles
-	 */
-	/*td_active = null;
-	$(".details_table tbody td").on("click", function(){
-		if(td_active)
-		{
-			td_active.removeClass("td_active");
-		}
-		td_active = $(this);
-		td_active.addClass("td_active");
-	});
-	$(".details_table tbody td input").on("focus", function(){
-		if(td_active)
-		{
-			td_active.removeClass("td_active");
-		}
-		td_active = $(this).closest("td");
-		td_active.addClass("td_active");
-	});*/
-
-	/**
 	 * Activar o desacrivar tablas, columnas o filas completas
 	 */
 	$(".check_table").on("click", function(e)
@@ -1451,7 +1223,10 @@ $(function()
 		{
 			return false;
 		}
-		child.val(0).trigger("change");
+
+		// Conservación de valor actual seleccionado de selector hijo
+		child.data("value", child.val());
+
 		if(child.data("resetmode") == "full")
 		{
 			child.find("option").remove();
@@ -1490,89 +1265,20 @@ $(function()
 				select_params.minimumResultsForSearch = Infinity;
 			}
 			child.select2(select_params);
+
+			// Validando que el valor aún existe en la nueva lista de optiones
+			// Check if any option has this value
+			const childCurrentValue = child.data("value");
+			const isValid = child.find("option").filter(function() {
+				return $(this).val() == childCurrentValue;
+			}).length > 0;
+
+			if (!isValid)
+			{
+				child.val(child.find("option:first").val());
+			}
 		});
 	});
-
-	/* Procedimiento genérico para cambio de estados */
-	/*
-	change_status_click = function()
-	{
-		change_status_url = $(this).data("url");
-		change_status_next = $(this).data("next");
-		var action = $(this).data("action");
-		$.jAlert({
-			'title': "Confirmar",
-			'content': "¿Confirma que desea " + action + " este registro?",
-			'theme': "yellow",
-			'autofocus': '.jalert_cancel',
-			'btns': [
-				{'text':'Confirmar', 'closeAlert':true, 'theme': 'black', 'class': 'jalert_accept', 'onClick': change_status},
-				{'text':'Cancelar', 'closeAlert':true, 'theme': 'gray', 'class': 'jalert_cancel'}]
-		});
-	}
-
-	$(".change_status_button").on("click", change_status_click);
-
-	function change_status()
-	{
-		$.ajax({
-			method: "POST",
-			url: change_status_url,
-			data: url,
-			dataType: "json"
-		})
-		.done(function(status_data) {
-			if(status_data.changed)
-			{
-				$.jAlert({
-					'title': status_data.title || "Success",
-					'content': status_data.message || "Status changed succesfully!",
-					'theme': "blue",
-					'autofocus': '.jalert_accept',
-					'btns': [
-						{'text': status_data.accept || 'OK', 'closeAlert':true, 'theme': 'blue', 'class': 'jalert_accept', 'onClick': function() {
-							window.open(change_status_next, "_top");
-						}}]
-				});
-			}
-			else if(status_data.message)
-			{
-				$.jAlert({
-					'title': status_data.title || "Message",
-					'content': status_data.message,
-					'theme': status_data.theme || "red",
-					'autofocus': '.jalert_accept',
-					'btns': [
-						{'text':status_data.accept||'OK', 'closeAlert':true, 'theme': status_data.theme || "red", 'class': 'jalert_accept'}]
-				});
-			}
-			else
-			{
-				$.jAlert({
-					'title': "Error",
-					'content': "Failed to change status.",
-					'theme': "red",
-					'autofocus': '.jalert_accept',
-					'btns': [
-						{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
-				});
-			}
-		})
-		.fail(function()
-		{
-			$.jAlert({
-				'title': "Error",
-				'content': "Failed to change status.",
-				'theme': "red",
-				'autofocus': '.jalert_accept',
-				'btns': [
-					{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
-			});
-		})
-		.always(function() {
-		});	
-	}
-	Fin de procedimiento genérico para cambio de estados */
 
 	/* Botones para agregar parámetros en URL */
 	$(".route_button").on("click", function() {

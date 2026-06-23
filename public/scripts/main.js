@@ -190,8 +190,11 @@ $(function() {
 
 	setInterval(keep_alive, 30000);
 
-	$(".link_button").on("click", function() {
-		window.open($(this).data("href"), "_top");
+	$(".link_button").on("click", function()
+	{
+		const href = $(this).data("href");
+		const target = href.startsWith("http") ? "_blank" : "_top";
+		window.open(href, target);
 	});
 
 	/* Date Picker */

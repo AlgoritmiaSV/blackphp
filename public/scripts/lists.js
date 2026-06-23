@@ -467,8 +467,11 @@ $( function()
 				});
 				history.back();
 			});
-			_div.find(".link_button").on("click", function() {
-				window.open($(this).data("href"), "_top");
+			_div.find(".link_button").on("click", function()
+			{
+				const href = $(this).data("href");
+				const target = href.startsWith("http") ? "_blank" : "_top";
+				window.open(href, target);
 			});
 			_div.find(".alert_button").on("click", function() {
 				var alert_href = $(this).data("href");

@@ -148,7 +148,7 @@ $( function()
 					{
 						$.jAlert({
 							'title': $(this).data("title") || false,
-							'theme': $(this).data("theme") || "blue",
+							'theme': $(this).data("theme") || jAlertTheme || "dark_blue",
 							'iframe': $(this).data("alert"),
 							'size': {
 								"height": content_height + "px",
@@ -272,7 +272,7 @@ $( function()
 					{
 						$.jAlert({
 							'title': $(this).data("title") || false,
-							'theme': $(this).data("theme") || "blue",
+							'theme': $(this).data("theme") || jAlertTheme || "dark_blue",
 							'iframe': $(this).data("alert"),
 							'size': {
 								"height": content_height + "px",

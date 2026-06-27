@@ -11,7 +11,7 @@ trait Information
 	public function About()
 	{
 		$this->session_required("html", $this->module);
-		$this->view->data["title"] = sprintf(_("About %s"), Session::get("system/system_name"));
+		$this->view->data["title"] = sprintf(_("About %s"), Session::get("system/app_name"));
 		$this->view->standard_details();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["content_id"] = "info_details";
@@ -60,9 +60,24 @@ trait Information
 			$this->view->data[$key] = $item;
 		}
 		$this->view->data["dependencies"] = array_merge($this->getNpmDependencies(), $this->getComposerDependencies());
+
+		# Sitio web
+		if(!empty($info["app_website"]))
+		{
+			$this->view->data["website_label"] = str_replace("https://", "", $info["app_website"]);
+		}
+		else
+		{
+			$this->view->restrict[] = "app_website";
+		}
+
+		# Manual de usuario
+		$this->view->data["manual_label"] = str_replace("https://", "", $info["user_manual"]);
+
+		# Selección de la vista
 		if($mode == "standalone")
 		{
-			$this->view->data["title"] = sprintf(_("About %s"), Session::get("system/system_name"));
+			$this->view->data["title"] = sprintf(_("About %s"), Session::get("system/app_name"));
 			$this->view->standard_details();
 			$this->view->add("styles", "css", Array(
 				'styles/standalone.css'

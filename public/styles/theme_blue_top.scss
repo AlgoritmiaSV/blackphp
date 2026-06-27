@@ -17,6 +17,7 @@ $main_nav_width: auto;
 $main_nav_a_h_bg: #6F8ABC;
 $main_title_nav_display: none !important;
 $main_title_span_width: calc(100% - 120px);
+$normal_link_color: #3333ff;
 $user_link_color: #d9d9d9;
 $user_link_radius: 3px;
 $primary_button_bg: #0000ff;
@@ -93,6 +94,7 @@ $dt_main_content_bg: linear-gradient(to bottom, #ffffff, #cccccc 20%);
 $dt_content_bg: #ffffff;
 $dt_title_bg: #e6e6e6;
 $dt_users_color: #666644;
+$dt_users_border: #a9a9a9;
 $dsheet_table_border: 2px solid #ffffff;
 $dsheet_thead_bg: #cccccc;
 $dsheet_tbody_bg: #ededed;
@@ -100,7 +102,7 @@ $dsheet_td_border: 2px solid #ffffff;
 @import 'details.scss';
 
 /* **************** Estilos para listas **************** */
-$dv_border: 1px solid #cccccc;
+$dv_border: 1px solid #e0e0e0;
 $dv_even_bg: #f0f0ff;
 $dv_thead_bg: #ffffff;
 $dv_tfoot_bg: #ffffff;

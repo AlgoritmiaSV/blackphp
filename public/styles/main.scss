@@ -337,7 +337,7 @@
 .company_logo, .entity_logo
 {
 	max-width: 200px;
-	max-height: 150px;
+	max-height: 100px;
 	border-radius: 5px;
 }
 
@@ -456,6 +456,17 @@
 	height: 0;
 	clear: both;
 	right: 0px;
+}
+
+.normal_link
+{
+	text-decoration: none;
+	color: $normal_link_color;
+}
+
+.normal_link:hover
+{
+	text-decoration: underline;
 }
 
 .nowrap
@@ -946,6 +957,11 @@ input:checked + .slider:before
 		height: calc(100% - 50px);
 		position: absolute;
 		z-index: 1010;
+	}
+
+	#main_nav a
+	{
+		padding: 20px 7px;
 	}
 
 	#main_header

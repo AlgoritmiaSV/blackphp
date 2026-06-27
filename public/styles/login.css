@@ -92,6 +92,34 @@
 	width: 100%;
 }
 
+.bottom_links
+{
+	display: flex;
+	position: absolute;
+	bottom: 0px;
+	justify-content: space-between;
+	width: 100%;
+	flex-wrap: wrap;
+	max-width: 1200px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.bottom_links a
+{
+	text-decoration: none;
+	color: #666666;
+	display: inline-block;
+	padding: 10px;
+	border-radius: 3px;
+	background-color: #ffffff;
+}
+
+.bottom_links a:hover
+{
+	text-decoration: underline;
+	background-color: #d9d9d9;
+}
 /* tags */
 
 /*	Responsive styles */
@@ -113,11 +141,30 @@
 
 	#login
 	{
-		width: calc(100% - 10px);
+		width: 100%;
+		box-sizing: border-box;
 		margin: 20px auto;
+		float: none;
 	}
 
 	/* Class */
+
+	.bottom_links
+	{
+		position: relative;
+	}
+
+	.content
+	{
+		margin: 150px 0px;
+	}
+
+	.content img
+	{
+		max-width: 350px;
+		max-height: 120px;
+	}
+
 	.credits
 	{
 		text-align: center;
@@ -135,7 +182,8 @@
 
 	.entry input
 	{
-		width:90%;
+		width:100%;
+		box-sizing: border-box;
 	}
 
 	.title

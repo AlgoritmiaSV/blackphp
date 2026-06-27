@@ -27,7 +27,6 @@ class Controller
 	 * 8) Se establece el ajuste de texto en las tablas
 	 */
 	protected $view;
-	protected $system_name;
 	function __construct()
 	{
 		#1 Creación de la vista
@@ -44,11 +43,11 @@ class Controller
 			}
 			else
 			{
-				$system = Array("system_name" => "BlackPHP");
+				$system = Array("app_name" => "BlackPHP");
 			}
 			Session::set("system", $system);
 		}
-		$this->view->data["system_name"] = $system["system_name"];
+		$this->view->data["app_name"] = $system["app_name"];
 		$this->view->data["user_manual"] = $system["user_manual"];
 		if(isset($system["copyright"]))
 		{
@@ -340,7 +339,7 @@ class Controller
 				"styles/login.css"
 			]);
 			$this->view->data["nav"] = "";
-			$this->view->data["about"] = sprintf(_("About %s"), Session::get("system/system_name"));
+			$this->view->data["about"] = sprintf(_("About %s"), Session::get("system/app_name"));
 			$this->view->data["content"] = $this->view->render("login", true);
 			$this->view->render('main');
 		}
@@ -516,7 +515,7 @@ class Controller
 					'styles/login.css'
 					));
 				$this->view->data["nav"] = "";
-				$this->view->data["about"] = sprintf(_("About %s"), Session::get("system/system_name"));
+				$this->view->data["about"] = sprintf(_("About %s"), Session::get("system/app_name"));
 				$this->view->data["content"] = $this->view->render("login", true);
 				$this->view->render('main');
 			}

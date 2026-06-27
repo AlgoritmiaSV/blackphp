@@ -31,6 +31,11 @@
 	background-color: #CAD3E3;
 }
 
+.menu_item:hover img
+{
+	filter: none;
+}
+
 .menu_item:active
 {
 	background-color: #BAC3D3;
@@ -42,6 +47,7 @@
 	position: absolute;
 	top: 15px;
 	left: 30px;
+	filter: grayscale(0.6);
 }
 
 .menu_item span
@@ -57,6 +63,14 @@
 	font-size: 9pt;
 }
 
+.menu_search
+{
+	padding: 10px;
+	border-radius: 5px;
+	width: -webkit-fill-available;
+	background-color: #292929;
+}
+
 .menu_title
 {
 	background: linear-gradient(#d9d9ff, #ffffff 50%);
@@ -65,6 +79,7 @@
 	padding: 20px;
 	color: #333333;
 	font-weight: bold;
+	margin: 60px 0px 0px 0px;
 }
 
 @media screen and (max-width: 799px)

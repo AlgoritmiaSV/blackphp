@@ -29,31 +29,19 @@
 		</div>
 	</div>
 	<div class="content table">
-		<div class="cell">
-			<img src="public/images/app_logo_light.png" alt="System Logo">
-			<p>{{ system_name }}</p>
+		<div class="cell pc_cell">
+			<img src="public/images/app_logo_light.png" alt="App logo">
+			<p>{{ app_name }}</p>
 		</div>
 		<div class="cell">
-			<p>_(Provided to):
-				<span class="phone_inline">{{ entity_name }}</span>
-			</p>
-			<img src="{{ entity_logo }}" class="pc_inline">
+			<p>_(Provided to):</p>
+			<img src="{{ entity_logo }}">
 		</div>
 	</div>
-	<div class="credits">
-		<div>
-			<p>_(For inquiries and technical support, write to us on WhatsApp): <a href="https://wa.me/50372301318">(503) 7230 1318</a></p>
-		</div>
-		<a href="#alert" data-title="_(Technical support)" data-href="index/technical_support_loader/standalone/">
-			<img src="public/images/technical_support.png" class="small_icon">
-			<span>_(Technical support)</span>
-		</a>
-		<a href="{{ user_manual }}">
-			<img src="public/images/question.png" class="small_icon">
-			<span>_(User manual)</span>
-		</a>
-		<a href="#alert" data-title="{{ about }}" data-href="Settings/info_details_loader/standalone/">
-			<img src="public/images/info.png" class="small_icon">
-			<span>{{ about }}</span>
-		</a>
+	<div class="bottom_links">
+		<a href="https://www.blackphp.com">www.blackphp.com</a>
+		<a href="https://www.algoritmia.sv">www.algoritmia.sv</a>
+		<a href="#alert" data-title="_(Technical support)" data-href="index/technical_support_loader/standalone/">_(Technical support)</a>
+		<a href="{{ user_manual }}">_(User manual)</a>
+		<a href="#alert" data-title="{{ about }}" data-href="Settings/info_details_loader/standalone/">{{ about }}</a>
 	</div>

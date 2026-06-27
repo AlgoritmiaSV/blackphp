@@ -1,13 +1,15 @@
 {
-  "system_name": "BlackPHP",
+  "app_name": "BlackPHP",
   "version": "2.0",
-  "number": "930",
-  "last_update": "2026-06-21 10:16:49",
+  "number": "1009",
+  "last_update": "2026-06-27 00:36:39",
   "copyright": {
-    "year": "2022- 2026",
+    "year": "2022 - 2026",
     "author": "Edwin Fajardo",
     "link": "https://www.edwinfajardo.com"
   },
+  "app_website": "https://www.blackphp.com",
+  "user_manual": "https://manuales.algoritmia.sv/blackphp/",
   "technical_support": [
     {
       "icon": "phone.png",
@@ -29,6 +31,5 @@
       "name": "Messenger",
       "link": "https://m.me/AlgoritmiaSV"
     }
-  ],
-  "user_manual": "https://manuales.algoritmia.sv/blackphp/"
+  ]
 }

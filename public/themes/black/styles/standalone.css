@@ -18,7 +18,7 @@
 {
 	width: calc(100% - 10px);
 	position: fixed;
-	background-color: #999999;
+	background-color: #666666;
 	bottom: 45px;
 }
 
@@ -27,7 +27,7 @@
 	position: fixed;
 	bottom: 0px;
 	border-radius: 3px;
-	background-color: #999999;
+	background-color: #666666;
 	width: calc(100% - 20px);
 }
 

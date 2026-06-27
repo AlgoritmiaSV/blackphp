@@ -15,9 +15,10 @@ $main_header_border: 0px;
 $main_nav_display: table-cell;
 $main_nav_bg: #666666;
 $main_nav_width: 150px;
-$main_nav_a_h_bg: #000000;
+$main_nav_a_h_bg: #494949;
 $main_title_nav_display: none !important;
 $main_title_span_width: calc(100% - 120px);
+$normal_link_color: #9999ff;
 $user_link_color: #d9d9d9;
 $user_link_radius: 3px;
 $primary_button_bg: #000525;
@@ -29,7 +30,7 @@ $cell_display: table-cell;
 $table_display: table;
 $table_width: 100%;
 $small_button_bg: #828282;
-$input_bg: #353535;
+$input_bg: #404040;
 $checkbox_h_bg: #404044;
 @mixin content_section
 {
@@ -103,7 +104,7 @@ $form_content_shadow: 0px 0px 4px 4px #000000;
 $form_title_bg: #353535;
 $form_td_border: 1px solid #757575;
 $form_thead_tr_bg: #182741;
-$notes_bg_image: repeating-linear-gradient(#353535, #353535 24px, #757575 24px, #757575 25px, #353535 25px);
+$notes_bg_image: repeating-linear-gradient(#404040, #404040 24px, #606060 24px, #606060 25px, #404040 25px);
 @import 'forms.scss';
 @import 'passwords.css';
 
@@ -112,6 +113,7 @@ $dt_main_content_bg: #0f0f0f;
 $dt_content_bg: #525252;
 $dt_title_bg: #353535;
 $dt_users_color: #ffffff;
+$dt_users_border: #a9a9a9;
 $dsheet_table_border: 2px solid #666666;
 $dsheet_tbody_bg: #404040;
 $dsheet_thead_bg: #333333;
@@ -119,7 +121,7 @@ $dsheet_td_border: 2px solid #666666;
 @import 'details.scss';
 
 /* **************** Estilos para listas **************** */
-$dv_border: 1px solid #666666;
+$dv_border: 1px solid #444444;
 $dv_even_bg: #222229;
 $dv_thead_bg: #666666;
 $dv_tfoot_bg: #666666;

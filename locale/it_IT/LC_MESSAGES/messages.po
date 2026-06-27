@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-01 20:38-0600\n"
-"PO-Revision-Date: 2026-05-15 11:34+UTC-6\n"
+"PO-Revision-Date: 2026-06-23 23:51+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: it_IT\n"
@@ -280,9 +280,6 @@ msgstr "filtrato da _MAX_ voci totali"
 
 msgid "First"
 msgstr "Primo"
-
-msgid "For inquiries and technical support, write to us on WhatsApp"
-msgstr "Per domande e supporto tecnico, scriveteci su WhatsApp"
 
 msgid "For your security, we will ask you to change your password every ninety days"
 msgstr "Per la tua sicurezza, ti chiederemo di cambiare la password ogni 90 giorni"
@@ -769,4 +766,4 @@ msgctxt "time"
 msgid "on"
 msgstr "il"
 
-# 249 messages translated.
+# 248 messages translated.

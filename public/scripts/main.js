@@ -80,6 +80,7 @@ $(function() {
 	});
 
 	/* Manage click on all links */
+	/*
 	$("a").not(".link_exclude").not(".delete_row_icon").on("click", function(e) {
 		e.preventDefault();
 		var href = $(this).attr("href");
@@ -120,6 +121,7 @@ $(function() {
 			window.location.href = href;
 		}
 	});
+	*/
 
 	/* Manage URL format */
 	function url_split()
@@ -276,4 +278,73 @@ $(function() {
 	$(".back_button").on("click", function() {
 		history.back();
 	});
+});
+
+// Calcular tema cargado
+let jAlertTheme = "dark_blue";
+// Find the stylesheet link for theme.css
+const link = [...document.querySelectorAll('link[rel="stylesheet"]')]
+  .find(l => l.href.includes('theme.min.css'));
+
+// If found, extract the immediate folder
+if (link) {
+  const url = new URL(link.href);
+  const parts = url.pathname.split('/').filter(Boolean); // split and remove empty
+  const folder = parts.length > 1 ? parts[parts.length - 3] : null;
+  const jAlertThemes = {
+    "black": "gray",
+    "green": "dark_green",
+    "white": "dark_gray"
+  };
+  if(Object.hasOwn(jAlertThemes, folder))
+  {
+	jAlertTheme = jAlertThemes[folder];
+  }
+}
+
+// Comportamiento de los links
+document.addEventListener("click", function (e) {
+    const link = e.target.closest("a");
+    if (!link) return;
+
+    // Exclude certain classes
+    if (link.classList.contains("link_exclude")) {
+        return;
+    }
+
+    e.preventDefault();
+    const href = link.getAttribute("href");
+
+    if (href === "#") {
+        return false;
+    }
+
+    if (href === "#alert") {
+		$.jAlert({
+			'title': link.dataset.title || false,
+			'theme': link.dataset.theme || jAlertTheme,
+			'iframe': link.dataset.href,
+			'size': {
+				"height": content_height + "px",
+				"width": "100%"
+			},
+			'iframeHeight': (content_height - 41) + "px",
+			'noPadContent':true
+		});
+        return false;
+    }
+
+    if (href.startsWith("#")) {
+        return false;
+    }
+
+    if (link.href === location.href) {
+        return false;
+    }
+
+    if (href.startsWith("http")) {
+        window.open(href, "_blank");
+    } else {
+        window.open(href, "_top");
+    }
 });

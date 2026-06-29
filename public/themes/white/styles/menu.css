@@ -28,7 +28,7 @@
 
 .menu_item:hover
 {
-	background-color: #CAD3E3;
+	background-color: #E9F0FF;
 }
 
 .menu_item:hover img
@@ -47,7 +47,7 @@
 	position: absolute;
 	top: 15px;
 	left: 30px;
-	filter: grayscale(0.6);
+	filter: grayscale(0.4);
 }
 
 .menu_item span

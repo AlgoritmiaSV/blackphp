@@ -129,7 +129,14 @@
 	text-decoration: none;
 }
 
-#main_nav a img, .blue_button img, .grey_button img, .red_button img
+#main_nav a img
+{
+	filter: invert(1);
+	margin: 0px 5px 0px 0px;
+	float: left;
+}
+
+.blue_button img, .grey_button img, .red_button img
 {
 	filter: invert(1);
 }
@@ -172,6 +179,7 @@
 	width: -webkit-fill-available;
 	width: -moz-available;
 	width: fill-available;
+	display: $nav_foot_display;
 }
 
 #title_bar_nav
@@ -214,7 +222,7 @@
 #user_link .user_icon
 {
 	display: inline-block;
-	padding: 5px 0px;
+	padding: 5px;
 	vertical-align: top;
 }
 
@@ -994,11 +1002,6 @@ input:checked + .slider:before
 	{
 		display: block;
 		width: auto;
-	}
-
-	#user_link .user_icon
-	{
-		padding: 5px;
 	}
 
 	.action_filter > span:not(.select2)

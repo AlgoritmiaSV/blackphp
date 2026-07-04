@@ -889,4 +889,11 @@ $( function()
 		});
 		div.remove();
 	};
+
+	$(".link_row").on("click", function() {
+		if($(this).data("href") != "#")
+		{
+			window.open($(this).data("href"), "_top");
+		}
+	});
 });

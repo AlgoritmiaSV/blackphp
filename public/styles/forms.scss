@@ -220,14 +220,15 @@ tr:hover .action_icon
 
 .foot_table
 {
-	margin: 10px 0px 0px 0px;
+	margin: 30px 0px 0px 0px;
 }
 
 .foot_table .cell
 {
-	padding: 2px;
+	padding: 5px;
 	border: 1px solid #d9d9d9;
 	border-radius: 3px;
+	width: 50%;
 }
 
 .foot_table .notes
@@ -291,7 +292,7 @@ tr:hover .action_icon
 .details_table
 {
 	width: 100%;
-	margin: 20px 0px;
+	margin: 20px 0px 10px 0px;
 }
 
 .inline_field
@@ -501,6 +502,11 @@ tr:hover .action_icon
 	{
 		border-radius: 0px;
 		font-weight: bold;
+	}
+
+	.foot_table .cell
+	{
+		width: auto;
 	}
 
 	.details_table, .details_table tbody, .details_table tr, .details_table td:not(.pc_cell), .details_table tfoot

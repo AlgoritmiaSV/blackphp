@@ -555,6 +555,11 @@
 	width: 100%;
 }
 
+.table-cols-2 .cell
+{
+	width: 50%;
+}
+
 .x-small_icon
 {
 	width: 16px;
@@ -943,6 +948,11 @@ input:checked + .slider:before
 .small_chart
 {
 	width: 200px;
+}
+
+.jAlert
+{
+	max-width: 1200px;
 }
 
 @media screen and (max-width: 799px)

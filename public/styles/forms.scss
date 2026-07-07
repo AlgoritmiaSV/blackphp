@@ -145,7 +145,7 @@ tr:hover .action_icon
 
 .form_body
 {
-	padding: 10px;
+	padding: 10px !important;
 }
 
 .form_content
@@ -170,18 +170,6 @@ tr:hover .action_icon
 .form_entry textarea
 {
 	resize: none;
-}
-
-.form_entry:not(.cell) label:not(.radio_container):not(.cbox_container):not(.switch):not(.description_label):not(.drop-label)
-{
-	display: inline-block;
-	width: 160px;
-	vertical-align: top;
-}
-
-.form_entry:is(.cell) label
-{
-	display: block;
 }
 
 .form_foot
@@ -467,11 +455,16 @@ tr:hover .action_icon
 
 @media screen and (max-width: 799px)
 {
-	.form_entry label:not(.switch)
+	.action_icon
+	{
+		opacity: 0.5;
+	}
+
+	.form_entry label:not(.radio_container):not(.cbox_container):not(.switch):not(.description_label):not(.drop-label)
 	{
 		display: block;
 		width: auto;
-		color: #9999cc;
+		opacity: 0.6;
 	}
 
 	.switch_span
@@ -513,6 +506,11 @@ tr:hover .action_icon
 	{
 		display: block;
 		width: auto;
+	}
+
+	.details_table tr
+	{
+		border-radius: 5px;
 	}
 
 	.details_table td
@@ -589,6 +587,18 @@ tr:hover .action_icon
 		background: linear-gradient(to bottom, $form_content_bg 0%, $form_content_bg 49%, #d9d9d9 50%, $form_content_bg 51%);
 	}
 	
+	.form_entry label:not(.radio_container):not(.cbox_container):not(.switch):not(.description_label):not(.drop-label)
+	{
+		display: inline-block;
+		width: 160px;
+		vertical-align: top;
+	}
+
+	.form_foot button:not(.delete_button)
+	{
+		margin-left: 7px;
+	}
+
 	.form_group
 	{
 		padding: 2px;
@@ -596,11 +606,6 @@ tr:hover .action_icon
 		background-color: $input_bg;
 	}
 	
-	.form_foot button:not(.delete_button)
-	{
-		margin-left: 7px;
-	}
-
 	.details_table_container
 	{
 		max-height: 500px;

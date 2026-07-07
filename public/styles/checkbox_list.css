@@ -1,0 +1,35 @@
+.checkbox-ul {
+  list-style: none;
+  padding: 0;
+}
+
+.checkbox-ul li {
+  position: relative;
+  padding-left: 1.5em; /* space for the custom icon */
+}
+
+/* Base empty box */
+.checkbox-ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  width: 1em;
+  height: 1em;
+  border: 2px solid #000; /* box outline */
+  border-radius: 2px;      /* slight rounding */
+  background: #fff;        /* white background */
+}
+
+/* Checked state: add a tick mark */
+.checkbox-ul li[data-checked="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0.25em;
+  top: 0.35em;
+  width: 0.5em;
+  height: 0.25em;
+  border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
+  transform: rotate(-45deg);
+}

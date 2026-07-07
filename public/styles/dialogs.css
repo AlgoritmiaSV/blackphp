@@ -49,6 +49,11 @@
 	padding: 0px;
 }
 
+.ui-widget, .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button
+{
+	font-family: inherit;
+}
+
 @media screen and (max-width: 799px)
 {
 	.ui-dialog-content input

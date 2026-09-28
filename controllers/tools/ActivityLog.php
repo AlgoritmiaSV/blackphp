@@ -12,13 +12,11 @@ trait ActivityLog
 	{
 		$this->check_permissions("read", "logs");
 		$args = func_get_args();
-		$options = Array();
-		for($i = 1; $i < func_num_args(); $i = $i + 2)
-		{
+		$options = array();
+		for ($i = 1; $i < func_num_args(); $i = $i + 2) {
 			$options[$args[$i - 1]] = $args[$i];
 		}
-		if(empty($options["from"]) || empty($options["to"]))
-		{
+		if (empty($options["from"]) || empty($options["to"])) {
 			$date = Date("Y-m-d");
 			header("Location: /" . $this->module . "/" . __FUNCTION__ . "/from/$date/to/$date/");
 			return;
@@ -60,12 +58,10 @@ trait ActivityLog
 			->where("date_time", ">=", $from)
 			->where("date_time", "<=", $to)
 			->orderBy("date_time", "DESC");
-		if(!empty($options["user"]))
-		{
+		if (!empty($options["user"])) {
 			$logsModel->where("users.user_id", $options["user"]);
 		}
-		if(!empty($options["element"]))
-		{
+		if (!empty($options["element"])) {
 			$logsModel->where("app_elements.element_key", $options["element"]);
 		}
 		$items = $logsModel->getAll();
@@ -74,31 +70,20 @@ trait ActivityLog
 			2 => _("updated"),
 			4 => _("created")
 		];
-		foreach($items as &$item)
-		{
+		foreach ($items as &$item) {
 			$article = "";
-			if($item["unique_element"] == 0)
-			{
+			if ($item["unique_element"] == 0) {
 				$first_character = substr($item["singular_name"], 0, 1);
-				if(in_array($first_character, ["a", "e", "i", "o", "u"]))
-				{
-					if($item["element_gender"] == 'F')
-					{
+				if (in_array($first_character, ["a", "e", "i", "o", "u"])) {
+					if ($item["element_gender"] == 'F') {
 						$article = _("femalean");
-					}
-					else
-					{
+					} else {
 						$article = _("malean");
 					}
-				}
-				else
-				{
-					if($item["element_gender"] == 'F')
-					{
+				} else {
+					if ($item["element_gender"] == 'F') {
 						$article = _("femalea");
-					}
-					else
-					{
+					} else {
 						$article = _("malea");
 					}
 				}
@@ -115,15 +100,12 @@ trait ActivityLog
 				"totalRecords" => count($items)
 			]
 		];
-		if($response == "Excel")
-		{
+		if ($response == "Excel") {
 			$data["title"] = _("Activity log");
-			$data["headers"] = Array(_("Date and time"), _("Activity description"));
-			$data["fields"] = Array("date_time", "description");
+			$data["headers"] = array(_("Date and time"), _("Activity description"));
+			$data["fields"] = array("date_time", "description");
 			excel::create_from_table($data, "Activity_log_" . Date("YmdHis") . ".xlsx");
-		}
-		else
-		{
+		} else {
 			http::json($data);
 		}
 	}
@@ -133,12 +115,11 @@ trait ActivityLog
 		$this->check_permissions("read", "logs");
 		$elements = appElementsModel::where("(is_deletable + is_creatable + is_deletable >= 1)")
 			->list("element_key", "element_name");
-		foreach($elements as &$element)
-		{
+		foreach ($elements as &$element) {
 			$element["text"] = _($element["text"]);
 		}
 		unset($element);
-		usort($elements, function($a, $b) {
+		usort($elements, function ($a, $b) {
 			return strcmp($a["text"], $b["text"]);
 		});
 		http::json([

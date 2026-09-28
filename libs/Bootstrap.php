@@ -6,7 +6,8 @@
  * La clase bootstrap sirve para interpretar la URL (REQUEST_URI), y decidir qué controlador se va
  * a cargar, y de qué forma se van a interpretar los parámetros.
  */
-class Bootstrap {
+class Bootstrap
+{
 
 	/**
 	 * @var string $_url La url solicitada por el cliente
@@ -15,9 +16,9 @@ class Bootstrap {
 
 	/**
 	 * @var string $_controller El controlador slicitado en la URL
-	*/
+	 */
 	private $_controller = null;
-	
+
 	/**
 	 * @var string $_controllerPath La ruta donde están ubicados los controladores en el sistema
 	 * Se debe incluir siempre la barra / al final
@@ -34,7 +35,7 @@ class Bootstrap {
 	 * explícitamente a un controlador.
 	 */
 	private $_defaultFile = 'index.php';
-	
+
 	/**
 	 * Iniciar
 	 * 
@@ -53,7 +54,7 @@ class Bootstrap {
 		$this->_loadExistingController();
 		$this->_callControllerMethod();
 	}
-	
+
 	/**
 	 * (Opcional) Introducir una ruta personalizada para los controladores
 	 * 
@@ -65,7 +66,7 @@ class Bootstrap {
 	{
 		$this->_controllerPath = trim($path, '/') . '/';
 	}
-	
+
 	/**
 	 * (Optional) Ruta personalizada para el archivo de error
 	 * 
@@ -77,7 +78,7 @@ class Bootstrap {
 	{
 		$this->_errorFile = trim($path, '/');
 	}
-	
+
 	/**
 	 * (Optional) Set a custom path to the error file
 	 * @param string $path Use the file name of your controller, eg: index.php
@@ -86,10 +87,10 @@ class Bootstrap {
 	{
 		$this->_defaultFile = trim($path, '/');
 	}
-	
+
 	/**
-	* Fetches the $_GET from 'url'
-	*/
+	 * Fetches the $_GET from 'url'
+	 */
 	private function _getUrl()
 	{
 		$url = isset($_GET['url']) ? $_GET['url'] : "";
@@ -97,26 +98,26 @@ class Bootstrap {
 		$url = filter_var($url, FILTER_SANITIZE_URL);
 		$this->_url = explode('/', $url);
 	}
-	
+
 	/**
-	* This loads if there is no GET parameter passed
-	*/
+	 * This loads if there is no GET parameter passed
+	 */
 	private function _loadDefaultController()
 	{
 		require $this->_controllerPath . $this->_defaultFile;
 		$this->_controller = new Index();
 		$this->_controller->index();
 	}
-	
+
 	/**
-	* Load an existing controller if there IS a GET parameter passed
-	*
-	* @return boolean|string
-	*/
+	 * Load an existing controller if there IS a GET parameter passed
+	 *
+	 * @return boolean|string
+	 */
 	private function _loadExistingController()
 	{
 		$file = $this->_controllerPath . $this->_url[0] . '.php';
-		
+
 		if (file_exists($file)) {
 			require $file;
 			$this->_controller = new $this->_url[0];
@@ -125,39 +126,37 @@ class Bootstrap {
 			return false;
 		}
 	}
-	
+
 	/**
-	* If a method is passed in the GET url paremter
-	* 
-	*  http://localhost/controller/method/ Default index
-	*  http://localhost/controller/method/id
-	*  http://localhost/controller/method/(param)/(value)/(param)/(value)...
-	*/
+	 * If a method is passed in the GET url paremter
+	 * 
+	 *  http://localhost/controller/method/ Default index
+	 *  http://localhost/controller/method/id
+	 *  http://localhost/controller/method/(param)/(value)/(param)/(value)...
+	 */
 	private function _callControllerMethod()
 	{
 		$length = count($this->_url);
-		
+
 		// Make sure the method we are calling exists
 		if ($length > 1) {
 			if (!method_exists($this->_controller, $this->_url[1])) {
 				$this->_error();
 			}
 		}
-		
+
 		// Determine what to load
 		#	Modified by: Edwin Fajardo 2017-09-23 22:30
-		$parameters = Array();
-		for($i = 2; $i < count($this->_url); $i++)
-		{
+		$parameters = array();
+		for ($i = 2; $i < count($this->_url); $i++) {
 			$parameters[] = $this->_url[$i];
 		}
-		if(count($this->_url) < 2)
-		{
+		if (count($this->_url) < 2) {
 			$this->_url[1] = "index";
 		}
-		call_user_func_array(Array($this->_controller, $this->_url[1]), $parameters);
+		call_user_func_array(array($this->_controller, $this->_url[1]), $parameters);
 	}
-	
+
 	/**
 	 * Display an error page if nothing exists
 	 * 

@@ -1,7 +1,6 @@
 <?php
 
-foreach(glob("controllers/installation/*") as $file)
-{
+foreach (glob("controllers/installation/*") as $file) {
 	include $file;
 }
 
@@ -22,7 +21,7 @@ class Installation extends Controller
 	use Menu;
 	use RoleAndUser;
 	use Users;
-	
+
 	/**
 	 * Constructor de la clase de instalación
 	 * 
@@ -79,7 +78,7 @@ class Installation extends Controller
 	 * 
 	 * @return void
 	 */
-	function AppInfo() 
+	function AppInfo()
 	{
 		$this->InstallerRequired();
 		$this->view->data["title"] = _("App info");
@@ -96,7 +95,7 @@ class Installation extends Controller
 	 * 
 	 * @return void
 	 */
-	function SessionData() 
+	function SessionData()
 	{
 		$this->InstallerRequired();
 		$this->view->data["title"] = _("Session data");
@@ -130,7 +129,7 @@ class Installation extends Controller
 	 * 
 	 * @return void
 	 */
-	function Summary() 
+	function Summary()
 	{
 		$this->InstallerRequired();
 		$this->view->data["title"] = _("Summary");
@@ -141,7 +140,7 @@ class Installation extends Controller
 		$time_diff = 0;
 		date_default_timezone_set('America/El_Salvador');
 		#--------------------------------------------------------------------------
-		$folders = Array(".");
+		$folders = array(".");
 		$this->add_folders(".", $folders);
 		$self = "./" . pathinfo($_SERVER["PHP_SELF"], PATHINFO_BASENAME);
 		$text = "";
@@ -153,11 +152,10 @@ class Installation extends Controller
 		$total_files = 0;
 		$total_size = 0;
 		$total_lines = 0;
-		$total_types = Array();
-		$type_lines = Array();
+		$total_types = array();
+		$type_lines = array();
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		foreach($folders as $folder)
-		{
+		foreach ($folders as $folder) {
 			$object = new DirectoryIterator($folder);
 			$folder_files = 0;
 			$folder_size = 0;
@@ -165,60 +163,47 @@ class Installation extends Controller
 			$folder_text = "\r\nFolder: " . $folder . "\r\n\r\n";
 			$folder_text .= "Lines\t|Size\t|Last modified\t\t|Filename\r\n";
 			$folder_text .= "--------+-------+-----------------------+---------------------\r\n";
-			$files = Array();
-			foreach($object as $file_object)
-			{
-				$files[] = Array($file_object->getFilename(), $file_object->getMTime());
+			$files = array();
+			foreach ($object as $file_object) {
+				$files[] = array($file_object->getFilename(), $file_object->getMTime());
 			}
 			asort($files);
-			foreach($files as $file_info)
-			{
+			foreach ($files as $file_info) {
 				$file = $folder . "/" . $file_info[0];
 				$mime_type = finfo_file($finfo, $file);
-				if(strncmp($mime_type, "text", 4) != 0 || $file == $self)
-				{
+				if (strncmp($mime_type, "text", 4) != 0 || $file == $self) {
 					continue;
 				}
 				$modified = $file_info[1];
 				$size = filesize($file);
 				$extension = pathinfo($file, PATHINFO_EXTENSION);
-				if(isset($total_types[$extension]))
-				{
+				if (isset($total_types[$extension])) {
 					$total_types[$extension]++;
-				}
-				else
-				{
+				} else {
 					$total_types[$extension] = 1;
 				}
 				$lines = 0;
 				$file_descriptor = fopen($file, "r");
-				while(!feof($file_descriptor))
-				{
+				while (!feof($file_descriptor)) {
 					$line = fgets($file_descriptor);
 					$lines++;
 				}
-				$folder_text .= $lines . "\t|" . $size . "\t|" . Date("Y-m-d H:i:s", $modified + $time_diff) . "\t|" . $file_info[0]. "\r\n";
+				$folder_text .= $lines . "\t|" . $size . "\t|" . Date("Y-m-d H:i:s", $modified + $time_diff) . "\t|" . $file_info[0] . "\r\n";
 				fclose($file_descriptor);
 				$folder_files++;
 				$folder_size += $size;
 				$folder_lines += $lines;
-				if(isset($type_lines[$extension]))
-				{
+				if (isset($type_lines[$extension])) {
 					$type_lines[$extension] += $lines;
-				}
-				else
-				{
+				} else {
 					$type_lines[$extension] = $lines;
 				}
 			}
 			$folder_text .= "--------+-------+-----------------------+---------------------\r\n";
 			$folder_text .= $folder_files . " files; " . $folder_lines . " lines; " . $folder_size . " bytes.\r\n";
-			if($folder_files == 0)
-			{
+			if ($folder_files == 0) {
 				continue;
-			}
-			else
-			{
+			} else {
 				$text .= $folder_text;
 			}
 			$total_files += $folder_files;
@@ -238,14 +223,12 @@ class Installation extends Controller
 		$text .= "Bytes per file: " . ($total_size / $total_files) . "\r\n";
 		$text .= "\r\n";
 		$text .= "--------File types--------\r\n";
-		foreach($total_types as $key => $total)
-		{
+		foreach ($total_types as $key => $total) {
 			$text .= $key . (strlen($key) > 7 ? "\t" : "\t\t") . $total . "\r\n";
 		}
 		$text .= "\r\n";
 		$text .= "--------Lines by type of file--------\r\n";
-		foreach($type_lines as $key => $total)
-		{
+		foreach ($type_lines as $key => $total) {
 			$text .= $key . (strlen($key) > 7 ? "\t" : "\t\t") . $total . "\r\n";
 		}
 		$this->view->data["text"] = $text;
@@ -259,8 +242,7 @@ class Installation extends Controller
 		$this->view->data["title"] = _("Error log");
 		$this->view->standard_error();
 		$text = "No errors found!";
-		if(file_exists("error_log"))
-		{
+		if (file_exists("error_log")) {
 			$text = file_get_contents("error_log");
 		}
 		$this->view->data["text"] = $text;
@@ -279,8 +261,7 @@ class Installation extends Controller
 	public function load_form_data()
 	{
 		$data = [];
-		if(Session::get("entity/entity_id") != null)
-		{
+		if (Session::get("entity/entity_id") != null) {
 			$entity = installationDataModel::get()
 				->toArray();
 			$data["update"] = $entity;
@@ -291,30 +272,24 @@ class Installation extends Controller
 					->getAll()
 			];
 			$admin_role = rolesModel::find($entity["admin_role"]);
-			if($admin_role->exists())
-			{
+			if ($admin_role->exists()) {
 				$read = [];
 				$create = [];
 				$update = [];
 				$delete = [];
 				$elements = roleElementsModel::where("role_id", $admin_role->getRoleId())
 					->getAll();
-				foreach($elements as &$element)
-				{
-					if((intval($element->getPermissions()) & 8) != 0)
-					{
+				foreach ($elements as &$element) {
+					if ((intval($element->getPermissions()) & 8) != 0) {
 						$read[] = ["id" => $element->getElementId()];
 					}
-					if((intval($element->getPermissions()) & 4) != 0)
-					{
+					if ((intval($element->getPermissions()) & 4) != 0) {
 						$create[] = ["id" => $element->getElementId()];
 					}
-					if((intval($element->getPermissions()) & 2) != 0)
-					{
+					if ((intval($element->getPermissions()) & 2) != 0) {
 						$update[] = ["id" => $element->getElementId()];
 					}
-					if((intval($element->getPermissions()) & 1) != 0)
-					{
+					if ((intval($element->getPermissions()) & 1) != 0) {
 						$delete[] = ["id" => $element->getElementId()];
 					}
 					$data["check"]["read"] = $read;
@@ -323,9 +298,7 @@ class Installation extends Controller
 					$data["check"]["delete"] = $delete;
 				}
 				unset($element);
-			}
-			else
-			{
+			} else {
 				$data["check"]["read"] = appElementsModel::select("element_id AS id")
 					->getAll();
 				$data["check"]["create"] = appElementsModel::select("element_id AS id")
@@ -353,8 +326,7 @@ class Installation extends Controller
 	public function TestAuthorization()
 	{
 		$response = ["success" => false];
-		if(empty($_POST["nickname"]) || empty($_POST["password"]))
-		{
+		if (empty($_POST["nickname"]) || empty($_POST["password"])) {
 			$response += [
 				"title" => "Error",
 				"message" => _("Enter your installer user and password"),
@@ -365,14 +337,11 @@ class Installation extends Controller
 		}
 		$installer = appInstallersModel::where("installer_nickname", $_POST["nickname"])
 			->get();
-		if(password_verify($_POST["password"], $installer->getInstallerPassword()))
-		{
+		if (password_verify($_POST["password"], $installer->getInstallerPassword())) {
 			Session::set("authorization_code", true);
 			Session::set("installer_id", $installer->getInstallerId());
 			$response["reload"] = true;
-		}
-		else
-		{
+		} else {
 			$response += [
 				"title" => "Error",
 				"message" => _("Bad user or password"),
@@ -385,10 +354,10 @@ class Installation extends Controller
 
 	public function php_info_loader()
 	{
-		ob_start () ;
-		phpinfo () ;
-		$pinfo = ob_get_contents () ;
-		ob_end_clean () ;
+		ob_start();
+		phpinfo();
+		$pinfo = ob_get_contents();
+		ob_end_clean();
 		$pinfo = preg_replace('/\s+/', ' ', $pinfo);
 		$pinfo = preg_replace('/(,)(?=[^\s])/', ', ', $pinfo);
 		$pinfo = preg_replace('/(:\/)(?=[^\/])/', ': /', $pinfo);
@@ -409,8 +378,7 @@ class Installation extends Controller
 	protected function InstallerRequired($type = 'html')
 	{
 		# Validar si el sistema permite el registro de nuevas entidades
-		if(Session::get("entity/entity_id") == null && CREATE_ENTITY != "OPEN")
-		{
+		if (Session::get("entity/entity_id") == null && CREATE_ENTITY != "OPEN") {
 			$this->view->data["title"] = _("Installation");
 			$this->view->standard_error();
 			$this->view->data["nav"] = "";
@@ -419,10 +387,8 @@ class Installation extends Controller
 			exit();
 		}
 
-		if(Session::get("installer_id") == null)
-		{
-			if($type == 'json')
-			{
+		if (Session::get("installer_id") == null) {
+			if ($type == 'json') {
 				http::json([
 					"success" => false,
 					"error" => true,
@@ -430,13 +396,9 @@ class Installation extends Controller
 					"title" => "Error",
 					"theme" => "red"
 				]);
-			}
-			elseif($type == 'internal')
-			{
+			} elseif ($type == 'internal') {
 				$this->view->render("main/error");
-			}
-			else
-			{
+			} else {
 				$this->view->data["title"] = _("Log in");
 				$this->view->standard_form();
 				$this->view->data["nav"] = "";
@@ -465,12 +427,10 @@ class Installation extends Controller
 	function add_folders($dir, &$array)
 	{
 		# Carpetas a excluir
-		$excluded_folders = Array("./public/external", "./plugins", "./db", "./public/icons", "./vendor", "./node_modules");
+		$excluded_folders = array("./public/external", "./plugins", "./db", "./public/icons", "./vendor", "./node_modules");
 		$list = glob($dir . "/*", GLOB_ONLYDIR);
-		foreach($list as $directory)
-		{
-			if(in_array($directory, $excluded_folders))
-			{
+		foreach ($list as $directory) {
+			if (in_array($directory, $excluded_folders)) {
 				continue;
 			}
 			array_push($array, $directory);

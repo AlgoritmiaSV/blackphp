@@ -23,7 +23,7 @@ class MainError extends Controller
 		parent::__construct();
 		$this->module = get_class($this);
 	}
-	
+
 	/**
 	 * Vista principal
 	 * 
@@ -31,7 +31,7 @@ class MainError extends Controller
 	 * 
 	 * @return void
 	 */
-	function index() 
+	function index()
 	{
 		$this->view->data["title"] = 'Error';
 		$this->view->standard_error();

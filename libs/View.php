@@ -34,8 +34,8 @@ class View
 	 */
 	function __construct()
 	{
-		$this->restrict = Array();
-		$this->data = Array();
+		$this->restrict = array();
+		$this->data = array();
 	}
 
 	/**
@@ -51,14 +51,10 @@ class View
 	public function render($name, $return = false)
 	{
 		$filename = 'views/' . $name . '.html';
-		if (!file_exists($filename))
-		{
-			if($return)
-			{
+		if (!file_exists($filename)) {
+			if ($return) {
 				return "Error loading template file ($filename).";
-			}
-			else
-			{
+			} else {
 				echo "Error loading template file ($filename).";
 			}
 		}
@@ -67,26 +63,21 @@ class View
 		# Quitando espacios
 		$template = preg_replace('/\s+/', ' ', $template);
 
-		foreach ($this->data as $key => $value)
-		{
-			if(is_array($value))
-			{
+		foreach ($this->data as $key => $value) {
+			if (is_array($value)) {
 				$first = true;
 				$text = "";
 				$array_key = "[[ $key ]]";
 				$begin = strpos($template, $array_key);
-				if($begin === false)
-				{
+				if ($begin === false) {
 					continue;
 				}
 				$begin += strlen($array_key);
 				$end = strpos($template, "[[/ $key ]]");
 				$sub = substr($template, $begin, $end - $begin);
-				foreach($value as $item_key => $item_value)
-				{
+				foreach ($value as $item_key => $item_value) {
 					$line = $sub;
-					foreach($item_value as $cell_key=>$cell_value)
-					{
+					foreach ($item_value as $cell_key => $cell_value) {
 						$tagToReplace = "{{ $cell_key }}";
 						$line = str_replace($tagToReplace, $cell_value, $line);
 					}
@@ -97,30 +88,25 @@ class View
 			}
 		}
 
-		foreach ($this->data as $key => $value)
-		{
-			if(!is_array($value))
-			{
+		foreach ($this->data as $key => $value) {
+			if (!is_array($value)) {
 				$tagToReplace = "{{ $key }}";
 				$template = str_replace($tagToReplace, $value, $template);
 			}
 		}
 
 		# Hide parts of HTML
-		foreach($this->restrict as $restrict)
-		{
+		foreach ($this->restrict as $restrict) {
 			$template = str_replace("<!-- $restrict -->", "\r\n<!-- $restrict -->", $template);
 			$template = preg_replace("/<!-- $restrict -->.*\<!-- \/$restrict -->/", "", $template);
 		}
 
 		#Translate
-		$all_matches = Array();
+		$all_matches = array();
 		if (preg_match_all("/_\(([^\)]+)\)/i", $template, $all_matches)) {
-			if(!empty($all_matches[1]))
-			{
+			if (!empty($all_matches[1])) {
 				$matches = $all_matches[1];
-				for($i = 0; $i < count($matches); $i++)
-				{
+				for ($i = 0; $i < count($matches); $i++) {
 					$template = str_replace("_($matches[$i])", _($matches[$i]), $template);
 				}
 			}
@@ -132,12 +118,9 @@ class View
 		$template = preg_replace("/\{\{ [a-z0-9_]* \}\}/", "", $template);
 
 		# Return rendered as string or print to output
-		if($return)
-		{
+		if ($return) {
 			return $template;
-		}
-		else
-		{
+		} else {
 			echo $template;
 		}
 	}
@@ -162,21 +145,17 @@ class View
 	 */
 	public function add($type, $extension, $files)
 	{
-		foreach($files as $file)
-		{
+		foreach ($files as $file) {
 			$filename = "public/themes/" . Session::get("theme_url") . "/" . $file;
-			if(!file_exists($filename))
-			{
+			if (!file_exists($filename)) {
 				$filename = "public/" . $file;
 			}
-			if(!file_exists($filename))
-			{
+			if (!file_exists($filename)) {
 				$filename = $file;
 			}
-			if(file_exists($filename))
-			{
+			if (file_exists($filename)) {
 				$time = filemtime($filename);
-				$this->data[$type][] = Array("$extension" => $filename . "?t=" . $time);
+				$this->data[$type][] = array("$extension" => $filename . "?t=" . $time);
 			}
 		}
 	}
@@ -188,7 +167,7 @@ class View
 	 * @param array $values Valores a insertar
 	 * 
 	 * @return void
-	*/
+	 */
 	public function set($values)
 	{
 		$this->data = array_merge($this->data, $values);
@@ -228,8 +207,7 @@ class View
 			'scripts/table_sorting.js'
 		]);
 		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
-		if(file_exists($select2_lang))
-		{
+		if (file_exists($select2_lang)) {
 			$this->add("scripts", "js", [
 				$select2_lang
 			]);
@@ -267,8 +245,7 @@ class View
 			'scripts/bpscript.min.js'
 		]);
 		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
-		if(file_exists($select2_lang))
-		{
+		if (file_exists($select2_lang)) {
 			$this->add("scripts", "js", [
 				$select2_lang
 			]);
@@ -304,8 +281,7 @@ class View
 			'scripts/bpscript.min.js'
 		]);
 		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
-		if(file_exists($select2_lang))
-		{
+		if (file_exists($select2_lang)) {
 			$this->add("scripts", "js", [
 				$select2_lang
 			]);
@@ -338,8 +314,7 @@ class View
 			'scripts/bpscript.min.js'
 		]);
 		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
-		if(file_exists($select2_lang))
-		{
+		if (file_exists($select2_lang)) {
 			$this->add("scripts", "js", [
 				$select2_lang
 			]);
@@ -369,8 +344,7 @@ class View
 			'scripts/bpscript.min.js'
 		]);
 		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
-		if(file_exists($select2_lang))
-		{
+		if (file_exists($select2_lang)) {
 			$this->add("scripts", "js", [
 				$select2_lang
 			]);
@@ -399,8 +373,7 @@ class View
 			'scripts/bpscript.min.js'
 		]);
 		$select2_lang = 'node_modules/select2/dist/js/i18n/' . Session::get("lang") . '.js';
-		if(file_exists($select2_lang))
-		{
+		if (file_exists($select2_lang)) {
 			$this->add("scripts", "js", [
 				$select2_lang
 			]);

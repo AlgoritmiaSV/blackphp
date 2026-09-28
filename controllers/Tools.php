@@ -1,7 +1,6 @@
 <?php
 
-foreach(glob("controllers/tools/*") as $file)
-{
+foreach (glob("controllers/tools/*") as $file) {
 	include $file;
 }
 
@@ -16,7 +15,7 @@ foreach(glob("controllers/tools/*") as $file)
  * Incorporado el 2023-01-04 10:54
  * @author Edwin Fajardo <contacto@edwinfajardo.com>
  * @link https://www.edwinfajardo.com
-*/
+ */
 
 class Tools extends Controller
 {
@@ -50,8 +49,8 @@ class Tools extends Controller
 		$module = appModulesModel::findBy("module_url", $this->module);
 		$this->view->data["title"] = _($module->getModuleName());
 		$this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
-		->where("module_id", $module->getModuleId())
-		->orderBy("method_order")->getAllArray();
+			->where("module_id", $module->getModuleId())
+			->orderBy("method_order")->getAllArray();
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
 		$this->view->render("main");
 	}
@@ -60,7 +59,7 @@ class Tools extends Controller
 
 	public function load_form_data()
 	{
-		http::json(Array());
+		http::json([]);
 	}
 }
 ?>

@@ -6,32 +6,24 @@ trait RoleAndUser
 		$this->InstallerRequired();
 		$this->view->data["title"] = _("Role and user");
 		$this->view->standard_form();
-		if(Session::get("user_id") == null)
-		{
+		if (Session::get("user_id") == null) {
 			$this->view->restrict[] = "inside_installation";
-		}
-		else
-		{
+		} else {
 			$this->view->restrict[] = "outside_installation";
 		}
 		$role_elements = "";
 		$modules = appModulesModel::getAll();
-		foreach($modules as $module)
-		{
+		foreach ($modules as $module) {
 			$elements = appElementsModel::where("module_id", $module->getModuleId())->getAllArray();
-			foreach($elements as &$element)
-			{
+			foreach ($elements as &$element) {
 				$element["element_name"] = _($element["element_name"]);
-				if($element["is_creatable"] == 0)
-				{
+				if ($element["is_creatable"] == 0) {
 					$element["creatable"] = "disabled";
 				}
-				if($element["is_updatable"] == 0)
-				{
+				if ($element["is_updatable"] == 0) {
 					$element["updatable"] = "disabled";
 				}
-				if($element["is_deletable"] == 0)
-				{
+				if ($element["is_deletable"] == 0) {
 					$element["deletable"] = "disabled";
 				}
 			}
@@ -64,8 +56,7 @@ trait RoleAndUser
 
 		# Creación del rol administrador
 		$role = rolesModel::find($entity->getAdminRole());
-		if(!$role->exists())
-		{
+		if (!$role->exists()) {
 			$role->set([
 				"entity_id" => $entity->getEntityId(),
 				"role_name" => "Administrator"
@@ -73,25 +64,20 @@ trait RoleAndUser
 			$entity->setAdminRole($role->getRoleId());
 			$entity->save();
 		}
-		$elements = Array();
-		foreach($_POST["read"] as $element)
-		{
+		$elements = array();
+		foreach ($_POST["read"] as $element) {
 			$elements[$element] = 8;
 		}
-		foreach($_POST["create"] as $element)
-		{
+		foreach ($_POST["create"] as $element) {
 			$elements[$element] = intval($elements[$element]) + 4;
 		}
-		foreach($_POST["update"] as $element)
-		{
+		foreach ($_POST["update"] as $element) {
 			$elements[$element] = intval($elements[$element]) + 2;
 		}
-		foreach($_POST["delete"] as $element)
-		{
+		foreach ($_POST["delete"] as $element) {
 			$elements[$element] = intval($elements[$element]) + 1;
 		}
-		foreach($elements as $element_id => $permissions)
-		{
+		foreach ($elements as $element_id => $permissions) {
 			$role_element = roleElementsModel::where("role_id", $role->getRoleId())
 				->where("element_id", $element_id)
 				->where("status", ">=", 0)
@@ -109,7 +95,7 @@ trait RoleAndUser
 		#Save default user
 		$user = usersModel::find($_POST["admin_user"]);
 
-		$user->set(Array(
+		$user->set(array(
 			"entity_id" => $entity->getEntityId(),
 			"user_name" => $_POST["user_name"],
 			"nickname" => $_POST["nickname"],
@@ -130,16 +116,13 @@ trait RoleAndUser
 			"theme" => "green",
 			"no_reset" => true
 		];
-		if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
-		{
+		if ($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"]) {
 			$protocol = "http";
-			if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
+			if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) {
 				$protocol .= "s";
 			}
 			$response["redirect_after"] = $protocol . "://" . str_replace("installer", $_POST["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/Menu/";
-		}
-		else
-		{
+		} else {
 			$response["reload_after"] = true;
 		}
 		http::json($response);

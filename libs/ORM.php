@@ -15,7 +15,7 @@ trait ORM
 	private static $_db = null;
 
 	/** @var string $_select Columnas que se seleccionarán en una tabla */
-	private static $_select = Array();
+	private static $_select = array();
 
 	/** @var string $_extra_select Columnas adicionales que se seleccionarán en una tabla */
 	private static $_extra_select = "";
@@ -24,16 +24,16 @@ trait ORM
 	private static $_modifier = "";
 
 	/** @var array $_join Uniones (JOIN) dentro de la consulta */
-	private static $_join = Array();
+	private static $_join = array();
 
 	/** @var array $_where Conjunto de condiciones que se aplicarán a la consulta */
-	private static $_where = Array();
+	private static $_where = array();
 
 	/** @var array $_order_by Criterios de ordenamiento de los resultados */
-	private static $_order_by = Array();
+	private static $_order_by = array();
 
 	/** @var array $_group_by Criterios de agrupación de los resultados */
-	private static $_group_by = Array();
+	private static $_group_by = array();
 
 	/**
 	 * @var int|bool $_offset Punto de partida para muestra de resultados
@@ -60,12 +60,11 @@ trait ORM
 	 */
 	public static function flush()
 	{
-		self::$_select = Array();
-		self::$_join = Array();
-		self::$_where = Array();
-		self::$_order_by = Array();
-		if(get_called_class() == "DB")
-		{
+		self::$_select = array();
+		self::$_join = array();
+		self::$_where = array();
+		self::$_order_by = array();
+		if (get_called_class() == "DB") {
 			self::$_table_name = null;
 		}
 		self::$_modifier = "";
@@ -82,8 +81,7 @@ trait ORM
 	 */
 	public static function init()
 	{
-		if(self::$_db == null)
-		{
+		if (self::$_db == null) {
 			self::$_db = DB::connect();
 		}
 	}
@@ -110,8 +108,7 @@ trait ORM
 	 */
 	public static function find($id, $deleted = false)
 	{
-		if($deleted && property_exists(new static(), "status"))
-		{
+		if ($deleted && property_exists(new static(), "status")) {
 			self::$_ommit_status = true;
 		}
 		return self::where(self::$_primary_key, $id)->get();
@@ -129,8 +126,7 @@ trait ORM
 	 */
 	public static function findBy($field, $value, $deleted = false)
 	{
-		if($deleted && property_exists(new static(), "status"))
-		{
+		if ($deleted && property_exists(new static(), "status")) {
 			self::$_ommit_status = true;
 		}
 		return self::where($field, $value)->get();
@@ -147,69 +143,56 @@ trait ORM
 	public function save()
 	{
 		// Las vistas no se guardan
-		if(self::$_table_type == "VIEW")
-		{
+		if (self::$_table_type == "VIEW") {
 			return 0;
 		}
 		$primary_key = self::$_primary_key;
-		if(!empty($this->{$primary_key}))
-		{
+		if (!empty($this->{$primary_key})) {
 			$class = get_called_class();
 			$initial = new $class;
 			$initial = $initial->find($this->{$primary_key});
-			if($this == $initial)
-			{
+			if ($this == $initial) {
 				return 0;
 			}
 		}
 		self::init();
 		$now = Date("Y-m-d H:i:s");
-		if(self::$_timestamps)
-		{
+		if (self::$_timestamps) {
 			$user_id = Session::get("user_id") ?? 0;
-			if(empty($this->{$primary_key}))
-			{
+			if (empty($this->{$primary_key})) {
 				$this->setCreationUser($user_id);
 				$this->setCreationTime($now);
 			}
 			$this->setEditionUser($user_id);
 			$this->setEditionTime($now);
 		}
-		if(property_exists($this, "entity_id") && is_null($this->entity_id))
-		{
+		if (property_exists($this, "entity_id") && is_null($this->entity_id)) {
 			$this->entity_id = Session::get("entity/entity_id");
 		}
 		$data = get_object_vars($this);
 		$sth = null;
 		$table_name = self::$_table_name;
-		if(empty($this->{$primary_key}))
-		{
+		if (empty($this->{$primary_key})) {
 			unset($data[$primary_key]);
 			$fieldNames = implode(',', array_keys($data));
 			$fieldValues = ':' . implode(', :', array_keys($data));
 			$sth = self::$_db->prepare("INSERT INTO $table_name ($fieldNames) VALUES ($fieldValues)");
-		}
-		else
-		{
+		} else {
 			$fieldDetails = "";
-			foreach($data as $key => $value)
-			{
-				if($key != $primary_key)
-				{
+			foreach ($data as $key => $value) {
+				if ($key != $primary_key) {
 					$fieldDetails .= "$key=:$key,";
 				}
 			}
 			$fieldDetails = rtrim($fieldDetails, ',');
 			$sth = self::$_db->prepare("UPDATE $table_name SET $fieldDetails WHERE $primary_key = :$primary_key");
 		}
-		foreach ($data as $key => $value)
-		{
+		foreach ($data as $key => $value) {
 			$sth->bindValue(":$key", $value);
 		}
 		$sth->execute();
 		self::flush();
-		if(empty($this->{$primary_key}))
-		{
+		if (empty($this->{$primary_key})) {
 			$this->{$primary_key} = self::$_db->lastInsertId();
 		}
 		return $sth->rowCount();
@@ -226,15 +209,13 @@ trait ORM
 	public static function update($data)
 	{
 		# Las vistas no se actualizan
-		if(self::$_table_type == "VIEW")
-		{
+		if (self::$_table_type == "VIEW") {
 			return 0;
 		}
 
 		self::init();
 		$now = Date("Y-m-d H:i:s");
-		if(self::$_timestamps)
-		{
+		if (self::$_timestamps) {
 			$user_id = empty(Session::get("user_id")) ? 0 : Session::get("user_id");
 			$data["edition_user"] = $user_id;
 			$data["edition_time"] = $now;
@@ -242,76 +223,61 @@ trait ORM
 		$sth = null;
 		$table_name = self::$_table_name;
 		$fieldDetails = "";
-		foreach($data as $key => $value)
-		{
+		foreach ($data as $key => $value) {
 			$fieldDetails .= "$key=:$key,";
 		}
 		$fieldDetails = rtrim($fieldDetails, ',');
 
 		# Where
-		$wheres = Array();
+		$wheres = array();
 		$prefix = "";
-		foreach(self::$_where as $value)
-		{
-			if(is_array($value))
-			{
+		foreach (self::$_where as $value) {
+			if (is_array($value)) {
 				$var = str_replace(".", "_", $value[0]);
-				$var = preg_replace( '/[^a-z0-9]/i', '', $var);
-				if($var == "" || is_numeric($var[0]))
-				{
+				$var = preg_replace('/[^a-z0-9]/i', '', $var);
+				if ($var == "" || is_numeric($var[0])) {
 					$var = "v" . $var;
 				}
 				$var = substr($var, 0, 32);
 				$number = 1;
 				$initial_var = $var;
-				while(array_key_exists($var, $data))
-				{
+				while (array_key_exists($var, $data)) {
 					$var = $initial_var . $number;
 					$number++;
 				}
-				if(count($value) == 3)
-				{
+				if (count($value) == 3) {
 					$data[$var] = $value[2];
 					$wheres[] = $value[0] . " " . $value[1] . " :" . $var;
 				}
-				if(count($value) == 2)
-				{
+				if (count($value) == 2) {
 					$data[$var] = $value[1];
 					$wheres[] = $value[0] . " = :" . $var;
 				}
-				if($value[0] == "status" || $value[0] == $prefix . "status")
-				{
+				if ($value[0] == "status" || $value[0] == $prefix . "status") {
 					self::$_ommit_status = true;
 				}
-				if($value[0] == "entity_id" || $value[0] == $prefix . "entity_id")
-				{
+				if ($value[0] == "entity_id" || $value[0] == $prefix . "entity_id") {
 					$entity = true;
 				}
-			}
-			elseif(is_string($value))
-			{
+			} elseif (is_string($value)) {
 				$wheres[] = $value;
 			}
 		}
-		if(self::$_soft_delete && !self::$_ommit_status)
-		{
+		if (self::$_soft_delete && !self::$_ommit_status) {
 			$wheres[] = $prefix . "status != 0";
 		}
-		if(property_exists(new static(), "entity_id") && !$entity && Session::get("entity") != null && Session::get("entity/entity_id") != null)
-		{
+		if (property_exists(new static(), "entity_id") && !$entity && Session::get("entity") != null && Session::get("entity/entity_id") != null) {
 			$wheres[] = $prefix . "entity_id = " . Session::get("entity/entity_id");
 		}
 		$where = implode(" AND ", $wheres);
 
-		if(empty($where))
-		{
+		if (empty($where)) {
 			$where = 1;
 		}
 
 		$sql = "UPDATE $table_name SET $fieldDetails WHERE $where";
 		$sth = self::$_db->prepare($sql);
-		foreach ($data as $key => $value)
-		{
+		foreach ($data as $key => $value) {
 			$sth->bindValue(":$key", $value);
 		}
 		$sth->execute();
@@ -336,23 +302,18 @@ trait ORM
 	 */
 	public function delete()
 	{
-		if(self::$_table_type == "VIEW" || !$this->exists())
-		{
+		if (self::$_table_type == "VIEW" || !$this->exists()) {
 			return 0;
 		}
 		$affected = 0;
-		if(self::$_soft_delete)
-		{
-			if(self::$_timestamps)
-			{
+		if (self::$_soft_delete) {
+			if (self::$_timestamps) {
 				$this->setEditionUser(Session::get("user_id"));
 				$this->setEditionTime(Date("Y-m-d H:i:s"));
 			}
 			$this->setStatus(self::$_deleted_status);
 			$affected = $this->save();
-		}
-		else
-		{
+		} else {
 			$table_name = self::$_table_name;
 			$primary_key = self::$_primary_key;
 			self::init();
@@ -418,12 +379,9 @@ trait ORM
 	{
 		$argc = func_num_args();
 		$argv = func_get_args();
-		if($argc == 1)
-		{
-			self::$_where[] = (string)$argv[0];
-		}
-		else
-		{
+		if ($argc == 1) {
+			self::$_where[] = (string) $argv[0];
+		} else {
 			self::$_where[] = $argv;
 		}
 		return new static();
@@ -473,13 +431,10 @@ trait ORM
 
 	public static function limit($offset_or_limit, $limit = false)
 	{
-		if($limit === false)
-		{
+		if ($limit === false) {
 			self::$_offset = false;
 			self::$_limit = intval($offset_or_limit);
-		}
-		else
-		{
+		} else {
 			self::$_offset = intval($offset_or_limit);
 			self::$_limit = intval($limit);
 		}
@@ -519,16 +474,14 @@ trait ORM
 		$table_name = self::$_table_name;
 		$prefix = "";
 		$entity = false;
-		if(strpos($table_name, ",") !== false)
-		{
+		if (strpos($table_name, ",") !== false) {
 			$objects = false;
 			self::$_ommit_status = true;
 		}
 
 		# Select
 		$select = "*";
-		if(count(self::$_select) > 0)
-		{
+		if (count(self::$_select) > 0) {
 			$select = implode(",", self::$_select);
 			$objects = false;
 		}
@@ -538,31 +491,21 @@ trait ORM
 
 		# Opciones adicionales (Contar líneas...)
 		$extra_select = self::$_extra_select;
-		if(!empty($extra_select))
-		{
+		if (!empty($extra_select)) {
 			$objects = false;
 		}
 
 		# Join
 		$join = "";
-		if(count(self::$_join) > 0)
-		{
-			foreach(self::$_join as $value)
-			{
-				if(is_array($value))
-				{
-					if(count($value) == 3)
-					{
+		if (count(self::$_join) > 0) {
+			foreach (self::$_join as $value) {
+				if (is_array($value)) {
+					if (count($value) == 3) {
 						$join .= "LEFT JOIN " . DB_PREFIX . "$value[0] ON $table_name.$value[1] = " . DB_PREFIX . "$value[0].$value[2] ";
-					}
-					elseif(count($value) == 2)
-					{
-						if(strpos($value[1], ".") !== false)
-						{
+					} elseif (count($value) == 2) {
+						if (strpos($value[1], ".") !== false) {
 							$join .= "LEFT JOIN " . DB_PREFIX . "$value[0] ON $value[1] ";
-						}
-						else
-						{
+						} else {
 							$join .= "LEFT JOIN " . DB_PREFIX . "$value[0] ON $table_name.$value[1] = " . DB_PREFIX . "$value[0].$value[1] ";
 						}
 					}
@@ -573,82 +516,64 @@ trait ORM
 		}
 
 		# Where
-		$wheres = Array();
-		$data = Array();
-		foreach(self::$_where as $value)
-		{
-			if(is_array($value))
-			{
+		$wheres = array();
+		$data = array();
+		foreach (self::$_where as $value) {
+			if (is_array($value)) {
 				$var = str_replace(".", "_", $value[0]);
-				$var = preg_replace( '/[^a-z0-9]/i', '', $var);
-				if($var == "" || is_numeric($var[0]))
-				{
+				$var = preg_replace('/[^a-z0-9]/i', '', $var);
+				if ($var == "" || is_numeric($var[0])) {
 					$var = "v" . $var;
 				}
 				$var = substr($var, 0, 32);
 				$number = 1;
 				$initial_var = $var;
-				while(array_key_exists($var, $data))
-				{
+				while (array_key_exists($var, $data)) {
 					$var = $initial_var . $number;
 					$number++;
 				}
-				if(count($value) == 3)
-				{
+				if (count($value) == 3) {
 					$data[$var] = $value[2];
 					$wheres[] = $value[0] . " " . $value[1] . " :" . $var;
 				}
-				if(count($value) == 2)
-				{
+				if (count($value) == 2) {
 					$data[$var] = $value[1];
 					$wheres[] = $value[0] . " = :" . $var;
 				}
-				if($value[0] == "status" || $value[0] == $prefix . "status")
-				{
+				if ($value[0] == "status" || $value[0] == $prefix . "status") {
 					self::$_ommit_status = true;
 				}
-				if($value[0] == "entity_id" || $value[0] == $prefix . "entity_id")
-				{
+				if ($value[0] == "entity_id" || $value[0] == $prefix . "entity_id") {
 					$entity = true;
 				}
-			}
-			elseif(is_string($value))
-			{
-				if($value == $prefix . "status IS NULL")
-				{
+			} elseif (is_string($value)) {
+				if ($value == $prefix . "status IS NULL") {
 					self::$_ommit_status = true;
 				}
 				$wheres[] = $value;
 			}
 		}
-		if(self::$_soft_delete && !self::$_ommit_status)
-		{
+		if (self::$_soft_delete && !self::$_ommit_status) {
 			$wheres[] = $prefix . "status != 0";
 		}
-		if(property_exists(new static(), "entity_id") && !$entity && !empty(Session::get("entity/entity_id")))
-		{
+		if (property_exists(new static(), "entity_id") && !$entity && !empty(Session::get("entity/entity_id"))) {
 			$wheres[] = $prefix . "entity_id = " . Session::get("entity/entity_id");
 		}
 		$where = implode(" AND ", $wheres);
 
-		if(empty($where))
-		{
+		if (empty($where)) {
 			$where = '1 = 1';
 		}
 
 		# Order By
 		$order_by = "";
-		if(count(self::$_order_by) > 0)
-		{
+		if (count(self::$_order_by) > 0) {
 			$order_by .= "ORDER BY ";
-			$orders = Array();
-			foreach(self::$_order_by as $value)
-			{
-				if(is_array($value))
-				{
+			$orders = array();
+			foreach (self::$_order_by as $value) {
+				if (is_array($value)) {
 					$order_item = $value[0];
-					if(count($value) == 2)
-					{
+					if (count($value) == 2) {
 						$order_item .= " " . $value[1];
 					}
 					$orders[] = $order_item;
@@ -659,14 +584,11 @@ trait ORM
 
 		# Group By
 		$group_by = "";
-		if(count(self::$_group_by) > 0)
-		{
+		if (count(self::$_group_by) > 0) {
 			$group_by .= "GROUP BY ";
-			$groups = Array();
-			foreach(self::$_group_by as $value)
-			{
-				if(is_array($value))
-				{
+			$groups = array();
+			foreach (self::$_group_by as $value) {
+				if (is_array($value)) {
 					$groups[] = implode(", ", $value);
 				}
 			}
@@ -678,21 +600,15 @@ trait ORM
 		$limit = "";
 		# SQL Server TOP
 		$top = "";
-		if(is_numeric($results))
-		{
+		if (is_numeric($results)) {
 			self::$_limit = $results;
 		}
-		if(self::$_limit !== false)
-		{
-			if(DB_TYPE == "sqlsrv")
-			{
+		if (self::$_limit !== false) {
+			if (DB_TYPE == "sqlsrv") {
 				$top = "TOP " . self::$_limit;
-			}
-			else
-			{
+			} else {
 				$limit = "LIMIT ";
-				if(self::$_offset !== false)
-				{
+				if (self::$_offset !== false) {
 					$limit .= (self::$_offset . ",");
 				}
 				$limit .= self::$_limit;
@@ -709,33 +625,21 @@ trait ORM
 		self::flush();
 		$class = get_called_class();
 
-		if($results == "FIRST")
-		{
-			if($objects)
-			{
-				$object = $sth->fetchObject($class, Array(false));
-				if($object === false)
-				{
+		if ($results == "FIRST") {
+			if ($objects) {
+				$object = $sth->fetchObject($class, array(false));
+				if ($object === false) {
 					return new $class;
-				}
-				else
-				{
+				} else {
 					return $object;
 				}
-			}
-			else
-			{
+			} else {
 				return $sth->fetch(PDO::FETCH_ASSOC);
 			}
-		}
-		else
-		{
-			if($objects)
-			{
-				return $sth->fetchAll(PDO::FETCH_CLASS, $class, Array(false));
-			}
-			else
-			{
+		} else {
+			if ($objects) {
+				return $sth->fetchAll(PDO::FETCH_CLASS, $class, array(false));
+			} else {
 				return $sth->fetchAll(PDO::FETCH_ASSOC);
 			}
 		}
@@ -792,10 +696,8 @@ trait ORM
 	public function set($array)
 	{
 		$data = get_object_vars($this);
-		foreach($array as $key => $value)
-		{
-			if(array_key_exists($key, $data))
-			{
+		foreach ($array as $key => $value) {
+			if (array_key_exists($key, $data)) {
 				$key = str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
 				$this->{"set" . $key}($value);
 			}
@@ -817,12 +719,9 @@ trait ORM
 	{
 		self::init();
 		$start = intval($start);
-		if(DB_TYPE == "sqlsrv")
-		{
+		if (DB_TYPE == "sqlsrv") {
 			self::$_extra_select .= ", ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS $field";
-		}
-		else
-		{
+		} else {
 			$sth = self::$_db->prepare("SET @row_number = $start");
 			$sth->execute();
 			self::$_extra_select .= ", (@row_number:=@row_number + 1) AS $field";
@@ -839,7 +738,7 @@ trait ORM
 	 */
 	public static function count()
 	{
-		self::$_select = Array("COUNT(*) AS total");
+		self::$_select = array("COUNT(*) AS total");
 		$result = self::get();
 		return $result["total"];
 	}
@@ -866,46 +765,35 @@ trait ORM
 		$argv = func_get_args();
 		$argc = func_num_args();
 		$select = "";
-		if($argc > 0 && is_bool($argv[$argc - 1]) && $argv[$argc - 1])
-		{
+		if ($argc > 0 && is_bool($argv[$argc - 1]) && $argv[$argc - 1]) {
 			$argc--;
 			$select = "*, ";
 		}
-		if($argc == 0)
-		{
+		if ($argc == 0) {
 			$id = self::$_primary_key;
 			$class = get_called_class();
 			$vars = get_object_vars(new $class);
 			$text = "";
-			foreach(array_keys($vars) AS $key)
-			{
-				if($key == $id)
-				{
+			foreach (array_keys($vars) as $key) {
+				if ($key == $id) {
 					continue;
 				}
-				if($text == "" || strpos($key, "_name") !== false)
-				{
+				if ($text == "" || strpos($key, "_name") !== false) {
 					$text = $key;
 				}
-				if(strpos($key, "_name") !== false)
-				{
+				if (strpos($key, "_name") !== false) {
 					break;
 				}
 			}
-		}
-		elseif($argc == 1)
-		{
+		} elseif ($argc == 1) {
 			$id = self::$_primary_key;
 			$text = $argv[0];
-		}
-		else
-		{
+		} else {
 			$id = $argv[0];
 			$text = $argv[1];
 		}
 		$select .= "$id AS id, $text AS text";
-		if($argc == 3)
-		{
+		if ($argc == 3) {
 			$description = $argv[2];
 			$select .= ", $description AS description";
 		}
@@ -965,11 +853,10 @@ trait ORM
 	 * 
 	 * @return int El siguiente número generado
 	 */
-	public static function next($field, $conditions = Array())
+	public static function next($field, $conditions = array())
 	{
 		$last_model = self::orderBy($field, "DESC");
-		foreach($conditions as $key => $value)
-		{
+		foreach ($conditions as $key => $value) {
 			$last_model->where($key, $value);
 		}
 		$last = $last_model->first();
@@ -984,52 +871,41 @@ trait ORM
 	 * Devuelve una lista de los elementos eliminados de la clase, evaluando el estado eliminado (NULL o cero, según corresponda).
 	 * 
 	 * @return array La lista de datos
-	*/
+	 */
 	public static function list_deleted($from = "", $to = "")
 	{
-		if(!self::$_soft_delete)
-		{
-			return Array();
+		if (!self::$_soft_delete) {
+			return array();
 		}
 		$id = self::$_primary_key;
 		$class = get_called_class();
 		$vars = get_object_vars(new $class);
 		$text = "";
-		foreach(array_keys($vars) AS $key)
-		{
-			if($key == $id)
-			{
+		foreach (array_keys($vars) as $key) {
+			if ($key == $id) {
 				continue;
 			}
-			if($text == "" || strpos($key, "_name") !== false)
-			{
+			if ($text == "" || strpos($key, "_name") !== false) {
 				$text = $key;
 			}
-			if(strpos($key, "_name") !== false)
-			{
+			if (strpos($key, "_name") !== false) {
 				break;
 			}
 		}
 		$table_name = self::$_table_name;
 		$query = self::select("$table_name.*, $table_name.$id AS element_id, $table_name.$text AS description");
-		if(self::$_timestamps)
-		{
+		if (self::$_timestamps) {
 			$query->select("creator.user_name AS creator_name, editor.user_name AS editor_name")->join(DB_PREFIX . "users AS creator", "$table_name.creation_user = creator.user_id")->join(DB_PREFIX . "users AS editor", "$table_name.edition_user = editor.user_id");
 		}
-		if(self::$_deleted_status === 0)
-		{
+		if (self::$_deleted_status === 0) {
 			$query->where("$table_name.status", 0);
-		}
-		else
-		{
+		} else {
 			$query->where("$table_name.status IS NULL");
 		}
-		if(self::$_timestamps && !empty($from))
-		{
+		if (self::$_timestamps && !empty($from)) {
 			$query->where("$table_name.edition_time", ">=", $from . " 00:00:00");
 		}
-		if(self::$_timestamps && !empty($to))
-		{
+		if (self::$_timestamps && !empty($to)) {
 			$query->where("$table_name.edition_time", "<=", $to . " 23:59:59");
 		}
 		return $query->getAll();
@@ -1044,8 +920,7 @@ trait ORM
 	 */
 	public function _getId()
 	{
-		if(empty(self::$_primary_key))
-		{
+		if (empty(self::$_primary_key)) {
 			return 0;
 		}
 		return $this->{self::$_primary_key};
@@ -1060,24 +935,20 @@ trait ORM
 	 * @param string $field El nombre del campo a evaluar. Si no se especifica, se toma por defecto la llave primaria.
 	 * 
 	 * @return object Una instancia de la misma clase
-	*/
+	 */
 	public static function whereIn($list, $field = null)
 	{
-		if($field == null)
-		{
-			if(self::$_primary_key == null)
-			{
+		if ($field == null) {
+			if (self::$_primary_key == null) {
 				return new static();
 			}
 			$field = self::$_primary_key;
 		}
-		if(!is_array($list))
-		{
+		if (!is_array($list)) {
 			return new static();
 		}
 		$list = array_filter($list);
-		if(count($list) == 0)
-		{
+		if (count($list) == 0) {
 			return self::where($field . " IN (NULL)");
 		}
 
@@ -1094,24 +965,20 @@ trait ORM
 	 * @param string $field El nombre del campo a evaluar. Si no se especifica, se toma por defecto la llave primaria.
 	 * 
 	 * @return object Una instancia de la misma clase
-	*/
+	 */
 	public static function whereNotIn($list, $field = null)
 	{
-		if($field == null)
-		{
-			if(self::$_primary_key == null)
-			{
+		if ($field == null) {
+			if (self::$_primary_key == null) {
 				return new static();
 			}
 			$field = self::$_primary_key;
 		}
-		if(!is_array($list))
-		{
+		if (!is_array($list)) {
 			return new static();
 		}
 		$list = array_filter($list);
-		if(count($list) == 0)
-		{
+		if (count($list) == 0) {
 			return new static();
 		}
 
@@ -1139,8 +1006,7 @@ trait ORM
 	 */
 	private static function validateStringSize(&$string, $size)
 	{
-		if($string != null && strlen($string) > $size)
-		{
+		if ($string != null && strlen($string) > $size) {
 			$string = substr($string, 0, $size);
 		}
 	}
@@ -1161,16 +1027,11 @@ trait ORM
 		$fieldNames = func_get_args();
 		$class = new static();
 		$result = "";
-		foreach($fieldNames as $name)
-		{
-			if($name == "*" || property_exists($class, $name))
-			{
-				if(strlen($result) > 0)
-				{
+		foreach ($fieldNames as $name) {
+			if ($name == "*" || property_exists($class, $name)) {
+				if (strlen($result) > 0) {
 					$result .= (", " . self::$_table_name . "." . $name);
-				}
-				else
-				{
+				} else {
 					$result = self::$_table_name . "." . $name;
 				}
 			}
@@ -1191,14 +1052,11 @@ trait ORM
 	 */
 	public static function catalog($columnName, $exclude = [])
 	{
-		$catalogModel =  appCatalogsModel::where("table_name", self::$_table_name)
+		$catalogModel = appCatalogsModel::where("table_name", self::$_table_name)
 			->where("column_name", $columnName);
-		if(is_array($exclude) && count($exclude) > 0)
-		{
+		if (is_array($exclude) && count($exclude) > 0) {
 			$catalogModel->whereNotIn($exclude, "field_value");
-		}
-		elseif(is_numeric($exclude))
-		{
+		} elseif (is_numeric($exclude)) {
 			$catalogModel->where("field_value", "!=", $exclude);
 		}
 		return $catalogModel->list("field_value", "description");
@@ -1231,17 +1089,13 @@ class DB
 	 */
 	public static function connect()
 	{
-		if(self::$_db == null)
-		{
-			if(DB_TYPE == 'sqlsrv')
-			{
-				self::$_db = new PDO(DB_TYPE.':Server='.DB_HOST.','.DB_PORT.';Database='.DB_NAME, DB_USER, DB_PASS);
+		if (self::$_db == null) {
+			if (DB_TYPE == 'sqlsrv') {
+				self::$_db = new PDO(DB_TYPE . ':Server=' . DB_HOST . ',' . DB_PORT . ';Database=' . DB_NAME, DB_USER, DB_PASS);
 				self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				# self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
-			}
-			else
-			{
-				self::$_db = new PDO(DB_TYPE.':host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_NAME, DB_USER, DB_PASS);
+			} else {
+				self::$_db = new PDO(DB_TYPE . ':host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
 				self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				self::$_db->exec('SET NAMES "utf8" COLLATE "utf8_general_ci"');
 			}
@@ -1257,15 +1111,12 @@ class DB
 	 * @param string $table_name El nombre de la tabla a consultar
 	 * 
 	 * @return object Un objeto de la clase DB
-	*/
+	 */
 	public static function from($table_name)
 	{
-		if(empty(self::$_table_name))
-		{
+		if (empty(self::$_table_name)) {
 			self::$_table_name = $table_name;
-		}
-		else
-		{
+		} else {
 			self::$_table_name .= ", " . $table_name;
 		}
 		return new static();

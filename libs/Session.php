@@ -15,7 +15,7 @@ class Session
 	{
 		@session_start();
 	}
-	
+
 	/**
 	 * Insertar valor
 	 * 
@@ -35,7 +35,7 @@ class Session
 	{
 		unset($_SESSION[$key]);
 	}
-	
+
 	/**
 	 * Obtener valor
 	 * 
@@ -50,22 +50,18 @@ class Session
 	 */
 	public static function get($key)
 	{
-		if(strpos($key, "/") !== false)
-		{
+		if (strpos($key, "/") !== false) {
 			$indexes = explode("/", $key);
 			$result = $_SESSION;
-			foreach($indexes as $index)
-			{
-				if(!isset($result[$index]))
-				{
+			foreach ($indexes as $index) {
+				if (!isset($result[$index])) {
 					return null;
 				}
 				$result = $result[$index];
 			}
 			return $result;
 		}
-		if (isset($_SESSION[$key]))
-		{
+		if (isset($_SESSION[$key])) {
 			return $_SESSION[$key];
 		}
 		return null;

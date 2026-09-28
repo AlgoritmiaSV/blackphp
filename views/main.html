@@ -1,126 +1,128 @@
 <!DocType html>
 <html lang="{{ lang }}">
-	<head>
-		<base href="{{ base_href }}">
-		<title>{{ title }} - {{ app_name }}</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="robots" content="noindex, nofollow">
-		[[ styles ]]
-		<link rel="stylesheet" href="{{ css }}">[[/ styles ]]
-		[[ scripts ]]
-		<script type="text/javascript" src="{{ js }}"></script>[[/ scripts ]]
-		<!-- favicon -->
-		<link rel="apple-touch-icon" sizes="57x57" href="public/icons/apple-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="public/icons/apple-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="public/icons/apple-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="public/icons/apple-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="public/icons/apple-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="public/icons/apple-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="public/icons/apple-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="public/icons/apple-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="public/icons/apple-icon-180x180.png">
-		<link rel="icon" type="image/png" sizes="192x192"  href="public/icons/android-icon-192x192.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="public/icons/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="public/icons/favicon-96x96.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="public/icons/favicon-16x16.png">
-		<link rel="manifest" href="Resources/manifest/">
-		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content="public/icons/ms-icon-144x144.png">
-		<meta name="theme-color" content="#ffffff">
-		<!-- end favicon -->
-		<!-- Service Worker -->
-		<script>
-			if ('serviceWorker' in navigator) {
-				window.addEventListener('load', function()
-				{
-					navigator.serviceWorker.register('/public/scripts/serviceWorker.js').then(function(registration) {
-						console.log('Registered!');
-					}, function(err) {
-						console.log('ServiceWorker registration failed: ', err);
-					}).catch(function(err) {
-						console.log(err);
-					});
+
+<head>
+	<base href="{{ base_href }}">
+	<title>{{ title }} - {{ app_name }}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="noindex, nofollow">
+	[[ styles ]]
+	<link rel="stylesheet" href="{{ css }}">[[/ styles ]]
+	[[ scripts ]]
+	<script type="text/javascript" src="{{ js }}"></script>[[/ scripts ]]
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="57x57" href="public/icons/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="public/icons/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="public/icons/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="public/icons/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="public/icons/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="public/icons/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="public/icons/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="public/icons/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="public/icons/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="public/icons/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="public/icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="public/icons/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="public/icons/favicon-16x16.png">
+	<link rel="manifest" href="Resources/manifest/">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="public/icons/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	<!-- end favicon -->
+	<!-- Service Worker -->
+	<script>
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function () {
+				navigator.serviceWorker.register('/public/scripts/serviceWorker.js').then(function (registration) {
+					console.log('Registered!');
+				}, function (err) {
+					console.log('ServiceWorker registration failed: ', err);
+				}).catch(function (err) {
+					console.log(err);
 				});
-			} else {
-				console.log('service worker is not supported');
-			}
-		</script>
-		<!-- /Service Worker -->
-		<!-- Push Manager -->
-		<script>
-			if(navigator.serviceWorker)
-			{
-				navigator.serviceWorker.ready.then(function(registration) {
-					if (!registration.pushManager) {
+			});
+		} else {
+			console.log('service worker is not supported');
+		}
+	</script>
+	<!-- /Service Worker -->
+	<!-- Push Manager -->
+	<script>
+		if (navigator.serviceWorker) {
+			navigator.serviceWorker.ready.then(function (registration) {
+				if (!registration.pushManager) {
 					console.log('No push notifications support.');
 					return false;
-					}
-					registration.pushManager.subscribe({
-						userVisibleOnly: true
-					})
+				}
+				registration.pushManager.subscribe({
+					userVisibleOnly: true
+				})
 					.then(function (subscription) {
 						console.log('Subscribed.');
 					})
 					.catch(function (error) {
 						console.log('Subscription error: ', error);
 					});
-				})
-			}
-		</script>
-		<!-- /Push Manager -->
-	</head>
-	<body>
-		<div id="container">
-			<header id="main_header">
-				<div id="main_title_bar">
-					<a href="/" id="app_logo">
-						<img src="public/images/app_logo_dark.png" alt="Logo">
-					</a>
-					<!-- user -->
-					<a href="#" id="menu_button" class="phone_inline">
-						<img src="public/images/menu.png" class="small_icon" alt="Menu">
-					</a>
-					<!-- /user -->
-					<span class="pc_inline">{{ title }}</span>
-					<span class="phone_inline">{{ title }}</span>
-				</div>
+			})
+		}
+	</script>
+	<!-- /Push Manager -->
+</head>
+
+<body>
+	<div id="container">
+		<header id="main_header">
+			<div id="main_title_bar">
+				<a href="/" id="app_logo">
+					<img src="public/images/app_logo_dark.png" alt="Logo">
+				</a>
 				<!-- user -->
-				<a id="user_link" href="#">
-					<span class="user_icon">
-						<img class="small_icon" src="{{ user_photo }}" alt="_(User)">
-					</span>
-					<span class="pc_inline user_name">{{ user_name }}</span>
+				<a href="#" id="menu_button" class="phone_inline">
+					<img src="public/images/menu.png" class="small_icon" alt="Menu">
 				</a>
 				<!-- /user -->
-			</header>
-			<section id="content_section">
+				<span class="pc_inline">{{ title }}</span>
+				<span class="phone_inline">{{ title }}</span>
+			</div>
+			<!-- user -->
+			<a id="user_link" href="#">
+				<span class="user_icon">
+					<img class="small_icon" src="{{ user_photo }}" alt="_(User)">
+				</span>
+				<span class="pc_inline user_name">{{ user_name }}</span>
+			</a>
+			<!-- /user -->
+		</header>
+		<section id="content_section">
+			<!-- user -->
+			<nav id="main_nav">
+				{{ nav }}
+			</nav>
+			<!-- /user -->
+			<article id="main_content">
+				{{ content }}
 				<!-- user -->
-				<nav id="main_nav">
-					{{ nav }}
-				</nav>
-				<!-- /user -->
-				<article id="main_content">
-					{{ content }}
-					<!-- user -->
-					<aside id="main_aside">
-						<span id="u_name">{{ user_name }}</span>
-						<div class="user_container">
-							<div class="user_photo_container">
-								<img class="user_photo" src="{{ user_photo }}" alt="Foto">
-							</div>
+				<aside id="main_aside">
+					<span id="u_name">{{ user_name }}</span>
+					<div class="user_container">
+						<div class="user_photo_container">
+							<img class="user_photo" src="{{ user_photo }}" alt="Foto">
 						</div>
-						<span id="user_nickname">{{ nickname }}</span>
-						<a href="User/MyAccount/">_(My account)</a>
-						<a class="logout_button" href="#">_(Log out)</a>
-					</aside>
-					<!-- /user -->
-				</article>
-			</section>
-			<footer id ="main_footer">
-				<small>
-					Copyright &copy;{{ copyright_year }} <a href="{{ copyright_link }}">{{ copyright_author }}</a>. All right reserved.
-				</small>
-			</footer>
-		</div>
-	</body>
+					</div>
+					<span id="user_nickname">{{ nickname }}</span>
+					<a href="User/MyAccount/">_(My account)</a>
+					<a class="logout_button" href="#">_(Log out)</a>
+				</aside>
+				<!-- /user -->
+			</article>
+		</section>
+		<footer id="main_footer">
+			<small>
+				Copyright &copy;{{ copyright_year }} <a href="{{ copyright_link }}">{{ copyright_author }}</a>. All
+				right reserved.
+			</small>
+		</footer>
+	</div>
+</body>
+
 </html>

@@ -6,8 +6,8 @@ trait Users
 		// Define character pools
 		$lowercase = 'abcdefghijklmnopqrstuvwxyz';
 		$uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$digits    = '0123456789';
-		$special   = '!@#%^&*()-_=+[]{};:,.<>?';
+		$digits = '0123456789';
+		$special = '!@#%^&*()-_=+[]{};:,.<>?';
 
 		// Combine all pools
 		$allChars = $lowercase . $uppercase . $digits . $special;
@@ -34,8 +34,7 @@ trait Users
 		$this->InstallerRequired("json");
 		$users = usersModel::getAll();
 		$passwords = [];
-		foreach ($users as $user)
-		{
+		foreach ($users as $user) {
 			$password = $this->generateRandomPassword(8);
 			$user->setPasswordHash(password_hash($password, PASSWORD_BCRYPT));
 			$user->save();

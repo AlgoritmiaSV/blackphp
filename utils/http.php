@@ -7,31 +7,34 @@ class http
 {
 	public static function get_param($name, $method = "get")
 	{
-		switch($method)
-		{
+		switch ($method) {
 			case "get":
-				if(isset($_GET[$name])) return (string)$_GET[$name];
+				if (isset($_GET[$name]))
+					return (string) $_GET[$name];
 				break;
 			case "post":
-				if(isset($_POST[$name])) return (string)$_POST[$name];
+				if (isset($_POST[$name]))
+					return (string) $_POST[$name];
 				break;
 			case "request":
-				if(isset($_REQUEST[$name])) return (string)$_REQUEST[$name];
+				if (isset($_REQUEST[$name]))
+					return (string) $_REQUEST[$name];
 				break;
 			case "server":
-				if(isset($_SERVER[$name])) return (string)$_SERVER[$name];
+				if (isset($_SERVER[$name]))
+					return (string) $_SERVER[$name];
 				break;
 			case "session":
-				if(isset($_SESSION[$name])) return (string)$_SESSION[$name];
+				if (isset($_SESSION[$name]))
+					return (string) $_SESSION[$name];
 				break;
 		}
 		return null;
 	}
-	
+
 	public static function set_param($name, $value, $method = "session")
 	{
-		switch($method)
-		{
+		switch ($method) {
 			case "session":
 				$_SESSION[$name] = $value;
 				break;
@@ -40,8 +43,7 @@ class http
 
 	public static function unset_param($name, $method = "session")
 	{
-		switch($method)
-		{
+		switch ($method) {
 			case "session":
 				unset($_SESSION[$name]);
 				break;
@@ -53,13 +55,10 @@ class http
 
 	public static function get_post_params($required)
 	{
-		$results = Array();
-		if(count($_POST) > 0)
-		{
-			foreach($required as $item)
-			{
-				if(!isset($_POST[$item]))
-				{
+		$results = array();
+		if (count($_POST) > 0) {
+			foreach ($required as $item) {
+				if (!isset($_POST[$item])) {
 					return null;
 				}
 				$results[$item] = $_POST[$item];
@@ -97,8 +96,7 @@ class http
 	 */
 	public static function json($data)
 	{
-		array_walk_recursive($data, function(&$item)
-		{
+		array_walk_recursive($data, function (&$item) {
 			$item = $item === null ? "" : $item;
 		});
 		header('Content-type: application/json');
@@ -116,19 +114,15 @@ class http
 	public static function isIpAddress($str)
 	{
 		$octets = explode(".", $str);
-		if(count($octets) != 4)
-		{
+		if (count($octets) != 4) {
 			return false;
 		}
-		foreach($octets as $octet)
-		{
-			if(!is_numeric($octet))
-			{
+		foreach ($octets as $octet) {
+			if (!is_numeric($octet)) {
 				return false;
 			}
 			$octet = intval($octet);
-			if($octet < 0 || $octet > 255)
-			{
+			if ($octet < 0 || $octet > 255) {
 				return false;
 			}
 		}

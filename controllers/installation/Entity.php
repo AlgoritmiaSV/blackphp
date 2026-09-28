@@ -16,8 +16,7 @@ trait Entity
 		$this->view->data["subdomain"] = $subdomain;
 
 		# Validación de nombre de subdominio
-		if(!empty($subdomain) && !preg_match('/^[a-z][a-z0-9]{0,30}$/', $subdomain))
-		{
+		if (!empty($subdomain) && !preg_match('/^[a-z][a-z0-9]{0,30}$/', $subdomain)) {
 			$this->view->data["title"] = _("Installation");
 			$this->view->standard_error();
 			$this->view->data["nav"] = "";
@@ -28,12 +27,9 @@ trait Entity
 
 		$this->view->data["title"] = _("Installation");
 		$this->view->standard_form();
-		if(Session::get("user_id") == null)
-		{
+		if (Session::get("user_id") == null) {
 			$this->view->restrict[] = "inside_installation";
-		}
-		else
-		{
+		} else {
 			$this->view->restrict[] = "outside_installation";
 		}
 		$this->view->data["content"] = $this->view->render("installation/entity_data", true);
@@ -52,20 +48,17 @@ trait Entity
 	 */
 	public function SaveEntity()
 	{
-		$response = [ "success" => false ];
+		$response = ["success" => false];
 		$now = Date("Y-m-d H:i:s");
 		$today = Date("Y-m-d");
 
 		# Validando tipo de sesión
-		if(Session::get("entity/entity_id") == null)
-		{
+		if (Session::get("entity/entity_id") == null) {
 			# Si es nueva instalación, se valida el dominio
 			$reserved_subdomains = ["www", "installer", "local"];
 
-			if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
-			{
-				if(empty($_POST["subdomain"]))
-				{
+			if ($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"]) {
+				if (empty($_POST["subdomain"])) {
 					$response += [
 						"title" => "Error",
 						"message" => _("No subdomain chosen"),
@@ -78,8 +71,7 @@ trait Entity
 			$entity = entitiesModel::where("entity_subdomain", $_POST["subdomain"])
 				->get()
 				->toArray();
-			if(isset($entity["entity_id"]) || in_array($_POST["subdomain"], $reserved_subdomains))
-			{
+			if (isset($entity["entity_id"]) || in_array($_POST["subdomain"], $reserved_subdomains)) {
 				$response += [
 					"title" => "Error",
 					"message" => sprintf(_("The subdomain %s is not available"), $_POST["subdomain"]),
@@ -92,8 +84,7 @@ trait Entity
 
 		$entity = entitiesModel::find(Session::get("entity/entity_id"));
 		$subdomain = empty($_POST["subdomain"]) ? $entity->getEntitySubdomain() : $_POST["subdomain"];
-		if(empty($entity->getEntityId()))
-		{
+		if (empty($entity->getEntityId())) {
 			$entity->set([
 				"entity_subdomain" => $subdomain,
 				"entity_begin" => $today,
@@ -111,8 +102,7 @@ trait Entity
 			"user_edition_time" => $now
 		]);
 		$entity->save();
-		if(empty($entity->getEntityId()))
-		{
+		if (empty($entity->getEntityId())) {
 			$response += [
 				"title" => "Error",
 				"message" => _("Failed to create the entity"),
@@ -124,25 +114,20 @@ trait Entity
 
 		# Creación de subdirectorios
 		$dir = "entities/" . $subdomain . "/";
-		if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
-		{
+		if ($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"]) {
 			$dir = "entities/local/";
 		}
-		if(!is_dir($dir))
-		{
+		if (!is_dir($dir)) {
 			mkdir($dir, 0755, true);
 		}
 
 		#Logo
-		if(!empty($_FILES["logo"]["name"]))
-		{
+		if (!empty($_FILES["logo"]["name"])) {
 			$extension = strtolower(pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION));
 			$file = $dir . "logo." . $extension;
 			$generic_file = glob($dir . "logo.*");
-			if(is_dir($dir))
-			{
-				foreach($generic_file as $previous)
-				{
+			if (is_dir($dir)) {
+				foreach ($generic_file as $previous) {
 					unlink($previous);
 				}
 			}
@@ -157,17 +142,14 @@ trait Entity
 			"theme" => "green",
 			"no_reset" => true
 		];
-		if($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"])
-		{
+		if ($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"]) {
 			$protocol = "http";
-			if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 ){
+			if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) {
 				$protocol .= "s";
 			}
 			$response["redirect_after"] = $protocol . "://" . str_replace("installer", $_POST["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/RoleAndUser/";
 			Session::destroy();
-		}
-		else
-		{
+		} else {
 			$response["reload_after"] = true;
 		}
 		http::json($response);

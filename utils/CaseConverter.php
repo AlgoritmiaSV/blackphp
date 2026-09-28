@@ -6,12 +6,14 @@
  * 
  * Generado por Copilot
  */
-class CaseConverter {
+class CaseConverter
+{
     /**
      * Detect the case style of a string
      * Returns: "snake", "camel", "pascal", "kebab", "constant", or "unknown"
      */
-    public static function detectCase(string $string): string {
+    public static function detectCase(string $string): string
+    {
         if (preg_match('/^[a-z]+(_[a-z0-9]+)*$/', $string)) {
             return "snake";
         } elseif (preg_match('/^[a-z]+([A-Z][a-z0-9]*)*$/', $string)) {
@@ -30,7 +32,8 @@ class CaseConverter {
      * Universal conversion method
      * $toCase must be one of: "snake", "camel", "pascal", "kebab", "constant"
      */
-    public static function convert(string $string, string $toCase): string {
+    public static function convert(string $string, string $toCase): string
+    {
         $fromCase = self::detectCase($string);
 
         // Normalize to words array

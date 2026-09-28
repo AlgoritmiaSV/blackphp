@@ -17,8 +17,7 @@ class excel
 
 		$currentRow = 1;
 
-		if(!empty($data["title"]))
-		{
+		if (!empty($data["title"])) {
 			$sheet->setCellValue([1, 1], $data["title"]);
 			$sheet->getStyle("A1")
 				->getFont()
@@ -33,8 +32,7 @@ class excel
 			$currentRow += 2;
 		}
 
-		for ($i = 0, $l = sizeof($headers); $i < $l; $i++)
-		{
+		for ($i = 0, $l = sizeof($headers); $i < $l; $i++) {
 			$sheet->setCellValue([$i + 1, $currentRow], $headers[$i]);
 		}
 		$sheet->getStyle("A" . $currentRow . ":" . chr(64 + count($headers)) . $currentRow)
@@ -48,30 +46,24 @@ class excel
 			->setBold(true);
 		$currentRow++;
 
-		$maxWidth = Array();
+		$maxWidth = array();
 		$l = sizeof($content);
-		for ($i = 0; $i < $l; $i++)
-		{
+		for ($i = 0; $i < $l; $i++) {
 			$j = 0;
-			foreach ($fields as $k)
-			{
+			foreach ($fields as $k) {
 				$v = $content[$i][$k] ?? "";
-				if(strlen($v) > 100)
-				{
+				if (strlen($v) > 100) {
 					$maxWidth[$j] = 50;
 				}
 				$sheet->setCellValue([$j + 1, $i + $currentRow], $v);
 				$j++;
 			}
 		}
-		if(count($footers) > 0)
-		{
+		if (count($footers) > 0) {
 			$j = 0;
-			foreach ($fields as $k)
-			{
+			foreach ($fields as $k) {
 				$v = $footers[$k] ?? "";
-				if(strlen($v) > 100)
-				{
+				if (strlen($v) > 100) {
 					$maxWidth[$j] = 50;
 				}
 				$sheet->setCellValue([$j + 1, $l + 4], $v);
@@ -84,22 +76,17 @@ class excel
 		}
 
 		$sheet->calculateColumnWidths();
-		foreach (range(65, 64 + count($fields)) as $ascii)
-		{
+		foreach (range(65, 64 + count($fields)) as $ascii) {
 			$dimension = $sheet->getColumnDimension(chr($ascii));
-			if(isset($maxWidth[$ascii - 65]))
-			{
+			if (isset($maxWidth[$ascii - 65])) {
 				$dimension->setWidth($maxWidth[$ascii - 65]);
-			}
-			else
-			{
+			} else {
 				$dimension->setAutoSize(true);
 			}
 		}
 		$writer = new Xlsx($spreadsheet);
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment; filename="'. urlencode($fileName).'"');
+		header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
 		$writer->save('php://output');
 	}
 }
-?>

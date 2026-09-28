@@ -53,8 +53,7 @@ trait Users
 		$this->view->data["title"] = _("Edit user");
 		$this->view->standard_form();
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		if($user_id == Session::get("user_id"))
-		{
+		if ($user_id == Session::get("user_id")) {
 			$this->view->restrict[] = "no_self";
 		}
 		$this->view->restrict[] = "creation";
@@ -94,10 +93,8 @@ trait Users
 	{
 		$this->check_permissions("read", "users");
 		$users = userDataModel::getAllArray();
-		foreach($users as &$user)
-		{
-			if(!empty($user["last_login"]))
-			{
+		foreach ($users as &$user) {
+			if (!empty($user["last_login"])) {
 				$last_login = new DateTime($user["last_login"]);
 				$user["last_login"] = $last_login->format("d/m/Y h:ia");
 			}
@@ -109,15 +106,12 @@ trait Users
 				"totalRecords" => count($users)
 			]
 		];
-		if($response == "Excel")
-		{
+		if ($response == "Excel") {
 			$data["title"] = _("Users");
-			$data["headers"] = Array(_("User"), _("Complete name"), _("Last login"));
-			$data["fields"] = Array("nickname", "user_name", "last_login");
+			$data["headers"] = array(_("User"), _("Complete name"), _("Last login"));
+			$data["fields"] = array("nickname", "user_name", "last_login");
 			excel::create_from_table($data, "Users_" . Date("YmdHis") . ".xlsx");
-		}
-		else
-		{
+		} else {
 			http::json($data);
 		}
 	}
@@ -138,8 +132,7 @@ trait Users
 	public function user_details_loader($user_id = "", $mode = "embedded")
 	{
 		$this->check_permissions("read", "users", $mode);
-		if(empty($user_id))
-		{
+		if (empty($user_id)) {
 			$user_id = $_POST["id"];
 		}
 		$user = userDataModel::findBy("user_id", $user_id)->toArray();
@@ -149,8 +142,7 @@ trait Users
 			->orderBy("date_time", "DESC")
 			->addCounter("item")
 			->get(10);
-		foreach($sessions as $key => $session)
-		{
+		foreach ($sessions as $key => $session) {
 			$time = strtotime($session["date_time"]);
 			$sessions[$key]["session_date"] = Date("d/m/Y", $time);
 			$sessions[$key]["session_time"] = Date("h:i a", $time);
@@ -159,32 +151,27 @@ trait Users
 
 		#User photo
 		$photo = $this->store_dir . "users/" . $user["user_id"] . "-profile.jpg";
-		if(!file_exists($photo))
-		{
+		if (!file_exists($photo)) {
 			$photo = "public/images/user.png";
 		}
 		$this->view->data["user_photo"] = $photo;
 
 		$this->userActions($user);
-		if($user_id == Session::get("user_id"))
-		{
+		if ($user_id == Session::get("user_id")) {
 			$this->view->restrict[] = "no_self";
 		}
 		$this->view->data["print_title"] = _("User details");
 		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
-		if($mode == "standalone")
-		{
+		if ($mode == "standalone") {
 			$this->view->data["title"] = _("User details");
 			$this->view->standard_details();
-			$this->view->add("styles", "css", Array(
+			$this->view->add("styles", "css", array(
 				'styles/standalone.css'
 			));
 			$this->view->restrict[] = "embedded";
 			$this->view->data["content"] = $this->view->render('settings/user_details', true);
 			$this->view->render('clean_main');
-		}
-		else
-		{
+		} else {
 			$this->view->render("settings/user_details");
 		}
 	}
@@ -200,8 +187,7 @@ trait Users
 	public function save_user()
 	{
 		$this->check_permissions(empty($_POST["user_id"]) ? "create" : "update", "users");
-		if(empty($_POST["user_name"]))
-		{
+		if (empty($_POST["user_name"])) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -214,8 +200,7 @@ trait Users
 		#Validate nickname
 		$test = usersModel::where("nickname", $_POST["nickname"])
 			->where("user_id", "!=", $_POST["user_id"])->get();
-		if(!empty($test->getUserId()))
-		{
+		if (!empty($test->getUserId())) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -231,11 +216,9 @@ trait Users
 			"user_name" => $_POST["user_name"],
 			"nickname" => $_POST["nickname"]
 		]);
-		if(!empty($_POST["password"]))
-		{
+		if (!empty($_POST["password"])) {
 			$validate = $this->ValidatePassword($_POST["password"]);
-			if($validate !== true)
-			{
+			if ($validate !== true) {
 				http::json([
 					"success" => false,
 					"title" => _("Error"),
@@ -248,23 +231,18 @@ trait Users
 			$user->setPasswordHash(password_hash($_POST["password"], PASSWORD_BCRYPT));
 			$user->setPasswordChanged(Date("Y-m-d H:i:s"));
 		}
-		if(empty($user->getPassword()))
-		{
+		if (empty($user->getPassword())) {
 			$user->setPassword("");
 			$user->setPasswordHash("");
 			$user->setPasswordChanged(Date("Y-m-d H:i:s"));
 		}
-		if(!empty($_POST["role_id"]))
-		{
+		if (!empty($_POST["role_id"])) {
 			$user->setRoleId($_POST["role_id"]);
 		}
 		$user->save();
-		if(!empty($_POST["user_id"]))
-		{
+		if (!empty($_POST["user_id"])) {
 			$this->setUserLog("update", "users", $user->getUserId());
-		}
-		else
-		{
+		} else {
 			$this->setUserLog("create", "users", $user->getUserId());
 		}
 
@@ -288,8 +266,7 @@ trait Users
 	{
 		$this->check_permissions("delete", "users");
 		$request = http::getRequestData();
-		if(empty($request["id"]))
-		{
+		if (empty($request["id"])) {
 			http::json([
 				"deleted" => false,
 				"title" => _("Error"),
@@ -316,11 +293,9 @@ trait Users
 		$ectiveSessionId = session_id();
 		$path = session_save_path();
 		$files = glob($path . "/sess*");
-		foreach($files as $file)
-		{
+		foreach ($files as $file) {
 			session_decode(file_get_contents($file));
-			if($_SESSION["server_name"] == $serverName && !empty($_SESSION["user_id"]) && $userId == $_SESSION["user_id"])
-			{
+			if ($_SESSION["server_name"] == $serverName && !empty($_SESSION["user_id"]) && $userId == $_SESSION["user_id"]) {
 				unlink($file);
 			}
 		}

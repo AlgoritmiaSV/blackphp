@@ -32,9 +32,8 @@ class Resources extends Controller
 
 	public function age_calculation($date)
 	{
-		$data = Array("age" => 0);
-		if(!empty($date))
-		{
+		$data = array("age" => 0);
+		if (!empty($date)) {
 			$data["age"] = date_utilities::sql_date_to_age($date);
 		}
 		http::json($data);
@@ -82,8 +81,7 @@ class Resources extends Controller
 	{
 		$manifest = json_decode(file_get_contents("public/manifest.json"), true);
 		$entity = Session::get("entity");
-		if(!empty($entity["app_name"]))
-		{
+		if (!empty($entity["app_name"])) {
 			$manifest["name"] = $entity["app_name"];
 			$manifest["short_name"] = $entity["app_name"];
 		}

@@ -28,16 +28,14 @@ class Index extends Controller
 		$entity = Session::get("entity");
 		$this->view->restrict[] = "standalone";
 		$this->view->data["real_date"] = date_utilities::sql_date_to_string(Date("Y-m-d"));
-		foreach($entity as $key => $value)
-		{
+		foreach ($entity as $key => $value) {
 			$this->view->data[$key] = $value;
 		}
-		foreach($this->view->data["modules"] as $key => $module)
-		{
+		foreach ($this->view->data["modules"] as $key => $module) {
 			$this->view->data["module"] = $module["module_url"];
 			$this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
-			->where("module_id", $module["module_id"])
-			->orderBy("method_order")->getAllArray();
+				->where("module_id", $module["module_id"])
+				->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"][$key]["module_menu"] = $this->view->render("generic_menu", true);
 		}
 		$this->view->render('home_content');
@@ -45,7 +43,7 @@ class Index extends Controller
 
 	public function branch_filter_loader()
 	{
-		$data = Array();
+		$data = array();
 		http::json($data);
 	}
 
@@ -59,24 +57,20 @@ class Index extends Controller
 	 */
 	public function technical_support_loader($mode = "embedded")
 	{
-		if(file_exists("app_info.json"))
-		{
+		if (file_exists("app_info.json")) {
 			$info = json_decode(file_get_contents("app_info.json"), true);
 			$this->view->data["contacts"] = $info["technical_support"];
 		}
-		if($mode == "standalone")
-		{
+		if ($mode == "standalone") {
 			$this->view->data["title"] = _("Technical support");
 			$this->view->standard_menu();
-			$this->view->add("styles", "css", Array(
+			$this->view->add("styles", "css", array(
 				'styles/standalone.css'
 			));
 			$this->view->restrict[] = "embedded";
 			$this->view->data["content"] = $this->view->render('main/technical_support', true);
 			$this->view->render('clean_main');
-		}
-		else
-		{
+		} else {
 			$this->view->render('main/technical_support');
 		}
 	}

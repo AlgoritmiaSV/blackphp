@@ -27,8 +27,8 @@ class date_utilities
 	 * _("October"),
 	 * _("November"),
 	 * _("December")
-	*/
-	public static $months = Array(
+	 */
+	public static $months = [
 		"January",
 		"February",
 		"March",
@@ -41,8 +41,8 @@ class date_utilities
 		"October",
 		"November",
 		"December"
-	);
-	
+	];
+
 	/**
 	 * Fecha del formato ISO a texto
 	 * 
@@ -59,13 +59,12 @@ class date_utilities
 	{
 		$time = strtotime($sql_date);
 		$string = self::date_to_string($time, $dayname);
-		if($hour)
-		{
+		if ($hour) {
 			$string .= " " . _("at") . " " . self::hour($sql_date);
 		}
 		return $string;
 	}
-	
+
 	/**
 	 * Fecha del formato DateTime a texto
 	 * 
@@ -78,8 +77,8 @@ class date_utilities
 	 */
 	public static function date_to_string($time, $dayname = false)
 	{
-		$time_data = Array(Date("Y", $time), Date("n", $time) - 1, Date("d", $time), Date("w", $time));
-		$days = Array(
+		$time_data = array(Date("Y", $time), Date("n", $time) - 1, Date("d", $time), Date("w", $time));
+		$days = array(
 			_("Sunday"),
 			_("Monday"),
 			_("Tuesday"),
@@ -89,21 +88,17 @@ class date_utilities
 			_("Saturday")
 		);
 		$date = "";
-		if($dayname)
-		{
+		if ($dayname) {
 			$date = _($days[$time_data[3]]) . ', ';
 		}
-		if(Session::get("lang") == "es")
-		{
+		if (Session::get("lang") == "es") {
 			$date .= $time_data[2] . ' de ' . _(self::$months[$time_data[1]]) . ' de ' . $time_data[0];
-		}
-		else
-		{
+		} else {
 			$date .= self::$months[$time_data[1]] . ' ' . $time_data[2] . ', ' . $time_data[0];
 		}
 		return $date;
 	}
-	
+
 	/**
 	 * Intervalo a texto
 	 * 
@@ -119,27 +114,21 @@ class date_utilities
 	{
 		$time_begin = strtotime($begin);
 		$time_end = strtotime($end);
-		$begin_data = Array(Date("Y", $time_begin), Date("n", $time_begin) - 1, Date("d", $time_begin));
-		$end_data = Array(Date("Y", $time_end), Date("n", $time_end) - 1, Date("d", $time_end));
+		$begin_data = array(Date("Y", $time_begin), Date("n", $time_begin) - 1, Date("d", $time_begin));
+		$end_data = array(Date("Y", $time_end), Date("n", $time_end) - 1, Date("d", $time_end));
 		$interval_str = "";
-		if($begin_data[0] == $end_data[0])
-		{
-			if($begin_data[1] == $end_data[1])
-			{
+		if ($begin_data[0] == $end_data[0]) {
+			if ($begin_data[1] == $end_data[1]) {
 				$interval_str = 'del ' . $begin_data[2] . ' al ' . $end_data[2] . ' de ' . self::$months[$end_data[1]] . ' de ' . $end_data[0];
-			}
-			else
-			{
+			} else {
 				$interval_str = 'del ' . $begin_data[2] . ' de ' . self::$months[$begin_data[1]] . ' al ' . $end_data[2] . ' de ' . self::$months[$end_data[1]] . ' de ' . $end_data[0];
 			}
-		}
-		else
-		{
+		} else {
 			$interval_str = 'del ' . $begin_data[2] . ' de ' . self::$months[$begin_data[1]] . ' de ' . $begin_data[0] . ' al ' . $end_data[2] . ' de ' . self::$months[$end_data[1]] . ' de ' . $end_data[0];
 		}
 		return $interval_str;
 	}
-	
+
 	/**
 	 * Hora
 	 * 
@@ -154,7 +143,7 @@ class date_utilities
 		$time = strtotime($date_str);
 		return Date("h:i a", $time);
 	}
-	
+
 	/**
 	 * Día del mes
 	 * 
@@ -167,7 +156,7 @@ class date_utilities
 	public static function day_of_month($date)
 	{
 		$time = strtotime($date);
-		$time_data = Array(Date("n", $time) - 1, Date("d", $time));
+		$time_data = array(Date("n", $time) - 1, Date("d", $time));
 		$day_of_month = $time_data[1] . ' de ' . self::$months[$time_data[0]];
 		return $day_of_month;
 	}
@@ -188,44 +177,34 @@ class date_utilities
 		$time = new DateTime($time_string);
 		$ago = $time->diff(new DateTime());
 		$string = "";
-		if($ago->y > 0)
-		{
+		if ($ago->y > 0) {
 			$string = $ago->y . " " . ($ago->y == 1 ? _("year") : _("years"));
 		}
-		if($ago->m > 0 || $string != "")
-		{
-			if($string != "")
-			{
+		if ($ago->m > 0 || $string != "") {
+			if ($string != "") {
 				$string .= ", ";
 			}
 			$string .= $ago->m . " " . ($ago->m == 1 ? _("month") : _("months"));
 		}
-		if($ago->d > 0 || $string != "")
-		{
-			if($string != "")
-			{
+		if ($ago->d > 0 || $string != "") {
+			if ($string != "") {
 				$string .= ", ";
 			}
 			$string .= $ago->d . " " . ($ago->d == 1 ? _("day") : _("days"));
 		}
-		if($ago->h > 0 || $string != "")
-		{
-			if($string != "")
-			{
+		if ($ago->h > 0 || $string != "") {
+			if ($string != "") {
 				$string .= ", ";
 			}
 			$string .= $ago->h . " " . ($ago->h == 1 ? _("hour") : _("hours"));
 		}
-		if($ago->i > 0 || $string != "")
-		{
-			if($string != "")
-			{
+		if ($ago->i > 0 || $string != "") {
+			if ($string != "") {
 				$string .= ", ";
 			}
 			$string .= $ago->i . " " . ($ago->i == 1 ? _("minute") : _("minutes"));
 		}
-		if($string != "")
-		{
+		if ($string != "") {
 			$string .= " " . _("and") . " ";
 		}
 		$string .= $ago->s . " " . ($ago->s == 1 ? _("second") : _("seconds"));
@@ -249,26 +228,19 @@ class date_utilities
 		$time = new DateTime($time_string);
 		$ago = $time->diff(new DateTime());
 		$string = "";
-		if($ago->y > 0)
-		{
+		if ($ago->y > 0) {
 			$string = ($text ? text_utilities::number_to_text($ago->y) : $ago->y) . " " . ($ago->y == 1 ? _("year") : _("years"));
 		}
-		if($ago->y < 5)
-		{
-			if($ago->m > 0 || $string != "")
-			{
-				if($string != "")
-				{
+		if ($ago->y < 5) {
+			if ($ago->m > 0 || $string != "") {
+				if ($string != "") {
 					$string .= ", ";
 				}
 				$string .= $ago->m . " " . ($ago->m == 1 ? _("month") : _("months"));
 			}
-			if($ago->y == 0 && $ago->m < 12)
-			{
-				if($ago->d > 0 || $string != "")
-				{
-					if($string != "")
-					{
+			if ($ago->y == 0 && $ago->m < 12) {
+				if ($ago->d > 0 || $string != "") {
+					if ($string != "") {
 						$string .= ", ";
 					}
 					$string .= $ago->d . " " . ($ago->d == 1 ? _("day") : _("days"));
@@ -289,12 +261,9 @@ class date_utilities
 	 */
 	public static function format(&$date, $format)
 	{
-		if(empty($date) || $date == "0000-00-00")
-		{
+		if (empty($date) || $date == "0000-00-00") {
 			$date = "";
-		}
-		else
-		{
+		} else {
 			$date_time = date_create($date);
 			$date = date_format($date_time, $format);
 		}
@@ -303,23 +272,20 @@ class date_utilities
 
 	public static function month_list($from, $to, $desc = false)
 	{
-		$list = Array();
+		$list = array();
 		$year_month = explode('-', $from);
 		$year = intval($year_month[0]);
 		$month = intval($year_month[1]);
-		while($from <= $to)
-		{
+		while ($from <= $to) {
 			$month_name = _(self::$months[$month - 1]);
-			$list[] = Array("id" => $from, "text" => ucfirst($month_name) . " " . $year);
-			if($month == 12)
-			{
+			$list[] = array("id" => $from, "text" => ucfirst($month_name) . " " . $year);
+			if ($month == 12) {
 				$year++;
 			}
 			$month = ($month % 12) + 1;
 			$from = $year . "-" . str_pad($month, 2, "0", STR_PAD_LEFT);
 		}
-		if($desc)
-		{
+		if ($desc) {
 			$list = array_reverse($list);
 		}
 		return $list;

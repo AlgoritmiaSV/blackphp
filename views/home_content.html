@@ -1,24 +1,24 @@
-	<div class="company_header table">
-		<div class="cell">
-			<img class="company_logo" src="{{ entity_logo }}" alt="Logo">
-		</div>
-		<div class="cell">
-			<h3 class="center">{{ entity_name }}</h3>
-			<table class="info_table">
-				<tbody>
-					<tr>
-						<td>_(Server date):</td>
-						<td>{{ real_date }}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="cell">
-			<input type="text" class="menu_search" placeholder="_(Search in menu)">
-		</div>
+<div class="company_header table">
+	<div class="cell">
+		<img class="company_logo" src="{{ entity_logo }}" alt="Logo">
 	</div>
-	<div>
-		[[ modules ]]
-		<div class="menu_title">_({{ module_name }})</div>
-		{{ module_menu }} [[/ modules ]]
+	<div class="cell">
+		<h3 class="center">{{ entity_name }}</h3>
+		<table class="info_table">
+			<tbody>
+				<tr>
+					<td>_(Server date):</td>
+					<td>{{ real_date }}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+	<div class="cell">
+		<input type="text" class="menu_search" placeholder="_(Search in menu)">
+	</div>
+</div>
+<div>
+	[[ modules ]]
+	<div class="menu_title">_({{ module_name }})</div>
+	{{ module_menu }} [[/ modules ]]
+</div>

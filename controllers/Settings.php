@@ -1,7 +1,6 @@
 <?php
 
-foreach(glob("controllers/settings/*") as $file)
-{
+foreach (glob("controllers/settings/*") as $file) {
 	include $file;
 }
 
@@ -51,8 +50,8 @@ class Settings extends Controller
 		$module = appModulesModel::findBy("module_url", $this->module);
 		$this->view->data["title"] = _($module->getModuleName());
 		$this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
-		->where("module_id", $module->getModuleId())
-		->orderBy("method_order")->getAllArray();
+			->where("module_id", $module->getModuleId())
+			->orderBy("method_order")->getAllArray();
 		$this->view->data["content"] = $this->view->render("generic_menu", true);
 		$this->view->render("main");
 	}
@@ -68,8 +67,7 @@ class Settings extends Controller
 	public function load_form_data()
 	{
 		$result = [];
-		switch($_POST["method"])
-		{
+		switch ($_POST["method"]) {
 			case "Entity":
 				$result = $this->LoadEntityForm();
 				break;
@@ -106,16 +104,13 @@ class Settings extends Controller
 			"update" => []
 		];
 		$options = entityOptionsModel::join("app_options", "option_id")->getAll();
-		foreach($options as $option)
-		{
+		foreach ($options as $option) {
 			$result["update"][$option["option_key"]] = $option["option_value"];
 		}
 
 		$optionValues = appOptionValuesModel::join("app_options", "option_id")->getAll();
-		foreach($optionValues as $value)
-		{
-			if(!isset($result[$value["option_key"]]))
-			{
+		foreach ($optionValues as $value) {
+			if (!isset($result[$value["option_key"]])) {
 				$result[$value["option_key"]] = [];
 			}
 			$result[$value["option_key"]][] = [
@@ -132,30 +127,24 @@ class Settings extends Controller
 			"check" => []
 		];
 		$role = rolesModel::find($_POST["id"]);
-		if($role->exists())
-		{
+		if ($role->exists()) {
 			$result["update"] = $role->toArray();
 			$read = [];
 			$create = [];
 			$update = [];
 			$delete = [];
 			$elements = roleElementsModel::where("role_id", $role->getRoleId())->getAll();
-			foreach($elements as &$element)
-			{
-				if((intval($element->getPermissions()) & 8) != 0)
-				{
+			foreach ($elements as &$element) {
+				if ((intval($element->getPermissions()) & 8) != 0) {
 					$read[] = ["id" => $element->getElementId()];
 				}
-				if((intval($element->getPermissions()) & 4) != 0)
-				{
+				if ((intval($element->getPermissions()) & 4) != 0) {
 					$create[] = ["id" => $element->getElementId()];
 				}
-				if((intval($element->getPermissions()) & 2) != 0)
-				{
+				if ((intval($element->getPermissions()) & 2) != 0) {
 					$update[] = ["id" => $element->getElementId()];
 				}
-				if((intval($element->getPermissions()) & 1) != 0)
-				{
+				if ((intval($element->getPermissions()) & 1) != 0) {
 					$delete[] = ["id" => $element->getElementId()];
 				}
 			}
@@ -164,30 +153,23 @@ class Settings extends Controller
 			$result["check"]["create"] = $create;
 			$result["check"]["update"] = $update;
 			$result["check"]["delete"] = $delete;
-		}
-		else
-		{
+		} else {
 			$readable = [];
 			$creatable = [];
 			$updatable = [];
 			$deletable = [];
 
-			foreach(Session::get("permissions") as $key => $value)
-			{
-				if(8 & intval($value))
-				{
+			foreach (Session::get("permissions") as $key => $value) {
+				if (8 & intval($value)) {
 					$readable[] = $key;
 				}
-				if(4 & intval($value))
-				{
+				if (4 & intval($value)) {
 					$creatable[] = $key;
 				}
-				if(2 & intval($value))
-				{
+				if (2 & intval($value)) {
 					$updatable[] = $key;
 				}
-				if(1 & intval($value))
-				{
+				if (1 & intval($value)) {
 					$deletable[] = $key;
 				}
 			}
@@ -215,8 +197,7 @@ class Settings extends Controller
 	{
 		$result = [];
 		$role = rolesModel::find($_POST["id"]);
-		if($role->exists())
-		{
+		if ($role->exists()) {
 			$result = [
 				"update" => $role->toArray(),
 				"check" => [
@@ -241,29 +222,24 @@ class Settings extends Controller
 		$result = [
 			"asign" => []
 		];
-		foreach($roles as $role)
-		{
+		foreach ($roles as $role) {
 			$elements = roleElementsModel::join("app_elements", "element_id")
 				->where("role_id", $role->getRoleId())
 				->getAll();
 			$asignable = true;
-			foreach($elements as $element)
-			{
+			foreach ($elements as $element) {
 				$test = intval($element["permissions"]) & intval($permissions[$element["element_key"]]);
-				if($permissions[$element["element_key"]] < $test)
-				{
+				if ($permissions[$element["element_key"]] < $test) {
 					$asignable = false;
 				}
 				$result["asign"][] = $test;
 			}
-			if($asignable)
-			{
+			if ($asignable) {
 				$asignables[] = $role->getRoleId();
 			}
 		}
 		$result["roles"] = rolesModel::whereIn($asignables)->list();
-		if($_POST["method"] == "EditUser")
-		{
+		if ($_POST["method"] == "EditUser") {
 			$result["update"] = usersModel::find($_POST["id"])->toArray();
 		}
 		return $result;

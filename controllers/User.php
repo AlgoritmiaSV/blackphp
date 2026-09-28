@@ -1,4 +1,5 @@
 <?php
+
 use donatj\UserAgent\UserAgentParser;
 
 /**
@@ -47,14 +48,10 @@ class User extends Controller
 	public function load_form_data()
 	{
 		$result = [];
-		if(Session::get("user_id") == null && $_POST["method"] != "SetNewPassword")
-		{
+		if (Session::get("user_id") == null && $_POST["method"] != "SetNewPassword") {
 			$result = $this->LoadLoginForm();
-		}
-		else
-		{
-			switch($_POST["method"])
-			{
+		} else {
+			switch ($_POST["method"]) {
 				case "MyAccount":
 					$result = $this->LoadMyAccountForm();
 					break;
@@ -78,14 +75,12 @@ class User extends Controller
 			"locales" => appLocalesModel::list("locale_code", "locale_name")
 		];
 
-		foreach($result["themes"] as &$theme)
-		{
+		foreach ($result["themes"] as &$theme) {
 			$theme["text"] = _($theme["text"]);
 		}
 		unset($theme);
 
-		foreach($result["locales"] as &$locale)
-		{
+		foreach ($result["locales"] as &$locale) {
 			$locale["text"] = _($locale["text"]);
 		}
 		unset($locale);
@@ -124,8 +119,7 @@ class User extends Controller
 	public function TestLogin()
 	{
 		$data = ["session" => false];
-		if(empty($_POST["nickname"]))
-		{
+		if (empty($_POST["nickname"])) {
 			$data["title"] = "Error";
 			$data["message"] = _("Bad request");
 			$data["theme"] = "red";
@@ -134,8 +128,7 @@ class User extends Controller
 		}
 		$user = usersModel::findBy("nickname", $_POST["nickname"]);
 
-		if(!$user->exists())
-		{
+		if (!$user->exists()) {
 			$data["title"] = "Error";
 			$data["message"] = _("Bad user or password");
 			$data["theme"] = "red";
@@ -146,8 +139,7 @@ class User extends Controller
 		# Verificar número de intentos fallidos en los últimos cinco minutos
 		$date_time = Date("Y-m-d H:i:s", time() - 300);
 		$attemps = loginAttempsModel::where("user_id", $user->getUserId())->where("date_time", ">=", $date_time)->count();
-		if($attemps >= 3)
-		{
+		if ($attemps >= 3) {
 			$data["title"] = _("Error");
 			$data["message"] = _("Too many failed attempts, try again in five minutes");
 			$data["theme"] = "red";
@@ -155,8 +147,7 @@ class User extends Controller
 			return;
 		}
 
-		if(empty($user->getPasswordHash()) && md5($_POST["password"]) == $user->getPassword())
-		{
+		if (empty($user->getPasswordHash()) && md5($_POST["password"]) == $user->getPassword()) {
 			$user->set([
 				"password_hash" => password_hash($_POST["password"], PASSWORD_BCRYPT),
 				"password" => "HASH"
@@ -168,8 +159,7 @@ class User extends Controller
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 		$ipv4 = $this->getRealIP();
 		$browser = browsersModel::where("user_agent", $user_agent)->get();
-		if(!$browser->exists())
-		{
+		if (!$browser->exists()) {
 			$parser = new UserAgentParser();
 			$ua = $parser->parse($user_agent);
 			$browser->set([
@@ -182,14 +172,12 @@ class User extends Controller
 			])->save();
 		}
 
-		if(password_verify($_POST["password"], $user->getPasswordHash()))
-		{
+		if (password_verify($_POST["password"], $user->getPasswordHash())) {
 			# Verificar si la contraseña ha sido cambiada en los últimos noventa días
 			$passwordChanged = new DateTime($user->getPasswordChanged());
 			$threshold = new DateTime();
 			$threshold->sub(new DateInterval('P90D'));
-			if ($passwordChanged < $threshold)
-			{
+			if ($passwordChanged < $threshold) {
 				Session::set("password_user_id", $user->getUserId());
 				$data["next"] = "/User/SetNewPassword/";
 				http::json($data);
@@ -208,14 +196,12 @@ class User extends Controller
 			Session::set("blackphp_device_code", $_POST["blackphp_device_code"]);
 
 			# Cargar el idioma del usuario
-			if(!empty($user->getLocale()))
-			{
+			if (!empty($user->getLocale())) {
 				Session::set("lang", explode("_", $user->getLocale())[0]);
 			}
 
 			# Cargar el tema del usuario
-			if(!empty($user->getThemeId()))
-			{
+			if (!empty($user->getThemeId())) {
 				$theme = appThemesModel::find($user->getThemeId());
 				Session::set("theme_id", $theme->getThemeId());
 				Session::set("theme_url", $theme->getThemeUrl());
@@ -235,18 +221,15 @@ class User extends Controller
 			Session::set("modules", availableModulesModel::where("role_id", $user->getRoleId())->orderBy("module_order")->getAllArray());
 
 			# Cargar los permisos del usuario
-			$permissions = Array();
+			$permissions = array();
 			$elements = roleElementsModel::where("role_id", $user->getRoleId())
 				->join("app_elements", "element_id")
 				->getAll();
-			foreach($elements as $element)
-			{
+			foreach ($elements as $element) {
 				$permissions[$element["element_key"]] = $element["permissions"];
 			}
 			Session::set("permissions", $permissions);
-		}
-		else
-		{
+		} else {
 			$login_attemp = new loginAttempsModel();
 			$login_attemp->set([
 				"user_id" => $user->getUserId(),
@@ -297,8 +280,7 @@ class User extends Controller
 		]);
 
 		$profileImage = "entities/" . Session::get("entity/entity_subdomain") . "/users/" . Session::get("user_id") . "-profile.jpg";
-		if(!file_exists($profileImage))
-		{
+		if (!file_exists($profileImage)) {
 			$profileImage = "public/images/user.png";
 		}
 		$this->view->data["profile_image"] = $profileImage;
@@ -320,42 +302,35 @@ class User extends Controller
 		$this->session_required("json");
 
 		$user = usersModel::find(Session::get("user_id"));
-		if($_POST["theme_id"] != Session::get("theme_id"))
-		{
+		if ($_POST["theme_id"] != Session::get("theme_id")) {
 			$user->setThemeId($_POST["theme_id"]);
 			$theme = appThemesModel::find($_POST["theme_id"]);
 			Session::set("theme_id", $theme->getThemeId());
 			Session::set("theme_url", $theme->getThemeUrl());
 		}
-		if($_POST["locale"] != Session::get("locale"))
-		{
+		if ($_POST["locale"] != Session::get("locale")) {
 			$user->setLocale($_POST["locale"]);
 			Session::set("locale", $_POST["locale"]);
 			Session::set("lang", explode("_", $_POST["locale"])[0]);
 		}
-		if($_POST["user_name"] != Session::get("user_name"))
-		{
+		if ($_POST["user_name"] != Session::get("user_name")) {
 			$user->setUserName($_POST["user_name"]);
 			Session::set("user_name", $_POST["user_name"]);
 		}
 		$user->save();
 
 		$dir = "entities/" . Session::get("entity/entity_subdomain") . "/";
-		if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
-		{
+		if ($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"]) {
 			$dir = "entities/local/";
 		}
 		$dir .= "users/";
-		if(!is_dir($dir))
-		{
+		if (!is_dir($dir)) {
 			mkdir($dir, 0755, true);
 		}
 
-		if(!empty($_FILES["profile"]["name"]))
-		{
+		if (!empty($_FILES["profile"]["name"])) {
 			$file = $dir . Session::get("user_id") . "-profile.jpg";
-			if(file_exists($file))
-			{
+			if (file_exists($file)) {
 				unlink($file);
 			}
 			move_uploaded_file($_FILES["profile"]["tmp_name"], $file);
@@ -381,8 +356,7 @@ class User extends Controller
 	{
 		$this->session_required("json");
 		$user = usersModel::find(Session::get("user_id"));
-		if(md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash()))
-		{
+		if (md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash())) {
 			http::json([
 				"success" => false,
 				"title" => "Error",
@@ -391,8 +365,7 @@ class User extends Controller
 			]);
 			return;
 		}
-		if($_POST["new_password"] != $_POST["confirm_password"])
-		{
+		if ($_POST["new_password"] != $_POST["confirm_password"]) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -403,8 +376,7 @@ class User extends Controller
 		}
 
 		$validate = $this->ValidatePassword($_POST["new_password"]);
-		if($validate !== true)
-		{
+		if ($validate !== true) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -428,8 +400,7 @@ class User extends Controller
 
 	public function SetNewPassword()
 	{
-		if(Session::get("password_user_id") == null)
-		{
+		if (Session::get("password_user_id") == null) {
 			header("Location: /");
 			return;
 		}
@@ -446,8 +417,7 @@ class User extends Controller
 
 		# El usuario no existe
 		$user = usersModel::find($_POST["user_id"]);
-		if(!$user->exists())
-		{
+		if (!$user->exists()) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -458,8 +428,7 @@ class User extends Controller
 		}
 
 		# La contraseña actual es incorrecta
-		if(md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash()))
-		{
+		if (md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash())) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -470,8 +439,7 @@ class User extends Controller
 		}
 
 		# Las contraseñas no coinciden
-		if($_POST["new_password"] != $_POST["confirm_password"])
-		{
+		if ($_POST["new_password"] != $_POST["confirm_password"]) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -485,8 +453,7 @@ class User extends Controller
 
 		# Validar contraseña
 		$validate = $this->ValidatePassword($_POST["new_password"]);
-		if($validate !== true)
-		{
+		if ($validate !== true) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -551,4 +518,3 @@ class User extends Controller
 		return $errors;
 	}
 }
-?>

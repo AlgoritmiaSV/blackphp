@@ -27,6 +27,19 @@ class Controller
 	 * 8) Se establece el ajuste de texto en las tablas
 	 */
 	protected $view;
+
+	/**
+	 * Módulo
+	 * @var string $module El módulo actual seleccionado
+	 */
+	protected $module;
+
+	/**
+	 * Carpeta de almacenamiento
+	 * @var string $store_dir El directorio por defecto de almacenamiento de archivos de las entidades
+	 */
+	protected $store_dir;
+
 	function __construct()
 	{
 		#1 Creación de la vista
@@ -317,7 +330,7 @@ class Controller
 	 * tales como el usuario y fecha de creación y el usuario y fecha de última edición
 	 * Date-time: 2021-11-18 09:32
 	 * 
-	 * @param array $element Un array asociativo que contiene los campos
+	 * @param array|object $element Un array asociativo que contiene los campos
 	 * creation_user, creation_time, edition_user y edition_time
 	 * 
 	 * @return void Realiza los cambios directamente en la vista

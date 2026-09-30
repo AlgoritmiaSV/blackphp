@@ -14,7 +14,7 @@ trait ORM
 	/** @var PDO $_db Base de datos */
 	private static $_db = null;
 
-	/** @var string $_select Columnas que se seleccionarán en una tabla */
+	/** @var array $_select Columnas que se seleccionarán en una tabla */
 	private static $_select = array();
 
 	/** @var string $_extra_select Columnas adicionales que se seleccionarán en una tabla */
@@ -106,7 +106,7 @@ trait ORM
 	 * 
 	 * @return object Objeto de la clase que llamó al método
 	 */
-	public static function find($id, $deleted = false)
+	public static function find($id, bool $deleted = false)
 	{
 		if ($deleted && property_exists(new static(), "status")) {
 			self::$_ommit_status = true;
@@ -124,7 +124,7 @@ trait ORM
 	 * 
 	 * @return object Objeto de la clase que llamó al método
 	 */
-	public static function findBy($field, $value, $deleted = false)
+	public static function findBy(string $field, $value, bool $deleted = false)
 	{
 		if ($deleted && property_exists(new static(), "status")) {
 			self::$_ommit_status = true;
@@ -138,7 +138,7 @@ trait ORM
 	 * Inserta o actualiza un registro en la base de datos. Si existe un valor en la propiedad
 	 * indicada como llave primaria, el registro se actualiza; sino, se crea uno nuevo.
 	 * 
-	 * @return void
+	 * @return int Cantidad de registros afectados
 	 */
 	public function save()
 	{
@@ -204,7 +204,7 @@ trait ORM
 	 * Actualiza todas las filas coincidentes con las condiciones previamente establecidas
 	 * en where. Si no se han establecido condiciones, actualiza todas las filas.
 	 * 
-	 * @return void
+	 * @return int Cantidad de registros afectados
 	 */
 	public static function update($data)
 	{
@@ -710,12 +710,12 @@ trait ORM
 	 * 
 	 * Agrega un campo con el nombre especificado por parámetro, en el que se enumeran los resultados.
 	 * 
-	 * @param int $field Nombre del campo contador (Por defecto num)
+	 * @param string $field Nombre del campo contador (Por defecto num)
 	 * 
 	 * @return object Una instancia de la misma clase
 	 */
 
-	public static function addCounter($field = "num", $start = 0)
+	public static function addCounter(string $field = "num", int $start = 0)
 	{
 		self::init();
 		$start = intval($start);
@@ -853,7 +853,7 @@ trait ORM
 	 * 
 	 * @return int El siguiente número generado
 	 */
-	public static function next($field, $conditions = array())
+	public static function next(string $field, array $conditions = array())
 	{
 		$last_model = self::orderBy($field, "DESC");
 		foreach ($conditions as $key => $value) {
@@ -932,11 +932,11 @@ trait ORM
 	 * Agrega una condición Where In con los valores de un arreglo unidimensional
 	 * 
 	 * @param Array<string> $list La lista de elementos a ser incluídos.
-	 * @param string $field El nombre del campo a evaluar. Si no se especifica, se toma por defecto la llave primaria.
+	 * @param string|null $field El nombre del campo a evaluar. Si no se especifica, se toma por defecto la llave primaria.
 	 * 
 	 * @return object Una instancia de la misma clase
 	 */
-	public static function whereIn($list, $field = null)
+	public static function whereIn(array $list, ?string $field = null)
 	{
 		if ($field == null) {
 			if (self::$_primary_key == null) {
@@ -966,7 +966,7 @@ trait ORM
 	 * 
 	 * @return object Una instancia de la misma clase
 	 */
-	public static function whereNotIn($list, $field = null)
+	public static function whereNotIn(array $list, ?string $field = null)
 	{
 		if ($field == null) {
 			if (self::$_primary_key == null) {
@@ -1048,9 +1048,9 @@ trait ORM
 	 * 
 	 * @param string $columnName Nombre de la columna de la que se buscará el catálogo de valores
 	 * 
-	 * @return array Un arreglo conteniendo la lista de elementos encontrados.
+	 * @return array|integer Un arreglo conteniendo la lista de elementos encontrados.
 	 */
-	public static function catalog($columnName, $exclude = [])
+	public static function catalog(string $columnName, mixed $exclude = [])
 	{
 		$catalogModel = appCatalogsModel::where("table_name", self::$_table_name)
 			->where("column_name", $columnName);
@@ -1112,7 +1112,7 @@ class DB
 	 * 
 	 * @return object Un objeto de la clase DB
 	 */
-	public static function from($table_name)
+	public static function from(string $table_name)
 	{
 		if (empty(self::$_table_name)) {
 			self::$_table_name = $table_name;

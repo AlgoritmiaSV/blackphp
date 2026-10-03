@@ -34,7 +34,7 @@ class Resources extends Controller
 	{
 		$data = array("age" => 0);
 		if (!empty($date)) {
-			$data["age"] = date_utilities::sql_date_to_age($date);
+			$data["age"] = Dates::age($date);
 		}
 		http::json($data);
 	}

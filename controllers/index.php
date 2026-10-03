@@ -27,7 +27,7 @@ class Index extends Controller
 	{
 		$entity = Session::get("entity");
 		$this->view->restrict[] = "standalone";
-		$this->view->data["real_date"] = date_utilities::sql_date_to_string(Date("Y-m-d"));
+		$this->view->data["real_date"] = Dates::toString(time());
 		foreach ($entity as $key => $value) {
 			$this->view->data[$key] = $value;
 		}

@@ -343,21 +343,21 @@ class Controller
 		if ($element["creation_user"] != 0) {
 			$creator = usersModel::find($element["creation_user"]);
 			$this->view->data["cr_user_name"] = $creator->getUserName();
-			$this->view->data["cr_time"] = date_utilities::sql_date_to_string($element["creation_time"], true);
+			$this->view->data["cr_time"] = Dates::isoToString($element["creation_time"], true);
 		} else {
 			$this->view->restrict[] = "created";
 		}
 		if ($element["edition_user"] != 0 && $element["edition_time"] != $element["creation_time"]) {
 			$editor = usersModel::find($element["edition_user"]);
 			$this->view->data["ed_user_name"] = $editor->getUserName();
-			$this->view->data["ed_time"] = date_utilities::sql_date_to_string($element["edition_time"], true);
+			$this->view->data["ed_time"] = Dates::isoToString($element["edition_time"], true);
 		} else {
 			$this->view->restrict[] = "edited";
 		}
 		if (isset($element["printing_user"]) && $element["printing_user"] != 0) {
 			$printing_user = usersModel::find($element["printing_user"]);
 			$this->view->data["pr_user_name"] = $printing_user->getUserName();
-			$this->view->data["pr_time"] = date_utilities::sql_date_to_string($element["printing_time"], true);
+			$this->view->data["pr_time"] = Dates::isoToString($element["printing_time"], true);
 		} else {
 			$this->view->restrict[] = "printed";
 		}

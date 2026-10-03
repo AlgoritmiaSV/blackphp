@@ -33,9 +33,9 @@ trait Information
 		if(file_exists("app_info.json"))
 		{
 			$info = json_decode(file_get_contents("app_info.json"), true);
-			$info["last_update_ago"] = date_utilities::sql_date_to_ago($info["last_update"]);
+			$info["last_update_ago"] = Dates::timeAgo($info["last_update"]);
 			$info["last_update_ago"] = sprintf(_("%s ago"), $info["last_update_ago"]);
-			$info["last_update"] = date_utilities::sql_date_to_string($info["last_update"], true);
+			$info["last_update"] = Dates::isoToString($info["last_update"], true);
 		}
 		else
 		{
@@ -49,8 +49,8 @@ trait Information
 					$last_modified = $modified;
 				}
 			}
-			$info["last_update"] = date_utilities::sql_date_to_string(Date("Y-m-d H:i:s", $last_modified), true);
-			$info["last_update_ago"] = date_utilities::sql_date_to_ago(Date("Y-m-d H:i:s", $last_modified));
+			$info["last_update"] = Dates::isoToString(Date("Y-m-d H:i:s", $last_modified), true);
+			$info["last_update_ago"] = Dates::timeAgo(Date("Y-m-d H:i:s", $last_modified));
 			$info["last_update_ago"] = sprintf(_("%s ago"), $info["last_update_ago"]);
 			$info["version"] = "1.0";
 			$info["number"] = "0";

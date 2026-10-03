@@ -28,10 +28,10 @@ trait Trash
 			$this->view->data["content"] = $this->view->render("tools/trash_select", true);
 		} else {
 			if (!empty($options["from"])) {
-				$this->view->data["from"] = implode("/", array_reverse(explode("-", $options["from"])));
+				$this->view->data["from"] = Dates::dmy($options["from"]);
 			}
 			if (!empty($options["to"])) {
-				$this->view->data["to"] = implode("/", array_reverse(explode("-", $options["to"])));
+				$this->view->data["to"] = Dates::dmy($options["to"]);
 			}
 			$this->view->data["content"] = $this->view->render("tools/trash_list", true);
 		}

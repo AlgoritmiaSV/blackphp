@@ -895,7 +895,9 @@ trait ORM
 		$table_name = self::$_table_name;
 		$query = self::select("$table_name.*, $table_name.$id AS element_id, $table_name.$text AS description");
 		if (self::$_timestamps) {
-			$query->select("creator.user_name AS creator_name, editor.user_name AS editor_name")->join(DB_PREFIX . "users AS creator", "$table_name.creation_user = creator.user_id")->join(DB_PREFIX . "users AS editor", "$table_name.edition_user = editor.user_id");
+			$query->select("creator.user_name AS creator_name, editor.user_name AS editor_name")
+				->join(DB_PREFIX . "users AS creator", "$table_name.creation_user = creator.user_id")
+				->join(DB_PREFIX . "users AS editor", "$table_name.edition_user = editor.user_id");
 		}
 		if (self::$_deleted_status === 0) {
 			$query->where("$table_name.status", 0);
@@ -931,12 +933,12 @@ trait ORM
 	 * 
 	 * Agrega una condición Where In con los valores de un arreglo unidimensional
 	 * 
-	 * @param Array<string> $list La lista de elementos a ser incluídos.
+	 * @param array|null $list La lista de elementos a ser incluídos.
 	 * @param string|null $field El nombre del campo a evaluar. Si no se especifica, se toma por defecto la llave primaria.
 	 * 
 	 * @return object Una instancia de la misma clase
 	 */
-	public static function whereIn(array $list, ?string $field = null)
+	public static function whereIn(mixed $list, ?string $field = null)
 	{
 		if ($field == null) {
 			if (self::$_primary_key == null) {
@@ -961,12 +963,12 @@ trait ORM
 	 * 
 	 * Agrega una condición Where In excluyendo los valores de un arreglo unidimensional
 	 * 
-	 * @param Array<string> $list La lista de elementos a ser incluídos.
+	 * @param array|null $list La lista de elementos a ser incluídos.
 	 * @param string $field El nombre del campo a evaluar. Si no se especifica, se toma por defecto la llave primaria.
 	 * 
 	 * @return object Una instancia de la misma clase
 	 */
-	public static function whereNotIn(array $list, ?string $field = null)
+	public static function whereNotIn(mixed $list, ?string $field = null)
 	{
 		if ($field == null) {
 			if (self::$_primary_key == null) {

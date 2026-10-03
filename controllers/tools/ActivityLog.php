@@ -28,8 +28,8 @@ trait ActivityLog
 		]);
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
-		$this->view->data["from"] = implode("/", array_reverse(explode("-", $options["from"])));
-		$this->view->data["to"] = implode("/", array_reverse(explode("-", $options["to"])));
+		$this->view->data["from"] = Dates::dmy($options["from"]);
+		$this->view->data["to"] = Dates::dmy($options["to"]);
 		$this->view->data["content"] = $this->view->render("tools/activity_log", true);
 		$this->view->render('main');
 	}

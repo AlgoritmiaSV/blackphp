@@ -47,10 +47,6 @@ trait RoleAndUser
 	 */
 	public function SaveRoleAndUser()
 	{
-		$response = ["success" => false];
-		$now = Date("Y-m-d H:i:s");
-		$today = Date("Y-m-d");
-
 		#Check session type
 		$entity = entitiesModel::get();
 
@@ -109,23 +105,27 @@ trait RoleAndUser
 		$entity->save();
 
 		# Finalizando y enviando respuesta
-		$response["success"] = true;
-		$response += [
-			"title" => _("Success"),
-			"message" => _("Installation completed successfully"),
-			"theme" => "green",
-			"no_reset" => true
-		];
+		$reload = false;
+		$redirect = null;
 		if ($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"]) {
 			$protocol = "http";
 			if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) {
 				$protocol .= "s";
 			}
-			$response["redirect_after"] = $protocol . "://" . str_replace("installer", $_POST["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/Menu/";
+			$redirect = $protocol . "://" . str_replace("installer", $_POST["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/Menu/";
 		} else {
-			$response["reload_after"] = true;
+			$reload = true;
 		}
-		http::json($response);
+		ApiResponse::success(
+			code: "UPDATED",
+			title: _("Success"),
+			message: _("Installation completed successfully"),
+			actions: [
+				"reset" => false,
+				"reload" => $reload,
+				"redirect" => $redirect
+			]
+		);
 	}
 }
 ?>

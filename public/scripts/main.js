@@ -7,76 +7,69 @@
 content_height = 200;
 url = {};
 
-$(function() {
+$(function () {
 	content_height = $(window).height() - $("#main_header").outerHeight() - $("#main_footer").outerHeight();
-	if($(".list_options").length)
-	{
+	if ($(".list_options").length) {
 		content_height -= $(".list_options").outerHeight();
-		if($(".path_container").length)
-		{
+		if ($(".path_container").length) {
 			content_height -= 1;
 		}
 	}
-	if($("#main_nav").length && $("#main_nav").css("width") == $("#main_nav").parent().css("width") && screen.width >= 800)
-	{
+	if ($("#main_nav").length && $("#main_nav").css("width") == $("#main_nav").parent().css("width") && screen.width >= 800) {
 		content_height -= $("#main_nav").outerHeight();
 	}
-	if(content_height > 0)
-	{
+	if (content_height > 0) {
 		$("#content_section").css("min-height", content_height + "px");
 		$(".content_viewer").css("height", content_height + "px");
 	}
 
-	$(".nav_link").each(function() {
-		if($(this).prop("href") == location.href)
-		{
+	$(".nav_link").each(function () {
+		if ($(this).prop("href") == location.href) {
 			$(this).addClass("nav_link_active");
 		}
 	});
 
-	$(".nav_link").on("click", function(e) {
+	$(".nav_link").on("click", function (e) {
 		$(".nav_link_active").removeClass("nav_link_active");
 		$(this).addClass("nav_link_active");
 	});
 
 	/* User link */
-	$("#user_link").on("click", function() {
+	$("#user_link").on("click", function () {
 		$("#main_aside").slideToggle("fast");
 	});
 
-	$(".logout_button").on("click", function() {
+	$(".logout_button").on("click", function () {
 		$.ajax({
 			method: "GET",
 			url: "User/logout/",
 			dataType: "json"
 		})
-		.done(function(json) {
-			if(json.session)
-			{
+			.done(function (json) {
+				if (json.session) {
+					$.jAlert({
+						'title': "Error",
+						'content': "No se ha podido cerrar sesión",
+						'theme': "red",
+						'autofocus': '.jalert_accept',
+						'btns': [
+							{ 'text': 'Aceptar', 'closeAlert': true, 'theme': 'red', 'class': 'jalert_accept' }]
+					});
+				}
+				else {
+					location.href = "/";
+				}
+			})
+			.fail(function () {
 				$.jAlert({
 					'title': "Error",
 					'content': "No se ha podido cerrar sesión",
 					'theme': "red",
 					'autofocus': '.jalert_accept',
 					'btns': [
-						{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
+						{ 'text': 'Aceptar', 'closeAlert': true, 'theme': 'red', 'class': 'jalert_accept' }]
 				});
-			}
-			else
-			{
-				location.href = "/";
-			}
-		})
-		.fail(function() {
-			$.jAlert({
-				'title': "Error",
-				'content': "No se ha podido cerrar sesión",
-				'theme': "red",
-				'autofocus': '.jalert_accept',
-				'btns': [
-					{'text':'Aceptar', 'closeAlert':true, 'theme': 'red', 'class': 'jalert_accept'}]
 			});
-		});
 	});
 
 	/* Manage click on all links */
@@ -124,15 +117,12 @@ $(function() {
 	*/
 
 	/* Manage URL format */
-	function url_split()
-	{
+	function url_split() {
 		var pathname = $(location).attr("pathname");
-		if(pathname.indexOf("/") == 0)
-		{
+		if (pathname.indexOf("/") == 0) {
 			pathname = pathname.substring(1);
 		}
-		if(pathname.slice(-1) == "/")
-		{
+		if (pathname.slice(-1) == "/") {
 			pathname = pathname.substring(0, pathname.length - 1);
 		}
 		var path = pathname.split("/");
@@ -141,12 +131,11 @@ $(function() {
 			module: path[0],
 			method: path[1],
 			id: path[2],
-			options: {} };
+			options: {}
+		};
 
-		if(path.length > 3)
-		{
-			for(i = 2; i < path.length; i += 2)
-			{
+		if (path.length > 3) {
+			for (i = 2; i < path.length; i += 2) {
 				url_object.options[path[i]] = path[i + 1];
 			}
 		}
@@ -156,68 +145,58 @@ $(function() {
 	url = url_split();
 
 	connection_fails = 0;
-	function keep_alive()
-	{
+	function keepAlive() {
 		$.ajax({
 			method: "POST",
-			url: "Resources/keep_alive/",
+			url: "Resources/KeepAlive/",
 			data: url,
 			dataType: "json"
 		})
-		.done(function(json) {
-			if(json.alive)
-			{
-				connection_fails = 0;
-				if (document.querySelectorAll("#login_form").length > 0)
-				{
+			.done(function (json) {
+				if (json.data.alive) {
+					connection_fails = 0;
+					if (document.querySelectorAll("#login_form").length > 0) {
+						location.reload();
+					}
+				}
+				else {
+					if (document.querySelectorAll("#login_form").length == 0 && url.module != "Installation" && !(url.module == "User" && url.method == "SetNewPassword")) {
+						location.reload();
+					}
+				}
+			})
+			.fail(function () {
+				connection_fails++;
+				if (connection_fails > 1) {
 					location.reload();
 				}
-			}
-			else
-			{
-				if (document.querySelectorAll("#login_form").length == 0 && url.module != "Installation" && !(url.module == "User" && url.method == "SetNewPassword"))
-				{
-					location.reload();
-				}
-			}
-		})
-		.fail(function() {
-			connection_fails++;
-			if(connection_fails > 1)
-			{
-				location.reload();
-			}
-		});
+			});
 	}
 
-	setInterval(keep_alive, 30000);
+	setInterval(keepAlive, 30000);
 
-	$(".link_button").on("click", function()
-	{
+	$(".link_button").on("click", function () {
 		const href = $(this).data("href");
 		const target = href.startsWith("http") ? "_blank" : "_top";
 		window.open(href, target);
 	});
 
 	/* Date Picker */
-	set_date_picker = function()
-	{
+	set_date_picker = function () {
 		$(this).removeClass("hasDatepicker");
 		$(this).removeAttr("id");
 		$(this).attr("autocomplete", "off");
 		var options = {
 			dateFormat: $(this).data("format") || "dd/mm/yy",
-			monthNames: [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ],
-			dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ],
+			monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+			dayNamesMin: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
 			changeYear: true,
 			yearRange: "-15:+10",
 		};
-		if($(this).data("min"))
-		{
+		if ($(this).data("min")) {
 			options.minDate = $(this).data("min");
 		}
-		if($(this).data("max"))
-		{
+		if ($(this).data("max")) {
 			options.maxDate = $(this).data("max");
 		}
 		$(this).datepicker(options);
@@ -225,39 +204,36 @@ $(function() {
 	$(".date_input").each(set_date_picker);
 
 	/* Before print */
-	window.onbeforeprint = function() {
+	window.onbeforeprint = function () {
 		$(".content_viewer").css({
 			"overflow-y": "auto",
 			"height": "auto"
 		});
 	}
 
-	$(".menu_item").on("click", function() {
+	$(".menu_item").on("click", function () {
 		$(this).css({
-			"opacity":"0.1",
-			"transform":"scale(2)"
+			"opacity": "0.1",
+			"transform": "scale(2)"
 		});
 	});
 
-	$("#nav_content a").each(function() {
-		a_module = $(this).attr("href").replace("/","");
-		if(a_module == url.module)
-		{
+	$("#nav_content a").each(function () {
+		a_module = $(this).attr("href").replace("/", "");
+		if (a_module == url.module) {
 			$(this).addClass("nav_link_active");
 		}
 	});
 	/* Keymap */
 	$("body").on('keydown', event => {
-		if ((event.key =='I' || event.key =='i') && event.altKey)
-		{
+		if ((event.key == 'I' || event.key == 'i') && event.altKey) {
 			location.href = "/";
 		}
 	});
 	$(document).tooltip();
 
-	$("#menu_button").on("click", function() {
-		if($(this).attr("href") == "#")
-		{
+	$("#menu_button").on("click", function () {
+		if ($(this).attr("href") == "#") {
 			$("#main_nav").slideToggle("slow");
 		}
 	});
@@ -267,15 +243,15 @@ $(function() {
 	$("#tabs").tabs();
 
 	/* Accordion */
-	$( "#accordion" ).accordion({
+	$("#accordion").accordion({
 		collapsible: true,
 		heightStyle: "content",
-		activate: function() {
+		activate: function () {
 			$("textarea").trigger("input");
 		}
 	});
 
-	$(".back_button").on("click", function() {
+	$(".back_button").on("click", function () {
 		history.back();
 	});
 });
@@ -284,42 +260,41 @@ $(function() {
 let jAlertTheme = "dark_blue";
 // Find the stylesheet link for theme.css
 const link = [...document.querySelectorAll('link[rel="stylesheet"]')]
-  .find(l => l.href.includes('theme.min.css'));
+	.find(l => l.href.includes('theme.min.css'));
 
 // If found, extract the immediate folder
 if (link) {
-  const url = new URL(link.href);
-  const parts = url.pathname.split('/').filter(Boolean); // split and remove empty
-  const folder = parts.length > 1 ? parts[parts.length - 3] : null;
-  const jAlertThemes = {
-    "black": "gray",
-    "green": "dark_green",
-    "white": "dark_gray"
-  };
-  if(Object.hasOwn(jAlertThemes, folder))
-  {
-	jAlertTheme = jAlertThemes[folder];
-  }
+	const url = new URL(link.href);
+	const parts = url.pathname.split('/').filter(Boolean); // split and remove empty
+	const folder = parts.length > 1 ? parts[parts.length - 3] : null;
+	const jAlertThemes = {
+		"black": "gray",
+		"green": "dark_green",
+		"white": "dark_gray"
+	};
+	if (Object.hasOwn(jAlertThemes, folder)) {
+		jAlertTheme = jAlertThemes[folder];
+	}
 }
 
 // Comportamiento de los links
 document.addEventListener("click", function (e) {
-    const link = e.target.closest("a");
-    if (!link) return;
+	const link = e.target.closest("a");
+	if (!link) return;
 
-    // Exclude certain classes
-    if (link.classList.contains("link_exclude")) {
-        return;
-    }
+	// Exclude certain classes
+	if (link.classList.contains("link_exclude")) {
+		return;
+	}
 
-    e.preventDefault();
-    const href = link.getAttribute("href");
+	e.preventDefault();
+	const href = link.getAttribute("href");
 
-    if (href === "#") {
-        return false;
-    }
+	if (href === "#") {
+		return false;
+	}
 
-    if (href === "#alert") {
+	if (href === "#alert") {
 		$.jAlert({
 			'title': link.dataset.title || false,
 			'theme': link.dataset.theme || jAlertTheme,
@@ -329,22 +304,22 @@ document.addEventListener("click", function (e) {
 				"width": "100%"
 			},
 			'iframeHeight': (content_height - 41) + "px",
-			'noPadContent':true
+			'noPadContent': true
 		});
-        return false;
-    }
+		return false;
+	}
 
-    if (href.startsWith("#")) {
-        return false;
-    }
+	if (href.startsWith("#")) {
+		return false;
+	}
 
-    if (link.href === location.href) {
-        return false;
-    }
+	if (link.href === location.href) {
+		return false;
+	}
 
-    if (href.startsWith("http")) {
-        window.open(href, "_blank");
-    } else {
-        window.open(href, "_top");
-    }
+	if (href.startsWith("http")) {
+		window.open(href, "_blank");
+	} else {
+		window.open(href, "_top");
+	}
 });

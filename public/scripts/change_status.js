@@ -55,7 +55,7 @@ function delete_button_click(e) {
 }
 
 // Event delegation: listen at document level
-document.addEventListener("click", function(e) {
+document.addEventListener("click", function (e) {
     if (e.target.closest(".delete_button, .delete_link, .change_status_button")) {
         delete_button_click(e);
     }
@@ -67,38 +67,38 @@ function delete_entry() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(url)   // send the parsed URL object
     })
-    .then(response => response.json())
-    .then(deletionData => {
-        if (deletionData.deleted || deletionData.success || deletionData.changed) {
-            Swal.fire({
-                title: deletionData.title || "Success",
-                text: deletionData.message || "Deleted successfully!",
-                icon: "success",
-                didClose: function() {
-                    if (deletionNext) {
-                        window.open(deletionNext, "_top");
+        .then(response => response.json())
+        .then(deletionData => {
+            if (deletionData.success) {
+                Swal.fire({
+                    title: deletionData.title || "Success",
+                    text: deletionData.message || "Deleted successfully!",
+                    icon: "success",
+                    didClose: function () {
+                        if (deletionNext) {
+                            window.open(deletionNext, "_top");
+                        }
                     }
-                }
-            });
-        } else if (deletionData.message) {
-            Swal.fire({
-                title: deletionData.title || "Error",
-                text: deletionData.message,
-                icon: "error"
-            });
-        } else {
+                });
+            } else if (deletionData.message) {
+                Swal.fire({
+                    title: deletionData.title || "Error",
+                    text: deletionData.message,
+                    icon: "error"
+                });
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "Failed to delete.",
+                    icon: "error"
+                });
+            }
+        })
+        .catch(() => {
             Swal.fire({
                 title: "Error",
-                text: "Failed to delete.",
+                text: "Request failed.",
                 icon: "error"
             });
-        }
-    })
-    .catch(() => {
-        Swal.fire({
-            title: "Error",
-            text: "Request failed.",
-            icon: "error"
         });
-    });
 }

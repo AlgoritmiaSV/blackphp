@@ -39,28 +39,22 @@ trait Roles
 
 		$role_elements = "";
 		$modules = appModulesModel::getAll();
-		foreach($modules as $module)
-		{
+		foreach ($modules as $module) {
 			$elements = appElementsModel::where("module_id", $module->getModuleId())
 				->getAllArray();
-			foreach($elements as &$element)
-			{
+			foreach ($elements as &$element) {
 				$element["element_name"] = _($element["element_name"]);
 				$permissions = Session::get("permissions/" . $element["element_key"]);
-				if((8 & intval($permissions)) == 0)
-				{
+				if ((8 & intval($permissions)) == 0) {
 					$element["readable"] = "disabled";
 				}
-				if($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0)
-				{
+				if ($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0) {
 					$element["creatable"] = "disabled";
 				}
-				if($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0)
-				{
+				if ($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0) {
 					$element["updatable"] = "disabled";
 				}
-				if($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0)
-				{
+				if ($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0) {
 					$element["deletable"] = "disabled";
 				}
 			}
@@ -93,27 +87,21 @@ trait Roles
 
 		$role_elements = "";
 		$modules = appModulesModel::getAll();
-		foreach($modules as $module)
-		{
+		foreach ($modules as $module) {
 			$elements = appElementsModel::where("module_id", $module->getModuleId())->getAllArray();
-			foreach($elements as &$element)
-			{
+			foreach ($elements as &$element) {
 				$element["element_name"] = _($element["element_name"]);
 				$permissions = Session::get("permissions/" . $element["element_key"]);
-				if((8 & intval($permissions)) == 0)
-				{
+				if ((8 & intval($permissions)) == 0) {
 					$element["readable"] = "disabled";
 				}
-				if($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0)
-				{
+				if ($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0) {
 					$element["creatable"] = "disabled";
 				}
-				if($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0)
-				{
+				if ($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0) {
 					$element["updatable"] = "disabled";
 				}
-				if($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0)
-				{
+				if ($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0) {
 					$element["deletable"] = "disabled";
 				}
 			}
@@ -146,15 +134,13 @@ trait Roles
 		$this->view->data["nav"] = $this->view->render("main/nav", true);
 		$modules = availableModulesModel::where("role_id", Session::get("role_id"))->orderBy("module_order")->getAllArray();
 		$this->view->data["modules"] = "";
-		foreach($modules as $module)
-		{
-			foreach($module as $key => $item)
-			{
+		foreach ($modules as $module) {
+			foreach ($module as $key => $item) {
 				$this->view->data[$key] = $item;
 			}
 			$this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
-			->where("module_id", $module["module_id"])
-			->orderBy("method_order")->getAllArray();
+				->where("module_id", $module["module_id"])
+				->orderBy("method_order")->getAllArray();
 			$this->view->data["modules"] .= $this->view->render("modules", true);
 		}
 		$this->view->data["content"] = $this->view->render("settings/role_menu_form", true);
@@ -192,8 +178,7 @@ trait Roles
 	{
 		$this->check_permissions("read", "roles");
 		$roles = rolesModel::getAllArray();
-		foreach($roles as &$role)
-		{
+		foreach ($roles as &$role) {
 			$role["users"] = usersModel::where("role_id", $role["role_id"])
 				->count();
 		}
@@ -204,15 +189,12 @@ trait Roles
 				"totalRecords" => count($roles)
 			]
 		];
-		if($response == "Excel")
-		{
+		if ($response == "Excel") {
 			$data["title"] = _("Roles");
-			$data["headers"] = Array(_("Role name"), _("Users"));
-			$data["fields"] = Array("role_name", "users");
+			$data["headers"] = array(_("Role name"), _("Users"));
+			$data["fields"] = array("role_name", "users");
 			excel::create_from_table($data, "Roles_" . Date("YmdHis") . ".xlsx");
-		}
-		else
-		{
+		} else {
 			http::json($data);
 		}
 	}
@@ -233,8 +215,7 @@ trait Roles
 	public function role_details_loader($role_id = "", $mode = "embedded")
 	{
 		$this->check_permissions("read", "roles", $mode);
-		if(empty($role_id))
-		{
+		if (empty($role_id)) {
 			$role_id = $_POST["id"];
 		}
 		$role = rolesModel::find($role_id)->toArray();
@@ -242,20 +223,17 @@ trait Roles
 
 		$this->view->data["users"] = implode(", ", array_column(usersModel::where("role_id", $role_id)->getAllArray(), "user_name"));
 
-		if($role["role_id"] == Session::get("role_id"))
-		{
+		if ($role["role_id"] == Session::get("role_id")) {
 			$this->view->restrict[] = "self";
 		}
-		
+
 		# Permissions
 		$appModules = appModulesModel::whereIn(array_column(entityModulesModel::getAllArray(), "module_id"))->getAll();
 		$modules = "";
-		foreach($appModules as $module)
-		{
+		foreach ($appModules as $module) {
 			$this->view->data["module_name"] = _($module->getModuleName());
 			$permissions = appElementsModel::join("role_elements", "element_id")->where("module_id", $module->getModuleId())->where("role_id", $role_id)->getAll();
-			foreach($permissions as &$permission)
-			{
+			foreach ($permissions as &$permission) {
 				$permission["element_name"] = _($permission["element_name"]);
 				$permission["read"] = ($permission["permissions"] & 8) == 0 ? "not_permitted" : "checked";
 				$permission["create"] = ($permission["permissions"] & 4) == 0 ? "not_permitted" : "checked";
@@ -271,19 +249,16 @@ trait Roles
 		$this->userActions($role);
 		$this->view->data["print_title"] = _("Role details");
 		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
-		if($mode == "standalone")
-		{
+		if ($mode == "standalone") {
 			$this->view->data["title"] = _("Role details");
 			$this->view->standard_details();
-			$this->view->add("styles", "css", Array(
+			$this->view->add("styles", "css", array(
 				'styles/standalone.css'
 			));
 			$this->view->restrict[] = "embedded";
 			$this->view->data["content"] = $this->view->render('settings/role_details', true);
 			$this->view->render('clean_main');
-		}
-		else
-		{
+		} else {
 			$this->view->render("settings/role_details");
 		}
 	}
@@ -293,8 +268,7 @@ trait Roles
 		$this->check_permissions(empty($_POST["role_id"]) ? "create" : "update", "roles");
 
 		# Validando que el nombre del rol no esté vacío
-		if(empty($_POST["role_name"]))
-		{
+		if (empty($_POST["role_name"])) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -307,13 +281,11 @@ trait Roles
 		# Validando roles existentes con el mismo nombre
 		$_POST["role_name"] = trim($_POST["role_name"]);
 		$existingRoleModel = rolesModel::where("role_name", $_POST["role_name"]);
-		if(!empty($_POST["role_id"]))
-		{
+		if (!empty($_POST["role_id"])) {
 			$existingRoleModel->where("role_id", "!=", $_POST["role_id"]);
 		}
 		$existingRole = $existingRoleModel->get();
-		if($existingRole->exists())
-		{
+		if ($existingRole->exists()) {
 			http::json([
 				"success" => false,
 				"title" => _("Error"),
@@ -327,25 +299,20 @@ trait Roles
 		$role->set([
 			"role_name" => $_POST["role_name"]
 		])->save();
-		$elements = Array();
-		foreach($_POST["read"] as $element)
-		{
+		$elements = array();
+		foreach ($_POST["read"] as $element) {
 			$elements[$element] = 8;
 		}
-		foreach($_POST["create"] as $element)
-		{
+		foreach ($_POST["create"] as $element) {
 			$elements[$element] = intval($elements[$element]) + 4;
 		}
-		foreach($_POST["update"] as $element)
-		{
+		foreach ($_POST["update"] as $element) {
 			$elements[$element] = intval($elements[$element]) + 2;
 		}
-		foreach($_POST["delete"] as $element)
-		{
+		foreach ($_POST["delete"] as $element) {
 			$elements[$element] = intval($elements[$element]) + 1;
 		}
-		foreach($elements as $element_id => $permissions)
-		{
+		foreach ($elements as $element_id => $permissions) {
 			$role_element = roleElementsModel::where("role_id", $role->getRoleId())
 				->where("element_id", $element_id)
 				->where("status", ">=", 0)
@@ -357,15 +324,14 @@ trait Roles
 				"status" => 1
 			])->save();
 		}
-		roleElementsModel::where("role_id", $role->getRoleId())->whereNotIn(array_keys($elements), "element_id")->update(["status" => 0]);
+		roleElementsModel::where("role_id", $role->getRoleId())
+			->whereNotIn(array_keys($elements), "element_id")
+			->update(["status" => 0]);
 
 		#Finish and response
-		if(!empty($_POST["role_id"]))
-		{
+		if (!empty($_POST["role_id"])) {
 			$this->setUserLog("update", "roles", $role->getRoleId());
-		}
-		else
-		{
+		} else {
 			$this->setUserLog("create", "roles", $role->getRoleId());
 		}
 		http::json([
@@ -386,45 +352,46 @@ trait Roles
 	 */
 	public function SaveRoleMenu()
 	{
-		$this->check_permissions(empty($_POST["role_id"]) ? "create" : "update", "roles");
-		$data = Array("success" => false);
+		$this->check_permissions(empty($request["role_id"]) ? "create" : "update", "roles");
+		$request = http::getRequestData();
 
-		if($_POST["role_id"] != Session::get("role_id"))
-		{
+		if ($request["role_id"] != Session::get("role_id")) {
 			# Acceso a los módulos
-			roleModulesModel::where("role_id", $_POST["role_id"])->whereNotIn($_POST["modules"], "module_id")->update(["status" => 0]);
-			foreach($_POST["modules"] as $module_id)
-			{
-				roleModulesModel::where("role_id", $_POST["role_id"])
+			roleModulesModel::where("role_id", $request["role_id"])
+				->whereNotIn($request["modules"], "module_id")
+				->update(["status" => 0]);
+			foreach ($request["modules"] as $module_id) {
+				roleModulesModel::where("role_id", $request["role_id"])
 					->where("module_id", $module_id)
 					->where("status", ">=", 0)
 					->get()->set([
-						"module_id" => $module_id,
-						"role_id" => $_POST["role_id"],
-						"status" => 1
-					])->save();
+							"module_id" => $module_id,
+							"role_id" => $request["role_id"],
+							"status" => 1
+						])->save();
 			}
 
 			# Acceso a los métodos
-			roleMethodsModel::where("role_id", $_POST["role_id"])->whereNotIn($_POST["methods"], "method_id")->update(["status" => 0]);
-			foreach($_POST["methods"] as $method_id)
-			{
-				roleMethodsModel::where("role_id", $_POST["role_id"])
+			roleMethodsModel::where("role_id", $request["role_id"])
+				->whereNotIn($request["methods"], "method_id")
+				->update(["status" => 0]);
+			foreach ($request["methods"] as $method_id) {
+				roleMethodsModel::where("role_id", $request["role_id"])
 					->where("method_id", $method_id)
 					->where("status", ">=", 0)
-					->get()->set(Array(
-						"method_id" => $method_id,
-						"role_id" => $_POST["role_id"],
-						"status" => 1
-					))->save();
+					->get()->set(array(
+							"method_id" => $method_id,
+							"role_id" => $request["role_id"],
+							"status" => 1
+						))->save();
 			}
 		}
-		$data["success"] = true;
-		$data["title"] = _("Success");
-		$data["message"] = _("Changes have been saved");
-		$data["theme"] = "green";
-		$data["reload_after"] = true;
-		http::json($data);
+		ApiResponse::success(
+			code: "UPDATED",
+			title: _("Success"),
+			message: _("Changes have been saved"),
+			actions: ["reload" => true]
+		);
 	}
 
 	/**
@@ -438,40 +405,32 @@ trait Roles
 	{
 		$this->check_permissions("delete", "roles");
 		$request = http::getRequestData();
-		if(empty($request["id"]))
-		{
-			http::json([
-				"deleted" => false,
-				"title" => _("Error"),
-				"message" => _("Bad request"),
-				"theme" => "red"
-			]);
-			return;
+		if (empty($request["id"])) {
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Bad request")
+			);
 		}
 		$role = rolesModel::find($request["id"]);
 
 		# Validar que el rol no contiene usuarios activos
 		$users = usersModel::where("role_id", $role->getRoleId())
 			->count();
-		if($users > 0)
-		{
-			http::json([
-				"deleted" => false,
-				"title" => _("Error"),
-				"message" => _("There are active users in this role"),
-				"theme" => "red"
-			]);
-			return;
+		if ($users > 0) {
+			ApiResponse::error(
+				code: "VALIDATION_ERROR",
+				title: _("Error"),
+				message: _("There are active users in this role")
+			);
 		}
-		
-		$affected = $role->delete();
+
+		$role->delete();
 		$this->setUserLog("delete", "roles", $role->getRoleId());
-		http::json([
-			"deleted" => $affected > 0,
-			"title" => _("Success"),
-			"message" => _("Deleted successfully"),
-			"theme" => "green"
-		]);
+		ApiResponse::success(
+			code: "DELETED",
+			title: _("Success"),
+			message: _("Deleted successfully")
+		);
 	}
 }
-?>

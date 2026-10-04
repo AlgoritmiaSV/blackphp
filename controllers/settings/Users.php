@@ -107,12 +107,14 @@ trait Users
 			]
 		];
 		if ($response == "Excel") {
-			$data["title"] = _("Users");
-			$data["headers"] = array(_("User"), _("Complete name"), _("Last login"));
-			$data["fields"] = array("nickname", "user_name", "last_login");
-			excel::create_from_table($data, "Users_" . Date("YmdHis") . ".xlsx");
+			excel::create_from_table([
+				"title" => _("Users"),
+				"headers" => [_("User"), _("Complete name"), _("Last login")],
+				"fields" => ["nickname", "user_name", "last_login"],
+				"content" => $users
+			], "Users_" . Date("YmdHis") . ".xlsx");
 		} else {
-			http::json($data);
+			ApiResponse::success(data: $data);
 		}
 	}
 
@@ -186,31 +188,28 @@ trait Users
 	 */
 	public function save_user()
 	{
-		$this->check_permissions(empty($_POST["user_id"]) ? "create" : "update", "users");
-		if (empty($_POST["user_name"])) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => _("Bad request"),
-				"theme" => "red"
-			]);
-			return;
+		$request = http::getRequestData();
+		$this->check_permissions(empty($request["user_id"]) ? "create" : "update", "users");
+		if (empty($request["user_name"])) {
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Bad request")
+			);
 		}
 
 		#Validate nickname
-		$test = usersModel::where("nickname", $_POST["nickname"])
-			->where("user_id", "!=", $_POST["user_id"])->get();
-		if (!empty($test->getUserId())) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => _("The nickname already exists!"),
-				"theme" => "red"
-			]);
-			return;
+		$registeredUser = usersModel::where("nickname", $request["nickname"])
+			->where("user_id", "!=", $request["user_id"])
+			->get();
+		if ($registeredUser->exists()) {
+			ApiResponse::error(
+				code: "VALIDATION_ERROR",
+				title: _("Error"),
+				message: _("The nickname already exists!")
+			);
 		}
 
-		$user_id = 0;
 		$user = usersModel::find($_POST["user_id"]);
 		$user->set([
 			"user_name" => $_POST["user_name"],
@@ -219,13 +218,11 @@ trait Users
 		if (!empty($_POST["password"])) {
 			$validate = $this->ValidatePassword($_POST["password"]);
 			if ($validate !== true) {
-				http::json([
-					"success" => false,
-					"title" => _("Error"),
-					"message" => implode("<br>", $validate),
-					"theme" => "red"
-				]);
-				return;
+				ApiResponse::error(
+					code: "VALIDATION_ERROR",
+					title: _("Error"),
+					message: implode("<br>", $validate)
+				);
 			}
 			$user->setPassword("HASH");
 			$user->setPasswordHash(password_hash($_POST["password"], PASSWORD_BCRYPT));
@@ -240,19 +237,14 @@ trait Users
 			$user->setRoleId($_POST["role_id"]);
 		}
 		$user->save();
-		if (!empty($_POST["user_id"])) {
-			$this->setUserLog("update", "users", $user->getUserId());
-		} else {
-			$this->setUserLog("create", "users", $user->getUserId());
-		}
+		$this->setUserLog(empty($request["user_id"]) ? "create" : "update", "users", $user->getUserId());
 
-		http::json([
-			"success" => true,
-			"title" => _("Success"),
-			"message" => _("Changes have been saved"),
-			"theme" => "green",
-			"reload_after" => true
-		]);
+		ApiResponse::success(
+			title: _("Success"),
+			code: empty($request["user_id"]) ? "CREATED" : "UPDATED",
+			message: _("Changes have been saved"),
+			actions: ["reload" => true]
+		);
 	}
 
 	/**
@@ -267,23 +259,20 @@ trait Users
 		$this->check_permissions("delete", "users");
 		$request = http::getRequestData();
 		if (empty($request["id"])) {
-			http::json([
-				"deleted" => false,
-				"title" => _("Error"),
-				"message" => _("Bad request"),
-				"theme" => "red"
-			]);
-			return;
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Bad request")
+			);
 		}
 		$user = usersModel::find($request["id"]);
-		$affected = $user->delete();
+		$user->delete();
 		$this->setUserLog("delete", "users", $user->getUserId());
-		http::json([
-			"deleted" => $affected > 0,
-			"title" => _("Success"),
-			"message" => _("Deleted successfully"),
-			"theme" => "green"
-		]);
+		ApiResponse::success(
+			code: "DELETED",
+			title: _("Success"),
+			message: _("Deleted successfully")
+		);
 	}
 
 	public function CloseSessions($userId)

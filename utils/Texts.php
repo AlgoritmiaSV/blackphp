@@ -15,96 +15,17 @@
  * 
  * Conjunto de funciones utilitarias para la conversión y sustitución de textos.
  */
-class text_utilities
+class Texts
 {
-	private static $url_out = array("+", "%E1", "%E9", "%ED", "%F3", "%FA", "%BF", "%3F", "%2C", "%F1", "%28", "%29", "%2F", "%C3");
-	private static $php_in = array(" ", "á", "é", "í", "ó", "ú", "¿", "?", ",", "ñ", "(", ")", "/");
-	private static $php_out = array(" ", "&aacute;", "&eacute;", "&iacute;", "&oacute;", "&uacute;", "&iquest", "?", ",", "&ntilde;", "(", ")", "/");
-	private static $url_in = array("_", "a", "e", "i", "o", "u", "", "", "_", "n", "_", "", "_");
 
-	public static function list_sql_html($list)
-	{
-		foreach ($list as $key => $value) {
-			$list[$key] = self::sql_to_html($value);
-		}
-		return $list;
-	}
-
-	public static function array_sql_html($matrix)
-	{
-		foreach ($matrix as $key => $list) {
-			$matrix[$key] = self::list_sql_html($list);
-		}
-		return $matrix;
-	}
-
-	public static function list_to_utf8($list, $space = false)
-	{
-		foreach ($list as $key => $value) {
-			$list[$key] = utf8_encode($value);
-			if ($space) {
-				$list[$key] = str_replace("\n", "<br>", $list[$key]);
-			}
-		}
-		return $list;
-	}
-
-	public static function array_to_utf8($matrix, $space = false)
-	{
-		foreach ($matrix as $key => $list) {
-			$matrix[$key] = self::list_to_utf8($list, $space);
-		}
-		return $matrix;
-	}
-
-	public static function windows_to_utf8($array)
-	{
-		foreach ($array as $key => $item) {
-			if (is_array($item)) {
-				$array[$key] = self::windows_to_utf8($item);
-			} else {
-				$array[$key] = iconv("windows-1251", "UTF-8", $item);
-			}
-		}
-		return $array;
-	}
-
-	public static function url_entities($string)
-	{
-		$text = strtolower($string);
-		$text = str_replace(self::$php_in, self::$url_in, $text);
-		$text = urlencode($text);
-		$text = str_replace(self::$url_out, self::$url_in, $text);
-		return $text;
-	}
-	public static function substring($text, $length)
-	{
-		if (strlen($text) > $length) {
-			$text = substr($text, 0, $length + 1);
-			$last_space = strrpos($text, " ");
-			$text = substr($text, 0, $last_space);
-			$text .= '...';
-		}
-		return $text;
-	}
-
-	public static function sql_to_html($text)
-	{
-		$sql = array("\n", "á", "é", "í", "ó", "ú", "Á", "É", "Í", "Ó", "Ú", "ñ", "Ñ", "\"");
-		$html = array("<br>", "&aacute;", "&eacute;", "&iacute;", "&oacute;", "&uacute;", "&Aacute;", "&Eacute;", "&Iacute;", "&Oacute;", "&Uacute;", "&ntilde;", "&Ntilde;", "&quote;");
-		$sql_e = array("<", ">");
-		$html_e = array("&lt;", "&gt;");
-		return str_replace($sql, $html, $text);
-	}
-
-	public static function number_to_text($number)
+	public static function numberToString($number)
 	{
 		$number = str_replace(",", "", (string) $number);
 		$f = new NumberFormatter("es-ES", NumberFormatter::SPELLOUT);
 		return $f->format($number);
 	}
 
-	public static function spell_document($number)
+	public static function spellDocument($number)
 	{
 		$str = "";
 		$prev_number = false;
@@ -130,20 +51,6 @@ class text_utilities
 			$prev_number = is_numeric($digit);
 		}
 		return $str;
-	}
-
-	public static function spell_date($date)
-	{
-		$months = array(1 => "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
-		$parts = explode("-", $date);
-		return self::number_to_text($parts[2]) . ' de ' . $months[(int) $parts[1]] . ' de ' . self::number_to_text($parts[0]);
-	}
-
-	public static function large_date($date)
-	{
-		$months = array(1 => "enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
-		$parts = explode("-", $date);
-		return self::number_to_text($parts[2]) . ' d&iacute;as del mes de ' . $months[(int) $parts[1]] . ' del año ' . self::number_to_text($parts[0]);
 	}
 
 	public static function encrypt($text)

@@ -35,7 +35,6 @@ trait Menu
 	{
 		$result = ["success" => false];
 		$now = Date("Y-m-d H:i:s");
-		$today = Date("Y-m-d");
 
 		#Check session type
 		if (Session::get("entity/entity_id") == null) {
@@ -112,27 +111,31 @@ trait Menu
 		}
 
 		# Preparación de respuesta
-		$result = [
-			"success" => true,
-			"title" => _("Success"),
-			"message" => _("Installation completed successfully"),
-			"theme" => "green",
-			"no_reset" => true
-		];
+		$redirect = null;
+		$reload = false;
 		if ($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"]) {
 			$protocol = "http";
 			if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) {
 				$protocol .= "s";
 			}
-			$result["redirect_after"] = $protocol . "://" . str_replace("installer", $result["subdomain"], $_SERVER["SERVER_NAME"]);
+			$redirect = $protocol . "://" . str_replace("installer", $result["subdomain"], $_SERVER["SERVER_NAME"]);
 		} else {
-			$result["reload_after"] = true;
+			$reload = true;
 		}
 
 		# Cerrar sesión del instalador
 		Session::destroy();
 
-		http::json($result);
+		ApiResponse::success(
+			code: "UPDATED",
+			title: _("Success"),
+			message: _("Installation completed successfully"),
+			actions: [
+				"reset" => false,
+				"reload" => $reload,
+				"redirect" => $redirect
+			]
+		);
 	}
 }
 ?>

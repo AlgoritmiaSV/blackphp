@@ -23,59 +23,23 @@ class Resources extends Controller
 		$this->view->render('main');
 	}
 
-	public function keep_alive()
+	public function KeepAlive()
 	{
-		http::json([
+		ApiResponse::success(data: [
 			"alive" => Session::get("user_id") != null
 		]);
 	}
 
-	public function age_calculation($date)
+	public function AgeCalculation($date)
 	{
-		$data = array("age" => 0);
+		$age = 0;
 		if (!empty($date)) {
-			$data["age"] = Dates::age($date);
+			$age = Dates::age($date);
 		}
-		http::json($data);
+		ApiResponse::success(data: [
+			"age" => $age
+		]);
 	}
-
-	/**
-	 * DataTables
-	 * 
-	 * Traducción de palabras utilizadas en DataTables; respuesta en formato JSON.
-	 * 
-	 * @return void
-	 */
-	/*
-	public function datatables_language()
-	{
-		$data = Array(
-			"decimal" => "",
-			"emptyTable" => _("No data available in table"),
-			"info" => _("Showing _START_ to _END_ of _TOTAL_ entries"),
-			"infoEmpty" => _("Showing 0 to 0 of 0 entries"),
-			"infoFiltered" => _("filtered from _MAX_ total entries"),
-			"infoPostFix" => "",
-			"thousands" => ",",
-			"lengthMenu" => _("Show _MENU_ entries"),
-			"loadingRecords" => _("Loading") . "...",
-			"processing" => "",
-			"search" => _("Search") . ":",
-			"zeroRecords" => _("No matching records found"),
-			"paginate" => Array(
-				"first" => _("First"),
-				"last" => _("Last"),
-				"next" => _("Next"),
-				"previous" => _("Previous")
-			),
-			"aria" => Array(
-				"sortAscending" => ": " . _("activate to sort column ascending"),
-				"sortDescending" => ": " . _("activate to sort column descending")
-			)
-		);
-		http::json($data);
-	}
-	*/
 
 	public function manifest()
 	{
@@ -116,4 +80,3 @@ class Resources extends Controller
 		exit;
 	}
 }
-?>

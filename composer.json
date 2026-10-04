@@ -5,7 +5,8 @@
     "license": "MIT",
     "require": {
         "phpoffice/phpspreadsheet": "^4.1",
-        "donatj/phpuseragentparser": "^1.10"
+        "donatj/phpuseragentparser": "^1.10",
+        "fizzday/fizzjwt": "^0.1.0"
     },
     "minimum-stability": "stable",
     "prefer-stable": true

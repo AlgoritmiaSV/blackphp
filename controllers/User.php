@@ -27,9 +27,7 @@ class User extends Controller
 	/**
 	 * Vista principal
 	 * 
-	 * La vista principal para este módulo no ha sido desarrollada.
-	 * 
-	 * @todo Desarrollar contenido propio de la vista principal del usuario.
+	 * Redirige a Mi Cuenta.
 	 * 
 	 * @return void
 	 */
@@ -118,38 +116,40 @@ class User extends Controller
 	 */
 	public function TestLogin()
 	{
-		$data = ["session" => false];
-		if (empty($_POST["nickname"])) {
-			$data["title"] = "Error";
-			$data["message"] = _("Bad request");
-			$data["theme"] = "red";
-			http::json($data);
-			return;
+		$request = http::getRequestData();
+		if (empty($request["nickname"])) {
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Bad request")
+			);
 		}
-		$user = usersModel::findBy("nickname", $_POST["nickname"]);
 
+		$user = usersModel::findBy("nickname", $request["nickname"]);
 		if (!$user->exists()) {
-			$data["title"] = "Error";
-			$data["message"] = _("Bad user or password");
-			$data["theme"] = "red";
-			http::json($data);
-			return;
+			ApiResponse::error(
+				code: "AUTH_INVALID_CREDENTIALS",
+				title: _("Error"),
+				message: _("Bad user or password")
+			);
 		}
 
 		# Verificar número de intentos fallidos en los últimos cinco minutos
 		$date_time = Date("Y-m-d H:i:s", time() - 300);
-		$attemps = loginAttempsModel::where("user_id", $user->getUserId())->where("date_time", ">=", $date_time)->count();
+		$attemps = loginAttempsModel::where("user_id", $user->getUserId())
+			->where("date_time", ">=", $date_time)
+			->count();
 		if ($attemps >= 3) {
-			$data["title"] = _("Error");
-			$data["message"] = _("Too many failed attempts, try again in five minutes");
-			$data["theme"] = "red";
-			http::json($data);
-			return;
+			ApiResponse::error(
+				code: "AUTH_LOGIN_RATE_LIMIT",
+				title: _("Error"),
+				message: _("Too many failed attempts, try again in five minutes")
+			);
 		}
 
-		if (empty($user->getPasswordHash()) && md5($_POST["password"]) == $user->getPassword()) {
+		if (empty($user->getPasswordHash()) && md5($request["password"]) == $user->getPassword()) {
 			$user->set([
-				"password_hash" => password_hash($_POST["password"], PASSWORD_BCRYPT),
+				"password_hash" => password_hash($request["password"], PASSWORD_BCRYPT),
 				"password" => "HASH"
 			])->save();
 		}
@@ -158,21 +158,24 @@ class User extends Controller
 		$now = Date("Y-m-d H:i:s");
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 		$ipv4 = $this->getRealIP();
-		$browser = browsersModel::where("user_agent", $user_agent)->get();
+		$browser = browsersModel::where("user_agent", $user_agent)
+			->get();
 		if (!$browser->exists()) {
 			$parser = new UserAgentParser();
 			$ua = $parser->parse($user_agent);
-			$browser->set([
-				"user_agent" => $user_agent,
-				"browser_name" => $ua->browser(),
-				"browser_version" => $ua->browserVersion(),
-				"platform" => $ua->platform(),
-				"creation_user" => $user->getUserId(),
-				"creation_time" => $now
-			])->save();
+			if (!empty($ua->platform)) {
+				$browser->set([
+					"user_agent" => $user_agent,
+					"browser_name" => $ua->browser(),
+					"browser_version" => $ua->browserVersion(),
+					"platform" => $ua->platform(),
+					"creation_user" => $user->getUserId(),
+					"creation_time" => $now
+				])->save();
+			}
 		}
 
-		if (password_verify($_POST["password"], $user->getPasswordHash())) {
+		if (password_verify($request["password"], $user->getPasswordHash())) {
 			# Verificar si la contraseña ha sido cambiada en los últimos noventa días
 			$passwordChanged = new DateTime($user->getPasswordChanged());
 			$threshold = new DateTime();
@@ -184,16 +187,13 @@ class User extends Controller
 				return;
 			}
 
-			# Continuar con el inicio normal de la sesión
-			$data["reload"] = true;
-
 			# Cargar los datos del usuario a la sesión actual
 			foreach ($user->toArray() as $key => $value) {
 				Session::set($key, $value);
 			}
 
 			# Guardar en la sesión el identificador del equipo del usuario
-			Session::set("blackphp_device_code", $_POST["blackphp_device_code"]);
+			Session::set("blackphp_device_code", $request["blackphp_device_code"]);
 
 			# Cargar el idioma del usuario
 			if (!empty($user->getLocale())) {
@@ -212,16 +212,21 @@ class User extends Controller
 			$session->set([
 				"user_id" => $user->getUserId(),
 				"ip_address" => $ipv4,
-				"device_code" => $_POST["blackphp_device_code"],
+				"device_code" => $request["blackphp_device_code"],
 				"browser_id" => $browser->getBrowserId(),
 				"date_time" => $now
 			])->save();
 
 			# Cargar los módulos a la sesión actual
-			Session::set("modules", availableModulesModel::where("role_id", $user->getRoleId())->orderBy("module_order")->getAllArray());
+			Session::set(
+				"modules",
+				availableModulesModel::where("role_id", $user->getRoleId())
+					->orderBy("module_order")
+					->getAllArray()
+			);
 
 			# Cargar los permisos del usuario
-			$permissions = array();
+			$permissions = [];
 			$elements = roleElementsModel::where("role_id", $user->getRoleId())
 				->join("app_elements", "element_id")
 				->getAll();
@@ -229,6 +234,8 @@ class User extends Controller
 				$permissions[$element["element_key"]] = $element["permissions"];
 			}
 			Session::set("permissions", $permissions);
+
+			ApiResponse::success(actions: ["reload" => true]);
 		} else {
 			$login_attemp = new loginAttempsModel();
 			$login_attemp->set([
@@ -237,11 +244,12 @@ class User extends Controller
 				"browser_id" => $browser->getBrowserId(),
 				"ip_address" => $ipv4
 			])->save();
-			$data["title"] = _("Error");
-			$data["message"] = _("Bad user or password");
-			$data["theme"] = "red";
+			ApiResponse::error(
+				code: "AUTH_INVALID_CREDENTIALS",
+				title: _("Error"),
+				message: _("Bad user or password")
+			);
 		}
-		http::json($data);
 	}
 
 	/**
@@ -255,9 +263,7 @@ class User extends Controller
 	public function logout()
 	{
 		Session::destroy();
-		http::json([
-			"session" => false
-		]);
+		ApiResponse::success();
 	}
 
 	/**
@@ -336,13 +342,14 @@ class User extends Controller
 			move_uploaded_file($_FILES["profile"]["tmp_name"], $file);
 		}
 
-		http::json([
-			"success" => true,
-			"reload_after" => true,
-			"title" => _("Success"),
-			"message" => _("Changes have been saved"),
-			"theme" => "green"
-		]);
+		ApiResponse::success(
+			code: "UPDATED",
+			title: _("Success"),
+			message: _("Changes have been saved"),
+			actions: [
+				"reload" => true
+			]
+		);
 	}
 
 	/**
@@ -358,44 +365,41 @@ class User extends Controller
 		$user = usersModel::find(Session::get("user_id"));
 		if (md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash())) {
 			http::json([
-				"success" => false,
-				"title" => "Error",
-				"message" => _("Incorrect password"),
 				"theme" => "red"
 			]);
-			return;
+			ApiResponse::error(
+				code: "AUTH_INVALID_CREDENTIALS",
+				title: _("Error"),
+				message: _("Incorrect password")
+			);
 		}
 		if ($_POST["new_password"] != $_POST["confirm_password"]) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => _("Passwords do not match"),
-				"theme" => "red"
-			]);
-			return;
+			ApiResponse::error(
+				code: "VALIDATION_ERROR",
+				title: _("Error"),
+				message: _("Passwords do not match")
+			);
 		}
 
 		$validate = $this->ValidatePassword($_POST["new_password"]);
 		if ($validate !== true) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => implode("<br>", $validate),
-				"theme" => "red"
-			]);
-			return;
+			ApiResponse::error(
+				code: "VALIDATION_ERROR",
+				title: _("Error"),
+				message: implode("<br>", $validate)
+			);
 		}
 
 		$user->setPassword("HASH");
 		$user->setPasswordHash(password_hash($_POST["new_password"], PASSWORD_BCRYPT));
 		$user->save();
-		http::json([
-			"success" => true,
-			"reload_after" => true,
-			"title" => _("Success"),
-			"message" => _("Changes have been saved"),
-			"theme" => "green"
-		]);
+
+		ApiResponse::success(
+			code: "UPDATED",
+			title: _("Success"),
+			message: _("Changes have been saved"),
+			actions: ["reload" => true]
+		);
 	}
 
 	public function SetNewPassword()
@@ -418,35 +422,29 @@ class User extends Controller
 		# El usuario no existe
 		$user = usersModel::find($_POST["user_id"]);
 		if (!$user->exists()) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => _("Bad request"),
-				"theme" => "red"
-			]);
-			return;
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Bad request")
+			);
 		}
 
 		# La contraseña actual es incorrecta
 		if (md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash())) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => _("Incorrect password"),
-				"theme" => "red"
-			]);
-			return;
+			ApiResponse::error(
+				code: "AUTH_INVALID_CREDENTIALS",
+				title: _("Error"),
+				message: _("Incorrect password")
+			);
 		}
 
 		# Las contraseñas no coinciden
 		if ($_POST["new_password"] != $_POST["confirm_password"]) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => _("Passwords do not match"),
-				"theme" => "red"
-			]);
-			return;
+			ApiResponse::error(
+				code: "VALIDATION_ERROR",
+				title: _("Error"),
+				message: _("Passwords do not match")
+			);
 		}
 
 		# No puede ser la misma contraseña anterior
@@ -454,12 +452,11 @@ class User extends Controller
 		# Validar contraseña
 		$validate = $this->ValidatePassword($_POST["new_password"]);
 		if ($validate !== true) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => implode("<br>", $validate),
-				"theme" => "red"
-			]);
+			ApiResponse::error(
+				code: "VALIDATION_ERROR",
+				title: _("Error"),
+				message: implode("<br>", $validate)
+			);
 			return;
 		}
 
@@ -471,13 +468,12 @@ class User extends Controller
 		$user->save();
 		Session::unset("password_user_id");
 
-		http::json([
-			"success" => true,
-			"redirect_after" => "/",
-			"title" => _("Success"),
-			"message" => _("Changes have been saved"),
-			"theme" => "green"
-		]);
+		ApiResponse::success(
+			code: "UPDATED",
+			title: _("Success"),
+			message: _("Changes have been saved"),
+			actions: ["redirect" => "/"]
+		);
 	}
 
 	private function ValidatePassword($password)

@@ -47,12 +47,15 @@ trait ActivityLog
 	{
 		$this->check_permissions("read", "logs");
 		$options = $_POST["options"];
-		$type = $options["type"];
 		$from = $options["from"] ?? Date("Y-m-d");
 		$from .= " 00:00:00";
 		$to = $options["to"] ?? Date("Y-m-d");
 		$to .= " 23:59:59";
-		$logsModel = userLogsModel::select(userLogsModel::fields("*"), usersModel::fields("user_name"), appElementsModel::fields("singular_name", "element_gender", "unique_element"))
+		$logsModel = userLogsModel::select(
+			userLogsModel::fields("*"),
+			usersModel::fields("user_name"),
+			appElementsModel::fields("singular_name", "element_gender", "unique_element")
+		)
 			->join("users", "user_id")
 			->join("app_elements", "element_id")
 			->where("date_time", ">=", $from)
@@ -101,12 +104,13 @@ trait ActivityLog
 			]
 		];
 		if ($response == "Excel") {
-			$data["title"] = _("Activity log");
-			$data["headers"] = array(_("Date and time"), _("Activity description"));
-			$data["fields"] = array("date_time", "description");
-			excel::create_from_table($data, "Activity_log_" . Date("YmdHis") . ".xlsx");
+			excel::create_from_table([
+				"title" => _("Activity log"),
+				"headers" => [_("Date and time"), _("Activity description")],
+				"fields" => ["date_time", "description"]
+			], "Activity_log_" . Date("YmdHis") . ".xlsx");
 		} else {
-			http::json($data);
+			ApiResponse::success(data: $data);
 		}
 	}
 
@@ -133,13 +137,10 @@ trait ActivityLog
 	public function user_filter_loader()
 	{
 		$this->check_permissions("read", "logs");
-		http::json([
-			"results" => array_merge(
-				[["id" => 0, "text" => _("All users")]],
-				usersModel::orderBy("text")
-					->list("user_id", "user_name")
-			)
-		]);
+		ApiResponse::success(data: array_merge(
+			[["id" => 0, "text" => _("All users")]],
+			usersModel::orderBy("text")
+				->list("user_id", "user_name")
+		));
 	}
 }
-?>

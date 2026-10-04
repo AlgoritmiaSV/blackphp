@@ -28,55 +28,54 @@ trait Entity
 	 */
 	public function save_entity()
 	{
+		$request = http::getRequestData();
 		$this->check_permissions("update", "entityData");
-		$data = Array("success" => false);
-		if(!empty($_POST["entity_name"]))
-		{
-			$time = Date("Y-m-d H:i:s");
-			$entity = entitiesModel::get();
-			$entity->set(Array(
-				"entity_name" => $_POST["entity_name"],
-				"entity_slogan" => $_POST["entity_slogan"],
-				"edition_user" => Session::get("user_id"),
-				"user_edition_time" => $time
-			))->save();
-			Session::set("entity", $entity->toArray());
-			$data["success"] = true;
-			$data["title"] = _("Success");
-			$data["message"] = _("Changes have been saved");
-			$data["theme"] = "green";
-			$data["no_reset"] = true;
 
-			#Save image
-			if(!empty($_FILES["logo"]["name"]))
-			{
-				$extension = strtolower(pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION));
-				if($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"])
-				{
-					$dir = "entities/local/";
-				}
-				else
-				{
-					$dir = "entities/" . Session::get("entity/entity_subdomain") . "/";
-				}
-				$file = $dir . "logo." . $extension;
-				$generic_file = glob($dir . "logo.*");
-				if(!is_dir($dir))
-				{
-					mkdir($dir, 0755, true);
-				}
-				else
-				{
-					foreach($generic_file as $previous)
-					{
-						unlink($previous);
-					}
-				}
-				move_uploaded_file($_FILES["logo"]["tmp_name"], $file);
-			}
-			$this->setUserLog("update", "entityData");
+		if (empty($request["entity_name"])) {
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Bad request")
+			);
 		}
-		http::json($data);
+
+		# Guardar la entidad
+		$time = Date("Y-m-d H:i:s");
+		$entity = entitiesModel::get();
+		$entity->set(array(
+			"entity_name" => $request["entity_name"],
+			"entity_slogan" => $request["entity_slogan"],
+			"edition_user" => Session::get("user_id"),
+			"user_edition_time" => $time
+		))->save();
+		Session::set("entity", $entity->toArray());
+
+		# Guardar imagen
+		if (!empty($_FILES["logo"]["name"])) {
+			$extension = strtolower(pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION));
+			if ($_SERVER["SERVER_NAME"] == $_SERVER["SERVER_ADDR"]) {
+				$dir = "entities/local/";
+			} else {
+				$dir = "entities/" . Session::get("entity/entity_subdomain") . "/";
+			}
+			$file = $dir . "logo." . $extension;
+			$generic_file = glob($dir . "logo.*");
+			if (!is_dir($dir)) {
+				mkdir($dir, 0755, true);
+			} else {
+				foreach ($generic_file as $previous) {
+					unlink($previous);
+				}
+			}
+			move_uploaded_file($_FILES["logo"]["tmp_name"], $file);
+		}
+		$this->setUserLog("update", "entityData");
+
+		ApiResponse::success(
+			code: "UPDATED",
+			title: _("Success"),
+			message: _("Changes have been saved"),
+			actions: ["reset" => false]
+		);
 	}
 }
-?>

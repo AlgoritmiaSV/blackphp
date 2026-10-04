@@ -223,13 +223,13 @@ class Dates
 	 * 
 	 * @return string La edad
 	 */
-	public static function age($time_string, $text = false)
+	public static function age(string $time_string, bool $text = false)
 	{
 		$time = new DateTime($time_string);
 		$ago = $time->diff(new DateTime());
 		$string = "";
 		if ($ago->y > 0) {
-			$string = ($text ? text_utilities::number_to_text($ago->y) : $ago->y) . " " . ($ago->y == 1 ? _("year") : _("years"));
+			$string = ($text ? Texts::numberToString($ago->y) : $ago->y) . " " . ($ago->y == 1 ? _("year") : _("years"));
 		}
 		if ($ago->y < 5) {
 			if ($ago->m > 0 || $string != "") {

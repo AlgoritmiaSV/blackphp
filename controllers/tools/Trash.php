@@ -79,14 +79,17 @@ trait Trash
 		}
 		unset($item);
 
-		$data["content"] = $items;
 		if ($response == "Excel") {
-			$data["title"] = $title;
-			$data["headers"] = array(_("Element ID"), _("Description"), _("Created by"), _("Created at"), _("Deleted by"), _("Deleted at"));
-			$data["fields"] = array("element_id", "description", "creator_name", "creation_time", "editor_name", "edition_time");
-			excel::create_from_table($data, "Trash_" . Date("YmdHis") . ".xlsx");
+			excel::create_from_table([
+				"content" => $items,
+				"title" => $title,
+				"headers" => [_("Element ID"), _("Description"), _("Created by"), _("Created at"), _("Deleted by"), _("Deleted at")],
+				"fields" => ["element_id", "description", "creator_name", "creation_time", "editor_name", "edition_time"]
+			], "Trash_" . Date("YmdHis") . ".xlsx");
 		} else {
-			http::json($data);
+			ApiResponse::success(
+				data: $items
+			);
 		}
 	}
 

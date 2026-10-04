@@ -48,9 +48,18 @@ trait Entity
 	 */
 	public function SaveEntity()
 	{
+		$request = http::getRequestData();
 		$response = ["success" => false];
-		$now = Date("Y-m-d H:i:s");
+		$time = Date("Y-m-d H:i:s");
 		$today = Date("Y-m-d");
+
+		if (empty($request["entity_name"])) {
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Bad request")
+			);
+		}
 
 		# Validando tipo de sesión
 		if (Session::get("entity/entity_id") == null) {
@@ -59,26 +68,22 @@ trait Entity
 
 			if ($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"]) {
 				if (empty($_POST["subdomain"])) {
-					$response += [
-						"title" => "Error",
-						"message" => _("No subdomain chosen"),
-						"theme" => "red"
-					];
-					http::json($response);
-					return;
+					ApiResponse::error(
+						code: "VALIDATION_ERROR",
+						title: _("Error"),
+						message: _("No subdomain chosen")
+					);
 				}
 			}
 			$entity = entitiesModel::where("entity_subdomain", $_POST["subdomain"])
 				->get()
 				->toArray();
 			if (isset($entity["entity_id"]) || in_array($_POST["subdomain"], $reserved_subdomains)) {
-				$response += [
-					"title" => "Error",
-					"message" => sprintf(_("The subdomain %s is not available"), $_POST["subdomain"]),
-					"theme" => "red"
-				];
-				http::json($response);
-				return;
+				ApiResponse::error(
+					code: "VALIDATION_ERROR",
+					title: _("Error"),
+					message: sprintf(_("The subdomain %s is not available"), $_POST["subdomain"])
+				);
 			}
 		}
 
@@ -89,28 +94,19 @@ trait Entity
 				"entity_subdomain" => $subdomain,
 				"entity_begin" => $today,
 				"creation_installer" => Session::get("installer_id"),
-				"creation_time" => $now,
+				"creation_time" => $time,
 				"edition_installer" => Session::get("installer_id"),
-				"installer_edition_time" => $now
+				"installer_edition_time" => $time
 			]);
 		}
 		$entity->set([
-			"entity_name" => $_POST["entity_name"],
-			"app_name" => empty($_POST["app_name"]) ? ucfirst($subdomain) : $_POST["app_name"],
-			"entity_slogan" => $_POST["entity_slogan"],
+			"entity_name" => $request["entity_name"],
+			"app_name" => empty($request["app_name"]) ? ucfirst($subdomain) : $request["app_name"],
+			"entity_slogan" => $request["entity_slogan"],
 			"edition_user" => Session::get("user_id") == null ? 0 : Session::get("user_id"),
-			"user_edition_time" => $now
+			"user_edition_time" => $time
 		]);
 		$entity->save();
-		if (empty($entity->getEntityId())) {
-			$response += [
-				"title" => "Error",
-				"message" => _("Failed to create the entity"),
-				"theme" => "red"
-			];
-			http::json($response);
-			return;
-		}
 
 		# Creación de subdirectorios
 		$dir = "entities/" . $subdomain . "/";
@@ -135,10 +131,9 @@ trait Entity
 		}
 
 		#Finish and response
-		$response["success"] = true;
+		$reload = false;
+		$redirect = null;
 		$response += [
-			"title" => _("Success"),
-			"message" => _("Installation completed successfully"),
 			"theme" => "green",
 			"no_reset" => true
 		];
@@ -147,12 +142,20 @@ trait Entity
 			if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) {
 				$protocol .= "s";
 			}
-			$response["redirect_after"] = $protocol . "://" . str_replace("installer", $_POST["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/RoleAndUser/";
+			$redirect = $protocol . "://" . str_replace("installer", $_POST["subdomain"], $_SERVER["SERVER_NAME"]) . "/Installation/RoleAndUser/";
 			Session::destroy();
 		} else {
-			$response["reload_after"] = true;
+			$reload = true;
 		}
-		http::json($response);
+		ApiResponse::success(
+			code: "UPDATED",
+			title: _("Success"),
+			message: _("Installation completed successfully"),
+			actions: [
+				"reset" => false,
+				"reload" => $reload,
+				"redirect" => $redirect
+			]
+		);
 	}
 }
-?>

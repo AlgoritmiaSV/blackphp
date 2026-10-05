@@ -7,94 +7,92 @@
 
 class appCatalogsModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var string $table_name Nombre de la tabla */
-	private $table_name;
+    /** @var string $table_name Nombre de la tabla */
+    private $table_name;
 
-	/** @var string $column_name Nombre del campo */
-	private $column_name;
+    /** @var string $column_name Nombre del campo */
+    private $column_name;
 
-	/** @var int $field_value Opción/Valor */
-	private $field_value;
+    /** @var int $field_value Opción/Valor */
+    private $field_value;
 
-	/** @var string $description Descripción */
-	private $description;
+    /** @var string $description Descripción */
+    private $description;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "app_catalogs";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "app_catalogs";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "table_name";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "table_name";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = false;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = false;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+        }
+    }
 
-	public function getTableName()
-	{
-		return $this->table_name;
-	}
+    public function getTableName()
+    {
+        return $this->table_name;
+    }
 
-	public function setTableName($value)
-	{
-		self::validateStringSize($value, 64);
-		$this->table_name = $value === null ? null : (string)$value;
-	}
+    public function setTableName($value)
+    {
+        self::validateStringSize($value, 64);
+        $this->table_name = $value === null ? null : (string) $value;
+    }
 
-	public function getColumnName()
-	{
-		return $this->column_name;
-	}
+    public function getColumnName()
+    {
+        return $this->column_name;
+    }
 
-	public function setColumnName($value)
-	{
-		self::validateStringSize($value, 64);
-		$this->column_name = $value === null ? null : (string)$value;
-	}
+    public function setColumnName($value)
+    {
+        self::validateStringSize($value, 64);
+        $this->column_name = $value === null ? null : (string) $value;
+    }
 
-	public function getFieldValue()
-	{
-		return $this->field_value;
-	}
+    public function getFieldValue()
+    {
+        return $this->field_value;
+    }
 
-	public function setFieldValue($value)
-	{
-		$this->field_value = $value === null ? null : (int)$value;
-	}
+    public function setFieldValue($value)
+    {
+        $this->field_value = $value === null ? null : (int) $value;
+    }
 
-	public function getDescription()
-	{
-		return $this->description;
-	}
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
-	public function setDescription($value)
-	{
-		self::validateStringSize($value, 255);
-		$this->description = $value === null ? null : (string)$value;
-	}
+    public function setDescription($value)
+    {
+        self::validateStringSize($value, 255);
+        $this->description = $value === null ? null : (string) $value;
+    }
 }
-?>

@@ -7,132 +7,130 @@
 
 class entityModulesModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $entity_module_id Llave primaria */
-	private $entity_module_id;
+    /** @var int $entity_module_id Llave primaria */
+    private $entity_module_id;
 
-	/** @var int $entity_id ID de la empresa */
-	private $entity_id;
+    /** @var int $entity_id ID de la empresa */
+    private $entity_id;
 
-	/** @var int $module_id ID del módulo */
-	private $module_id;
+    /** @var int $module_id ID del módulo */
+    private $module_id;
 
-	/** @var int $module_order Ubicación del módulo en el menú */
-	private $module_order;
+    /** @var int $module_order Ubicación del módulo en el menú */
+    private $module_order;
 
-	/** @var string $creation_time - */
-	private $creation_time;
+    /** @var string $creation_time - */
+    private $creation_time;
 
-	/** @var string $edition_time - */
-	private $edition_time;
+    /** @var string $edition_time - */
+    private $edition_time;
 
-	/** @var int $status Estado: Ver valores en app_catalogs */
-	private $status;
+    /** @var int $status Estado: Ver valores en app_catalogs */
+    private $status;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "entity_modules";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "entity_modules";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "entity_module_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "entity_module_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = true;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = true;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-			$this->module_order = 1;
-			$this->status = 1;
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+            $this->module_order = 1;
+            $this->status = 1;
+        }
+    }
 
-	public function getEntityModuleId()
-	{
-		return $this->entity_module_id;
-	}
+    public function getEntityModuleId()
+    {
+        return $this->entity_module_id;
+    }
 
-	public function setEntityModuleId($value)
-	{
-		$this->entity_module_id = $value === null ? null : (int)$value;
-	}
+    public function setEntityModuleId($value)
+    {
+        $this->entity_module_id = $value === null ? null : (int) $value;
+    }
 
-	public function getEntityId()
-	{
-		return $this->entity_id;
-	}
+    public function getEntityId()
+    {
+        return $this->entity_id;
+    }
 
-	public function setEntityId($value)
-	{
-		$this->entity_id = $value === null ? null : (int)$value;
-	}
+    public function setEntityId($value)
+    {
+        $this->entity_id = $value === null ? null : (int) $value;
+    }
 
-	public function getModuleId()
-	{
-		return $this->module_id;
-	}
+    public function getModuleId()
+    {
+        return $this->module_id;
+    }
 
-	public function setModuleId($value)
-	{
-		$this->module_id = $value === null ? null : (int)$value;
-	}
+    public function setModuleId($value)
+    {
+        $this->module_id = $value === null ? null : (int) $value;
+    }
 
-	public function getModuleOrder()
-	{
-		return $this->module_order;
-	}
+    public function getModuleOrder()
+    {
+        return $this->module_order;
+    }
 
-	public function setModuleOrder($value)
-	{
-		$this->module_order = $value === null ? null : (int)$value;
-	}
+    public function setModuleOrder($value)
+    {
+        $this->module_order = $value === null ? null : (int) $value;
+    }
 
-	public function getCreationTime()
-	{
-		return $this->creation_time;
-	}
+    public function getCreationTime()
+    {
+        return $this->creation_time;
+    }
 
-	public function setCreationTime($value)
-	{
-		$this->creation_time = $value === null ? null : (string)$value;
-	}
+    public function setCreationTime($value)
+    {
+        $this->creation_time = $value === null ? null : (string) $value;
+    }
 
-	public function getEditionTime()
-	{
-		return $this->edition_time;
-	}
+    public function getEditionTime()
+    {
+        return $this->edition_time;
+    }
 
-	public function setEditionTime($value)
-	{
-		$this->edition_time = $value === null ? null : (string)$value;
-	}
+    public function setEditionTime($value)
+    {
+        $this->edition_time = $value === null ? null : (string) $value;
+    }
 
-	public function getStatus()
-	{
-		return $this->status;
-	}
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
-	public function setStatus($value)
-	{
-		$this->status = $value === null ? null : (int)$value;
-	}
+    public function setStatus($value)
+    {
+        $this->status = $value === null ? null : (int) $value;
+    }
 }
-?>

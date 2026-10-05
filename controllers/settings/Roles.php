@@ -174,7 +174,7 @@ trait Roles
 	 * 
 	 * @return void
 	 */
-	public function role_table_loader($response = "JSON")
+	public function role_table_loader(string $response = "JSON")
 	{
 		$this->check_permissions("read", "roles");
 		$roles = rolesModel::getAllArray();
@@ -190,12 +190,14 @@ trait Roles
 			]
 		];
 		if ($response == "Excel") {
-			$data["title"] = _("Roles");
-			$data["headers"] = array(_("Role name"), _("Users"));
-			$data["fields"] = array("role_name", "users");
-			excel::create_from_table($data, "Roles_" . Date("YmdHis") . ".xlsx");
+			excel::create_from_table([
+				"title" => _("Roles"),
+				"headers" => [_("Role name"), _("Users")],
+				"fields" => ["role_name", "users"],
+				"content" => $data
+			], "Roles_" . Date("YmdHis") . ".xlsx");
 		} else {
-			http::json($data);
+			ApiResponse::success(data: $data);
 		}
 	}
 
@@ -269,13 +271,11 @@ trait Roles
 
 		# Validando que el nombre del rol no esté vacío
 		if (empty($_POST["role_name"])) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => _("Bad request"),
-				"theme" => "red"
-			]);
-			return;
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Bad request")
+			);
 		}
 
 		# Validando roles existentes con el mismo nombre
@@ -286,13 +286,11 @@ trait Roles
 		}
 		$existingRole = $existingRoleModel->get();
 		if ($existingRole->exists()) {
-			http::json([
-				"success" => false,
-				"title" => _("Error"),
-				"message" => _("A role with this name already exists"),
-				"theme" => "red"
-			]);
-			return;
+			ApiResponse::error(
+				code: "DUPLICATE_RECORD",
+				title: _("Error"),
+				message: _("A role with this name already exists")
+			);
 		}
 
 		$role = rolesModel::find($_POST["role_id"]);
@@ -334,13 +332,14 @@ trait Roles
 		} else {
 			$this->setUserLog("create", "roles", $role->getRoleId());
 		}
-		http::json([
-			"success" => true,
-			"title" => _("Success"),
-			"message" => _("Changes have been saved"),
-			"theme" => "green",
-			"redirect_after" => $this->module . "/EditRoleMenu/" . $role->getRoleId() . "/"
-		]);
+		ApiResponse::success(
+			code: empty($_POST["role_id"]) ? "CREATED" : "UPDATED",
+			title: _("Success"),
+			message: _("Changes have been saved"),
+			actions: [
+				"redirect" => $this->module . "/EditRoleMenu/" . $role->getRoleId() . "/"
+			]
+		);
 	}
 
 	/**

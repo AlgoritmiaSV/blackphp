@@ -7,86 +7,84 @@
 
 class appOptionCategoriesModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $category_id Llave primaria */
-	private $category_id;
+    /** @var int $category_id Llave primaria */
+    private $category_id;
 
-	/** @var string $category_name Nombre de la categoría */
-	private $category_name;
+    /** @var string $category_name Nombre de la categoría */
+    private $category_name;
 
-	/** @var string $category_key Código de categoría */
-	private $category_key;
+    /** @var string $category_key Código de categoría */
+    private $category_key;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "app_option_categories";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "app_option_categories";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "category_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "category_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = false;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = false;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+        }
+    }
 
-	public function getCategoryId()
-	{
-		return $this->category_id;
-	}
+    public function getCategoryId()
+    {
+        return $this->category_id;
+    }
 
-	public function setCategoryId($value)
-	{
-		$this->category_id = $value === null ? null : (int)$value;
-	}
+    public function setCategoryId($value)
+    {
+        $this->category_id = $value === null ? null : (int) $value;
+    }
 
-	public function getCategoryName()
-	{
-		return $this->category_name;
-	}
+    public function getCategoryName()
+    {
+        return $this->category_name;
+    }
 
-	public function setCategoryName($value)
-	{
-		self::validateStringSize($value, 64);
-		$this->category_name = $value === null ? null : (string)$value;
-	}
+    public function setCategoryName($value)
+    {
+        self::validateStringSize($value, 64);
+        $this->category_name = $value === null ? null : (string) $value;
+    }
 
-	public function getCategoryKey()
-	{
-		return $this->category_key;
-	}
+    public function getCategoryKey()
+    {
+        return $this->category_key;
+    }
 
-	public function setCategoryKey($value)
-	{
-		self::validateStringSize($value, 32);
-		$this->category_key = $value === null ? null : (string)$value;
-	}
+    public function setCategoryKey($value)
+    {
+        self::validateStringSize($value, 32);
+        $this->category_key = $value === null ? null : (string) $value;
+    }
 
-	public function appOptions()
-	{
-		appOptionsModel::flush();
-		return appOptionsModel::where("category_id", $this->category_id);
-	}
+    public function appOptions()
+    {
+        appOptionsModel::flush();
+        return appOptionsModel::where("category_id", $this->category_id);
+    }
 }
-?>

@@ -126,12 +126,10 @@ trait ActivityLog
 		usort($elements, function ($a, $b) {
 			return strcmp($a["text"], $b["text"]);
 		});
-		http::json([
-			"results" => array_merge(
-				[["id" => 0, "text" => _("All elements")]],
-				$elements
-			)
-		]);
+		ApiResponse::success(data: array_merge(
+			[["id" => 0, "text" => _("All elements")]],
+			$elements
+		));
 	}
 
 	public function user_filter_loader()

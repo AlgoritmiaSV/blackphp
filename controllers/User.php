@@ -182,8 +182,9 @@ class User extends Controller
 			$threshold->sub(new DateInterval('P90D'));
 			if ($passwordChanged < $threshold) {
 				Session::set("password_user_id", $user->getUserId());
-				$data["next"] = "/User/SetNewPassword/";
-				http::json($data);
+				ApiResponse::success(actions:[
+					"redirect"=> "/User/SetNewPassword/"
+				]);
 				return;
 			}
 
@@ -364,9 +365,6 @@ class User extends Controller
 		$this->session_required("json");
 		$user = usersModel::find(Session::get("user_id"));
 		if (md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash())) {
-			http::json([
-				"theme" => "red"
-			]);
 			ApiResponse::error(
 				code: "AUTH_INVALID_CREDENTIALS",
 				title: _("Error"),

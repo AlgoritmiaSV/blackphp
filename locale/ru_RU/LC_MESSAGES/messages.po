@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: BlackPHP 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-31 09:52-0600\n"
-"PO-Revision-Date: 2026-09-27 17:29+UTC-6\n"
+"PO-Revision-Date: 2026-10-04 23:07+UTC-6\n"
 "Last-Translator: Edwin Fajardo <contacto@edwinfajardo.com>\n"
 "Language-Team: Algoritmia SV <desarrollo@algoritmia.sv>\n"
 "Language: ru_RU\n"
@@ -31,12 +31,6 @@ msgstr "O BlackPHP"
 
 msgid "Accept"
 msgstr "Принимать"
-
-msgid "activate to sort column ascending"
-msgstr "активировать для сортировки столбцов по возрастанию"
-
-msgid "activate to sort column descending"
-msgstr "активировать для сортировки столбцов по убыванию"
 
 msgid "Active"
 msgstr "Активный"
@@ -260,9 +254,6 @@ msgstr "Ошибка!"
 msgid "Export to Excel"
 msgstr "Экспорт в Excel"
 
-msgid "Failed to create the entity"
-msgstr "Не удалось создать сущность"
-
 msgid "Failed to load page"
 msgstr "Не удалось загрузить страницу"
 
@@ -274,12 +265,6 @@ msgstr "Февраль"
 
 msgid "Filter"
 msgstr "Фильтр"
-
-msgid "filtered from _MAX_ total entries"
-msgstr "отфильтровано из _MAX_ всего записей"
-
-msgid "First"
-msgstr "Первый"
 
 msgid "For your security, we will ask you to change your password every ninety days"
 msgstr "целях вашей безопасности мы будем просить вас менять пароль каждые 90 дней"
@@ -349,9 +334,6 @@ msgstr "Июнь"
 
 msgid "Language"
 msgstr "Язык"
-
-msgid "Last"
-msgstr "Последний"
 
 msgid "Last edition by"
 msgstr "Последний раз редактировалось"
@@ -428,20 +410,11 @@ msgstr "Новая роль"
 msgid "New user"
 msgstr "Новый пользователь"
 
-msgid "Next"
-msgstr "Следующий"
-
 msgid "Nickname"
 msgstr "Псевдоним"
 
 msgid "No"
 msgstr "Нет"
-
-msgid "No data available in table"
-msgstr "Данные отсутствуют в таблице"
-
-msgid "No matching records found"
-msgstr "Совпадающих записей не найдено"
 
 msgid "No records found!"
 msgstr "Записей не найдено!"
@@ -515,9 +488,6 @@ msgstr "предпочтения"
 msgid "Preferences"
 msgstr "Предпочтения"
 
-msgid "Previous"
-msgstr "Предыдущий"
-
 msgid "Print"
 msgstr "Печать"
 
@@ -566,9 +536,6 @@ msgstr "Сохранить"
 msgid "Saving"
 msgstr "Сохранение"
 
-msgid "Search"
-msgstr "Поиск"
-
 msgid "Search in menu"
 msgstr "Поиск в меню"
 
@@ -592,15 +559,6 @@ msgstr "Данные сеанса"
 
 msgid "Settings"
 msgstr "Настройки"
-
-msgid "Show _MENU_ entries"
-msgstr "Показать _MENU_ записей"
-
-msgid "Showing 0 to 0 of 0 entries"
-msgstr "Показано 0 по 0 из 0 записей"
-
-msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr "Показано _START_ по _END_ из _TOTAL_ записей"
 
 msgid "Slogan"
 msgstr "Лозунг"
@@ -769,4 +727,4 @@ msgctxt "time"
 msgid "on"
 msgstr ""
 
-# 249 messages translated.
+# 235 messages translated.

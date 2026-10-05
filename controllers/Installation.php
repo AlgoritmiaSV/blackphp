@@ -325,15 +325,13 @@ class Installation extends Controller
 	 */
 	public function TestAuthorization()
 	{
-		$response = ["success" => false];
-		if (empty($_POST["nickname"]) || empty($_POST["password"])) {
-			$response += [
-				"title" => "Error",
-				"message" => _("Enter your installer user and password"),
-				"theme" => "red"
-			];
-			http::json($response);
-			return;
+		$request = http::getRequestData();
+		if (empty($request["nickname"]) || empty($request["password"])) {
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Enter your installer user and password")
+			);
 		}
 		$installer = appInstallersModel::where("installer_nickname", $_POST["nickname"])
 			->get();
@@ -342,14 +340,17 @@ class Installation extends Controller
 			Session::set("installer_id", $installer->getInstallerId());
 			$response["reload"] = true;
 		} else {
-			$response += [
-				"title" => "Error",
-				"message" => _("Bad user or password"),
-				"theme" => "red",
-				"no_reset" => true
-			];
+			ApiResponse::error(
+				code: "REQUIRED_FIELD",
+				title: _("Error"),
+				message: _("Enter your installer user and password")
+			);
 		}
-		http::json($response);
+		ApiResponse::success(
+			actions: [
+				"reload" => true
+			]
+		);
 	}
 
 	public function php_info_loader()
@@ -389,13 +390,11 @@ class Installation extends Controller
 
 		if (Session::get("installer_id") == null) {
 			if ($type == 'json') {
-				http::json([
-					"success" => false,
-					"error" => true,
-					"message" => _("You are not logged in"),
-					"title" => "Error",
-					"theme" => "red"
-				]);
+				ApiResponse::error(
+					code: "AUTH_REQUIRED",
+					title: _("Error"),
+					message: _("You are not logged in")
+				);
 			} elseif ($type == 'internal') {
 				$this->view->render("main/error");
 			} else {

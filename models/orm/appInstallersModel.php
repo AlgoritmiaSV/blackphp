@@ -7,127 +7,125 @@
 
 class appInstallersModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $installer_id ID de la tabla */
-	private $installer_id;
+    /** @var int $installer_id ID de la tabla */
+    private $installer_id;
 
-	/** @var string $installer_nickname Usuario */
-	private $installer_nickname;
+    /** @var string $installer_nickname Usuario */
+    private $installer_nickname;
 
-	/** @var string $installer_password Resumen de contraseña */
-	private $installer_password;
+    /** @var string $installer_password Resumen de contraseña */
+    private $installer_password;
 
-	/** @var string $installer_name Nombre del instalador */
-	private $installer_name;
+    /** @var string $installer_name Nombre del instalador */
+    private $installer_name;
 
-	/** @var string $creation_time Hora y fecha de creación */
-	private $creation_time;
+    /** @var string $creation_time Hora y fecha de creación */
+    private $creation_time;
 
-	/** @var int $status Estado: Ver valores en app_catalogs */
-	private $status;
+    /** @var int $status Estado: Ver valores en app_catalogs */
+    private $status;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "app_installers";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "app_installers";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "installer_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "installer_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = true;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = true;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-			$this->status = 1;
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+            $this->status = 1;
+        }
+    }
 
-	public function getInstallerId()
-	{
-		return $this->installer_id;
-	}
+    public function getInstallerId()
+    {
+        return $this->installer_id;
+    }
 
-	public function setInstallerId($value)
-	{
-		$this->installer_id = $value === null ? null : (int)$value;
-	}
+    public function setInstallerId($value)
+    {
+        $this->installer_id = $value === null ? null : (int) $value;
+    }
 
-	public function getInstallerNickname()
-	{
-		return $this->installer_nickname;
-	}
+    public function getInstallerNickname()
+    {
+        return $this->installer_nickname;
+    }
 
-	public function setInstallerNickname($value)
-	{
-		self::validateStringSize($value, 32);
-		$this->installer_nickname = $value === null ? null : (string)$value;
-	}
+    public function setInstallerNickname($value)
+    {
+        self::validateStringSize($value, 32);
+        $this->installer_nickname = $value === null ? null : (string) $value;
+    }
 
-	public function getInstallerPassword()
-	{
-		return $this->installer_password;
-	}
+    public function getInstallerPassword()
+    {
+        return $this->installer_password;
+    }
 
-	public function setInstallerPassword($value)
-	{
-		self::validateStringSize($value, 60);
-		$this->installer_password = $value === null ? null : (string)$value;
-	}
+    public function setInstallerPassword($value)
+    {
+        self::validateStringSize($value, 60);
+        $this->installer_password = $value === null ? null : (string) $value;
+    }
 
-	public function getInstallerName()
-	{
-		return $this->installer_name;
-	}
+    public function getInstallerName()
+    {
+        return $this->installer_name;
+    }
 
-	public function setInstallerName($value)
-	{
-		self::validateStringSize($value, 128);
-		$this->installer_name = $value === null ? null : (string)$value;
-	}
+    public function setInstallerName($value)
+    {
+        self::validateStringSize($value, 128);
+        $this->installer_name = $value === null ? null : (string) $value;
+    }
 
-	public function getCreationTime()
-	{
-		return $this->creation_time;
-	}
+    public function getCreationTime()
+    {
+        return $this->creation_time;
+    }
 
-	public function setCreationTime($value)
-	{
-		$this->creation_time = $value === null ? null : (string)$value;
-	}
+    public function setCreationTime($value)
+    {
+        $this->creation_time = $value === null ? null : (string) $value;
+    }
 
-	public function getStatus()
-	{
-		return $this->status;
-	}
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
-	public function setStatus($value)
-	{
-		$this->status = $value === null ? null : (int)$value;
-	}
+    public function setStatus($value)
+    {
+        $this->status = $value === null ? null : (int) $value;
+    }
 
-	public function entities()
-	{
-		entitiesModel::flush();
-		return entitiesModel::where("creation_installer", $this->installer_id);
-	}
+    public function entities()
+    {
+        entitiesModel::flush();
+        return entitiesModel::where("creation_installer", $this->installer_id);
+    }
 }
-?>

@@ -497,7 +497,7 @@ CREATE TABLE `login_attemps` (
   `attemp_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave primaria',
   `user_id` int(11) NOT NULL COMMENT 'ID del usuario',
   `date_time` datetime NOT NULL COMMENT 'Hora y fecha',
-  `browser_id` int(11) NOT NULL COMMENT 'ID del navegador',
+  `browser_id` int(11) DEFAULT NULL COMMENT 'ID del navegador',
   `ip_address` varchar(15) NOT NULL COMMENT 'Dirección IP',
   PRIMARY KEY (`attemp_id`),
   KEY `login_attemps_user` (`user_id`),

@@ -7,94 +7,92 @@
 
 class appLocalesModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $locale_id Llave primaria de idioma regional */
-	private $locale_id;
+    /** @var int $locale_id Llave primaria de idioma regional */
+    private $locale_id;
 
-	/** @var string $language_code Código de idioma en ISO 639-1 */
-	private $language_code;
+    /** @var string $language_code Código de idioma en ISO 639-1 */
+    private $language_code;
 
-	/** @var string $locale_code Código de idioma regional */
-	private $locale_code;
+    /** @var string $locale_code Código de idioma regional */
+    private $locale_code;
 
-	/** @var string $locale_name Nombre del idioma */
-	private $locale_name;
+    /** @var string $locale_name Nombre del idioma */
+    private $locale_name;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "app_locales";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "app_locales";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "locale_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "locale_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = false;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = false;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+        }
+    }
 
-	public function getLocaleId()
-	{
-		return $this->locale_id;
-	}
+    public function getLocaleId()
+    {
+        return $this->locale_id;
+    }
 
-	public function setLocaleId($value)
-	{
-		$this->locale_id = $value === null ? null : (int)$value;
-	}
+    public function setLocaleId($value)
+    {
+        $this->locale_id = $value === null ? null : (int) $value;
+    }
 
-	public function getLanguageCode()
-	{
-		return $this->language_code;
-	}
+    public function getLanguageCode()
+    {
+        return $this->language_code;
+    }
 
-	public function setLanguageCode($value)
-	{
-		self::validateStringSize($value, 2);
-		$this->language_code = $value === null ? null : (string)$value;
-	}
+    public function setLanguageCode($value)
+    {
+        self::validateStringSize($value, 2);
+        $this->language_code = $value === null ? null : (string) $value;
+    }
 
-	public function getLocaleCode()
-	{
-		return $this->locale_code;
-	}
+    public function getLocaleCode()
+    {
+        return $this->locale_code;
+    }
 
-	public function setLocaleCode($value)
-	{
-		self::validateStringSize($value, 5);
-		$this->locale_code = $value === null ? null : (string)$value;
-	}
+    public function setLocaleCode($value)
+    {
+        self::validateStringSize($value, 5);
+        $this->locale_code = $value === null ? null : (string) $value;
+    }
 
-	public function getLocaleName()
-	{
-		return $this->locale_name;
-	}
+    public function getLocaleName()
+    {
+        return $this->locale_name;
+    }
 
-	public function setLocaleName($value)
-	{
-		self::validateStringSize($value, 32);
-		$this->locale_name = $value === null ? null : (string)$value;
-	}
+    public function setLocaleName($value)
+    {
+        self::validateStringSize($value, 32);
+        $this->locale_name = $value === null ? null : (string) $value;
+    }
 }
-?>

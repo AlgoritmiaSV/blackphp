@@ -7,130 +7,128 @@
 
 class userLogsModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $log_id ID de la tabla */
-	private $log_id;
+    /** @var int $log_id ID de la tabla */
+    private $log_id;
 
-	/** @var int $entity_id ID de la entidad */
-	private $entity_id;
+    /** @var int $entity_id ID de la entidad */
+    private $entity_id;
 
-	/** @var int $user_id ID del usuario */
-	private $user_id;
+    /** @var int $user_id ID del usuario */
+    private $user_id;
 
-	/** @var int $element_id ID del tipo de elemento */
-	private $element_id;
+    /** @var int $element_id ID del tipo de elemento */
+    private $element_id;
 
-	/** @var int $action_id Acción realizada */
-	private $action_id;
+    /** @var int $action_id Acción realizada */
+    private $action_id;
 
-	/** @var string $date_time Hora y fecha */
-	private $date_time;
+    /** @var string $date_time Hora y fecha */
+    private $date_time;
 
-	/** @var int $element_link Enlace al elemento en cuestión */
-	private $element_link;
+    /** @var int $element_link Enlace al elemento en cuestión */
+    private $element_link;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "user_logs";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "user_logs";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "log_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "log_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = false;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = false;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+        }
+    }
 
-	public function getLogId()
-	{
-		return $this->log_id;
-	}
+    public function getLogId()
+    {
+        return $this->log_id;
+    }
 
-	public function setLogId($value)
-	{
-		$this->log_id = $value === null ? null : (int)$value;
-	}
+    public function setLogId($value)
+    {
+        $this->log_id = $value === null ? null : (int) $value;
+    }
 
-	public function getEntityId()
-	{
-		return $this->entity_id;
-	}
+    public function getEntityId()
+    {
+        return $this->entity_id;
+    }
 
-	public function setEntityId($value)
-	{
-		$this->entity_id = $value === null ? null : (int)$value;
-	}
+    public function setEntityId($value)
+    {
+        $this->entity_id = $value === null ? null : (int) $value;
+    }
 
-	public function getUserId()
-	{
-		return $this->user_id;
-	}
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
 
-	public function setUserId($value)
-	{
-		$this->user_id = $value === null ? null : (int)$value;
-	}
+    public function setUserId($value)
+    {
+        $this->user_id = $value === null ? null : (int) $value;
+    }
 
-	public function getElementId()
-	{
-		return $this->element_id;
-	}
+    public function getElementId()
+    {
+        return $this->element_id;
+    }
 
-	public function setElementId($value)
-	{
-		$this->element_id = $value === null ? null : (int)$value;
-	}
+    public function setElementId($value)
+    {
+        $this->element_id = $value === null ? null : (int) $value;
+    }
 
-	public function getActionId()
-	{
-		return $this->action_id;
-	}
+    public function getActionId()
+    {
+        return $this->action_id;
+    }
 
-	public function setActionId($value)
-	{
-		$this->action_id = $value === null ? null : (int)$value;
-	}
+    public function setActionId($value)
+    {
+        $this->action_id = $value === null ? null : (int) $value;
+    }
 
-	public function getDateTime()
-	{
-		return $this->date_time;
-	}
+    public function getDateTime()
+    {
+        return $this->date_time;
+    }
 
-	public function setDateTime($value)
-	{
-		$this->date_time = $value === null ? null : (string)$value;
-	}
+    public function setDateTime($value)
+    {
+        $this->date_time = $value === null ? null : (string) $value;
+    }
 
-	public function getElementLink()
-	{
-		return $this->element_link;
-	}
+    public function getElementLink()
+    {
+        return $this->element_link;
+    }
 
-	public function setElementLink($value)
-	{
-		$this->element_link = $value === null ? null : (int)$value;
-	}
+    public function setElementLink($value)
+    {
+        $this->element_link = $value === null ? null : (int) $value;
+    }
 }
-?>

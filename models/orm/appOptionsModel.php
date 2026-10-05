@@ -7,146 +7,144 @@
 
 class appOptionsModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $option_id Llave primaria */
-	private $option_id;
+    /** @var int $option_id Llave primaria */
+    private $option_id;
 
-	/** @var int $category_id ID de la categoría */
-	private $category_id;
+    /** @var int $category_id ID de la categoría */
+    private $category_id;
 
-	/** @var int $option_type Tipo de variable: 1: Booleana; 2: Valor */
-	private $option_type;
+    /** @var int $option_type Tipo de variable: 1: Booleana; 2: Valor */
+    private $option_type;
 
-	/** @var string $option_key Clave de la opción */
-	private $option_key;
+    /** @var string $option_key Clave de la opción */
+    private $option_key;
 
-	/** @var string $option_description Descripción de la opción */
-	private $option_description;
+    /** @var string $option_description Descripción de la opción */
+    private $option_description;
 
-	/** @var int $module_id Módulo en el que se realiza la configuración */
-	private $module_id;
+    /** @var int $module_id Módulo en el que se realiza la configuración */
+    private $module_id;
 
-	/** @var string $default_value Valor por defecto de la opción */
-	private $default_value;
+    /** @var string $default_value Valor por defecto de la opción */
+    private $default_value;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "app_options";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "app_options";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "option_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "option_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = false;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = false;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-			$this->option_type = 1;
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+            $this->option_type = 1;
+        }
+    }
 
-	public function getOptionId()
-	{
-		return $this->option_id;
-	}
+    public function getOptionId()
+    {
+        return $this->option_id;
+    }
 
-	public function setOptionId($value)
-	{
-		$this->option_id = $value === null ? null : (int)$value;
-	}
+    public function setOptionId($value)
+    {
+        $this->option_id = $value === null ? null : (int) $value;
+    }
 
-	public function getCategoryId()
-	{
-		return $this->category_id;
-	}
+    public function getCategoryId()
+    {
+        return $this->category_id;
+    }
 
-	public function setCategoryId($value)
-	{
-		$this->category_id = $value === null ? null : (int)$value;
-	}
+    public function setCategoryId($value)
+    {
+        $this->category_id = $value === null ? null : (int) $value;
+    }
 
-	public function getOptionType()
-	{
-		return $this->option_type;
-	}
+    public function getOptionType()
+    {
+        return $this->option_type;
+    }
 
-	public function setOptionType($value)
-	{
-		$this->option_type = $value === null ? null : (int)$value;
-	}
+    public function setOptionType($value)
+    {
+        $this->option_type = $value === null ? null : (int) $value;
+    }
 
-	public function getOptionKey()
-	{
-		return $this->option_key;
-	}
+    public function getOptionKey()
+    {
+        return $this->option_key;
+    }
 
-	public function setOptionKey($value)
-	{
-		self::validateStringSize($value, 32);
-		$this->option_key = $value === null ? null : (string)$value;
-	}
+    public function setOptionKey($value)
+    {
+        self::validateStringSize($value, 32);
+        $this->option_key = $value === null ? null : (string) $value;
+    }
 
-	public function getOptionDescription()
-	{
-		return $this->option_description;
-	}
+    public function getOptionDescription()
+    {
+        return $this->option_description;
+    }
 
-	public function setOptionDescription($value)
-	{
-		self::validateStringSize($value, 255);
-		$this->option_description = $value === null ? null : (string)$value;
-	}
+    public function setOptionDescription($value)
+    {
+        self::validateStringSize($value, 255);
+        $this->option_description = $value === null ? null : (string) $value;
+    }
 
-	public function getModuleId()
-	{
-		return $this->module_id;
-	}
+    public function getModuleId()
+    {
+        return $this->module_id;
+    }
 
-	public function setModuleId($value)
-	{
-		$this->module_id = $value === null ? null : (int)$value;
-	}
+    public function setModuleId($value)
+    {
+        $this->module_id = $value === null ? null : (int) $value;
+    }
 
-	public function getDefaultValue()
-	{
-		return $this->default_value;
-	}
+    public function getDefaultValue()
+    {
+        return $this->default_value;
+    }
 
-	public function setDefaultValue($value)
-	{
-		self::validateStringSize($value, 255);
-		$this->default_value = $value === null ? null : (string)$value;
-	}
+    public function setDefaultValue($value)
+    {
+        self::validateStringSize($value, 255);
+        $this->default_value = $value === null ? null : (string) $value;
+    }
 
-	public function appOptionValues()
-	{
-		appOptionValuesModel::flush();
-		return appOptionValuesModel::where("option_id", $this->option_id);
-	}
+    public function appOptionValues()
+    {
+        appOptionValuesModel::flush();
+        return appOptionValuesModel::where("option_id", $this->option_id);
+    }
 
-	public function entityOptions()
-	{
-		entityOptionsModel::flush();
-		return entityOptionsModel::where("option_id", $this->option_id);
-	}
+    public function entityOptions()
+    {
+        entityOptionsModel::flush();
+        return entityOptionsModel::where("option_id", $this->option_id);
+    }
 }
-?>

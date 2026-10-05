@@ -46,7 +46,7 @@ class ApiResponse
         string $title,
         string $message = '',
         array $errors = [],
-        int $httpCode = 400
+        int $httpCode = 200
     ): never {
         self::send([
             'success' => false,

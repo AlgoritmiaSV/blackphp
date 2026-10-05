@@ -7,132 +7,130 @@
 
 class userSessionsModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $session_id Llave primaria */
-	private $session_id;
+    /** @var int $session_id Llave primaria */
+    private $session_id;
 
-	/** @var int $user_id ID del usuario */
-	private $user_id;
+    /** @var int $user_id ID del usuario */
+    private $user_id;
 
-	/** @var int $branch_id Sucursal en la que inició sesión */
-	private $branch_id;
+    /** @var int $branch_id Sucursal en la que inició sesión */
+    private $branch_id;
 
-	/** @var string $device_code Código de dispositivo */
-	private $device_code;
+    /** @var string $device_code Código de dispositivo */
+    private $device_code;
 
-	/** @var string $ip_address Dirección IP desde donde se conecta */
-	private $ip_address;
+    /** @var string $ip_address Dirección IP desde donde se conecta */
+    private $ip_address;
 
-	/** @var int $browser_id Navegador que usa */
-	private $browser_id;
+    /** @var int $browser_id Navegador que usa */
+    private $browser_id;
 
-	/** @var string $date_time Fecha y hora */
-	private $date_time;
+    /** @var string $date_time Fecha y hora */
+    private $date_time;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "user_sessions";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "user_sessions";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "session_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "session_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = false;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = false;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+        }
+    }
 
-	public function getSessionId()
-	{
-		return $this->session_id;
-	}
+    public function getSessionId()
+    {
+        return $this->session_id;
+    }
 
-	public function setSessionId($value)
-	{
-		$this->session_id = $value === null ? null : (int)$value;
-	}
+    public function setSessionId($value)
+    {
+        $this->session_id = $value === null ? null : (int) $value;
+    }
 
-	public function getUserId()
-	{
-		return $this->user_id;
-	}
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
 
-	public function setUserId($value)
-	{
-		$this->user_id = $value === null ? null : (int)$value;
-	}
+    public function setUserId($value)
+    {
+        $this->user_id = $value === null ? null : (int) $value;
+    }
 
-	public function getBranchId()
-	{
-		return $this->branch_id;
-	}
+    public function getBranchId()
+    {
+        return $this->branch_id;
+    }
 
-	public function setBranchId($value)
-	{
-		$this->branch_id = $value === null ? null : (int)$value;
-	}
+    public function setBranchId($value)
+    {
+        $this->branch_id = $value === null ? null : (int) $value;
+    }
 
-	public function getDeviceCode()
-	{
-		return $this->device_code;
-	}
+    public function getDeviceCode()
+    {
+        return $this->device_code;
+    }
 
-	public function setDeviceCode($value)
-	{
-		self::validateStringSize($value, 36);
-		$this->device_code = $value === null ? null : (string)$value;
-	}
+    public function setDeviceCode($value)
+    {
+        self::validateStringSize($value, 36);
+        $this->device_code = $value === null ? null : (string) $value;
+    }
 
-	public function getIpAddress()
-	{
-		return $this->ip_address;
-	}
+    public function getIpAddress()
+    {
+        return $this->ip_address;
+    }
 
-	public function setIpAddress($value)
-	{
-		self::validateStringSize($value, 15);
-		$this->ip_address = $value === null ? null : (string)$value;
-	}
+    public function setIpAddress($value)
+    {
+        self::validateStringSize($value, 15);
+        $this->ip_address = $value === null ? null : (string) $value;
+    }
 
-	public function getBrowserId()
-	{
-		return $this->browser_id;
-	}
+    public function getBrowserId()
+    {
+        return $this->browser_id;
+    }
 
-	public function setBrowserId($value)
-	{
-		$this->browser_id = $value === null ? null : (int)$value;
-	}
+    public function setBrowserId($value)
+    {
+        $this->browser_id = $value === null ? null : (int) $value;
+    }
 
-	public function getDateTime()
-	{
-		return $this->date_time;
-	}
+    public function getDateTime()
+    {
+        return $this->date_time;
+    }
 
-	public function setDateTime($value)
-	{
-		$this->date_time = $value === null ? null : (string)$value;
-	}
+    public function setDateTime($value)
+    {
+        $this->date_time = $value === null ? null : (string) $value;
+    }
 }
-?>

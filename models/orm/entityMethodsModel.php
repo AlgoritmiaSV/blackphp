@@ -7,132 +7,130 @@
 
 class entityMethodsModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $entity_method_id Llave primaria */
-	private $entity_method_id;
+    /** @var int $entity_method_id Llave primaria */
+    private $entity_method_id;
 
-	/** @var int $entity_id ID de la empresa */
-	private $entity_id;
+    /** @var int $entity_id ID de la empresa */
+    private $entity_id;
 
-	/** @var int $method_id ID del método */
-	private $method_id;
+    /** @var int $method_id ID del método */
+    private $method_id;
 
-	/** @var int $method_order Orden en el que aoparecerá el método en el menú */
-	private $method_order;
+    /** @var int $method_order Orden en el que aoparecerá el método en el menú */
+    private $method_order;
 
-	/** @var string $creation_time - */
-	private $creation_time;
+    /** @var string $creation_time - */
+    private $creation_time;
 
-	/** @var string $edition_time - */
-	private $edition_time;
+    /** @var string $edition_time - */
+    private $edition_time;
 
-	/** @var int $status Estado: Ver valores en app_catalogs */
-	private $status;
+    /** @var int $status Estado: Ver valores en app_catalogs */
+    private $status;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "entity_methods";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "entity_methods";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "entity_method_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "entity_method_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = true;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = true;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-			$this->method_order = 1;
-			$this->status = 1;
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+            $this->method_order = 1;
+            $this->status = 1;
+        }
+    }
 
-	public function getEntityMethodId()
-	{
-		return $this->entity_method_id;
-	}
+    public function getEntityMethodId()
+    {
+        return $this->entity_method_id;
+    }
 
-	public function setEntityMethodId($value)
-	{
-		$this->entity_method_id = $value === null ? null : (int)$value;
-	}
+    public function setEntityMethodId($value)
+    {
+        $this->entity_method_id = $value === null ? null : (int) $value;
+    }
 
-	public function getEntityId()
-	{
-		return $this->entity_id;
-	}
+    public function getEntityId()
+    {
+        return $this->entity_id;
+    }
 
-	public function setEntityId($value)
-	{
-		$this->entity_id = $value === null ? null : (int)$value;
-	}
+    public function setEntityId($value)
+    {
+        $this->entity_id = $value === null ? null : (int) $value;
+    }
 
-	public function getMethodId()
-	{
-		return $this->method_id;
-	}
+    public function getMethodId()
+    {
+        return $this->method_id;
+    }
 
-	public function setMethodId($value)
-	{
-		$this->method_id = $value === null ? null : (int)$value;
-	}
+    public function setMethodId($value)
+    {
+        $this->method_id = $value === null ? null : (int) $value;
+    }
 
-	public function getMethodOrder()
-	{
-		return $this->method_order;
-	}
+    public function getMethodOrder()
+    {
+        return $this->method_order;
+    }
 
-	public function setMethodOrder($value)
-	{
-		$this->method_order = $value === null ? null : (int)$value;
-	}
+    public function setMethodOrder($value)
+    {
+        $this->method_order = $value === null ? null : (int) $value;
+    }
 
-	public function getCreationTime()
-	{
-		return $this->creation_time;
-	}
+    public function getCreationTime()
+    {
+        return $this->creation_time;
+    }
 
-	public function setCreationTime($value)
-	{
-		$this->creation_time = $value === null ? null : (string)$value;
-	}
+    public function setCreationTime($value)
+    {
+        $this->creation_time = $value === null ? null : (string) $value;
+    }
 
-	public function getEditionTime()
-	{
-		return $this->edition_time;
-	}
+    public function getEditionTime()
+    {
+        return $this->edition_time;
+    }
 
-	public function setEditionTime($value)
-	{
-		$this->edition_time = $value === null ? null : (string)$value;
-	}
+    public function setEditionTime($value)
+    {
+        $this->edition_time = $value === null ? null : (string) $value;
+    }
 
-	public function getStatus()
-	{
-		return $this->status;
-	}
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
-	public function setStatus($value)
-	{
-		$this->status = $value === null ? null : (int)$value;
-	}
+    public function setStatus($value)
+    {
+        $this->status = $value === null ? null : (int) $value;
+    }
 }
-?>

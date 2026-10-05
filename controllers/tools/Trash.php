@@ -111,9 +111,6 @@ trait Trash
 		usort($elements, function ($a, $b) {
 			return strcmp($a["text"], $b["text"]);
 		});
-		http::json(array(
-			"results" => $elements
-		));
+		ApiResponse::success(data: $elements);
 	}
 }
-?>

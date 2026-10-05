@@ -7,140 +7,138 @@
 
 class browsersModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $browser_id ID de la tabla */
-	private $browser_id;
+    /** @var int $browser_id ID de la tabla */
+    private $browser_id;
 
-	/** @var string $user_agent Cadena completa User Agent enviada por el navegador */
-	private $user_agent;
+    /** @var string $user_agent Cadena completa User Agent enviada por el navegador */
+    private $user_agent;
 
-	/** @var string $browser_name Nombre del navegador */
-	private $browser_name;
+    /** @var string $browser_name Nombre del navegador */
+    private $browser_name;
 
-	/** @var string $browser_version Versión del navegador */
-	private $browser_version;
+    /** @var string $browser_version Versión del navegador */
+    private $browser_version;
 
-	/** @var string $platform Sistema operativo */
-	private $platform;
+    /** @var string $platform Sistema operativo */
+    private $platform;
 
-	/** @var int $creation_user Primer usuario que lo registra */
-	private $creation_user;
+    /** @var int $creation_user Primer usuario que lo registra */
+    private $creation_user;
 
-	/** @var string $creation_time Hora y fecha de registro */
-	private $creation_time;
+    /** @var string $creation_time Hora y fecha de registro */
+    private $creation_time;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "browsers";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "browsers";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "browser_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "browser_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = false;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = false;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+        }
+    }
 
-	public function getBrowserId()
-	{
-		return $this->browser_id;
-	}
+    public function getBrowserId()
+    {
+        return $this->browser_id;
+    }
 
-	public function setBrowserId($value)
-	{
-		$this->browser_id = $value === null ? null : (int)$value;
-	}
+    public function setBrowserId($value)
+    {
+        $this->browser_id = $value === null ? null : (int) $value;
+    }
 
-	public function getUserAgent()
-	{
-		return $this->user_agent;
-	}
+    public function getUserAgent()
+    {
+        return $this->user_agent;
+    }
 
-	public function setUserAgent($value)
-	{
-		self::validateStringSize($value, 255);
-		$this->user_agent = $value === null ? null : (string)$value;
-	}
+    public function setUserAgent($value)
+    {
+        self::validateStringSize($value, 255);
+        $this->user_agent = $value === null ? null : (string) $value;
+    }
 
-	public function getBrowserName()
-	{
-		return $this->browser_name;
-	}
+    public function getBrowserName()
+    {
+        return $this->browser_name;
+    }
 
-	public function setBrowserName($value)
-	{
-		self::validateStringSize($value, 16);
-		$this->browser_name = $value === null ? null : (string)$value;
-	}
+    public function setBrowserName($value)
+    {
+        self::validateStringSize($value, 16);
+        $this->browser_name = $value === null ? null : (string) $value;
+    }
 
-	public function getBrowserVersion()
-	{
-		return $this->browser_version;
-	}
+    public function getBrowserVersion()
+    {
+        return $this->browser_version;
+    }
 
-	public function setBrowserVersion($value)
-	{
-		self::validateStringSize($value, 16);
-		$this->browser_version = $value === null ? null : (string)$value;
-	}
+    public function setBrowserVersion($value)
+    {
+        self::validateStringSize($value, 16);
+        $this->browser_version = $value === null ? null : (string) $value;
+    }
 
-	public function getPlatform()
-	{
-		return $this->platform;
-	}
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
 
-	public function setPlatform($value)
-	{
-		self::validateStringSize($value, 16);
-		$this->platform = $value === null ? null : (string)$value;
-	}
+    public function setPlatform($value)
+    {
+        self::validateStringSize($value, 16);
+        $this->platform = $value === null ? null : (string) $value;
+    }
 
-	public function getCreationUser()
-	{
-		return $this->creation_user;
-	}
+    public function getCreationUser()
+    {
+        return $this->creation_user;
+    }
 
-	public function setCreationUser($value)
-	{
-		$this->creation_user = $value === null ? null : (int)$value;
-	}
+    public function setCreationUser($value)
+    {
+        $this->creation_user = $value === null ? null : (int) $value;
+    }
 
-	public function getCreationTime()
-	{
-		return $this->creation_time;
-	}
+    public function getCreationTime()
+    {
+        return $this->creation_time;
+    }
 
-	public function setCreationTime($value)
-	{
-		$this->creation_time = $value === null ? null : (string)$value;
-	}
+    public function setCreationTime($value)
+    {
+        $this->creation_time = $value === null ? null : (string) $value;
+    }
 
-	public function userSessions()
-	{
-		userSessionsModel::flush();
-		return userSessionsModel::where("browser_id", $this->browser_id);
-	}
+    public function userSessions()
+    {
+        userSessionsModel::flush();
+        return userSessionsModel::where("browser_id", $this->browser_id);
+    }
 }
-?>

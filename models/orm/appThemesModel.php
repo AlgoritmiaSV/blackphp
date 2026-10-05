@@ -7,86 +7,84 @@
 
 class appThemesModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $theme_id ID de la tabla */
-	private $theme_id;
+    /** @var int $theme_id ID de la tabla */
+    private $theme_id;
 
-	/** @var string $theme_name Nombre del tema */
-	private $theme_name;
+    /** @var string $theme_name Nombre del tema */
+    private $theme_name;
 
-	/** @var string $theme_url Nombre de la carpeta pública */
-	private $theme_url;
+    /** @var string $theme_url Nombre de la carpeta pública */
+    private $theme_url;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "app_themes";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "app_themes";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "theme_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "theme_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = false;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = false;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+        }
+    }
 
-	public function getThemeId()
-	{
-		return $this->theme_id;
-	}
+    public function getThemeId()
+    {
+        return $this->theme_id;
+    }
 
-	public function setThemeId($value)
-	{
-		$this->theme_id = $value === null ? null : (int)$value;
-	}
+    public function setThemeId($value)
+    {
+        $this->theme_id = $value === null ? null : (int) $value;
+    }
 
-	public function getThemeName()
-	{
-		return $this->theme_name;
-	}
+    public function getThemeName()
+    {
+        return $this->theme_name;
+    }
 
-	public function setThemeName($value)
-	{
-		self::validateStringSize($value, 32);
-		$this->theme_name = $value === null ? null : (string)$value;
-	}
+    public function setThemeName($value)
+    {
+        self::validateStringSize($value, 32);
+        $this->theme_name = $value === null ? null : (string) $value;
+    }
 
-	public function getThemeUrl()
-	{
-		return $this->theme_url;
-	}
+    public function getThemeUrl()
+    {
+        return $this->theme_url;
+    }
 
-	public function setThemeUrl($value)
-	{
-		self::validateStringSize($value, 16);
-		$this->theme_url = $value === null ? null : (string)$value;
-	}
+    public function setThemeUrl($value)
+    {
+        self::validateStringSize($value, 16);
+        $this->theme_url = $value === null ? null : (string) $value;
+    }
 
-	public function users()
-	{
-		usersModel::flush();
-		return usersModel::where("theme_id", $this->theme_id);
-	}
+    public function users()
+    {
+        usersModel::flush();
+        return usersModel::where("theme_id", $this->theme_id);
+    }
 }
-?>

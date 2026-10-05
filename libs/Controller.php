@@ -226,13 +226,11 @@ class Controller
 	protected function maintenance($type = 'html')
 	{
 		if ($type == 'json') {
-			http::json([
-				"success" => false,
-				"error" => true,
-				"message" => _("System under maintenance"),
-				"title" => "Error",
-				"theme" => "red"
-			]);
+			ApiResponse::error(
+				code: "SYSTEM_UNDER_MAINTENANCE",
+				title: _("Error"),
+				message: _("System under maintenance")
+			);
 		} elseif ($type == 'internal') {
 			$this->view->render("main/maintenance");
 		} else {
@@ -264,13 +262,11 @@ class Controller
 					->get();
 				if (empty($perms->getRoleModuleId())) {
 					if ($type == 'json') {
-						http::json([
-							"success" => false,
-							"error" => true,
-							"message" => _("You do not have permissions to perform this operation"),
-							"title" => "Error",
-							"theme" => "red"
-						]);
+						ApiResponse::error(
+							code: "INSUFFICIENT_PERMISSIONS",
+							title: _("Error"),
+							message: _("You do not have permissions to perform this operation")
+						);
 					} else {
 						$this->view->data["title"] = _("Not authorized");
 						$this->view->standard_error();
@@ -284,13 +280,11 @@ class Controller
 			return;
 		}
 		if ($type == 'json') {
-			http::json([
-				"success" => false,
-				"error" => true,
-				"message" => _("You are not logged in"),
-				"title" => "Error",
-				"theme" => "red"
-			]);
+			ApiResponse::error(
+				code: "AUTH_REQUIRED",
+				title: _("Error"),
+				message: _("You are not logged in")
+			);
 		} elseif ($type == 'internal') {
 			$this->view->render("main/error");
 		} else {
@@ -405,27 +399,6 @@ class Controller
 	}
 
 	/**
-	 * Imprimir un array en formato JSON
-	 * 
-	 * AVISO:
-	 * @deprecated 2.0.873 Este método se eliminará en las versiones siguientes. Use http::json
-	 * 
-	 * Convierte todos los valores nulos a cadenas vacías, y luego, imprime el resultado en formato
-	 * JSON
-	 * @param array $data Arreglo de datos a imprimir
-	 * 
-	 * @return void
-	 */
-	protected function json($data)
-	{
-		array_walk_recursive($data, function (&$item) {
-			$item = $item === null ? "" : $item;
-		});
-		header('Content-type: application/json');
-		echo json_encode($data);
-	}
-
-	/**
 	 * Comprobar permisos
 	 * 
 	 * Comprueba si un usuario tiene permisos para el método solicitado
@@ -439,13 +412,11 @@ class Controller
 		$permissions = Session::get("permissions");
 		if ($permissions == null) {
 			if ($response == 'json') {
-				http::json(array(
-					"success" => false,
-					"error" => true,
-					"message" => _("You are not logged in"),
-					"title" => "Error",
-					"theme" => "red"
-				));
+				ApiResponse::error(
+					code: "AUTH_REQUIRED",
+					title: _("Error"),
+					message: _("You are not logged in")
+				);
 			} elseif ($response == 'embedded') {
 				$this->view->render("main/error");
 			} else {
@@ -462,13 +433,11 @@ class Controller
 			exit();
 		} elseif (!isset($permissions[$element]) || ($actions[$action] & $permissions[$element]) == 0) {
 			if ($response == "json") {
-				http::json(array(
-					"success" => false,
-					"error" => true,
-					"message" => _("You do not have permissions to perform this operation"),
-					"title" => "Error",
-					"theme" => "red"
-				));
+				ApiResponse::error(
+					code: "INSUFFICIENT_PERMISSIONS",
+					title: _("Error"),
+					message: _("You do not have permissions to perform this operation")
+				);
 			} elseif ($response == "embedded") {
 				$this->view->render("main/forbidden");
 			} else {
@@ -497,4 +466,3 @@ class Controller
 		$this->view->render("main");
 	}
 }
-?>

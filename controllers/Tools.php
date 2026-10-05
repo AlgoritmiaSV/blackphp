@@ -59,7 +59,6 @@ class Tools extends Controller
 
 	public function load_form_data()
 	{
-		http::json([]);
+		ApiResponse::success();
 	}
 }
-?>

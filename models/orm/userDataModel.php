@@ -7,270 +7,268 @@
 
 class userDataModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $user_id ID de la tabla */
-	private $user_id;
+    /** @var int $user_id ID de la tabla */
+    private $user_id;
 
-	/** @var int $entity_id ID de la empresa */
-	private $entity_id;
+    /** @var int $entity_id ID de la empresa */
+    private $entity_id;
 
-	/** @var string $user_name Nombre completo del usuario */
-	private $user_name;
+    /** @var string $user_name Nombre completo del usuario */
+    private $user_name;
 
-	/** @var string $nickname Usuario para inicio de sesión */
-	private $nickname;
+    /** @var string $nickname Usuario para inicio de sesión */
+    private $nickname;
 
-	/** @var string $email Correo electrónico */
-	private $email;
+    /** @var string $email Correo electrónico */
+    private $email;
 
-	/** @var string $password Contraseña */
-	private $password;
+    /** @var string $password Contraseña */
+    private $password;
 
-	/** @var string $password_hash Hash de la contraseña */
-	private $password_hash;
+    /** @var string $password_hash Hash de la contraseña */
+    private $password_hash;
 
-	/** @var int $theme_id Tema de visualización del usuario */
-	private $theme_id;
+    /** @var int $theme_id Tema de visualización del usuario */
+    private $theme_id;
 
-	/** @var string $locale Idioma del usuario */
-	private $locale;
+    /** @var string $locale Idioma del usuario */
+    private $locale;
 
-	/** @var int $role_id ID del rol */
-	private $role_id;
+    /** @var int $role_id ID del rol */
+    private $role_id;
 
-	/** @var int $creation_user - */
-	private $creation_user;
+    /** @var int $creation_user - */
+    private $creation_user;
 
-	/** @var string $creation_time - */
-	private $creation_time;
+    /** @var string $creation_time - */
+    private $creation_time;
 
-	/** @var int $edition_user - */
-	private $edition_user;
+    /** @var int $edition_user - */
+    private $edition_user;
 
-	/** @var string $edition_time - */
-	private $edition_time;
+    /** @var string $edition_time - */
+    private $edition_time;
 
-	/** @var int $status Estado: Ver valores en app_catalogs */
-	private $status;
+    /** @var int $status Estado: Ver valores en app_catalogs */
+    private $status;
 
-	/** @var string $last_login Fecha y hora */
-	private $last_login;
+    /** @var string $last_login Fecha y hora */
+    private $last_login;
 
-	/** @var string $role_name Nombre del rol */
-	private $role_name;
+    /** @var string $role_name Nombre del rol */
+    private $role_name;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "user_data";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "user_data";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "VIEW";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "VIEW";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = true;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = true;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = true;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = true;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-			$this->user_id = 0;
-			$this->theme_id = 1;
-			$this->status = 1;
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+            $this->user_id = 0;
+            $this->theme_id = 1;
+            $this->status = 1;
+        }
+    }
 
-	public function getUserId()
-	{
-		return $this->user_id;
-	}
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
 
-	public function setUserId($value)
-	{
-		$this->user_id = $value === null ? null : (int)$value;
-	}
+    public function setUserId($value)
+    {
+        $this->user_id = $value === null ? null : (int) $value;
+    }
 
-	public function getEntityId()
-	{
-		return $this->entity_id;
-	}
+    public function getEntityId()
+    {
+        return $this->entity_id;
+    }
 
-	public function setEntityId($value)
-	{
-		$this->entity_id = $value === null ? null : (int)$value;
-	}
+    public function setEntityId($value)
+    {
+        $this->entity_id = $value === null ? null : (int) $value;
+    }
 
-	public function getUserName()
-	{
-		return $this->user_name;
-	}
+    public function getUserName()
+    {
+        return $this->user_name;
+    }
 
-	public function setUserName($value)
-	{
-		self::validateStringSize($value, 64);
-		$this->user_name = $value === null ? null : (string)$value;
-	}
+    public function setUserName($value)
+    {
+        self::validateStringSize($value, 64);
+        $this->user_name = $value === null ? null : (string) $value;
+    }
 
-	public function getNickname()
-	{
-		return $this->nickname;
-	}
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
 
-	public function setNickname($value)
-	{
-		self::validateStringSize($value, 32);
-		$this->nickname = $value === null ? null : (string)$value;
-	}
+    public function setNickname($value)
+    {
+        self::validateStringSize($value, 32);
+        $this->nickname = $value === null ? null : (string) $value;
+    }
 
-	public function getEmail()
-	{
-		return $this->email;
-	}
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
-	public function setEmail($value)
-	{
-		self::validateStringSize($value, 64);
-		$this->email = $value === null ? null : (string)$value;
-	}
+    public function setEmail($value)
+    {
+        self::validateStringSize($value, 64);
+        $this->email = $value === null ? null : (string) $value;
+    }
 
-	public function getPassword()
-	{
-		return $this->password;
-	}
+    public function getPassword()
+    {
+        return $this->password;
+    }
 
-	public function setPassword($value)
-	{
-		self::validateStringSize($value, 32);
-		$this->password = $value === null ? null : (string)$value;
-	}
+    public function setPassword($value)
+    {
+        self::validateStringSize($value, 32);
+        $this->password = $value === null ? null : (string) $value;
+    }
 
-	public function getPasswordHash()
-	{
-		return $this->password_hash;
-	}
+    public function getPasswordHash()
+    {
+        return $this->password_hash;
+    }
 
-	public function setPasswordHash($value)
-	{
-		self::validateStringSize($value, 60);
-		$this->password_hash = $value === null ? null : (string)$value;
-	}
+    public function setPasswordHash($value)
+    {
+        self::validateStringSize($value, 60);
+        $this->password_hash = $value === null ? null : (string) $value;
+    }
 
-	public function getThemeId()
-	{
-		return $this->theme_id;
-	}
+    public function getThemeId()
+    {
+        return $this->theme_id;
+    }
 
-	public function setThemeId($value)
-	{
-		$this->theme_id = $value === null ? null : (int)$value;
-	}
+    public function setThemeId($value)
+    {
+        $this->theme_id = $value === null ? null : (int) $value;
+    }
 
-	public function getLocale()
-	{
-		return $this->locale;
-	}
+    public function getLocale()
+    {
+        return $this->locale;
+    }
 
-	public function setLocale($value)
-	{
-		self::validateStringSize($value, 5);
-		$this->locale = $value === null ? null : (string)$value;
-	}
+    public function setLocale($value)
+    {
+        self::validateStringSize($value, 5);
+        $this->locale = $value === null ? null : (string) $value;
+    }
 
-	public function getRoleId()
-	{
-		return $this->role_id;
-	}
+    public function getRoleId()
+    {
+        return $this->role_id;
+    }
 
-	public function setRoleId($value)
-	{
-		$this->role_id = $value === null ? null : (int)$value;
-	}
+    public function setRoleId($value)
+    {
+        $this->role_id = $value === null ? null : (int) $value;
+    }
 
-	public function getCreationUser()
-	{
-		return $this->creation_user;
-	}
+    public function getCreationUser()
+    {
+        return $this->creation_user;
+    }
 
-	public function setCreationUser($value)
-	{
-		$this->creation_user = $value === null ? null : (int)$value;
-	}
+    public function setCreationUser($value)
+    {
+        $this->creation_user = $value === null ? null : (int) $value;
+    }
 
-	public function getCreationTime()
-	{
-		return $this->creation_time;
-	}
+    public function getCreationTime()
+    {
+        return $this->creation_time;
+    }
 
-	public function setCreationTime($value)
-	{
-		$this->creation_time = $value === null ? null : (string)$value;
-	}
+    public function setCreationTime($value)
+    {
+        $this->creation_time = $value === null ? null : (string) $value;
+    }
 
-	public function getEditionUser()
-	{
-		return $this->edition_user;
-	}
+    public function getEditionUser()
+    {
+        return $this->edition_user;
+    }
 
-	public function setEditionUser($value)
-	{
-		$this->edition_user = $value === null ? null : (int)$value;
-	}
+    public function setEditionUser($value)
+    {
+        $this->edition_user = $value === null ? null : (int) $value;
+    }
 
-	public function getEditionTime()
-	{
-		return $this->edition_time;
-	}
+    public function getEditionTime()
+    {
+        return $this->edition_time;
+    }
 
-	public function setEditionTime($value)
-	{
-		$this->edition_time = $value === null ? null : (string)$value;
-	}
+    public function setEditionTime($value)
+    {
+        $this->edition_time = $value === null ? null : (string) $value;
+    }
 
-	public function getStatus()
-	{
-		return $this->status;
-	}
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
-	public function setStatus($value)
-	{
-		$this->status = $value === null ? null : (int)$value;
-	}
+    public function setStatus($value)
+    {
+        $this->status = $value === null ? null : (int) $value;
+    }
 
-	public function getLastLogin()
-	{
-		return $this->last_login;
-	}
+    public function getLastLogin()
+    {
+        return $this->last_login;
+    }
 
-	public function setLastLogin($value)
-	{
-		$this->last_login = $value === null ? null : (string)$value;
-	}
+    public function setLastLogin($value)
+    {
+        $this->last_login = $value === null ? null : (string) $value;
+    }
 
-	public function getRoleName()
-	{
-		return $this->role_name;
-	}
+    public function getRoleName()
+    {
+        return $this->role_name;
+    }
 
-	public function setRoleName($value)
-	{
-		self::validateStringSize($value, 64);
-		$this->role_name = $value === null ? null : (string)$value;
-	}
+    public function setRoleName($value)
+    {
+        self::validateStringSize($value, 64);
+        $this->role_name = $value === null ? null : (string) $value;
+    }
 }
-?>

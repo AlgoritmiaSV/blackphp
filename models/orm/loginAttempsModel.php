@@ -7,105 +7,103 @@
 
 class loginAttempsModel
 {
-	use ORM;
+    use ORM;
 
-	/** @var int $attemp_id Llave primaria */
-	private $attemp_id;
+    /** @var int $attemp_id Llave primaria */
+    private $attemp_id;
 
-	/** @var int $user_id ID del usuario */
-	private $user_id;
+    /** @var int $user_id ID del usuario */
+    private $user_id;
 
-	/** @var string $date_time Hora y fecha */
-	private $date_time;
+    /** @var string $date_time Hora y fecha */
+    private $date_time;
 
-	/** @var int $browser_id ID del navegador */
-	private $browser_id;
+    /** @var int $browser_id ID del navegador */
+    private $browser_id;
 
-	/** @var string $ip_address Dirección IP */
-	private $ip_address;
+    /** @var string $ip_address Dirección IP */
+    private $ip_address;
 
 
-	/** @var string $_table_name Nombre de la tabla */
-	private static $_table_name = "login_attemps";
+    /** @var string $_table_name Nombre de la tabla */
+    private static $_table_name = "login_attemps";
 
-	/** @var string $_table_type Tipo de tabla */
-	private static $_table_type = "BASE TABLE";
+    /** @var string $_table_type Tipo de tabla */
+    private static $_table_type = "BASE TABLE";
 
-	/** @var string $_primary_key Llave primaria */
-	private static $_primary_key = "attemp_id";
+    /** @var string $_primary_key Llave primaria */
+    private static $_primary_key = "attemp_id";
 
-	/** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
-	private static $_timestamps = false;
+    /** @var bool $_timestamps La tabla usa marcas de tiempo para la inserción y edición de datos */
+    private static $_timestamps = false;
 
-	/** @var bool $_soft_delete La tabla soporta borrado lógico */
-	private static $_soft_delete = false;
+    /** @var bool $_soft_delete La tabla soporta borrado lógico */
+    private static $_soft_delete = false;
 
-	/** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
-	private static $_deleted_status = 0;
+    /** @var int|null $_deleted_status Valor a asignar en caso de borrado lógico. */
+    private static $_deleted_status = 0;
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * Se inicializan las propiedades de la clase.
-	 * @param bool $default Determina si se utilizan, o no, los valores por defecto
-	 * definidos en la base de datos.
-	 **/
-	public function __construct($default = true)
-	{
-		if($default)
-		{
-		}
-	}
+    /**
+     * Constructor de la clase
+     * 
+     * Se inicializan las propiedades de la clase.
+     * @param bool $default Determina si se utilizan, o no, los valores por defecto
+     * definidos en la base de datos.
+     **/
+    public function __construct($default = true)
+    {
+        if ($default) {
+        }
+    }
 
-	public function getAttempId()
-	{
-		return $this->attemp_id;
-	}
+    public function getAttempId()
+    {
+        return $this->attemp_id;
+    }
 
-	public function setAttempId($value)
-	{
-		$this->attemp_id = $value === null ? null : (int)$value;
-	}
+    public function setAttempId($value)
+    {
+        $this->attemp_id = $value === null ? null : (int) $value;
+    }
 
-	public function getUserId()
-	{
-		return $this->user_id;
-	}
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
 
-	public function setUserId($value)
-	{
-		$this->user_id = $value === null ? null : (int)$value;
-	}
+    public function setUserId($value)
+    {
+        $this->user_id = $value === null ? null : (int) $value;
+    }
 
-	public function getDateTime()
-	{
-		return $this->date_time;
-	}
+    public function getDateTime()
+    {
+        return $this->date_time;
+    }
 
-	public function setDateTime($value)
-	{
-		$this->date_time = $value === null ? null : (string)$value;
-	}
+    public function setDateTime($value)
+    {
+        $this->date_time = $value === null ? null : (string) $value;
+    }
 
-	public function getBrowserId()
-	{
-		return $this->browser_id;
-	}
+    public function getBrowserId()
+    {
+        return $this->browser_id;
+    }
 
-	public function setBrowserId($value)
-	{
-		$this->browser_id = $value === null ? null : (int)$value;
-	}
+    public function setBrowserId($value)
+    {
+        $this->browser_id = $value === null ? null : (int) $value;
+    }
 
-	public function getIpAddress()
-	{
-		return $this->ip_address;
-	}
+    public function getIpAddress()
+    {
+        return $this->ip_address;
+    }
 
-	public function setIpAddress($value)
-	{
-		self::validateStringSize($value, 15);
-		$this->ip_address = $value === null ? null : (string)$value;
-	}
+    public function setIpAddress($value)
+    {
+        self::validateStringSize($value, 15);
+        $this->ip_address = $value === null ? null : (string) $value;
+    }
 }
-?>

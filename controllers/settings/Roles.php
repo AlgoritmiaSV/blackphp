@@ -1,435 +1,435 @@
 <?php
 trait Roles
 {
-	/**
-	 * Roles
-	 * 
-	 * Muestra una lista de roles del sistema. Los roles sirven para gestionar los permisos de los usuarios.
-	 * 
-	 * @return void
-	 */
-	public function Roles()
-	{
-		$this->check_permissions("read", "roles");
-		$this->view->data["title"] = _("Roles");
-		$this->view->standard_list();
-		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$this->view->data["print_title"] = _("Roles");
-		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
-		$this->view->data["content"] = $this->view->render("settings/role_list", true);
-		$this->view->render('main');
-	}
+    /**
+     * Roles
+     * 
+     * Muestra una lista de roles del sistema. Los roles sirven para gestionar los permisos de los usuarios.
+     * 
+     * @return void
+     */
+    public function Roles()
+    {
+        $this->check_permissions("read", "roles");
+        $this->view->data["title"] = _("Roles");
+        $this->view->standard_list();
+        $this->view->data["nav"] = $this->view->render("main/nav", true);
+        $this->view->data["print_title"] = _("Roles");
+        $this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
+        $this->view->data["content"] = $this->view->render("settings/role_list", true);
+        $this->view->render('main');
+    }
 
-	/**
-	 * Nuevo rol
-	 * 
-	 * Muestra un formulario que permite registrar nuevos roles en el sistema, y asignarles
-	 * permisos a diferentes módulos. Un usuario autorizado para registrar roles, sólo puede
-	 * otorgar permisos que le han sido otorgados.
-	 * 
-	 * @return void
-	 */
-	public function NewRole()
-	{
-		$this->check_permissions("create", "roles");
-		$this->view->data["title"] = _("New role");
-		$this->view->standard_form();
-		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$this->view->restrict[] = "edition";
+    /**
+     * Nuevo rol
+     * 
+     * Muestra un formulario que permite registrar nuevos roles en el sistema, y asignarles
+     * permisos a diferentes módulos. Un usuario autorizado para registrar roles, sólo puede
+     * otorgar permisos que le han sido otorgados.
+     * 
+     * @return void
+     */
+    public function NewRole()
+    {
+        $this->check_permissions("create", "roles");
+        $this->view->data["title"] = _("New role");
+        $this->view->standard_form();
+        $this->view->data["nav"] = $this->view->render("main/nav", true);
+        $this->view->restrict[] = "edition";
 
-		$role_elements = "";
-		$modules = appModulesModel::getAll();
-		foreach ($modules as $module) {
-			$elements = appElementsModel::where("module_id", $module->getModuleId())
-				->getAllArray();
-			foreach ($elements as &$element) {
-				$element["element_name"] = _($element["element_name"]);
-				$permissions = Session::get("permissions/" . $element["element_key"]);
-				if ((8 & intval($permissions)) == 0) {
-					$element["readable"] = "disabled";
-				}
-				if ($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0) {
-					$element["creatable"] = "disabled";
-				}
-				if ($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0) {
-					$element["updatable"] = "disabled";
-				}
-				if ($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0) {
-					$element["deletable"] = "disabled";
-				}
-			}
-			unset($element);
-			$this->view->data["module_id"] = $module->getModuleId();
-			$this->view->data["module_name"] = _($module->getModuleName());
-			$this->view->data["elements"] = $elements;
-			$role_elements .= $this->view->render("settings/role_elements", true);
-		}
-		$this->view->data["role_elements"] = $role_elements;
+        $role_elements = "";
+        $modules = appModulesModel::getAll();
+        foreach ($modules as $module) {
+            $elements = appElementsModel::where("module_id", $module->getModuleId())
+                ->getAllArray();
+            foreach ($elements as &$element) {
+                $element["element_name"] = _($element["element_name"]);
+                $permissions = Session::get("permissions/" . $element["element_key"]);
+                if ((8 & intval($permissions)) == 0) {
+                    $element["readable"] = "disabled";
+                }
+                if ($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0) {
+                    $element["creatable"] = "disabled";
+                }
+                if ($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0) {
+                    $element["updatable"] = "disabled";
+                }
+                if ($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0) {
+                    $element["deletable"] = "disabled";
+                }
+            }
+            unset($element);
+            $this->view->data["module_id"] = $module->getModuleId();
+            $this->view->data["module_name"] = _($module->getModuleName());
+            $this->view->data["elements"] = $elements;
+            $role_elements .= $this->view->render("settings/role_elements", true);
+        }
+        $this->view->data["role_elements"] = $role_elements;
 
-		$this->view->data["content"] = $this->view->render("settings/role_form", true);
-		$this->view->render('main');
-	}
+        $this->view->data["content"] = $this->view->render("settings/role_form", true);
+        $this->view->render('main');
+    }
 
-	/**
-	 * Editar rol
-	 * 
-	 * Permite editar los datos y los permisos para un rol específico.
-	 * 
-	 * @return void
-	 */
-	public function EditRole($role_id)
-	{
-		$this->check_permissions("update", "roles");
-		$this->view->data["title"] = _("Edit role");
-		$this->view->standard_form();
-		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$this->view->restrict[] = "creation";
+    /**
+     * Editar rol
+     * 
+     * Permite editar los datos y los permisos para un rol específico.
+     * 
+     * @return void
+     */
+    public function EditRole($role_id)
+    {
+        $this->check_permissions("update", "roles");
+        $this->view->data["title"] = _("Edit role");
+        $this->view->standard_form();
+        $this->view->data["nav"] = $this->view->render("main/nav", true);
+        $this->view->restrict[] = "creation";
 
-		$role_elements = "";
-		$modules = appModulesModel::getAll();
-		foreach ($modules as $module) {
-			$elements = appElementsModel::where("module_id", $module->getModuleId())->getAllArray();
-			foreach ($elements as &$element) {
-				$element["element_name"] = _($element["element_name"]);
-				$permissions = Session::get("permissions/" . $element["element_key"]);
-				if ((8 & intval($permissions)) == 0) {
-					$element["readable"] = "disabled";
-				}
-				if ($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0) {
-					$element["creatable"] = "disabled";
-				}
-				if ($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0) {
-					$element["updatable"] = "disabled";
-				}
-				if ($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0) {
-					$element["deletable"] = "disabled";
-				}
-			}
-			unset($element);
-			$this->view->data["module_id"] = $module->getModuleId();
-			$this->view->data["module_name"] = _($module->getModuleName());
-			$this->view->data["elements"] = $elements;
-			$role_elements .= $this->view->render("settings/role_elements", true);
-		}
-		$this->view->data["role_elements"] = $role_elements;
+        $role_elements = "";
+        $modules = appModulesModel::getAll();
+        foreach ($modules as $module) {
+            $elements = appElementsModel::where("module_id", $module->getModuleId())->getAllArray();
+            foreach ($elements as &$element) {
+                $element["element_name"] = _($element["element_name"]);
+                $permissions = Session::get("permissions/" . $element["element_key"]);
+                if ((8 & intval($permissions)) == 0) {
+                    $element["readable"] = "disabled";
+                }
+                if ($element["is_creatable"] == 0 || (4 & intval($permissions)) == 0) {
+                    $element["creatable"] = "disabled";
+                }
+                if ($element["is_updatable"] == 0 || (2 & intval($permissions)) == 0) {
+                    $element["updatable"] = "disabled";
+                }
+                if ($element["is_deletable"] == 0 || (1 & intval($permissions)) == 0) {
+                    $element["deletable"] = "disabled";
+                }
+            }
+            unset($element);
+            $this->view->data["module_id"] = $module->getModuleId();
+            $this->view->data["module_name"] = _($module->getModuleName());
+            $this->view->data["elements"] = $elements;
+            $role_elements .= $this->view->render("settings/role_elements", true);
+        }
+        $this->view->data["role_elements"] = $role_elements;
 
-		$this->view->data["content"] = $this->view->render("settings/role_form", true);
-		$this->view->render('main');
-	}
+        $this->view->data["content"] = $this->view->render("settings/role_form", true);
+        $this->view->render('main');
+    }
 
-	/**
-	 * Editar menú del rol
-	 * 
-	 * Muestra la lista de módulos y métodos asignables al menú correspondiente al rol
-	 * que se está modificando.
-	 * @param int $role_id ID del rol a modificar
-	 * 
-	 * @return void
-	 */
-	public function EditRoleMenu($role_id)
-	{
-		$this->check_permissions("update", "roles");
-		$this->view->data["title"] = _("Menu");
-		$this->view->standard_form();
-		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$modules = availableModulesModel::where("role_id", Session::get("role_id"))->orderBy("module_order")->getAllArray();
-		$this->view->data["modules"] = "";
-		foreach ($modules as $module) {
-			foreach ($module as $key => $item) {
-				$this->view->data[$key] = $item;
-			}
-			$this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
-				->where("module_id", $module["module_id"])
-				->orderBy("method_order")->getAllArray();
-			$this->view->data["modules"] .= $this->view->render("modules", true);
-		}
-		$this->view->data["content"] = $this->view->render("settings/role_menu_form", true);
-		$this->view->render('main');
-	}
+    /**
+     * Editar menú del rol
+     * 
+     * Muestra la lista de módulos y métodos asignables al menú correspondiente al rol
+     * que se está modificando.
+     * @param int $role_id ID del rol a modificar
+     * 
+     * @return void
+     */
+    public function EditRoleMenu($role_id)
+    {
+        $this->check_permissions("update", "roles");
+        $this->view->data["title"] = _("Menu");
+        $this->view->standard_form();
+        $this->view->data["nav"] = $this->view->render("main/nav", true);
+        $modules = availableModulesModel::where("role_id", Session::get("role_id"))->orderBy("module_order")->getAllArray();
+        $this->view->data["modules"] = "";
+        foreach ($modules as $module) {
+            foreach ($module as $key => $item) {
+                $this->view->data[$key] = $item;
+            }
+            $this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
+                ->where("module_id", $module["module_id"])
+                ->orderBy("method_order")->getAllArray();
+            $this->view->data["modules"] .= $this->view->render("modules", true);
+        }
+        $this->view->data["content"] = $this->view->render("settings/role_menu_form", true);
+        $this->view->render('main');
+    }
 
-	/**
-	 * Detalles del rol
-	 * 
-	 * Muestra una hoja con los datos del rol y sus respectivos permisos.
-	 * @param int $role_id ID del usuario a consultar
-	 * 
-	 * @return void
-	 */
-	public function RoleDetails($role_id)
-	{
-		$this->check_permissions("read", "roles");
-		$this->view->data["title"] = _("Role details");
-		$this->view->standard_details();
-		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$this->view->data["content_id"] = "role_details";
-		$this->view->data["content"] = $this->view->render("content_loader", true);
-		$this->view->render('main');
-	}
+    /**
+     * Detalles del rol
+     * 
+     * Muestra una hoja con los datos del rol y sus respectivos permisos.
+     * @param int $role_id ID del usuario a consultar
+     * 
+     * @return void
+     */
+    public function RoleDetails($role_id)
+    {
+        $this->check_permissions("read", "roles");
+        $this->view->data["title"] = _("Role details");
+        $this->view->standard_details();
+        $this->view->data["nav"] = $this->view->render("main/nav", true);
+        $this->view->data["content_id"] = "role_details";
+        $this->view->data["content"] = $this->view->render("content_loader", true);
+        $this->view->render('main');
+    }
 
-	/**
-	 * Cargar tabla de roles
-	 * 
-	 * Devuelve, en formato JSON o en un archivo Excel, la lista de roles.
-	 * @param string $response El modo de respuesta (JSON o Excel)
-	 * 
-	 * @return void
-	 */
-	public function role_table_loader(string $response = "JSON")
-	{
-		$this->check_permissions("read", "roles");
-		$roles = rolesModel::getAllArray();
-		foreach ($roles as &$role) {
-			$role["users"] = usersModel::where("role_id", $role["role_id"])
-				->count();
-		}
-		unset($role);
-		$data = [
-			"content" => $roles,
-			"foot" => [
-				"totalRecords" => count($roles)
-			]
-		];
-		if ($response == "Excel") {
-			excel::create_from_table([
-				"title" => _("Roles"),
-				"headers" => [_("Role name"), _("Users")],
-				"fields" => ["role_name", "users"],
-				"content" => $data
-			], "Roles_" . Date("YmdHis") . ".xlsx");
-		} else {
-			ApiResponse::success(data: $data);
-		}
-	}
+    /**
+     * Cargar tabla de roles
+     * 
+     * Devuelve, en formato JSON o en un archivo Excel, la lista de roles.
+     * @param string $response El modo de respuesta (JSON o Excel)
+     * 
+     * @return void
+     */
+    public function role_table_loader(string $response = "JSON")
+    {
+        $this->check_permissions("read", "roles");
+        $roles = rolesModel::getAllArray();
+        foreach ($roles as &$role) {
+            $role["users"] = usersModel::where("role_id", $role["role_id"])
+                ->count();
+        }
+        unset($role);
+        $data = [
+            "content" => $roles,
+            "foot" => [
+                "totalRecords" => count($roles)
+            ]
+        ];
+        if ($response == "Excel") {
+            excel::create_from_table([
+                "title" => _("Roles"),
+                "headers" => [_("Role name"), _("Users")],
+                "fields" => ["role_name", "users"],
+                "content" => $data
+            ], "Roles_" . Date("YmdHis") . ".xlsx");
+        } else {
+            ApiResponse::success(data: $data);
+        }
+    }
 
-	/**
-	 * Carga de detalles del rol
-	 * 
-	 * Muestra una hoja con los detalles del rol. Este método puede ser invocado por a través
-	 * de RoleDetails (embedded) y directamente para ser mostrado en un jAlert (standalone); por
-	 * ejemplo, para el rol con ID 1, se podría visitar:
-	 * - Settings/RoleDetails/1/ (embedded)
-	 * - Settings/role_details_loader/1/standalone/ (standalone)
-	 * @param int $role_id ID del usuario
-	 * @param string $mode Modo en que se mostrará la vista
-	 * 
-	 * @return void
-	 */
-	public function role_details_loader($role_id = "", $mode = "embedded")
-	{
-		$this->check_permissions("read", "roles", $mode);
-		if (empty($role_id)) {
-			$role_id = $_POST["id"];
-		}
-		$role = rolesModel::find($role_id)->toArray();
-		$this->view->data = array_merge($this->view->data, $role);
+    /**
+     * Carga de detalles del rol
+     * 
+     * Muestra una hoja con los detalles del rol. Este método puede ser invocado por a través
+     * de RoleDetails (embedded) y directamente para ser mostrado en un jAlert (standalone); por
+     * ejemplo, para el rol con ID 1, se podría visitar:
+     * - Settings/RoleDetails/1/ (embedded)
+     * - Settings/role_details_loader/1/standalone/ (standalone)
+     * @param int $role_id ID del usuario
+     * @param string $mode Modo en que se mostrará la vista
+     * 
+     * @return void
+     */
+    public function role_details_loader($role_id = "", $mode = "embedded")
+    {
+        $this->check_permissions("read", "roles", $mode);
+        if (empty($role_id)) {
+            $role_id = $_POST["id"];
+        }
+        $role = rolesModel::find($role_id)->toArray();
+        $this->view->data = array_merge($this->view->data, $role);
 
-		$this->view->data["users"] = implode(", ", array_column(usersModel::where("role_id", $role_id)->getAllArray(), "user_name"));
+        $this->view->data["users"] = implode(", ", array_column(usersModel::where("role_id", $role_id)->getAllArray(), "user_name"));
 
-		if ($role["role_id"] == Session::get("role_id")) {
-			$this->view->restrict[] = "self";
-		}
+        if ($role["role_id"] == Session::get("role_id")) {
+            $this->view->restrict[] = "self";
+        }
 
-		# Permissions
-		$appModules = appModulesModel::whereIn(array_column(entityModulesModel::getAllArray(), "module_id"))->getAll();
-		$modules = "";
-		foreach ($appModules as $module) {
-			$this->view->data["module_name"] = _($module->getModuleName());
-			$permissions = appElementsModel::join("role_elements", "element_id")->where("module_id", $module->getModuleId())->where("role_id", $role_id)->getAll();
-			foreach ($permissions as &$permission) {
-				$permission["element_name"] = _($permission["element_name"]);
-				$permission["read"] = ($permission["permissions"] & 8) == 0 ? "not_permitted" : "checked";
-				$permission["create"] = ($permission["permissions"] & 4) == 0 ? "not_permitted" : "checked";
-				$permission["update"] = ($permission["permissions"] & 2) == 0 ? "not_permitted" : "checked";
-				$permission["delete"] = ($permission["permissions"] & 1) == 0 ? "not_permitted" : "checked";
-			}
-			unset($permission);
-			$this->view->data["permissions"] = $permissions;
-			$modules .= $this->view->render("settings/role_details_modules", true);
-		}
-		$this->view->data["modules"] = $modules;
+        # Permissions
+        $appModules = appModulesModel::whereIn(array_column(entityModulesModel::getAllArray(), "module_id"))->getAll();
+        $modules = "";
+        foreach ($appModules as $module) {
+            $this->view->data["module_name"] = _($module->getModuleName());
+            $permissions = appElementsModel::join("role_elements", "element_id")->where("module_id", $module->getModuleId())->where("role_id", $role_id)->getAll();
+            foreach ($permissions as &$permission) {
+                $permission["element_name"] = _($permission["element_name"]);
+                $permission["read"] = ($permission["permissions"] & 8) == 0 ? "not_permitted" : "checked";
+                $permission["create"] = ($permission["permissions"] & 4) == 0 ? "not_permitted" : "checked";
+                $permission["update"] = ($permission["permissions"] & 2) == 0 ? "not_permitted" : "checked";
+                $permission["delete"] = ($permission["permissions"] & 1) == 0 ? "not_permitted" : "checked";
+            }
+            unset($permission);
+            $this->view->data["permissions"] = $permissions;
+            $modules .= $this->view->render("settings/role_details_modules", true);
+        }
+        $this->view->data["modules"] = $modules;
 
-		$this->userActions($role);
-		$this->view->data["print_title"] = _("Role details");
-		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
-		if ($mode == "standalone") {
-			$this->view->data["title"] = _("Role details");
-			$this->view->standard_details();
-			$this->view->add("styles", "css", array(
-				'styles/standalone.css'
-			));
-			$this->view->restrict[] = "embedded";
-			$this->view->data["content"] = $this->view->render('settings/role_details', true);
-			$this->view->render('clean_main');
-		} else {
-			$this->view->render("settings/role_details");
-		}
-	}
+        $this->userActions($role);
+        $this->view->data["print_title"] = _("Role details");
+        $this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
+        if ($mode == "standalone") {
+            $this->view->data["title"] = _("Role details");
+            $this->view->standard_details();
+            $this->view->add("styles", "css", array(
+                'styles/standalone.css'
+            ));
+            $this->view->restrict[] = "embedded";
+            $this->view->data["content"] = $this->view->render('settings/role_details', true);
+            $this->view->render('clean_main');
+        } else {
+            $this->view->render("settings/role_details");
+        }
+    }
 
-	public function SaveRole()
-	{
-		$this->check_permissions(empty($_POST["role_id"]) ? "create" : "update", "roles");
+    public function SaveRole()
+    {
+        $this->check_permissions(empty($_POST["role_id"]) ? "create" : "update", "roles");
 
-		# Validando que el nombre del rol no esté vacío
-		if (empty($_POST["role_name"])) {
-			ApiResponse::error(
-				code: "REQUIRED_FIELD",
-				title: _("Error"),
-				message: _("Bad request")
-			);
-		}
+        # Validando que el nombre del rol no esté vacío
+        if (empty($_POST["role_name"])) {
+            ApiResponse::error(
+                code: "REQUIRED_FIELD",
+                title: _("Error"),
+                message: _("Bad request")
+            );
+        }
 
-		# Validando roles existentes con el mismo nombre
-		$_POST["role_name"] = trim($_POST["role_name"]);
-		$existingRoleModel = rolesModel::where("role_name", $_POST["role_name"]);
-		if (!empty($_POST["role_id"])) {
-			$existingRoleModel->where("role_id", "!=", $_POST["role_id"]);
-		}
-		$existingRole = $existingRoleModel->get();
-		if ($existingRole->exists()) {
-			ApiResponse::error(
-				code: "DUPLICATE_RECORD",
-				title: _("Error"),
-				message: _("A role with this name already exists")
-			);
-		}
+        # Validando roles existentes con el mismo nombre
+        $_POST["role_name"] = trim($_POST["role_name"]);
+        $existingRoleModel = rolesModel::where("role_name", $_POST["role_name"]);
+        if (!empty($_POST["role_id"])) {
+            $existingRoleModel->where("role_id", "!=", $_POST["role_id"]);
+        }
+        $existingRole = $existingRoleModel->get();
+        if ($existingRole->exists()) {
+            ApiResponse::error(
+                code: "DUPLICATE_RECORD",
+                title: _("Error"),
+                message: _("A role with this name already exists")
+            );
+        }
 
-		$role = rolesModel::find($_POST["role_id"]);
-		$role->set([
-			"role_name" => $_POST["role_name"]
-		])->save();
-		$elements = array();
-		foreach ($_POST["read"] as $element) {
-			$elements[$element] = 8;
-		}
-		foreach ($_POST["create"] as $element) {
-			$elements[$element] = intval($elements[$element]) + 4;
-		}
-		foreach ($_POST["update"] as $element) {
-			$elements[$element] = intval($elements[$element]) + 2;
-		}
-		foreach ($_POST["delete"] as $element) {
-			$elements[$element] = intval($elements[$element]) + 1;
-		}
-		foreach ($elements as $element_id => $permissions) {
-			$role_element = roleElementsModel::where("role_id", $role->getRoleId())
-				->where("element_id", $element_id)
-				->where("status", ">=", 0)
-				->get();
-			$role_element->set([
-				"role_id" => $role->getRoleId(),
-				"element_id" => $element_id,
-				"permissions" => $permissions,
-				"status" => 1
-			])->save();
-		}
-		roleElementsModel::where("role_id", $role->getRoleId())
-			->whereNotIn(array_keys($elements), "element_id")
-			->update(["status" => 0]);
+        $role = rolesModel::find($_POST["role_id"]);
+        $role->set([
+            "role_name" => $_POST["role_name"]
+        ])->save();
+        $elements = array();
+        foreach ($_POST["read"] as $element) {
+            $elements[$element] = 8;
+        }
+        foreach ($_POST["create"] as $element) {
+            $elements[$element] = intval($elements[$element]) + 4;
+        }
+        foreach ($_POST["update"] as $element) {
+            $elements[$element] = intval($elements[$element]) + 2;
+        }
+        foreach ($_POST["delete"] as $element) {
+            $elements[$element] = intval($elements[$element]) + 1;
+        }
+        foreach ($elements as $element_id => $permissions) {
+            $role_element = roleElementsModel::where("role_id", $role->getRoleId())
+                ->where("element_id", $element_id)
+                ->where("status", ">=", 0)
+                ->get();
+            $role_element->set([
+                "role_id" => $role->getRoleId(),
+                "element_id" => $element_id,
+                "permissions" => $permissions,
+                "status" => 1
+            ])->save();
+        }
+        roleElementsModel::where("role_id", $role->getRoleId())
+            ->whereNotIn(array_keys($elements), "element_id")
+            ->update(["status" => 0]);
 
-		#Finish and response
-		if (!empty($_POST["role_id"])) {
-			$this->setUserLog("update", "roles", $role->getRoleId());
-		} else {
-			$this->setUserLog("create", "roles", $role->getRoleId());
-		}
-		ApiResponse::success(
-			code: empty($_POST["role_id"]) ? "CREATED" : "UPDATED",
-			title: _("Success"),
-			message: _("Changes have been saved"),
-			actions: [
-				"redirect" => $this->module . "/EditRoleMenu/" . $role->getRoleId() . "/"
-			]
-		);
-	}
+        #Finish and response
+        if (!empty($_POST["role_id"])) {
+            $this->setUserLog("update", "roles", $role->getRoleId());
+        } else {
+            $this->setUserLog("create", "roles", $role->getRoleId());
+        }
+        ApiResponse::success(
+            code: empty($_POST["role_id"]) ? "CREATED" : "UPDATED",
+            title: _("Success"),
+            message: _("Changes have been saved"),
+            actions: [
+                "redirect" => $this->module . "/EditRoleMenu/" . $role->getRoleId() . "/"
+            ]
+        );
+    }
 
-	/**
-	 * Guardar menú del rol
-	 * 
-	 * Guarda cada uno de los módulos y los métodos asignados a un rol.
-	 * 
-	 * @return void
-	 */
-	public function SaveRoleMenu()
-	{
-		$this->check_permissions(empty($request["role_id"]) ? "create" : "update", "roles");
-		$request = http::getRequestData();
+    /**
+     * Guardar menú del rol
+     * 
+     * Guarda cada uno de los módulos y los métodos asignados a un rol.
+     * 
+     * @return void
+     */
+    public function SaveRoleMenu()
+    {
+        $this->check_permissions(empty($request["role_id"]) ? "create" : "update", "roles");
+        $request = http::getRequestData();
 
-		if ($request["role_id"] != Session::get("role_id")) {
-			# Acceso a los módulos
-			roleModulesModel::where("role_id", $request["role_id"])
-				->whereNotIn($request["modules"], "module_id")
-				->update(["status" => 0]);
-			foreach ($request["modules"] as $module_id) {
-				roleModulesModel::where("role_id", $request["role_id"])
-					->where("module_id", $module_id)
-					->where("status", ">=", 0)
-					->get()->set([
-							"module_id" => $module_id,
-							"role_id" => $request["role_id"],
-							"status" => 1
-						])->save();
-			}
+        if ($request["role_id"] != Session::get("role_id")) {
+            # Acceso a los módulos
+            roleModulesModel::where("role_id", $request["role_id"])
+                ->whereNotIn($request["modules"], "module_id")
+                ->update(["status" => 0]);
+            foreach ($request["modules"] as $module_id) {
+                roleModulesModel::where("role_id", $request["role_id"])
+                    ->where("module_id", $module_id)
+                    ->where("status", ">=", 0)
+                    ->get()->set([
+                            "module_id" => $module_id,
+                            "role_id" => $request["role_id"],
+                            "status" => 1
+                        ])->save();
+            }
 
-			# Acceso a los métodos
-			roleMethodsModel::where("role_id", $request["role_id"])
-				->whereNotIn($request["methods"], "method_id")
-				->update(["status" => 0]);
-			foreach ($request["methods"] as $method_id) {
-				roleMethodsModel::where("role_id", $request["role_id"])
-					->where("method_id", $method_id)
-					->where("status", ">=", 0)
-					->get()->set(array(
-							"method_id" => $method_id,
-							"role_id" => $request["role_id"],
-							"status" => 1
-						))->save();
-			}
-		}
-		ApiResponse::success(
-			code: "UPDATED",
-			title: _("Success"),
-			message: _("Changes have been saved"),
-			actions: ["reload" => true]
-		);
-	}
+            # Acceso a los métodos
+            roleMethodsModel::where("role_id", $request["role_id"])
+                ->whereNotIn($request["methods"], "method_id")
+                ->update(["status" => 0]);
+            foreach ($request["methods"] as $method_id) {
+                roleMethodsModel::where("role_id", $request["role_id"])
+                    ->where("method_id", $method_id)
+                    ->where("status", ">=", 0)
+                    ->get()->set(array(
+                            "method_id" => $method_id,
+                            "role_id" => $request["role_id"],
+                            "status" => 1
+                        ))->save();
+            }
+        }
+        ApiResponse::success(
+            code: "UPDATED",
+            title: _("Success"),
+            message: _("Changes have been saved"),
+            actions: ["reload" => true]
+        );
+    }
 
-	/**
-	 * Eliminar rol
-	 * 
-	 * Elimina un rol e imprime la respuesta en formato JSON.
-	 * 
-	 * @return void
-	 */
-	public function DeleteRole()
-	{
-		$this->check_permissions("delete", "roles");
-		$request = http::getRequestData();
-		if (empty($request["id"])) {
-			ApiResponse::error(
-				code: "REQUIRED_FIELD",
-				title: _("Error"),
-				message: _("Bad request")
-			);
-		}
-		$role = rolesModel::find($request["id"]);
+    /**
+     * Eliminar rol
+     * 
+     * Elimina un rol e imprime la respuesta en formato JSON.
+     * 
+     * @return void
+     */
+    public function DeleteRole()
+    {
+        $this->check_permissions("delete", "roles");
+        $request = http::getRequestData();
+        if (empty($request["id"])) {
+            ApiResponse::error(
+                code: "REQUIRED_FIELD",
+                title: _("Error"),
+                message: _("Bad request")
+            );
+        }
+        $role = rolesModel::find($request["id"]);
 
-		# Validar que el rol no contiene usuarios activos
-		$users = usersModel::where("role_id", $role->getRoleId())
-			->count();
-		if ($users > 0) {
-			ApiResponse::error(
-				code: "VALIDATION_ERROR",
-				title: _("Error"),
-				message: _("There are active users in this role")
-			);
-		}
+        # Validar que el rol no contiene usuarios activos
+        $users = usersModel::where("role_id", $role->getRoleId())
+            ->count();
+        if ($users > 0) {
+            ApiResponse::error(
+                code: "VALIDATION_ERROR",
+                title: _("Error"),
+                message: _("There are active users in this role")
+            );
+        }
 
-		$role->delete();
-		$this->setUserLog("delete", "roles", $role->getRoleId());
-		ApiResponse::success(
-			code: "DELETED",
-			title: _("Success"),
-			message: _("Deleted successfully")
-		);
-	}
+        $role->delete();
+        $this->setUserLog("delete", "roles", $role->getRoleId());
+        ApiResponse::success(
+            code: "DELETED",
+            title: _("Success"),
+            message: _("Deleted successfully")
+        );
+    }
 }

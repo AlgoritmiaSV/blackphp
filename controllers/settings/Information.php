@@ -1,149 +1,138 @@
 <?php
 trait Information
 {
-	/**
-	 * Acerca de
-	 * 
-	 * Muestra información acerca del sistema.
-	 * 
-	 * @return void
-	 */
-	public function About()
-	{
-		$this->session_required("html", $this->module);
-		$this->view->data["title"] = sprintf(_("About %s"), Session::get("system/app_name"));
-		$this->view->standard_details();
-		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$this->view->data["content_id"] = "info_details";
-		$this->view->data["content"] = $this->view->render("content_loader", true);
-		$this->view->render('main');
-	}
+    /**
+     * Acerca de
+     * 
+     * Muestra información acerca del sistema.
+     * 
+     * @return void
+     */
+    public function About()
+    {
+        $this->session_required("html", $this->module);
+        $this->view->data["title"] = sprintf(_("About %s"), Session::get("system/app_name"));
+        $this->view->standard_details();
+        $this->view->data["nav"] = $this->view->render("main/nav", true);
+        $this->view->data["content_id"] = "info_details";
+        $this->view->data["content"] = $this->view->render("content_loader", true);
+        $this->view->render('main');
+    }
 
-	/**
-	 * Carga de información del sistema
-	 * 
-	 * Imprime, en formato HTML, la información del sistema: datos de la última actualización e 
-	 * información de contacto.
-	 * 
-	 * @return void
-	 */
-	public function info_details_loader($mode = "embedded")
-	{
-		$info = Array();
-		if(file_exists("app_info.json"))
-		{
-			$info = json_decode(file_get_contents("app_info.json"), true);
-			$info["last_update_ago"] = Dates::timeAgo($info["last_update"]);
-			$info["last_update_ago"] = sprintf(_("%s ago"), $info["last_update_ago"]);
-			$info["last_update"] = Dates::isoToString($info["last_update"], true);
-		}
-		else
-		{
-			$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($_SERVER["DOCUMENT_ROOT"]), RecursiveIteratorIterator::SELF_FIRST);
-			$last_modified = 0;
-			foreach($files as $file_object)
-			{
-				$modified = $file_object->getMTime();
-				if($modified > $last_modified)
-				{
-					$last_modified = $modified;
-				}
-			}
-			$info["last_update"] = Dates::isoToString(Date("Y-m-d H:i:s", $last_modified), true);
-			$info["last_update_ago"] = Dates::timeAgo(Date("Y-m-d H:i:s", $last_modified));
-			$info["last_update_ago"] = sprintf(_("%s ago"), $info["last_update_ago"]);
-			$info["version"] = "1.0";
-			$info["number"] = "0";
-		}
-		foreach($info as $key => $item)
-		{
-			$this->view->data[$key] = $item;
-		}
-		$this->view->data["dependencies"] = array_merge($this->getNpmDependencies(), $this->getComposerDependencies());
+    /**
+     * Carga de información del sistema
+     * 
+     * Imprime, en formato HTML, la información del sistema: datos de la última actualización e 
+     * información de contacto.
+     * 
+     * @return void
+     */
+    public function info_details_loader($mode = "embedded")
+    {
+        $info = array();
+        if (file_exists("app_info.json")) {
+            $info = json_decode(file_get_contents("app_info.json"), true);
+            $info["last_update_ago"] = Dates::timeAgo($info["last_update"]);
+            $info["last_update_ago"] = sprintf(_("%s ago"), $info["last_update_ago"]);
+            $info["last_update"] = Dates::isoToString($info["last_update"], true);
+        } else {
+            $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($_SERVER["DOCUMENT_ROOT"]), RecursiveIteratorIterator::SELF_FIRST);
+            $last_modified = 0;
+            foreach ($files as $file_object) {
+                $modified = $file_object->getMTime();
+                if ($modified > $last_modified) {
+                    $last_modified = $modified;
+                }
+            }
+            $info["last_update"] = Dates::isoToString(Date("Y-m-d H:i:s", $last_modified), true);
+            $info["last_update_ago"] = Dates::timeAgo(Date("Y-m-d H:i:s", $last_modified));
+            $info["last_update_ago"] = sprintf(_("%s ago"), $info["last_update_ago"]);
+            $info["version"] = "1.0";
+            $info["number"] = "0";
+        }
+        foreach ($info as $key => $item) {
+            $this->view->data[$key] = $item;
+        }
+        $this->view->data["dependencies"] = array_merge($this->getNpmDependencies(), $this->getComposerDependencies());
 
-		# Sitio web
-		if(!empty($info["app_website"]))
-		{
-			$this->view->data["website_label"] = str_replace("https://", "", $info["app_website"]);
-		}
-		else
-		{
-			$this->view->restrict[] = "app_website";
-		}
+        # Sitio web
+        if (!empty($info["app_website"])) {
+            $this->view->data["website_label"] = str_replace("https://", "", $info["app_website"]);
+        } else {
+            $this->view->restrict[] = "app_website";
+        }
 
-		# Manual de usuario
-		$this->view->data["manual_label"] = str_replace("https://", "", $info["user_manual"]);
+        # Manual de usuario
+        $this->view->data["manual_label"] = str_replace("https://", "", $info["user_manual"]);
 
-		# Selección de la vista
-		if($mode == "standalone")
-		{
-			$this->view->data["title"] = sprintf(_("About %s"), Session::get("system/app_name"));
-			$this->view->standard_details();
-			$this->view->add("styles", "css", Array(
-				'styles/standalone.css'
-			));
-			$this->view->restrict[] = "embedded";
-			$this->view->data["content"] = $this->view->render('settings/info_details', true);
-			$this->view->render('clean_main');
-		}
-		else
-		{
-			$this->view->render('settings/info_details');
-		}
-	}
+        # Selección de la vista
+        if ($mode == "standalone") {
+            $this->view->data["title"] = sprintf(_("About %s"), Session::get("system/app_name"));
+            $this->view->standard_details();
+            $this->view->add("styles", "css", array(
+                'styles/standalone.css'
+            ));
+            $this->view->restrict[] = "embedded";
+            $this->view->data["content"] = $this->view->render('settings/info_details', true);
+            $this->view->render('clean_main');
+        } else {
+            $this->view->render('settings/info_details');
+        }
+    }
 
-	/**
-	 * Read npm dependencies from package.json and package-lock.json
-	 * Returns JSON with: name, version, license
-	 */
-	function getNpmDependencies() {
-		$packageJson = json_decode(file_get_contents('package.json'), true);
-		$lockJson    = json_decode(file_get_contents('package-lock.json'), true);
+    /**
+     * Read npm dependencies from package.json and package-lock.json
+     * Returns JSON with: name, version, license
+     */
+    function getNpmDependencies()
+    {
+        $packageJson = json_decode(file_get_contents('package.json'), true);
+        $lockJson = json_decode(file_get_contents('package-lock.json'), true);
 
-		$dependencies = [];
+        $dependencies = [];
 
-		if (!empty($packageJson['dependencies'])) {
-			foreach ($packageJson['dependencies'] as $name => $versionConstraint) {
-				if (isset($lockJson['packages']["node_modules/$name"])) {
-					$pkg = $lockJson['packages']["node_modules/$name"];
-					$dependencies[] = [
-						'name'    => $name,
-						'version' => $pkg['version'] ?? $versionConstraint,
-						'license' => $pkg['license'] ?? 'unknown'
-					];
-				}
-			}
-		}
+        if (!empty($packageJson['dependencies'])) {
+            foreach ($packageJson['dependencies'] as $name => $versionConstraint) {
+                if (isset($lockJson['packages']["node_modules/$name"])) {
+                    $pkg = $lockJson['packages']["node_modules/$name"];
+                    $dependencies[] = [
+                        'name' => $name,
+                        'version' => $pkg['version'] ?? $versionConstraint,
+                        'license' => $pkg['license'] ?? 'unknown'
+                    ];
+                }
+            }
+        }
 
-		return $dependencies;
-	}
+        return $dependencies;
+    }
 
-	/**
-	 * Read Composer dependencies from composer.json and composer.lock
-	 * Returns JSON with: name, version, license
-	 */
-	function getComposerDependencies() {
-		$composerJson = json_decode(file_get_contents('composer.json'), true);
-		$lockJson     = json_decode(file_get_contents('composer.lock'), true);
+    /**
+     * Read Composer dependencies from composer.json and composer.lock
+     * Returns JSON with: name, version, license
+     */
+    function getComposerDependencies()
+    {
+        $composerJson = json_decode(file_get_contents('composer.json'), true);
+        $lockJson = json_decode(file_get_contents('composer.lock'), true);
 
-		$dependencies = [];
+        $dependencies = [];
 
-		if (!empty($composerJson['require'])) {
-			foreach ($composerJson['require'] as $name => $versionConstraint) {
-				foreach ($lockJson['packages'] as $pkg) {
-					if ($pkg['name'] === $name) {
-						$dependencies[] = [
-							'name'    => $pkg['name'],
-							'version' => $pkg['version'] ?? $versionConstraint,
-							'license' => !empty($pkg['license']) ? implode(', ', $pkg['license']) : 'unknown'
-						];
-						break;
-					}
-				}
-			}
-		}
+        if (!empty($composerJson['require'])) {
+            foreach ($composerJson['require'] as $name => $versionConstraint) {
+                foreach ($lockJson['packages'] as $pkg) {
+                    if ($pkg['name'] === $name) {
+                        $dependencies[] = [
+                            'name' => $pkg['name'],
+                            'version' => $pkg['version'] ?? $versionConstraint,
+                            'license' => !empty($pkg['license']) ? implode(', ', $pkg['license']) : 'unknown'
+                        ];
+                        break;
+                    }
+                }
+            }
+        }
 
-		return $dependencies;
-	}
+        return $dependencies;
+    }
 }
-?>

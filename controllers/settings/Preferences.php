@@ -79,7 +79,8 @@ trait Preferences
         entityOptionsModel::whereIn(array_column($app_options, "option_id"), "option_id")
             ->update(array("option_value" => 0));
         foreach ($_POST as $key => $value) {
-            $option = appOptionsModel::where("option_key", $key)->get();
+            $option = appOptionsModel::where("option_key", $key)
+                ->get();
             $entity_option = $option->entityOptions()
                 ->get();
             if ($entity_option->getOptionValue() != $value) {
@@ -102,8 +103,12 @@ trait Preferences
         Session::set("options", $options);
 
         ApiResponse::success(
+            code: "UPDATED",
             title: _("Success"),
-            message: _("Changes have been saved")
+            message: _("Changes have been saved"),
+            actions: [
+                "reset" => false
+            ]
         );
     }
 }

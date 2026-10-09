@@ -133,10 +133,6 @@ trait Entity
         #Finish and response
         $reload = false;
         $redirect = null;
-        $response += [
-            "theme" => "green",
-            "no_reset" => true
-        ];
         if ($_SERVER["SERVER_NAME"] != $_SERVER["SERVER_ADDR"]) {
             $protocol = "http";
             if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) {

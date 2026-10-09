@@ -152,11 +152,12 @@ trait Users
         $this->view->data["sessions"] = $sessions;
 
         #User photo
-        $photo = $this->store_dir . "users/" . $user["user_id"] . "-profile.jpg";
-        if (!file_exists($photo)) {
-            $photo = "public/images/user.png";
+        $photo = glob($this->store_dir . "users/profile_" . $user["user_id"] . ".*");
+        if (count($photo) > 0) {
+            $this->view->data["user_photo"] = $photo[0];
+        } else {
+            $this->view->data["user_photo"] = "public/images/user.png";
         }
-        $this->view->data["user_photo"] = $photo;
 
         $this->userActions($user);
         if ($user_id == Session::get("user_id")) {
@@ -210,13 +211,13 @@ trait Users
             );
         }
 
-        $user = usersModel::find($_POST["user_id"]);
+        $user = usersModel::find($request["user_id"]);
         $user->set([
-            "user_name" => $_POST["user_name"],
-            "nickname" => $_POST["nickname"]
+            "user_name" => $request["user_name"],
+            "nickname" => $request["nickname"]
         ]);
-        if (!empty($_POST["password"])) {
-            $validate = $this->ValidatePassword($_POST["password"]);
+        if (!empty($request["password"])) {
+            $validate = $this->ValidatePassword($request["password"]);
             if ($validate !== true) {
                 ApiResponse::error(
                     code: "VALIDATION_ERROR",

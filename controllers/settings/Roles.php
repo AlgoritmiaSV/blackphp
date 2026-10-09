@@ -351,8 +351,8 @@ trait Roles
      */
     public function SaveRoleMenu()
     {
-        $this->check_permissions(empty($request["role_id"]) ? "create" : "update", "roles");
         $request = http::getRequestData();
+        $this->check_permissions(empty($request["role_id"]) ? "create" : "update", "roles");
 
         if ($request["role_id"] != Session::get("role_id")) {
             # Acceso a los módulos

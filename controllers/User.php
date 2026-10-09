@@ -182,10 +182,9 @@ class User extends Controller
             $threshold->sub(new DateInterval('P90D'));
             if ($passwordChanged < $threshold) {
                 Session::set("password_user_id", $user->getUserId());
-                ApiResponse::success(actions:[
-                    "redirect"=> "/User/SetNewPassword/"
+                ApiResponse::success(actions: [
+                    "redirect" => "/User/SetNewPassword/"
                 ]);
-                return;
             }
 
             # Cargar los datos del usuario a la sesión actual

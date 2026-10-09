@@ -338,19 +338,18 @@ class Installation extends Controller
         if (password_verify($_POST["password"], $installer->getInstallerPassword())) {
             Session::set("authorization_code", true);
             Session::set("installer_id", $installer->getInstallerId());
-            $response["reload"] = true;
+            ApiResponse::success(
+                actions: [
+                    "reload" => true
+                ]
+            );
         } else {
             ApiResponse::error(
-                code: "REQUIRED_FIELD",
+                code: "AUTH_INVALID_CREDENTIALS",
                 title: _("Error"),
-                message: _("Enter your installer user and password")
+                message: _("Bad user or password")
             );
         }
-        ApiResponse::success(
-            actions: [
-                "reload" => true
-            ]
-        );
     }
 
     public function php_info_loader()

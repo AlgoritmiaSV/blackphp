@@ -187,7 +187,7 @@ trait Users
      * 
      * @return void
      */
-    public function save_user()
+    public function SaveUser()
     {
         $request = http::getRequestData();
         $this->check_permissions(empty($request["user_id"]) ? "create" : "update", "users");
@@ -280,7 +280,6 @@ trait Users
     {
         $serverName = $_SERVER["SERVER_NAME"];
         $activeSession = $_SESSION;
-        $ectiveSessionId = session_id();
         $path = session_save_path();
         $files = glob($path . "/sess*");
         foreach ($files as $file) {

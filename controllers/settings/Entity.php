@@ -26,7 +26,7 @@ trait Entity
      * 
      * @return void
      */
-    public function save_entity()
+    public function SaveEntity()
     {
         $request = http::getRequestData();
         $this->check_permissions("update", "entityData");

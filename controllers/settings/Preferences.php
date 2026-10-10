@@ -70,7 +70,7 @@ trait Preferences
      * 
      * @return void
      */
-    public function save_preferences()
+    public function SavePreferences()
     {
         $this->check_permissions("update", "preferences");
         $app_options = appOptionsModel::select("option_id")

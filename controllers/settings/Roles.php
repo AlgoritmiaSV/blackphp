@@ -194,7 +194,7 @@ trait Roles
                 "title" => _("Roles"),
                 "headers" => [_("Role name"), _("Users")],
                 "fields" => ["role_name", "users"],
-                "content" => $data
+                "content" => $roles
             ], "Roles_" . Date("YmdHis") . ".xlsx");
         } else {
             ApiResponse::success(data: $data);
@@ -267,7 +267,8 @@ trait Roles
 
     public function SaveRole()
     {
-        $this->check_permissions(empty($_POST["role_id"]) ? "create" : "update", "roles");
+        $isNewRecord = empty($_POST["role_id"]);
+        $this->check_permissions($isNewRecord ? "create" : "update", "roles");
 
         # Validando que el nombre del rol no esté vacío
         if (empty($_POST["role_name"])) {
@@ -327,13 +328,10 @@ trait Roles
             ->update(["status" => 0]);
 
         #Finish and response
-        if (!empty($_POST["role_id"])) {
-            $this->setUserLog("update", "roles", $role->getRoleId());
-        } else {
-            $this->setUserLog("create", "roles", $role->getRoleId());
-        }
+        $this->setUserLog($isNewRecord ? "create" : "update", "roles", $role->getRoleId());
+
         ApiResponse::success(
-            code: empty($_POST["role_id"]) ? "CREATED" : "UPDATED",
+            code: $isNewRecord ? "CREATED" : "UPDATED",
             title: _("Success"),
             message: _("Changes have been saved"),
             actions: [

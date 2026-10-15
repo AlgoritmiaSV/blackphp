@@ -190,7 +190,8 @@ trait Users
     public function SaveUser()
     {
         $request = http::getRequestData();
-        $this->check_permissions(empty($request["user_id"]) ? "create" : "update", "users");
+        $isNewRecord = empty($request["user_id"]);
+        $this->check_permissions($isNewRecord ? "create" : "update", "users");
         if (empty($request["user_name"])) {
             ApiResponse::error(
                 code: "REQUIRED_FIELD",

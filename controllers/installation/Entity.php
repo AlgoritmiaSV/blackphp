@@ -49,7 +49,6 @@ trait Entity
     public function SaveEntity()
     {
         $request = http::getRequestData();
-        $response = ["success" => false];
         $time = Date("Y-m-d H:i:s");
         $today = Date("Y-m-d");
 
@@ -75,10 +74,10 @@ trait Entity
                     );
                 }
             }
-            $entity = entitiesModel::where("entity_subdomain", $_POST["subdomain"])
+            $entity = entitiesModel::where("entity_subdomain", $request["subdomain"])
                 ->get()
                 ->toArray();
-            if (isset($entity["entity_id"]) || in_array($_POST["subdomain"], $reserved_subdomains)) {
+            if (isset($entity["entity_id"]) || in_array($request["subdomain"], $reserved_subdomains)) {
                 ApiResponse::error(
                     code: "VALIDATION_ERROR",
                     title: _("Error"),

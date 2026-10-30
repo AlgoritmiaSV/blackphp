@@ -12,457 +12,457 @@
  */
 class Controller
 {
-	/**
-	 * Constructor de la clase Controller
-	 * 
-	 * En el presente constructor se realizan los siguientes procedimientos:
-	 * 1) Se crea una vista (Objeto de la clase View).
-	 * 2) Se establece una zona horaria por defecto.
-	 * 3) Se establece un idioma regional por defecto, o se usa el establecido en la sesión
-	 * 4) Se define error_reporting a E_ERROR | E_PARSE; esto para evitar las advertencias de PHP
-	 * cuando se tiene en producción sobre Windows.
-	 * 5) Se verifica la sesión del usuario, y se envían los datos a la vista.
-	 * 6) Se elige la entidad, y se establece el directorio, el logo y las restricciones de dicha entidad.
-	 * 7) Se establece un tema por defecto
-	 * 8) Se establece el ajuste de texto en las tablas
-	 */
-	protected $view;
+    /**
+     * Constructor de la clase Controller
+     * 
+     * En el presente constructor se realizan los siguientes procedimientos:
+     * 1) Se crea una vista (Objeto de la clase View).
+     * 2) Se establece una zona horaria por defecto.
+     * 3) Se establece un idioma regional por defecto, o se usa el establecido en la sesión
+     * 4) Se define error_reporting a E_ERROR | E_PARSE; esto para evitar las advertencias de PHP
+     * cuando se tiene en producción sobre Windows.
+     * 5) Se verifica la sesión del usuario, y se envían los datos a la vista.
+     * 6) Se elige la entidad, y se establece el directorio, el logo y las restricciones de dicha entidad.
+     * 7) Se establece un tema por defecto
+     * 8) Se establece el ajuste de texto en las tablas
+     */
+    protected $view;
 
-	/**
-	 * Módulo
-	 * @var string $module El módulo actual seleccionado
-	 */
-	protected $module;
+    /**
+     * Módulo
+     * @var string $module El módulo actual seleccionado
+     */
+    protected $module;
 
-	/**
-	 * Carpeta de almacenamiento
-	 * @var string $store_dir El directorio por defecto de almacenamiento de archivos de las entidades
-	 */
-	protected $store_dir;
+    /**
+     * Carpeta de almacenamiento
+     * @var string $store_dir El directorio por defecto de almacenamiento de archivos de las entidades
+     */
+    protected $store_dir;
 
-	function __construct()
-	{
-		#1 Creación de la vista
-		$this->view = new View();
-		$this->view->data["base_href"] = "/";
+    function __construct()
+    {
+        #1 Creación de la vista
+        $this->view = new View();
+        $this->view->data["base_href"] = "/";
 
-		#2 Extrayendo información del sistema
-		$system = Session::get("system");
-		if (empty($system)) {
-			if (file_exists("app_info.json")) {
-				$system = json_decode(file_get_contents("app_info.json"), true);
-			} else {
-				$system = array("app_name" => "BlackPHP");
-			}
-			Session::set("system", $system);
-		}
-		$this->view->data["app_name"] = $system["app_name"];
-		$this->view->data["user_manual"] = $system["user_manual"];
-		if (isset($system["copyright"])) {
-			foreach ($system["copyright"] as $key => $value) {
-				$this->view->data["copyright_" . $key] = $value;
-			}
-		}
+        #2 Extrayendo información del sistema
+        $system = Session::get("system");
+        if (empty($system)) {
+            if (file_exists("app_info.json")) {
+                $system = json_decode(file_get_contents("app_info.json"), true);
+            } else {
+                $system = array("app_name" => "BlackPHP");
+            }
+            Session::set("system", $system);
+        }
+        $this->view->data["app_name"] = $system["app_name"];
+        $this->view->data["user_manual"] = $system["user_manual"];
+        if (isset($system["copyright"])) {
+            foreach ($system["copyright"] as $key => $value) {
+                $this->view->data["copyright_" . $key] = $value;
+            }
+        }
 
-		#3 Zona horaria por defecto
-		date_default_timezone_set('America/El_Salvador');
+        #3 Zona horaria por defecto
+        date_default_timezone_set('America/El_Salvador');
 
-		#4 Idioma regional (Por defecto = en_US)
-		$locale = "en_US";
-		$lang = "en";
-		if (empty(Session::get("locale"))) {
-			if (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
-				$browser_language = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"], 0, 2);
-				if ($browser_language == "es") {
-					$locale = "es_ES";
-					$lang = "es";
-				}
-				Session::set("locale", $locale);
-				Session::set("lang", $lang);
-			}
-		} else {
-			$locale = Session::get("locale");
-			$lang = Session::get("lang");
-		}
-		$charset = Session::get("charset") ?? "UTF-8";
-		$this->view->data["lang"] = $lang;
+        #4 Idioma regional (Por defecto = en_US)
+        $locale = "en_US";
+        $lang = "en";
+        if (empty(Session::get("locale"))) {
+            if (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
+                $browser_language = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"], 0, 2);
+                if ($browser_language == "es") {
+                    $locale = "es_ES";
+                    $lang = "es";
+                }
+                Session::set("locale", $locale);
+                Session::set("lang", $lang);
+            }
+        } else {
+            $locale = Session::get("locale");
+            $lang = Session::get("lang");
+        }
+        $charset = Session::get("charset") ?? "UTF-8";
+        $this->view->data["lang"] = $lang;
 
-		if (defined('LC_MESSAGES')) {
-			putenv("LANGUAGE=$locale.$charset");
-			setlocale(LC_MESSAGES, $locale . "." . $charset); // Linux
-			bindtextdomain("messages", "locale/");
-		} else {
-			putenv("LC_ALL={$locale}"); // windows
-			bindtextdomain("messages", ".\locale");
-		}
-		bind_textdomain_codeset("messages", 'UTF-8');
-		textdomain("messages");
+        if (defined('LC_MESSAGES')) {
+            putenv("LANGUAGE=$locale.$charset");
+            setlocale(LC_MESSAGES, $locale . "." . $charset); // Linux
+            bindtextdomain("messages", "locale/");
+        } else {
+            putenv("LC_ALL={$locale}"); // windows
+            bindtextdomain("messages", ".\locale");
+        }
+        bind_textdomain_codeset("messages", 'UTF-8');
+        textdomain("messages");
 
-		#5 Error reporting
-		error_reporting(E_ERROR | E_PARSE);
+        #5 Error reporting
+        error_reporting(E_ERROR | E_PARSE);
 
-		#7 Sistema en mantenimiento
-		if (defined('SYSTEM_STATUS') && SYSTEM_STATUS == 'MAINTENANCE') {
-			$this->maintenance();
-		}
+        #7 Sistema en mantenimiento
+        if (defined('SYSTEM_STATUS') && SYSTEM_STATUS == 'MAINTENANCE') {
+            $this->maintenance();
+        }
 
-		#8 Entidad
-		$entity = array();
-		$options = array();
-		if (Session::get("entity") == null) {
-			# If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
-			if (http::isIpAddress($_SERVER["SERVER_NAME"])) {
-				# Primera entidad de la tabla
-				$entity = entityDataModel::first()
-					->toArray();
-				Session::set("server_name", "localhost");
-			} else {
-				# Subdominio de la entidad
-				$server_name = explode(".", $_SERVER["SERVER_NAME"]);
-				$subdomain = $server_name[0];
-				if ($subdomain != "installer") {
-					$entity = entityDataModel::findBy("entity_subdomain", $subdomain)
-						->toArray();
-					if (empty($entity["entity_id"])) {
-						$protocol = "http";
-						if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) {
-							$protocol .= "s";
-						}
-						$installer_url = $protocol . "://installer";
-						for ($i = 1; $i < count($server_name); $i++) {
-							$installer_url .= ("." . $server_name[$i]);
-						}
-						header("Location: " . $installer_url . "/Installation/NewEntity/" . $subdomain . "/");
-						return;
-					}
-				}
-				Session::set("server_name", $_SERVER["SERVER_NAME"]);
-			}
+        #8 Entidad
+        $entity = array();
+        $options = array();
+        if (Session::get("entity") == null) {
+            # If SERVER_NAME == IP address (SERVER_ADDR), then get the first entity from database
+            if (http::isIpAddress($_SERVER["SERVER_NAME"])) {
+                # Primera entidad de la tabla
+                $entity = entityDataModel::first()
+                    ->toArray();
+                Session::set("server_name", "localhost");
+            } else {
+                # Subdominio de la entidad
+                $server_name = explode(".", $_SERVER["SERVER_NAME"]);
+                $subdomain = $server_name[0];
+                if ($subdomain != "installer") {
+                    $entity = entityDataModel::findBy("entity_subdomain", $subdomain)
+                        ->toArray();
+                    if (empty($entity["entity_id"])) {
+                        $protocol = "http";
+                        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) {
+                            $protocol .= "s";
+                        }
+                        $installer_url = $protocol . "://installer";
+                        for ($i = 1; $i < count($server_name); $i++) {
+                            $installer_url .= ("." . $server_name[$i]);
+                        }
+                        header("Location: " . $installer_url . "/Installation/NewEntity/" . $subdomain . "/");
+                        return;
+                    }
+                }
+                Session::set("server_name", $_SERVER["SERVER_NAME"]);
+            }
 
-			# Moneda
-			if (empty($entity["currency_symbol"])) {
-				$entity["currency_symbol"] = "$";
-			}
+            # Moneda
+            if (empty($entity["currency_symbol"])) {
+                $entity["currency_symbol"] = "$";
+            }
 
-			Session::set("entity", $entity);
+            Session::set("entity", $entity);
 
-			$option_list = entityOptionsModel::select("option_key", "option_value")
-				->join("app_options", "option_id")
-				->getAll();
-			$options = array();
-			foreach ($option_list as $item) {
-				$options[$item["option_key"]] = $item["option_value"];
-			}
-			Session::set("options", $options);
-		} else {
-			$entity = Session::get("entity");
-			$options = Session::get("options");
-		}
-		$this->view->data["modules"] = Session::get("modules");
+            $option_list = entityOptionsModel::select("option_key", "option_value")
+                ->join("app_options", "option_id")
+                ->getAll();
+            $options = array();
+            foreach ($option_list as $item) {
+                $options[$item["option_key"]] = $item["option_value"];
+            }
+            Session::set("options", $options);
+        } else {
+            $entity = Session::get("entity");
+            $options = Session::get("options");
+        }
+        $this->view->data["modules"] = Session::get("modules");
 
-		# Directorio y logo
-		if (!empty($entity["entity_subdomain"])) {
-			$this->store_dir = "entities/" . $entity["entity_subdomain"] . "/";
-		} else {
-			$this->store_dir = "entities/local/";
-		}
-		$this->view->data["entity_dir"] = $this->store_dir;
-		$logoSufix = Session::get("branch/branch_id") ?? "";
-		$logo = glob($this->store_dir . "logo" . $logoSufix . ".*")[0];
-		if (empty($logo)) {
-			$logo = glob($this->store_dir . "logo.*")[0];
-		}
-		if (empty($logo)) {
-			$logo = "public/images/default_image.png";
-		}
-		$this->view->data["entity_logo"] = $logo . "?t=" . filemtime($logo);
+        # Directorio y logo
+        if (!empty($entity["entity_subdomain"])) {
+            $this->store_dir = "entities/" . $entity["entity_subdomain"] . "/";
+        } else {
+            $this->store_dir = "entities/local/";
+        }
+        $this->view->data["entity_dir"] = $this->store_dir;
+        $logoSufix = Session::get("branch/branch_id") ?? "";
+        $logo = glob($this->store_dir . "logo" . $logoSufix . ".*")[0];
+        if (empty($logo)) {
+            $logo = glob($this->store_dir . "logo.*")[0];
+        }
+        if (empty($logo)) {
+            $logo = "public/images/default_image.png";
+        }
+        $this->view->data["entity_logo"] = $logo . "?t=" . filemtime($logo);
 
-		#6 Verificación de usuario
-		$userPhoto = "public/images/user.png";
-		if (Session::get("user_id") != null) {
-			$this->view->data["user_name"] = Session::get("user_name");
-			$this->view->data["nickname"] = Session::get("nickname");
+        #6 Verificación de usuario
+        $userPhoto = "public/images/user.png";
+        if (Session::get("user_id") != null) {
+            $this->view->data["user_name"] = Session::get("user_name");
+            $this->view->data["nickname"] = Session::get("nickname");
 
-			$profilePhoto = $this->store_dir . "users/" . Session::get("user_id") . "-profile.jpg";
-			if (file_exists($profilePhoto)) {
-				$userPhoto = $profilePhoto;
-			}
-		} elseif (Session::get("installer_id") == null) {
-			$this->view->restrict = array("user");
-		}
-		$this->view->data["user_photo"] = $userPhoto;
+            $profilePhoto = $this->store_dir . "users/" . Session::get("user_id") . "-profile.jpg";
+            if (file_exists($profilePhoto)) {
+                $userPhoto = $profilePhoto;
+            }
+        } elseif (Session::get("installer_id") == null) {
+            $this->view->restrict = array("user");
+        }
+        $this->view->data["user_photo"] = $userPhoto;
 
-		# Entity vars are always available in the views
-		foreach ($entity as $key => $item) {
-			$this->view->data[$key] = $item;
-		}
+        # Entity vars are always available in the views
+        foreach ($entity as $key => $item) {
+            $this->view->data[$key] = $item;
+        }
 
-		#9 Restricciones
-		foreach ($options as $key => $value) {
-			if ($value == 0) {
-				$this->view->restrict[] = "entity:" . $key;
-			}
-		}
+        #9 Restricciones
+        foreach ($options as $key => $value) {
+            if ($value == 0) {
+                $this->view->restrict[] = "entity:" . $key;
+            }
+        }
 
-		#10 Tema por defecto
-		if (Session::get("theme_id") == null) {
-			$theme = appThemesModel::first();
-			Session::set("theme_id", $theme->getThemeId());
-			Session::set("theme_url", $theme->getThemeUrl());
-			$this->view->data["theme_id"] = $theme->getThemeId();
-			$this->view->data["theme_url"] = $theme->getThemeUrl();
-		}
+        #10 Tema por defecto
+        if (Session::get("theme_id") == null) {
+            $theme = appThemesModel::first();
+            Session::set("theme_id", $theme->getThemeId());
+            Session::set("theme_url", $theme->getThemeUrl());
+            $this->view->data["theme_id"] = $theme->getThemeId();
+            $this->view->data["theme_url"] = $theme->getThemeUrl();
+        }
 
-		#11 Ajuste del texto en tablas
-		$this->view->data["table_text_wrapping"] = Session::get("options/table_text_wrapping");
-	}
+        #11 Ajuste del texto en tablas
+        $this->view->data["table_text_wrapping"] = Session::get("options/table_text_wrapping");
+    }
 
-	/**
-	 * Sistema en mantenimiento
-	 * 
-	 * Muestra un aviso de sistema en mantenimiento, en caso de que la constante
-	 * SYSTEM_STATUS esté configurada como MAINTENANCE.
-	 */
-	protected function maintenance($type = 'html')
-	{
-		if ($type == 'json') {
-			ApiResponse::error(
-				code: "SYSTEM_UNDER_MAINTENANCE",
-				title: _("Error"),
-				message: _("System under maintenance")
-			);
-		} elseif ($type == 'internal') {
-			$this->view->render("main/maintenance");
-		} else {
-			$this->view->data["title"] = _("System under maintenance");
-			$this->view->standard_error();
-			$this->view->data["nav"] = "";
-			$this->view->data["content"] = $this->view->render("main/maintenance", true);
-			$this->view->render('clean_main');
-		}
-		exit();
-	}
+    /**
+     * Sistema en mantenimiento
+     * 
+     * Muestra un aviso de sistema en mantenimiento, en caso de que la constante
+     * SYSTEM_STATUS esté configurada como MAINTENANCE.
+     */
+    protected function maintenance($type = 'html')
+    {
+        if ($type == 'json') {
+            ApiResponse::error(
+                code: "SYSTEM_UNDER_MAINTENANCE",
+                title: _("Error"),
+                message: _("System under maintenance")
+            );
+        } elseif ($type == 'internal') {
+            $this->view->render("main/maintenance");
+        } else {
+            $this->view->data["title"] = _("System under maintenance");
+            $this->view->standard_error();
+            $this->view->data["nav"] = "";
+            $this->view->data["content"] = $this->view->render("main/maintenance", true);
+            $this->view->render('clean_main');
+        }
+        exit();
+    }
 
-	/**
-	 * Validación de sesión
-	 * 
-	 * Verifica si hay una sesión abierta para el usuario de forma general, o para el módulo
-	 * especificado.
-	 * 
-	 * @param string $type Tipo de respuesta esperada (html, internal o JSON)
-	 * @param string $module el módulo al que el usuario intenta acceder
-	 */
-	protected function session_required($type = 'html', $module = "")
-	{
-		if (Session::get("user_id") != null) {
-			if (!empty($module)) {
-				$module = appModulesModel::findBy("module_url", $module);
-				$perms = roleModulesModel::where("module_id", $module->getModuleId())
-					->where("role_id", Session::get("role_id"))
-					->get();
-				if (empty($perms->getRoleModuleId())) {
-					if ($type == 'json') {
-						ApiResponse::error(
-							code: "INSUFFICIENT_PERMISSIONS",
-							title: _("Error"),
-							message: _("You do not have permissions to perform this operation")
-						);
-					} else {
-						$this->view->data["title"] = _("Not authorized");
-						$this->view->standard_error();
-						$this->view->data["nav"] = $this->view->render("main/nav", true);
-						$this->view->data["content"] = $this->view->render("main/forbidden", true);
-						$this->view->render('main');
-					}
-					exit();
-				}
-			}
-			return;
-		}
-		if ($type == 'json') {
-			ApiResponse::error(
-				code: "AUTH_REQUIRED",
-				title: _("Error"),
-				message: _("You are not logged in")
-			);
-		} elseif ($type == 'internal') {
-			$this->view->render("main/error");
-		} else {
-			$this->view->data["title"] = _("Log in");
-			$this->view->standard_form();
-			$this->view->add("styles", "css", [
-				"styles/login.css"
-			]);
-			$this->view->data["nav"] = "";
-			$this->view->data["about"] = sprintf(_("About %s"), Session::get("system/app_name"));
-			$this->view->data["content"] = $this->view->render("login", true);
-			$this->view->render('main');
-		}
-		exit();
-	}
+    /**
+     * Validación de sesión
+     * 
+     * Verifica si hay una sesión abierta para el usuario de forma general, o para el módulo
+     * especificado.
+     * 
+     * @param string $type Tipo de respuesta esperada (html, internal o JSON)
+     * @param string $module el módulo al que el usuario intenta acceder
+     */
+    protected function session_required($type = 'html', $module = "")
+    {
+        if (Session::get("user_id") != null) {
+            if (!empty($module)) {
+                $module = appModulesModel::findBy("module_url", $module);
+                $perms = roleModulesModel::where("module_id", $module->getModuleId())
+                    ->where("role_id", Session::get("role_id"))
+                    ->get();
+                if (empty($perms->getRoleModuleId())) {
+                    if ($type == 'json') {
+                        ApiResponse::error(
+                            code: "INSUFFICIENT_PERMISSIONS",
+                            title: _("Error"),
+                            message: _("You do not have permissions to perform this operation")
+                        );
+                    } else {
+                        $this->view->data["title"] = _("Not authorized");
+                        $this->view->standard_error();
+                        $this->view->data["nav"] = $this->view->render("main/nav", true);
+                        $this->view->data["content"] = $this->view->render("main/forbidden", true);
+                        $this->view->render('main');
+                    }
+                    exit();
+                }
+            }
+            return;
+        }
+        if ($type == 'json') {
+            ApiResponse::error(
+                code: "AUTH_REQUIRED",
+                title: _("Error"),
+                message: _("You are not logged in")
+            );
+        } elseif ($type == 'internal') {
+            $this->view->render("main/error");
+        } else {
+            $this->view->data["title"] = _("Log in");
+            $this->view->standard_form();
+            $this->view->add("styles", "css", [
+                "styles/login.css"
+            ]);
+            $this->view->data["nav"] = "";
+            $this->view->data["about"] = sprintf(_("About %s"), Session::get("system/app_name"));
+            $this->view->data["content"] = $this->view->render("login", true);
+            $this->view->render('main');
+        }
+        exit();
+    }
 
-	/**
-	 * Obtener IP
-	 * 
-	 * Ontiene la dirección IP del cliente desde la primera variable $_SERVER disponible
-	 * 
-	 * @return string IP del cliente
-	 */
-	protected function getRealIP()
-	{
-		if (!empty($_SERVER['HTTP_CLIENT_IP']))
-			return $_SERVER['HTTP_CLIENT_IP'];
-		if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-			return $_SERVER['HTTP_X_FORWARDED_FOR'];
-		return $_SERVER['REMOTE_ADDR'];
-	}
+    /**
+     * Obtener IP
+     * 
+     * Ontiene la dirección IP del cliente desde la primera variable $_SERVER disponible
+     * 
+     * @return string IP del cliente
+     */
+    protected function getRealIP()
+    {
+        if (!empty($_SERVER['HTTP_CLIENT_IP']))
+            return $_SERVER['HTTP_CLIENT_IP'];
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        return $_SERVER['REMOTE_ADDR'];
+    }
 
-	/**
-	 * Acciones de usuario
-	 * 
-	 * Agrega información acerca de acciones de usuario para un objeto en particular,
-	 * tales como el usuario y fecha de creación y el usuario y fecha de última edición
-	 * Date-time: 2021-11-18 09:32
-	 * 
-	 * @param array|object $element Un array asociativo que contiene los campos
-	 * creation_user, creation_time, edition_user y edition_time
-	 * 
-	 * @return void Realiza los cambios directamente en la vista
-	 */
-	protected function userActions($element)
-	{
-		if (is_object($element)) {
-			$element = $element->toArray();
-		}
-		if ($element["creation_user"] != 0) {
-			$creator = usersModel::find($element["creation_user"]);
-			$this->view->data["cr_user_name"] = $creator->getUserName();
-			$this->view->data["cr_time"] = Dates::isoToString($element["creation_time"], true);
-		} else {
-			$this->view->restrict[] = "created";
-		}
-		if ($element["edition_user"] != 0 && $element["edition_time"] != $element["creation_time"]) {
-			$editor = usersModel::find($element["edition_user"]);
-			$this->view->data["ed_user_name"] = $editor->getUserName();
-			$this->view->data["ed_time"] = Dates::isoToString($element["edition_time"], true);
-		} else {
-			$this->view->restrict[] = "edited";
-		}
-		if (isset($element["printing_user"]) && $element["printing_user"] != 0) {
-			$printing_user = usersModel::find($element["printing_user"]);
-			$this->view->data["pr_user_name"] = $printing_user->getUserName();
-			$this->view->data["pr_time"] = Dates::isoToString($element["printing_time"], true);
-		} else {
-			$this->view->restrict[] = "printed";
-		}
-	}
+    /**
+     * Acciones de usuario
+     * 
+     * Agrega información acerca de acciones de usuario para un objeto en particular,
+     * tales como el usuario y fecha de creación y el usuario y fecha de última edición
+     * Date-time: 2021-11-18 09:32
+     * 
+     * @param array|object $element Un array asociativo que contiene los campos
+     * creation_user, creation_time, edition_user y edition_time
+     * 
+     * @return void Realiza los cambios directamente en la vista
+     */
+    protected function userActions($element)
+    {
+        if (is_object($element)) {
+            $element = $element->toArray();
+        }
+        if ($element["creation_user"] != 0) {
+            $creator = usersModel::find($element["creation_user"]);
+            $this->view->data["cr_user_name"] = $creator->getUserName();
+            $this->view->data["cr_time"] = Dates::isoToString($element["creation_time"], true);
+        } else {
+            $this->view->restrict[] = "created";
+        }
+        if ($element["edition_user"] != 0 && $element["edition_time"] != $element["creation_time"]) {
+            $editor = usersModel::find($element["edition_user"]);
+            $this->view->data["ed_user_name"] = $editor->getUserName();
+            $this->view->data["ed_time"] = Dates::isoToString($element["edition_time"], true);
+        } else {
+            $this->view->restrict[] = "edited";
+        }
+        if (isset($element["printing_user"]) && $element["printing_user"] != 0) {
+            $printing_user = usersModel::find($element["printing_user"]);
+            $this->view->data["pr_user_name"] = $printing_user->getUserName();
+            $this->view->data["pr_time"] = Dates::isoToString($element["printing_time"], true);
+        } else {
+            $this->view->restrict[] = "printed";
+        }
+    }
 
-	/**
-	 * Registro de actividades del usuario
-	 * 
-	 * Registra, en la base de datos, cada una de las actividades del usuario previamente definidas,
-	 * a fin de poder consultar en el futuro el historial de actividades.
-	 * Incorporado el: 2021-12-05 16:44
-	 * 
-	 * @param string $action_key Clave de actividad realizada
-	 * @param string $element_key Clave del elemento sobre el cual se realiza la actividad
-	 * @param int $element_link Identificador del elemento
-	 * @param string $date_time Fecha y hora en formato ISO
-	 * 
-	 * @return void No se devuelven valores
-	 */
-	protected function setUserLog($action_key, $element_key, $element_link = null, $date_time = "")
-	{
-		if (empty($date_time)) {
-			$date_time = Date("Y-m-d H:i:s");
-		}
-		$element = appElementsModel::findBy("element_key", $element_key);
-		if (!$element->exists()) {
-			return;
-		}
-		$actions = [
-			"create" => 4,
-			"update" => 2,
-			"delete" => 1
-		];
-		if (!isset($actions[$action_key])) {
-			return;
-		}
-		$user_log = new userLogsModel();
-		$user_log->set(array(
-			"user_id" => Session::get("user_id"),
-			"element_id" => $element->getElementId(),
-			"action_id" => $actions[$action_key],
-			"date_time" => $date_time,
-			"element_link" => $element_link
-		))->save();
-	}
+    /**
+     * Registro de actividades del usuario
+     * 
+     * Registra, en la base de datos, cada una de las actividades del usuario previamente definidas,
+     * a fin de poder consultar en el futuro el historial de actividades.
+     * Incorporado el: 2021-12-05 16:44
+     * 
+     * @param string $action_key Clave de actividad realizada
+     * @param string $element_key Clave del elemento sobre el cual se realiza la actividad
+     * @param int $element_link Identificador del elemento
+     * @param string $date_time Fecha y hora en formato ISO
+     * 
+     * @return void No se devuelven valores
+     */
+    protected function setUserLog($action_key, $element_key, $element_link = null, $date_time = "")
+    {
+        if (empty($date_time)) {
+            $date_time = Date("Y-m-d H:i:s");
+        }
+        $element = appElementsModel::findBy("element_key", $element_key);
+        if (!$element->exists()) {
+            return;
+        }
+        $actions = [
+            "create" => 4,
+            "update" => 2,
+            "delete" => 1
+        ];
+        if (!isset($actions[$action_key])) {
+            return;
+        }
+        $user_log = new userLogsModel();
+        $user_log->set(array(
+            "user_id" => Session::get("user_id"),
+            "element_id" => $element->getElementId(),
+            "action_id" => $actions[$action_key],
+            "date_time" => $date_time,
+            "element_link" => $element_link
+        ))->save();
+    }
 
-	/**
-	 * Comprobar permisos
-	 * 
-	 * Comprueba si un usuario tiene permisos para el método solicitado
-	 */
-	protected function check_permissions($action, $element, $response = "default")
-	{
-		if ($response == "default") {
-			$response = $_SERVER["REQUEST_METHOD"] == "GET" ? "html" : "json";
-		}
-		$actions = ["read" => 8, "create" => 4, "update" => 2, "delete" => 1];
-		$permissions = Session::get("permissions");
-		if ($permissions == null) {
-			if ($response == 'json') {
-				ApiResponse::error(
-					code: "AUTH_REQUIRED",
-					title: _("Error"),
-					message: _("You are not logged in")
-				);
-			} elseif ($response == 'embedded') {
-				$this->view->render("main/error");
-			} else {
-				$this->view->data["title"] = _("Log in");
-				$this->view->standard_form();
-				$this->view->add("styles", "css", array(
-					'styles/login.css'
-				));
-				$this->view->data["nav"] = "";
-				$this->view->data["about"] = sprintf(_("About %s"), Session::get("system/app_name"));
-				$this->view->data["content"] = $this->view->render("login", true);
-				$this->view->render('main');
-			}
-			exit();
-		} elseif (!isset($permissions[$element]) || ($actions[$action] & $permissions[$element]) == 0) {
-			if ($response == "json") {
-				ApiResponse::error(
-					code: "INSUFFICIENT_PERMISSIONS",
-					title: _("Error"),
-					message: _("You do not have permissions to perform this operation")
-				);
-			} elseif ($response == "embedded") {
-				$this->view->render("main/forbidden");
-			} else {
-				$this->view->data["title"] = _("Not authorized");
-				$this->view->standard_error();
-				$this->view->data["nav"] = $this->view->render("main/nav", true);
-				$this->view->data["content"] = $this->view->render("main/forbidden", true);
-				if ($response == "standalone") {
-					$this->view->render('clean_main');
-				} else {
-					$this->view->render('main');
-				}
-			}
-			exit();
-		}
-	}
+    /**
+     * Comprobar permisos
+     * 
+     * Comprueba si un usuario tiene permisos para el método solicitado
+     */
+    protected function check_permissions($action, $element, $response = "default")
+    {
+        if ($response == "default") {
+            $response = $_SERVER["REQUEST_METHOD"] == "GET" ? "html" : "json";
+        }
+        $actions = ["read" => 8, "create" => 4, "update" => 2, "delete" => 1];
+        $permissions = Session::get("permissions");
+        if ($permissions == null) {
+            if ($response == 'json') {
+                ApiResponse::error(
+                    code: "AUTH_REQUIRED",
+                    title: _("Error"),
+                    message: _("You are not logged in")
+                );
+            } elseif ($response == 'embedded') {
+                $this->view->render("main/error");
+            } else {
+                $this->view->data["title"] = _("Log in");
+                $this->view->standard_form();
+                $this->view->add("styles", "css", array(
+                    'styles/login.css'
+                ));
+                $this->view->data["nav"] = "";
+                $this->view->data["about"] = sprintf(_("About %s"), Session::get("system/app_name"));
+                $this->view->data["content"] = $this->view->render("login", true);
+                $this->view->render('main');
+            }
+            exit();
+        } elseif (!isset($permissions[$element]) || ($actions[$action] & $permissions[$element]) == 0) {
+            if ($response == "json") {
+                ApiResponse::error(
+                    code: "INSUFFICIENT_PERMISSIONS",
+                    title: _("Error"),
+                    message: _("You do not have permissions to perform this operation")
+                );
+            } elseif ($response == "embedded") {
+                $this->view->render("main/forbidden");
+            } else {
+                $this->view->data["title"] = _("Not authorized");
+                $this->view->standard_error();
+                $this->view->data["nav"] = $this->view->render("main/nav", true);
+                $this->view->data["content"] = $this->view->render("main/forbidden", true);
+                if ($response == "standalone") {
+                    $this->view->render('clean_main');
+                } else {
+                    $this->view->render('main');
+                }
+            }
+            exit();
+        }
+    }
 
-	protected function Building($title = "")
-	{
-		$this->session_required("html", $this->module);
-		$this->view->data["title"] = empty($title) ? _("In construction") : $title;
-		$this->view->standard_list();
-		$this->view->data["nav"] = $this->view->render("main/nav", true);
-		$this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
-		$this->view->data["content"] = $this->view->render("main/building", true);
-		$this->view->render("main");
-	}
+    protected function Building($title = "")
+    {
+        $this->session_required("html", $this->module);
+        $this->view->data["title"] = empty($title) ? _("In construction") : $title;
+        $this->view->standard_list();
+        $this->view->data["nav"] = $this->view->render("main/nav", true);
+        $this->view->data["print_header"] = $this->view->render("main/" . Session::get("options/page_header"), true);
+        $this->view->data["content"] = $this->view->render("main/building", true);
+        $this->view->render("main");
+    }
 }

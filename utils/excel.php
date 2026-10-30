@@ -5,88 +5,88 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class excel
 {
-	public static function create_from_table(array $data, $fileName = 'data.xlsx')
-	{
-		$headers = $data["headers"] ?? [];
-		$fields = $data["fields"] ?? [];
-		$footers = $data["foot"] ?? [];
-		$content = $data["content"];
+    public static function create_from_table(array $data, $fileName = 'data.xlsx')
+    {
+        $headers = $data["headers"] ?? [];
+        $fields = $data["fields"] ?? [];
+        $footers = $data["foot"] ?? [];
+        $content = $data["content"];
 
-		$spreadsheet = new Spreadsheet();
-		$sheet = $spreadsheet->getActiveSheet();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
 
-		$currentRow = 1;
+        $currentRow = 1;
 
-		if (!empty($data["title"])) {
-			$sheet->setCellValue([1, 1], $data["title"]);
-			$sheet->getStyle("A1")
-				->getFont()
-				->setSize(16);
-			$sheet->getRowDimension('1')
-				->setRowHeight(20);
-			$sheet->mergeCells("A1:" . chr(64 + count($headers)) . "1");
-			$sheet->getStyle('A1')
-				->getAlignment()
-				->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        if (!empty($data["title"])) {
+            $sheet->setCellValue([1, 1], $data["title"]);
+            $sheet->getStyle("A1")
+                ->getFont()
+                ->setSize(16);
+            $sheet->getRowDimension('1')
+                ->setRowHeight(20);
+            $sheet->mergeCells("A1:" . chr(64 + count($headers)) . "1");
+            $sheet->getStyle('A1')
+                ->getAlignment()
+                ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
-			$currentRow += 2;
-		}
+            $currentRow += 2;
+        }
 
-		for ($i = 0, $l = sizeof($headers); $i < $l; $i++) {
-			$sheet->setCellValue([$i + 1, $currentRow], $headers[$i]);
-		}
-		$sheet->getStyle("A" . $currentRow . ":" . chr(64 + count($headers)) . $currentRow)
-			->getFill()
-			->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-			->getStartColor()
-			->setARGB('d9d9d9');
+        for ($i = 0, $l = sizeof($headers); $i < $l; $i++) {
+            $sheet->setCellValue([$i + 1, $currentRow], $headers[$i]);
+        }
+        $sheet->getStyle("A" . $currentRow . ":" . chr(64 + count($headers)) . $currentRow)
+            ->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()
+            ->setARGB('d9d9d9');
 
-		$sheet->getStyle("A" . $currentRow . ":" . chr(64 + count($headers)) . $currentRow)
-			->getFont()
-			->setBold(true);
-		$currentRow++;
+        $sheet->getStyle("A" . $currentRow . ":" . chr(64 + count($headers)) . $currentRow)
+            ->getFont()
+            ->setBold(true);
+        $currentRow++;
 
-		$maxWidth = array();
-		$l = sizeof($content);
-		for ($i = 0; $i < $l; $i++) {
-			$j = 0;
-			foreach ($fields as $k) {
-				$v = $content[$i][$k] ?? "";
-				if (strlen($v) > 100) {
-					$maxWidth[$j] = 50;
-				}
-				$sheet->setCellValue([$j + 1, $i + $currentRow], $v);
-				$j++;
-			}
-		}
-		if (count($footers) > 0) {
-			$j = 0;
-			foreach ($fields as $k) {
-				$v = $footers[$k] ?? "";
-				if (strlen($v) > 100) {
-					$maxWidth[$j] = 50;
-				}
-				$sheet->setCellValue([$j + 1, $l + 4], $v);
-				$j++;
-			}
+        $maxWidth = array();
+        $l = sizeof($content);
+        for ($i = 0; $i < $l; $i++) {
+            $j = 0;
+            foreach ($fields as $k) {
+                $v = $content[$i][$k] ?? "";
+                if (strlen($v) > 100) {
+                    $maxWidth[$j] = 50;
+                }
+                $sheet->setCellValue([$j + 1, $i + $currentRow], $v);
+                $j++;
+            }
+        }
+        if (count($footers) > 0) {
+            $j = 0;
+            foreach ($fields as $k) {
+                $v = $footers[$k] ?? "";
+                if (strlen($v) > 100) {
+                    $maxWidth[$j] = 50;
+                }
+                $sheet->setCellValue([$j + 1, $l + 4], $v);
+                $j++;
+            }
 
-			$sheet->getStyle("A" . ($l + $currentRow) . ":" . chr(64 + count($fields)) . ($l + $currentRow))
-				->getFont()
-				->setBold(true);
-		}
+            $sheet->getStyle("A" . ($l + $currentRow) . ":" . chr(64 + count($fields)) . ($l + $currentRow))
+                ->getFont()
+                ->setBold(true);
+        }
 
-		$sheet->calculateColumnWidths();
-		foreach (range(65, 64 + count($fields)) as $ascii) {
-			$dimension = $sheet->getColumnDimension(chr($ascii));
-			if (isset($maxWidth[$ascii - 65])) {
-				$dimension->setWidth($maxWidth[$ascii - 65]);
-			} else {
-				$dimension->setAutoSize(true);
-			}
-		}
-		$writer = new Xlsx($spreadsheet);
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
-		$writer->save('php://output');
-	}
+        $sheet->calculateColumnWidths();
+        foreach (range(65, 64 + count($fields)) as $ascii) {
+            $dimension = $sheet->getColumnDimension(chr($ascii));
+            if (isset($maxWidth[$ascii - 65])) {
+                $dimension->setWidth($maxWidth[$ascii - 65]);
+            } else {
+                $dimension->setAutoSize(true);
+            }
+        }
+        $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . urlencode($fileName) . '"');
+        $writer->save('php://output');
+    }
 }

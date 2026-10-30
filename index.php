@@ -18,29 +18,22 @@
  * @version 1.0.0 Primera edición
  */
 $server_name = explode(".", $_SERVER["SERVER_NAME"]);
-if(file_exists("entities/" . $server_name[0] . "/config.php"))
-{
-	include "entities/" . $server_name[0] . "/config.php";
-}
-elseif(file_exists('config.php'))
-{
-	include 'config.php';
-}
-else
-{
-	include 'default_config.php';
+if (file_exists("entities/" . $server_name[0] . "/config.php")) {
+    include "entities/" . $server_name[0] . "/config.php";
+} elseif (file_exists('config.php')) {
+    include 'config.php';
+} else {
+    include 'default_config.php';
 }
 
 # Ficheros de la carpeta libs
-foreach(glob("libs/*") as $file)
-{
-	include $file;
+foreach (glob("libs/*") as $file) {
+    include $file;
 }
 
 # Ficheros de la carpeta utils
-foreach(glob("utils/*") as $file)
-{
-	include $file;
+foreach (glob("utils/*") as $file) {
+    include $file;
 }
 
 /**
@@ -56,16 +49,13 @@ foreach(glob("utils/*") as $file)
  */
 function site_autoload($class)
 {
-	if(file_exists("models/orm/$class.php"))
-	{
-		require "models/orm/$class.php";
-	}
-	elseif(file_exists('controllers/' . $class .".php"))
-	{
-		require 'controllers/' . $class .".php";
-	}
+    if (file_exists("models/orm/$class.php")) {
+        require "models/orm/$class.php";
+    } elseif (file_exists('controllers/' . $class . ".php")) {
+        require 'controllers/' . $class . ".php";
+    }
 }
-spl_autoload_register('site_autoload');	
+spl_autoload_register('site_autoload');
 
 # Iniciar la sesión
 Session::init();
@@ -73,4 +63,3 @@ Session::init();
 # Crear un objeto del tipo bootstrap
 $Bootstrap = new Bootstrap();
 $Bootstrap->init();
-?>

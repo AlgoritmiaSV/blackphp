@@ -16,39 +16,39 @@
  * Tipo de base de datos a utilizar.
  * Valores aceptados: mysql
  */
-define('DB_TYPE', 'mysql');
+const DB_TYPE = 'mysql';
 
 /**
  * Nombre del host o la IP del servidor de base de datos
  */
-define('DB_HOST', 'localhost');
+const DB_HOST = 'localhost';
 
 /**
  * Número de puerto del servicio de base de datos
  */
-define('DB_PORT', '3306');
+const DB_PORT = '3306';
 
 /**
  * Nombre de la base de datos
  */
-define('DB_NAME', 'blackphp');
+const DB_NAME = 'blackphp';
 
 /**
  * Usuario de la base de datos
  */
-define('DB_USER', 'bphpuser');
+const DB_USER = 'bphpuser';
 
 /**
  * Contraseña para conectarse a la base de datos
  */
-define('DB_PASS', 'x/p-29B%&ELYr.6A');
+const DB_PASS = 'x/p-29B%&ELYr.6A';
 
 /**
  * Prefijo de la base de datos
  * 
  * Prefijo que se agregará a cada tabla y vista de la base de datos
  */
-define('DB_PREFIX', '');
+const DB_PREFIX = '';
 
 ################################ LICENCIA DE USO DEL SOFTWARE
 /**
@@ -56,17 +56,17 @@ define('DB_PREFIX', '');
  * 
  * URL del servidor administrador de licencias.
  */
-define('LICENSE_SERVER', null);
+const LICENSE_SERVER = null;
 
 /**
  * Usuario al quien es acreditada la licencia
  */
-define('LICENSE_USER', null);
+const LICENSE_USER = null;
 
 /**
  * Contraseña para comprobación de licencia
  */
-define('LICENSE_PWD', null);
+const LICENSE_PWD = null;
 
 ################################ OTRAS CONFIGURACIONES
 /**
@@ -77,19 +77,18 @@ define('LICENSE_PWD', null);
  * El estado normal es PRODUCTION; en el modo MAINTENANCE, sólo se despliega un
  * aviso de Sistema en Mantenimiento.
  */
-define('SYSTEM_STATUS', 'PRODUCTION');
+const SYSTEM_STATUS = 'PRODUCTION';
 
 /**
  * Creación de entidades
  * Permite configurar el sistema para permitir, o no, nuevas entidades.
  * Valores aceptados: OPEN, CLOSE
  */
-define('CREATE_ENTITY', 'OPEN');
+const CREATE_ENTITY = 'OPEN';
 
 /**
  * Carpeta privada
  * Ubicación de archivos sensibles de las entidades. Se recomienda una ubicación
  * no accesible al público.
  */
-define('PRIVATE_FOLDER', 'entities/');
-?>
+const PRIVATE_FOLDER = 'entities/';

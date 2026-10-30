@@ -1,708 +1,708 @@
-/*
-#	Lists viewer
-#	By: Edwin Fajardo
-#	Date-time: 2020-06-18 13:17
-*/
+/**
+ * Lists viewer
+ * By: Edwin Fajardo
+ * Date-time: 2020-06-18 13:17
+ */
 
 /**
  * Extensión de JQuery para construir un formulatio partiendo de un objeto
  */
 jQuery(function ($) {
-	$.extend({
-		form: function (url, data, method) {
-			if (method == null) method = 'POST';
-			if (data == null) data = {};
+    $.extend({
+        form: function (url, data, method) {
+            if (method == null) method = 'POST';
+            if (data == null) data = {};
 
-			var form = $('<form>').attr({
-				method: method,
-				action: url
-			}).css({
-				display: 'none'
-			});
+            var form = $('<form>').attr({
+                method: method,
+                action: url
+            }).css({
+                display: 'none'
+            });
 
-			var addData = function (name, data) {
-				if (Array.isArray(data)) {
-					for (var i = 0; i < data.length; i++) {
-						var value = data[i];
-						addData(name + '[]', value);
-					}
-				} else if (typeof data === 'object') {
-					for (var key in data) {
-						if (data.hasOwnProperty(key)) {
-							addData(name + '[' + key + ']', data[key]);
-						}
-					}
-				} else if (data != null) {
-					form.append($('<input>').attr({
-						type: 'hidden',
-						name: String(name),
-						value: String(data)
-					}));
-				}
-			};
+            var addData = function (name, data) {
+                if (Array.isArray(data)) {
+                    for (var i = 0; i < data.length; i++) {
+                        var value = data[i];
+                        addData(name + '[]', value);
+                    }
+                } else if (typeof data === 'object') {
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            addData(name + '[' + key + ']', data[key]);
+                        }
+                    }
+                } else if (data != null) {
+                    form.append($('<input>').attr({
+                        type: 'hidden',
+                        name: String(name),
+                        value: String(data)
+                    }));
+                }
+            };
 
-			for (var key in data) {
-				if (data.hasOwnProperty(key)) {
-					addData(key, data[key]);
-				}
-			}
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    addData(key, data[key]);
+                }
+            }
 
-			return form.appendTo('body');
-		}
-	});
+            return form.appendTo('body');
+        }
+    });
 });
 
 let query = '';
 
 $(function () {
-	if (window.jspdf != null) {
-		window.jsPDF = window.jspdf.jsPDF;
-	}
+    if (window.jspdf != null) {
+        window.jsPDF = window.jspdf.jsPDF;
+    }
 
-	let platform = "Windows";
-	if (navigator.userAgentData) {
-		platform = navigator.userAgentData.platform;
-	}
-
-
-	/** 
-	 * Data viewer
-	 * 
-	 * Carga de contenido de tablas a través de peticiones generales
-	 */
-	$(".data_viewer").each(function () {
-		let tableId = $(this).attr("id");
-		if ($(this).data("loadmode") == "lazzy") {
-			currentPage = 1;
-			maxPages = 1;
-			emptyTable = true;
-			LazzyLoadTable(tableId);
-
-			const div = document.querySelector('.content_viewer');
-			scrollEvent = null;
-
-			div.addEventListener('scroll', function () {
-				const isAtBottom = div.scrollHeight - div.scrollTop <= div.clientHeight + 1;
-
-				scrollEvent = setTimeout(() => {
-					clearTimeout(scrollEvent);
-					console.log('div.scrollHeight: ' + div.scrollHeight + '- div.scrollTop: ' + div.scrollTop + ' <= div.clientHeight: ' + div.clientHeight);
-				}, 1000);
-
-				if (isAtBottom && currentPage < maxPages) {
-					console.log('Reached the bottom of the div!');
-					currentPage++;
-					LazzyLoadTable(tableId, query);
-				}
-			});
-		}
-		else {
-			load_table(tableId);
-		}
-		updateFooterColspan(tableId);
-	});
-
-	function load_table(table_id) {
-		var _table = $("#" + table_id);
-		var _template = _table.find(".template").clone().removeClass("template").prop("outerHTML");
-		$.ajax({
-			method: "POST",
-			url: url.module + "/" + table_id + "_loader/",
-			data: url,
-			dataType: "json"
-		})
-			.done(function (resp) {
-				var empty_table = true;
-				if (resp.data.content != null) {
-					if (resp.data.content.length > 0) {
-						empty_table = false;
-					}
-					$.each(resp.data.content, function (index, value) {
-						var tr = _template;
-						$.each(value, function (e_index, e_value) {
-							tr = tr.replace(new RegExp("{{" + e_index + "}}", 'g'), e_value);
-						});
-						$("#" + table_id + " tbody").append(tr);
-					});
-
-					// Preprocess table data once
-					$(".data_viewer tbody tr").not(".template").each(function () {
-						let searchableText = $(this).text().toLowerCase();
-						$(this).data("searchable", searchableText);
-					});
-
-					$("#" + table_id + " tbody tr").on("click", function () {
-						if ($(this).data("href") && (!$(this).data("alert") || platform == "Android")) {
-							location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
-						}
-						else if ($(this).data("alert")) {
-							$.jAlert({
-								'title': $(this).data("title") || false,
-								'theme': $(this).data("theme") || jAlertTheme || "dark_blue",
-								'iframe': $(this).data("alert"),
-								'size': {
-									"height": content_height + "px",
-									"width": "100%"
-								},
-								'iframeHeight': (content_height - 41) + "px",
-								'noPadContent': true,
-								'onClose': $(this).data("reload") ? function (alert) { location.reload(); } : function (alert) { return false; }
-							});
-						}
-					});
-					if (resp.data.foot) {
-						$.each(resp.data.foot, function (index, value) {
-							tr = $("#" + table_id + " tfoot").html();
-							tr = tr.replace(new RegExp("{{" + index + "}}", 'g'), value);
-							$("#" + table_id + " tfoot").html(tr);
-						});
-					}
-				}
-				if (resp.meta.total_rows != null) {
-					var current_page = 0;
-					if (url.options.page == null) {
-						current_page = resp.data.total_rows > 0 ? 1 : 0;
-					}
-					else {
-						current_page = url.options.page;
-					}
-					$('.pagination').jqPagination({
-						paged: function (page) {
-							url.options["page"] = page;
-							goto_url();
-						},
-						max_page: Math.ceil(resp.data.found_rows / 100),
-						current_page: current_page,
-						page_string: "{current_page} / {max_page}"
-					});
-				}
-				_table.show();
-				if (empty_table) {
-					$(".empty_table_message").show();
-				}
-				if (!_table.data("type")) {
-					_table.floatThead({
-						'scrollContainer': true
-					});
-				}
-
-				/** Relleno con celdas vacías */
-				var void_tr = _template.replaceAll(/\{\{[A-Za-z0-9_]+\}\}/g, "");
-				void_tr = $(void_tr);
-				void_tr.find("td").html("&nbsp;");
-				void_tr.addClass("void_tr");
-				while (_table.outerHeight() + 45 < content_height) {
-					$("#" + table_id + " tbody").append(void_tr.clone());
-				}
-
-				/* Fill content outside table after load */
-				if (data.meta) {
-					$.each(data.meta, function (index, value) {
-						$("." + index).text(value);
-					});
-				}
-			})
-			.fail(function () {
-				$("div.loading_error").show();
-			})
-			.always(function () {
-				$("div.loading_data").hide();
-			});
-	}
-
-	function LazzyLoadTable(table_id, query = '') {
-		var _table = $("#" + table_id);
-		var _template = _table.find(".template").clone().removeClass("template").prop("outerHTML");
-		let current_url = structuredClone(url);
-		current_url.page = currentPage;
-		current_url.query = query;
-		$.ajax({
-			method: "POST",
-			url: current_url.module + "/" + table_id + "_loader/",
-			data: current_url,
-			dataType: "json"
-		})
-			.done(function (resp) {
-				if (resp.data.content != null) {
-					if (resp.data.content.length > 0) {
-						emptyTable = false;
-					}
-					$.each(resp.data.content, function (index, value) {
-						var tr = _template;
-						$.each(value, function (e_index, e_value) {
-							tr = tr.replace(new RegExp("{{" + e_index + "}}", 'g'), e_value);
-						});
-						$("#" + table_id + " tbody").append(tr);
-					});
-
-					// Preprocess table data once
-					$(".data_viewer tbody tr").not(".template").each(function () {
-						let searchableText = $(this).text().toLowerCase();
-						$(this).data("searchable", searchableText);
-					});
-
-					$("#" + table_id + " tbody tr").off("click");
-					$("#" + table_id + " tbody tr").on("click", function () {
-						if ($(this).data("href")) {
-							location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
-						}
-						else if ($(this).data("alert")) {
-							$.jAlert({
-								'title': $(this).data("title") || false,
-								'theme': $(this).data("theme") || jAlertTheme || "dark_blue",
-								'iframe': $(this).data("alert"),
-								'size': {
-									"height": content_height + "px",
-									"width": "100%"
-								},
-								'iframeHeight': (content_height - 41) + "px",
-								'noPadContent': true,
-								'onClose': $(this).data("reload") ? function (alert) { location.reload(); } : function (alert) { return false; }
-							});
-						}
-					});
-					if (resp.data.foot) {
-						$.each(resp.data.foot, function (index, value) {
-							tr = $("#" + table_id + " tfoot").html();
-							tr = tr.replace(new RegExp("{{" + index + "}}", 'g'), value);
-							$("#" + table_id + " tfoot").html(tr);
-						});
-					}
-				}
-				if (resp.data.total_rows != null) {
-					maxPages = Math.ceil(resp.data.total_rows / 200);
-				}
-				else {
-					maxPages = 1;
-				}
-				_table.show();
-				if (emptyTable) {
-					$(".empty_table_message").show();
-				}
-				else {
-					$(".empty_table_message").hide();
-				}
-				if (!_table.data("type")) {
-					_table.floatThead({
-						'scrollContainer': true
-					});
-				}
-
-				/** Relleno con celdas vacías */
-				var void_tr = _template.replaceAll(/\{\{[A-Za-z0-9_]+\}\}/g, "");
-				void_tr = $(void_tr);
-				void_tr.find("td").html("&nbsp;");
-				void_tr.addClass("void_tr");
-				while (_table.outerHeight() + 45 < content_height) {
-					$("#" + table_id + " tbody").append(void_tr.clone());
-				}
-
-				/* Fill content outside table after load */
-				if (resp.data.meta) {
-					$.each(resp.data.meta, function (index, value) {
-						$("." + index).text(value);
-					});
-				}
-			})
-			.fail(function () {
-				$("div.loading_error").show();
-			})
-			.always(function () {
-				$("div.loading_data").hide();
-			});
-	}
-
-	/* Content loader */
-	$(".content_loader").each(function () {
-		load_content($(this).attr("id"));
-	});
-
-	function load_content(div_id) {
-		var _div = $("#" + div_id);
-		module = url.module || "index";
-		$.ajax({
-			method: "POST",
-			url: module + "/" + div_id + "_loader/",
-			data: url,
-			dataType: "html"
-		})
-			.done(function (data) {
-				_div.html(data);
-				$(".menu_item").on("click", function () {
-					$(this).css({
-						"opacity": "0.1",
-						"transform": "scale(2)"
-					});
-				});
-				$("#main_content").has(".details_content").addClass("details_main_content");
-				$(".close_details").on("click", function (e) {
-					e.preventDefault();
-					$(".details_content").css({
-						"opacity": "0.1",
-						"transform": "scale(0.1)"
-					});
-					history.back();
-				});
-				_div.find(".link_button").on("click", function () {
-					const href = $(this).data("href");
-					const target = href.startsWith("http") ? "_blank" : "_top";
-					window.open(href, target);
-				});
-				_div.find(".alert_button").on("click", function () {
-					var alert_href = $(this).data("href");
-					$.jAlert({
-						'title': $(this).data("title") || false,
-						'theme': $(this).data("theme") || "blue",
-						'iframe': alert_href,
-						'size': {
-							"height": content_height + "px",
-							"width": "100%"
-						},
-						'iframeHeight': (content_height - 41) + "px",
-						'noPadContent': true
-					});
-					return false;
-				});
-				_div.find(".print_button").on("click", function () {
-					print_header = null;
-					if ($(".print_header").length) {
-						print_header = $(".print_header").html();
-					}
-					print_footer = null;
-					if ($(".print_footer").length) {
-						print_footer = $(".print_footer").html();
-					}
-					$($(this).data("print")).printThis({
-						'loadCSS': $(this).data("css") || "",
-						'header': print_header,
-						'footer': print_footer
-					});
-				});
-				_div.find(".pdf_button").on("click", function () {
-					/* Destroy floatThead to avoid conficts with printThis */
-					var html = "";
-					var print_header = "";
-					if ($(".print_header").length) {
-						print_header = $(".print_header").html();
-					}
-					var print_footer = "";
-					if ($(".print_footer").length) {
-						print_footer = $(".print_footer").html();
-					}
-					html = print_header + $($(this).data("content")).html() + print_footer;
-					getPDF(html);
-				});
-				_div.find(".filter_button").on("click", function () {
-					$(".action_filter").toggle("slow");
-				});
-				_div.find("form").on("submit", form_on_submit);
-				$(".open_dialog_button").on("click", function () {
-					$("#" + $(this).data("dialog")).dialog("open");
-				});
-				/*
-				if($(".delete_button").length)
-				{
-					$(".delete_button").on("click", delete_button_click);
-				}
-				if($(".change_status_button").length)
-				{
-					$(".change_status_button").on("click", change_status_click);
-				}
-				*/
-				if ($(".file_downloader").length && typeof (FileDownloader) == "function") {
-					FileDownloader();
-				}
-
-				// Buscador en menú
-				if (typeof (menuSearchEvent) == "function") {
-					menuSearchEvent();
-				}
-
-				//Show data viewer
-				_div.find(".data_viewer").show();
-
-				/* Link row */
-				$(".link_row").on("click", function () {
-					if ($(this).data("href") != "#") {
-						location.href = $(this).data("href");
-					}
-				});
-
-				/* Charts */
-				var ctx = $(".myChart");
-				if (ctx.length > 0) {
-					init_chart();
-				}
-			})
-			.fail(function () {
-				$("div.loading_error").show();
-			})
-			.always(function () {
-				$("div.loading_data").hide();
-			});
-	}
-
-	if ($(".data_viewer").length) {
-		let searchTimeout;
-		$(".data_search").on("input", function () {
-			clearTimeout(searchTimeout);
-			query = $(this).val().trim().toLowerCase();
-
-			if ($(this).data("searchmode") === 'lazzy') {
-				searchTimeout = setTimeout(function () {
-					$(".data_viewer tbody tr").not(".template").each(function () {
-						$(this).remove();
-					});
-					const firstTable = document.querySelector('table.data_viewer:not(.floatThead-table)');
-					const viewerId = firstTable ? firstTable.id : null;
-
-					currentPage = 1;
-					maxPages = 1;
-					emptyTable = true;
-					LazzyLoadTable(viewerId, query);
-				}, 150); // Adjust delay to balance responsiveness
-			}
-			else {
-				searchTimeout = setTimeout(function () {
-					$(".data_viewer tbody tr").not(".template").each(function () {
-						$(this).toggle($(this).data("searchable").includes(query));
-					});
-				}, 150); // Adjust delay to balance responsiveness
-			}
-		});
-	}
-
-	/* Filter loader */
-	//filter_content = [];
-	$(".data_filter").each(function () {
-		if ($(this).is("select")) {
-			load_filter($(this).attr("id"));
-		}
-		else {
-			$(this).on("change", function () {
-				if ($(this).is(".date_input")) {
-					$(this).data("value", $(this).val());
-					url.options[$(this).data("identifier")] = $.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate"));
-				}
-				else {
-					url.options[$(this).data("identifier")] = $(this).val();
-				}
-				goto_url();
-			});
-		}
-	});
-
-	function load_filter(selector_id) {
-		var action_module = url.module || "index";
-		var _selector = $("#" + selector_id);
-		if (_selector.data("module") != null) {
-			action_module = _selector.data("module");
-		}
-		$.ajax({
-			method: "POST",
-			url: action_module + "/" + selector_id + "_loader/",
-			data: url,
-			dataType: "json"
-		})
-			.done(function (resp) {
-				if (resp.data) {
-					var select_default_width = screen.width < 750 ? '100%' : 'fit-content';
-					var select_params = {
-						data: resp.data,
-						dropdownAutoWidth: true,
-						placeholder: _selector.data("placeholder") || "",
-						width: _selector.data("width") || select_default_width
-					}
-					if (_selector.data("search") || _selector.data("default") == "none") {
-						item = $(document.createElement("option"));
-						item.appendTo(_selector);
-					}
-					if (!_selector.data("search")) {
-						select_params.minimumResultsForSearch = Infinity;
-					}
-					_selector.select2(select_params);
-					if (_selector.data("value") != null) {
-						_selector.val(_selector.data("value"));
-						_selector.trigger('change.select2');
-					}
-					if (_selector.data("identifier")) {
-						if (url.options[_selector.data("identifier")]) {
-							_selector.val(url.options[_selector.data("identifier")]);
-							_selector.trigger('change.select2');
-						}
-						_selector.on("change", function () {
-							url.options[_selector.data("identifier")] = _selector.val();
-							if (_selector.data("reset")) {
-								fields = _selector.data("reset").split(",");
-								$.each(fields, function () {
-									if (url.options[this]) {
-										url.options[this] = null;
-									}
-								});
-							}
-							goto_url();
-						});
-					}
-				}
-			})
-			.fail(function () {
-				_selector.hide();
-			})
-			.always(function () {
-			});
-	}
-
-	$(".filter_button").on("click", function () {
-		$(".action_filter").toggle("slow");
-	});
-
-	/**
-	 * Footer de una columna
-	 * 
-	 * Calcular colspan en footer de una sola columna.
-	 */
-	function updateFooterColspan(tableId) {
-		const table = document.getElementById(tableId);
-		if (!table) return;
-
-		// Count only visible <th> or <td> in the first row (header row is typical)
-		const headerCells = table.querySelectorAll("thead tr th, thead tr td");
-		let visibleCount = 0;
-
-		headerCells.forEach(cell => {
-			const style = window.getComputedStyle(cell);
-			if (style.display !== "none") {
-				visibleCount++;
-			}
-		});
-
-		// Update the footer cell colspan
-		const footerCell = table.querySelector(".one_column_footer");
-		if (footerCell) {
-			footerCell.colSpan = visibleCount;
-		}
-	}
-
-	/* Go To URL */
-	function goto_url() {
-		if (url.method == null) {
-			url.method = "Index";
-		}
-		var href = url.module + "/" + url.method + "/";
-		$.each(url.options, function (key, value) {
-			if (value != null && value != 0 && value != "0") {
-				href += key + "/" + value + "/";
-			}
-		});
-
-		location.href = href;
-	}
-
-	/** Download link */
-	$(".download_link").on("click", function () {
-		$.form($(this).data("url"), url).submit();
-	});
-
-	/* Print button */
-	$(".print_button").on("click", function () {
-		// Imprimit todo si no viene definido en data-print
-		if ($(this).data("print") == null) {
-			window.print();
-			return false;
-		}
-
-		/* Destroy floatThead to avoid conficts with printThis */
-		if ($(".data_viewer").length > 0) {
-			$($(this).data("print")).floatThead('destroy');
-		}
-		var rand = Math.floor(Math.random() * 100000);
-		var print_header = null;
-		if ($(".print_header").length) {
-			print_header = $(".print_header").html();
-		}
-		var print_footer = null;
-		if ($(".print_footer").length) {
-			print_footer = $(".print_footer").html();
-		}
-		var css = "";
-		if ($(this).data("print") == ".data_viewer" || $(this).data("print") == ".data_table") {
-			css = 'public/styles/print_list.css?r=' + rand;
-		}
-		if ($($(this).data("print")).data("css") !== undefined) {
-			css = $($(this).data("print")).data("css");
-		}
-		$($(this).data("print")).printThis({
-			'loadCSS': css,
-			'header': print_header,
-			'footer': print_footer
-		});
-	});
-
-	/** PDF button */
-	$(".pdf_button").on("click", function () {
-		/* Destroy floatThead to avoid conficts with printThis */
-		if ($(".data_viewer").length > 0) {
-			$($(this).data("print")).floatThead('destroy');
-		}
-		var html = "";
-		var print_header = "";
-		if ($(".print_header").length) {
-			print_header = $(".print_header").html();
-		}
-		var print_footer = "";
-		if ($(".print_footer").length) {
-			print_footer = $(".print_footer").html();
-		}
-		html = print_header;
-		$($(this).data("content")).each(function () {
-			html += $(this).html();
-		});
-		html += print_footer;
-		getPDF(html);
-	});
-
-	function getPDF(html) {
-		div = $(document.createElement('div'));
-		div.css("width", "720px");
-		div.html(html);
-		$("body").append(div);
-		var HTML_Width = div.width();
-		var HTML_Height = div.height();
-		var top_left_margin = 48;
-		var PDF_Width = HTML_Width + (top_left_margin * 2);
-		var PDF_Height = 958 + (top_left_margin * 2);
-		var canvas_image_width = HTML_Width;
-		var canvas_image_height = HTML_Height;
-
-		var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-
-		html2canvas(div[0], {
-			allowTaint: true,
-			scale: 2
-		}).then(function (canvas) {
-			canvas.getContext('2d');
-
-			console.log(canvas.height + "  " + canvas.width);
+    let platform = "Windows";
+    if (navigator.userAgentData) {
+        platform = navigator.userAgentData.platform;
+    }
 
 
-			var imgData = canvas.toDataURL("image/jpeg", 1.0);
-			var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-			pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+    /** 
+     * Data viewer
+     * 
+     * Carga de contenido de tablas a través de peticiones generales
+     */
+    $(".data_viewer").each(function () {
+        let tableId = $(this).attr("id");
+        if ($(this).data("loadmode") == "lazzy") {
+            currentPage = 1;
+            maxPages = 1;
+            emptyTable = true;
+            LazzyLoadTable(tableId);
+
+            const div = document.querySelector('.content_viewer');
+            scrollEvent = null;
+
+            div.addEventListener('scroll', function () {
+                const isAtBottom = div.scrollHeight - div.scrollTop <= div.clientHeight + 1;
+
+                scrollEvent = setTimeout(() => {
+                    clearTimeout(scrollEvent);
+                    console.log('div.scrollHeight: ' + div.scrollHeight + '- div.scrollTop: ' + div.scrollTop + ' <= div.clientHeight: ' + div.clientHeight);
+                }, 1000);
+
+                if (isAtBottom && currentPage < maxPages) {
+                    console.log('Reached the bottom of the div!');
+                    currentPage++;
+                    LazzyLoadTable(tableId, query);
+                }
+            });
+        }
+        else {
+            load_table(tableId);
+        }
+        updateFooterColspan(tableId);
+    });
+
+    function load_table(table_id) {
+        var _table = $("#" + table_id);
+        var _template = _table.find(".template").clone().removeClass("template").prop("outerHTML");
+        $.ajax({
+            method: "POST",
+            url: url.module + "/" + table_id + "_loader/",
+            data: url,
+            dataType: "json"
+        })
+            .done(function (resp) {
+                var empty_table = true;
+                if (resp.data.content != null) {
+                    if (resp.data.content.length > 0) {
+                        empty_table = false;
+                    }
+                    $.each(resp.data.content, function (index, value) {
+                        var tr = _template;
+                        $.each(value, function (e_index, e_value) {
+                            tr = tr.replace(new RegExp("{{" + e_index + "}}", 'g'), e_value);
+                        });
+                        $("#" + table_id + " tbody").append(tr);
+                    });
+
+                    // Preprocess table data once
+                    $(".data_viewer tbody tr").not(".template").each(function () {
+                        let searchableText = $(this).text().toLowerCase();
+                        $(this).data("searchable", searchableText);
+                    });
+
+                    $("#" + table_id + " tbody tr").on("click", function () {
+                        if ($(this).data("href") && (!$(this).data("alert") || platform == "Android")) {
+                            location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
+                        }
+                        else if ($(this).data("alert")) {
+                            $.jAlert({
+                                'title': $(this).data("title") || false,
+                                'theme': $(this).data("theme") || jAlertTheme || "dark_blue",
+                                'iframe': $(this).data("alert"),
+                                'size': {
+                                    "height": content_height + "px",
+                                    "width": "100%"
+                                },
+                                'iframeHeight': (content_height - 41) + "px",
+                                'noPadContent': true,
+                                'onClose': $(this).data("reload") ? function (alert) { location.reload(); } : function (alert) { return false; }
+                            });
+                        }
+                    });
+                    if (resp.data.foot) {
+                        $.each(resp.data.foot, function (index, value) {
+                            tr = $("#" + table_id + " tfoot").html();
+                            tr = tr.replace(new RegExp("{{" + index + "}}", 'g'), value);
+                            $("#" + table_id + " tfoot").html(tr);
+                        });
+                    }
+                }
+                if (resp.meta.total_rows != null) {
+                    var current_page = 0;
+                    if (url.options.page == null) {
+                        current_page = resp.data.total_rows > 0 ? 1 : 0;
+                    }
+                    else {
+                        current_page = url.options.page;
+                    }
+                    $('.pagination').jqPagination({
+                        paged: function (page) {
+                            url.options["page"] = page;
+                            goto_url();
+                        },
+                        max_page: Math.ceil(resp.data.found_rows / 100),
+                        current_page: current_page,
+                        page_string: "{current_page} / {max_page}"
+                    });
+                }
+                _table.show();
+                if (empty_table) {
+                    $(".empty_table_message").show();
+                }
+                if (!_table.data("type")) {
+                    _table.floatThead({
+                        'scrollContainer': true
+                    });
+                }
+
+                /** Relleno con celdas vacías */
+                var void_tr = _template.replaceAll(/\{\{[A-Za-z0-9_]+\}\}/g, "");
+                void_tr = $(void_tr);
+                void_tr.find("td").html("&nbsp;");
+                void_tr.addClass("void_tr");
+                while (_table.outerHeight() + 45 < content_height) {
+                    $("#" + table_id + " tbody").append(void_tr.clone());
+                }
+
+                /* Fill content outside table after load */
+                if (resp.data.meta) {
+                    $.each(resp.data.meta, function (index, value) {
+                        $("." + index).text(value);
+                    });
+                }
+            })
+            .fail(function () {
+                $("div.loading_error").show();
+            })
+            .always(function () {
+                $("div.loading_data").hide();
+            });
+    }
+
+    function LazzyLoadTable(table_id, query = '') {
+        var _table = $("#" + table_id);
+        var _template = _table.find(".template").clone().removeClass("template").prop("outerHTML");
+        let current_url = structuredClone(url);
+        current_url.page = currentPage;
+        current_url.query = query;
+        $.ajax({
+            method: "POST",
+            url: current_url.module + "/" + table_id + "_loader/",
+            data: current_url,
+            dataType: "json"
+        })
+            .done(function (resp) {
+                if (resp.data.content != null) {
+                    if (resp.data.content.length > 0) {
+                        emptyTable = false;
+                    }
+                    $.each(resp.data.content, function (index, value) {
+                        var tr = _template;
+                        $.each(value, function (e_index, e_value) {
+                            tr = tr.replace(new RegExp("{{" + e_index + "}}", 'g'), e_value);
+                        });
+                        $("#" + table_id + " tbody").append(tr);
+                    });
+
+                    // Preprocess table data once
+                    $(".data_viewer tbody tr").not(".template").each(function () {
+                        let searchableText = $(this).text().toLowerCase();
+                        $(this).data("searchable", searchableText);
+                    });
+
+                    $("#" + table_id + " tbody tr").off("click");
+                    $("#" + table_id + " tbody tr").on("click", function () {
+                        if ($(this).data("href")) {
+                            location.href = $(this).data("href") + "/" + $(this).data("id") + "/"
+                        }
+                        else if ($(this).data("alert")) {
+                            $.jAlert({
+                                'title': $(this).data("title") || false,
+                                'theme': $(this).data("theme") || jAlertTheme || "dark_blue",
+                                'iframe': $(this).data("alert"),
+                                'size': {
+                                    "height": content_height + "px",
+                                    "width": "100%"
+                                },
+                                'iframeHeight': (content_height - 41) + "px",
+                                'noPadContent': true,
+                                'onClose': $(this).data("reload") ? function (alert) { location.reload(); } : function (alert) { return false; }
+                            });
+                        }
+                    });
+                    if (resp.data.foot) {
+                        $.each(resp.data.foot, function (index, value) {
+                            tr = $("#" + table_id + " tfoot").html();
+                            tr = tr.replace(new RegExp("{{" + index + "}}", 'g'), value);
+                            $("#" + table_id + " tfoot").html(tr);
+                        });
+                    }
+                }
+                if (resp.data.total_rows != null) {
+                    maxPages = Math.ceil(resp.data.total_rows / 200);
+                }
+                else {
+                    maxPages = 1;
+                }
+                _table.show();
+                if (emptyTable) {
+                    $(".empty_table_message").show();
+                }
+                else {
+                    $(".empty_table_message").hide();
+                }
+                if (!_table.data("type")) {
+                    _table.floatThead({
+                        'scrollContainer': true
+                    });
+                }
+
+                /** Relleno con celdas vacías */
+                var void_tr = _template.replaceAll(/\{\{[A-Za-z0-9_]+\}\}/g, "");
+                void_tr = $(void_tr);
+                void_tr.find("td").html("&nbsp;");
+                void_tr.addClass("void_tr");
+                while (_table.outerHeight() + 45 < content_height) {
+                    $("#" + table_id + " tbody").append(void_tr.clone());
+                }
+
+                /* Fill content outside table after load */
+                if (resp.data.meta) {
+                    $.each(resp.data.meta, function (index, value) {
+                        $("." + index).text(value);
+                    });
+                }
+            })
+            .fail(function () {
+                $("div.loading_error").show();
+            })
+            .always(function () {
+                $("div.loading_data").hide();
+            });
+    }
+
+    /* Content loader */
+    $(".content_loader").each(function () {
+        load_content($(this).attr("id"));
+    });
+
+    function load_content(div_id) {
+        var _div = $("#" + div_id);
+        module = url.module || "index";
+        $.ajax({
+            method: "POST",
+            url: module + "/" + div_id + "_loader/",
+            data: url,
+            dataType: "html"
+        })
+            .done(function (data) {
+                _div.html(data);
+                $(".menu_item").on("click", function () {
+                    $(this).css({
+                        "opacity": "0.1",
+                        "transform": "scale(2)"
+                    });
+                });
+                $("#main_content").has(".details_content").addClass("details_main_content");
+                $(".close_details").on("click", function (e) {
+                    e.preventDefault();
+                    $(".details_content").css({
+                        "opacity": "0.1",
+                        "transform": "scale(0.1)"
+                    });
+                    history.back();
+                });
+                _div.find(".link_button").on("click", function () {
+                    const href = $(this).data("href");
+                    const target = href.startsWith("http") ? "_blank" : "_top";
+                    window.open(href, target);
+                });
+                _div.find(".alert_button").on("click", function () {
+                    var alert_href = $(this).data("href");
+                    $.jAlert({
+                        'title': $(this).data("title") || false,
+                        'theme': $(this).data("theme") || "blue",
+                        'iframe': alert_href,
+                        'size': {
+                            "height": content_height + "px",
+                            "width": "100%"
+                        },
+                        'iframeHeight': (content_height - 41) + "px",
+                        'noPadContent': true
+                    });
+                    return false;
+                });
+                _div.find(".print_button").on("click", function () {
+                    print_header = null;
+                    if ($(".print_header").length) {
+                        print_header = $(".print_header").html();
+                    }
+                    print_footer = null;
+                    if ($(".print_footer").length) {
+                        print_footer = $(".print_footer").html();
+                    }
+                    $($(this).data("print")).printThis({
+                        'loadCSS': $(this).data("css") || "",
+                        'header': print_header,
+                        'footer': print_footer
+                    });
+                });
+                _div.find(".pdf_button").on("click", function () {
+                    /* Destroy floatThead to avoid conficts with printThis */
+                    var html = "";
+                    var print_header = "";
+                    if ($(".print_header").length) {
+                        print_header = $(".print_header").html();
+                    }
+                    var print_footer = "";
+                    if ($(".print_footer").length) {
+                        print_footer = $(".print_footer").html();
+                    }
+                    html = print_header + $($(this).data("content")).html() + print_footer;
+                    getPDF(html);
+                });
+                _div.find(".filter_button").on("click", function () {
+                    $(".action_filter").toggle("slow");
+                });
+                _div.find("form").on("submit", form_on_submit);
+                $(".open_dialog_button").on("click", function () {
+                    $("#" + $(this).data("dialog")).dialog("open");
+                });
+                /*
+                if($(".delete_button").length)
+                {
+                    $(".delete_button").on("click", delete_button_click);
+                }
+                if($(".change_status_button").length)
+                {
+                    $(".change_status_button").on("click", change_status_click);
+                }
+                */
+                if ($(".file_downloader").length && typeof (FileDownloader) == "function") {
+                    FileDownloader();
+                }
+
+                // Buscador en menú
+                if (typeof (menuSearchEvent) == "function") {
+                    menuSearchEvent();
+                }
+
+                //Show data viewer
+                _div.find(".data_viewer").show();
+
+                /* Link row */
+                $(".link_row").on("click", function () {
+                    if ($(this).data("href") != "#") {
+                        location.href = $(this).data("href");
+                    }
+                });
+
+                /* Charts */
+                var ctx = $(".myChart");
+                if (ctx.length > 0) {
+                    init_chart();
+                }
+            })
+            .fail(function () {
+                $("div.loading_error").show();
+            })
+            .always(function () {
+                $("div.loading_data").hide();
+            });
+    }
+
+    if ($(".data_viewer").length) {
+        let searchTimeout;
+        $(".data_search").on("input", function () {
+            clearTimeout(searchTimeout);
+            query = $(this).val().trim().toLowerCase();
+
+            if ($(this).data("searchmode") === 'lazzy') {
+                searchTimeout = setTimeout(function () {
+                    $(".data_viewer tbody tr").not(".template").each(function () {
+                        $(this).remove();
+                    });
+                    const firstTable = document.querySelector('table.data_viewer:not(.floatThead-table)');
+                    const viewerId = firstTable ? firstTable.id : null;
+
+                    currentPage = 1;
+                    maxPages = 1;
+                    emptyTable = true;
+                    LazzyLoadTable(viewerId, query);
+                }, 150); // Adjust delay to balance responsiveness
+            }
+            else {
+                searchTimeout = setTimeout(function () {
+                    $(".data_viewer tbody tr").not(".template").each(function () {
+                        $(this).toggle($(this).data("searchable").includes(query));
+                    });
+                }, 150); // Adjust delay to balance responsiveness
+            }
+        });
+    }
+
+    /* Filter loader */
+    //filter_content = [];
+    $(".data_filter").each(function () {
+        if ($(this).is("select")) {
+            load_filter($(this).attr("id"));
+        }
+        else {
+            $(this).on("change", function () {
+                if ($(this).is(".date_input")) {
+                    $(this).data("value", $(this).val());
+                    url.options[$(this).data("identifier")] = $.datepicker.formatDate("yy-mm-dd", $(this).datepicker("getDate"));
+                }
+                else {
+                    url.options[$(this).data("identifier")] = $(this).val();
+                }
+                goto_url();
+            });
+        }
+    });
+
+    function load_filter(selector_id) {
+        var action_module = url.module || "index";
+        var _selector = $("#" + selector_id);
+        if (_selector.data("module") != null) {
+            action_module = _selector.data("module");
+        }
+        $.ajax({
+            method: "POST",
+            url: action_module + "/" + selector_id + "_loader/",
+            data: url,
+            dataType: "json"
+        })
+            .done(function (resp) {
+                if (resp.data) {
+                    var select_default_width = screen.width < 750 ? '100%' : 'fit-content';
+                    var select_params = {
+                        data: resp.data,
+                        dropdownAutoWidth: true,
+                        placeholder: _selector.data("placeholder") || "",
+                        width: _selector.data("width") || select_default_width
+                    }
+                    if (_selector.data("search") || _selector.data("default") == "none") {
+                        item = $(document.createElement("option"));
+                        item.appendTo(_selector);
+                    }
+                    if (!_selector.data("search")) {
+                        select_params.minimumResultsForSearch = Infinity;
+                    }
+                    _selector.select2(select_params);
+                    if (_selector.data("value") != null) {
+                        _selector.val(_selector.data("value"));
+                        _selector.trigger('change.select2');
+                    }
+                    if (_selector.data("identifier")) {
+                        if (url.options[_selector.data("identifier")]) {
+                            _selector.val(url.options[_selector.data("identifier")]);
+                            _selector.trigger('change.select2');
+                        }
+                        _selector.on("change", function () {
+                            url.options[_selector.data("identifier")] = _selector.val();
+                            if (_selector.data("reset")) {
+                                fields = _selector.data("reset").split(",");
+                                $.each(fields, function () {
+                                    if (url.options[this]) {
+                                        url.options[this] = null;
+                                    }
+                                });
+                            }
+                            goto_url();
+                        });
+                    }
+                }
+            })
+            .fail(function () {
+                _selector.hide();
+            })
+            .always(function () {
+            });
+    }
+
+    $(".filter_button").on("click", function () {
+        $(".action_filter").toggle("slow");
+    });
+
+    /**
+     * Footer de una columna
+     * 
+     * Calcular colspan en footer de una sola columna.
+     */
+    function updateFooterColspan(tableId) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+
+        // Count only visible <th> or <td> in the first row (header row is typical)
+        const headerCells = table.querySelectorAll("thead tr th, thead tr td");
+        let visibleCount = 0;
+
+        headerCells.forEach(cell => {
+            const style = window.getComputedStyle(cell);
+            if (style.display !== "none") {
+                visibleCount++;
+            }
+        });
+
+        // Update the footer cell colspan
+        const footerCell = table.querySelector(".one_column_footer");
+        if (footerCell) {
+            footerCell.colSpan = visibleCount;
+        }
+    }
+
+    /* Go To URL */
+    function goto_url() {
+        if (url.method == null) {
+            url.method = "Index";
+        }
+        var href = url.module + "/" + url.method + "/";
+        $.each(url.options, function (key, value) {
+            if (value != null && value != 0 && value != "0") {
+                href += key + "/" + value + "/";
+            }
+        });
+
+        location.href = href;
+    }
+
+    /** Download link */
+    $(".download_link").on("click", function () {
+        $.form($(this).data("url"), url).submit();
+    });
+
+    /* Print button */
+    $(".print_button").on("click", function () {
+        // Imprimit todo si no viene definido en data-print
+        if ($(this).data("print") == null) {
+            window.print();
+            return false;
+        }
+
+        /* Destroy floatThead to avoid conficts with printThis */
+        if ($(".data_viewer").length > 0) {
+            $($(this).data("print")).floatThead('destroy');
+        }
+        var rand = Math.floor(Math.random() * 100000);
+        var print_header = null;
+        if ($(".print_header").length) {
+            print_header = $(".print_header").html();
+        }
+        var print_footer = null;
+        if ($(".print_footer").length) {
+            print_footer = $(".print_footer").html();
+        }
+        var css = "";
+        if ($(this).data("print") == ".data_viewer" || $(this).data("print") == ".data_table") {
+            css = 'public/styles/print_list.css?r=' + rand;
+        }
+        if ($($(this).data("print")).data("css") !== undefined) {
+            css = $($(this).data("print")).data("css");
+        }
+        $($(this).data("print")).printThis({
+            'loadCSS': css,
+            'header': print_header,
+            'footer': print_footer
+        });
+    });
+
+    /** PDF button */
+    $(".pdf_button").on("click", function () {
+        /* Destroy floatThead to avoid conficts with printThis */
+        if ($(".data_viewer").length > 0) {
+            $($(this).data("print")).floatThead('destroy');
+        }
+        var html = "";
+        var print_header = "";
+        if ($(".print_header").length) {
+            print_header = $(".print_header").html();
+        }
+        var print_footer = "";
+        if ($(".print_footer").length) {
+            print_footer = $(".print_footer").html();
+        }
+        html = print_header;
+        $($(this).data("content")).each(function () {
+            html += $(this).html();
+        });
+        html += print_footer;
+        getPDF(html);
+    });
+
+    function getPDF(html) {
+        div = $(document.createElement('div'));
+        div.css("width", "720px");
+        div.html(html);
+        $("body").append(div);
+        var HTML_Width = div.width();
+        var HTML_Height = div.height();
+        var top_left_margin = 48;
+        var PDF_Width = HTML_Width + (top_left_margin * 2);
+        var PDF_Height = 958 + (top_left_margin * 2);
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+
+        var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+        html2canvas(div[0], {
+            allowTaint: true,
+            scale: 2
+        }).then(function (canvas) {
+            canvas.getContext('2d');
+
+            console.log(canvas.height + "  " + canvas.width);
 
 
-			for (var i = 1; i <= totalPDFPages; i++) {
-				pdf.addPage(PDF_Width, PDF_Height);
-				pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
-			}
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
 
-			pdf.save("HTML-Document.pdf");
-		});
-		div.remove();
-	};
 
-	$(".link_row").on("click", function () {
-		if ($(this).data("href") != "#") {
-			window.open($(this).data("href"), "_top");
-		}
-	});
+            for (var i = 1; i <= totalPDFPages; i++) {
+                pdf.addPage(PDF_Width, PDF_Height);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+            }
+
+            pdf.save("HTML-Document.pdf");
+        });
+        div.remove();
+    };
+
+    $(".link_row").on("click", function () {
+        if ($(this).data("href") != "#") {
+            window.open($(this).data("href"), "_top");
+        }
+    });
 });

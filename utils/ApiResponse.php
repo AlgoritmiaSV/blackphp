@@ -66,6 +66,10 @@ class ApiResponse
 
         header('Content-Type: application/json; charset=utf-8');
 
+        array_walk_recursive($response, function (&$item) {
+            $item = $item === null ? "" : $item;
+        });
+
         echo json_encode(
             $response,
             JSON_UNESCAPED_UNICODE |

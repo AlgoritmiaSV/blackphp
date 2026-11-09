@@ -158,7 +158,7 @@ trait ORM
         self::init();
         $now = Date("Y-m-d H:i:s");
         if (self::$_timestamps) {
-            $user_id = Session::get("user_id") ?? 0;
+            $user_id = Session::get("user/user_id") ?? 0;
             if (empty($this->{$primary_key})) {
                 $this->setCreationUser($user_id);
                 $this->setCreationTime($now);
@@ -216,7 +216,7 @@ trait ORM
         self::init();
         $now = Date("Y-m-d H:i:s");
         if (self::$_timestamps) {
-            $user_id = empty(Session::get("user_id")) ? 0 : Session::get("user_id");
+            $user_id = empty(Session::get("user/user_id")) ? 0 : Session::get("user/user_id");
             $data["edition_user"] = $user_id;
             $data["edition_time"] = $now;
         }
@@ -308,7 +308,7 @@ trait ORM
         $affected = 0;
         if (self::$_soft_delete) {
             if (self::$_timestamps) {
-                $this->setEditionUser(Session::get("user_id"));
+                $this->setEditionUser(Session::get("user/user_id"));
                 $this->setEditionTime(Date("Y-m-d H:i:s"));
             }
             $this->setStatus(self::$_deleted_status);

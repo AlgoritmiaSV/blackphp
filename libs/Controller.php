@@ -179,11 +179,11 @@ class Controller
 
         #6 Verificación de usuario
         $userPhoto = "public/images/user.png";
-        if (Session::get("user_id") != null) {
-            $this->view->data["user_name"] = Session::get("user_name");
-            $this->view->data["nickname"] = Session::get("nickname");
+        if (Session::get("user/user_id") != null) {
+            $this->view->data["user_name"] = Session::get("user/user_name");
+            $this->view->data["nickname"] = Session::get("user/nickname");
 
-            $profilePhoto = $this->store_dir . "users/" . Session::get("user_id") . "-profile.jpg";
+            $profilePhoto = $this->store_dir . "users/" . Session::get("user/user_id") . "-profile.jpg";
             if (file_exists($profilePhoto)) {
                 $userPhoto = $profilePhoto;
             }
@@ -254,11 +254,11 @@ class Controller
      */
     protected function session_required($type = 'html', $module = "")
     {
-        if (Session::get("user_id") != null) {
+        if (Session::get("user/user_id") != null) {
             if (!empty($module)) {
                 $module = appModulesModel::findBy("module_url", $module);
                 $perms = roleModulesModel::where("module_id", $module->getModuleId())
-                    ->where("role_id", Session::get("role_id"))
+                    ->where("role_id", Session::get("user/role_id"))
                     ->get();
                 if (empty($perms->getRoleModuleId())) {
                     if ($type == 'json') {
@@ -390,7 +390,7 @@ class Controller
         }
         $user_log = new userLogsModel();
         $user_log->set(array(
-            "user_id" => Session::get("user_id"),
+            "user_id" => Session::get("user/user_id"),
             "element_id" => $element->getElementId(),
             "action_id" => $actions[$action_key],
             "date_time" => $date_time,

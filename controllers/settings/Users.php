@@ -53,7 +53,7 @@ trait Users
         $this->view->data["title"] = _("Edit user");
         $this->view->standard_form();
         $this->view->data["nav"] = $this->view->render("main/nav", true);
-        if ($user_id == Session::get("user_id")) {
+        if ($user_id == Session::get("user/user_id")) {
             $this->view->restrict[] = "no_self";
         }
         $this->view->restrict[] = "creation";
@@ -160,7 +160,7 @@ trait Users
         }
 
         $this->userActions($user);
-        if ($user_id == Session::get("user_id")) {
+        if ($user_id == Session::get("user/user_id")) {
             $this->view->restrict[] = "no_self";
         }
         $this->view->data["print_title"] = _("User details");

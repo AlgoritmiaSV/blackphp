@@ -221,9 +221,9 @@ class Dates
      * @param string $time_string La fecha inicial (Por ejemplo, la fecha de nacimiento)
      * @param boolean $text La salida debe ser exclusivamente en texto
      * 
-     * @return string La edad
+     * @return string|null La edad
      */
-    public static function age(string $time_string, bool $text = false)
+    public static function age(?string $time_string, bool $text = false)
     {
         $time = new DateTime($time_string);
         $ago = $time->diff(new DateTime());

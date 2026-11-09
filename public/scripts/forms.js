@@ -204,20 +204,25 @@ $(function () {
                 });
             }
 
-            /* inputs */
-            if (json.update) {
+            /**
+             * Datos predeterminados en formularios
+             * 
+             * Datos predeterminados en inputs, select, textarea, radio, checkbox y spans
+             */
+            if (json.update || json.data?.formData) {
+                let formData = json.update ?? json.data.formData;
                 $(".update_input").each(function () {
-                    if (json.update[$(this).attr("name")]) {
-                        $(this).val(json.update[$(this).attr("name")]);
-                        $(this).data("value", json.update[$(this).attr("name")]);
+                    if (formData[$(this).attr("name")]) {
+                        $(this).val(formData[$(this).attr("name")]);
+                        $(this).data("value", formData[$(this).attr("name")]);
                     }
                     if ($(this).data("cat_source") != null) {
-                        $(this).data("default_value", json.update[$(this).attr("name")]);
-                        $(this).data("default_cat", json.update[$($(this).data("cat_source")).attr("name")]);
+                        $(this).data("default_value", formData[$(this).attr("name")]);
+                        $(this).data("default_cat", formData[$($(this).data("cat_source")).attr("name")]);
                     }
                 });
                 $(".update_radio").each(function () {
-                    if (json.update[$(this).attr("name")] == $(this).attr("value")) {
+                    if (formData[$(this).attr("name")] == $(this).attr("value")) {
                         $(this).attr("checked", "checked");
                     }
                     else {
@@ -225,7 +230,7 @@ $(function () {
                     }
                 });
                 $(".update_ucheck").each(function () {
-                    if (parseInt(json.update[$(this).attr("name")]) == 1) {
+                    if (parseInt(formData[$(this).attr("name")]) == 1) {
                         $(this).attr("checked", "checked");
                     }
                     else {
@@ -233,7 +238,7 @@ $(function () {
                     }
                 });
                 $(".update_text").each(function () {
-                    $(this).text(json.update[$(this).data("id")]);
+                    $(this).text(formData[$(this).data("id")]);
                 });
             }
             $(".age_input").trigger("change");

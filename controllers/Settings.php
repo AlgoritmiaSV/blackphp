@@ -49,7 +49,7 @@ class Settings extends Controller
         $this->view->data["nav"] = $this->view->render("main/nav", true);
         $module = appModulesModel::findBy("module_url", $this->module);
         $this->view->data["title"] = _($module->getModuleName());
-        $this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
+        $this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("user/role_id"))
             ->where("module_id", $module->getModuleId())
             ->orderBy("method_order")->getAllArray();
         $this->view->data["content"] = $this->view->render("generic_menu", true);

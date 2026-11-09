@@ -86,7 +86,7 @@ trait Preferences
             if ($entity_option->getOptionValue() != $value) {
                 $entity_option->set([
                     "option_value" => $value,
-                    "edition_user" => Session::get("user_id"),
+                    "edition_user" => Session::get("user/user_id"),
                     "edition_time" => Date("Y-m-d H:i:s")
                 ])->save();
             }

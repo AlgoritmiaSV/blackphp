@@ -13,7 +13,9 @@ class Session
      */
     public static function init()
     {
-        @session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            @session_start();
+        }
     }
 
     /**
@@ -28,7 +30,23 @@ class Session
      */
     public static function set($key, $value)
     {
-        $_SESSION[$key] = $value;
+        if (strpos($key, '/') === false) {
+            $_SESSION[$key] = $value;
+            return;
+        }
+
+        $indexes = explode('/', $key);
+        $current = &$_SESSION;
+
+        foreach ($indexes as $index) {
+            if (!isset($current[$index]) || !is_array($current[$index])) {
+                $current[$index] = [];
+            }
+
+            $current = &$current[$index];
+        }
+
+        $current = $value;
     }
 
     public static function unset($key)
@@ -61,10 +79,8 @@ class Session
             }
             return $result;
         }
-        if (isset($_SESSION[$key])) {
-            return $_SESSION[$key];
-        }
-        return null;
+
+        return $_SESSION[$key] ?? null;
     }
 
     /**

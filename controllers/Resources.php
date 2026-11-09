@@ -26,7 +26,7 @@ class Resources extends Controller
     public function KeepAlive()
     {
         ApiResponse::success(data: [
-            "alive" => Session::get("user_id") != null
+            "alive" => Session::get("user/user_id") != null
         ]);
     }
 

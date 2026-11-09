@@ -45,7 +45,7 @@ trait Entity
         $entity->set(array(
             "entity_name" => $request["entity_name"],
             "entity_slogan" => $request["entity_slogan"],
-            "edition_user" => Session::get("user_id"),
+            "edition_user" => Session::get("user/user_id"),
             "user_edition_time" => $time
         ))->save();
         Session::set("entity", $entity->toArray());

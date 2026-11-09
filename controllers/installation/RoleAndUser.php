@@ -6,11 +6,7 @@ trait RoleAndUser
         $this->InstallerRequired();
         $this->view->data["title"] = _("Role and user");
         $this->view->standard_form();
-        if (Session::get("user_id") == null) {
-            $this->view->restrict[] = "inside_installation";
-        } else {
-            $this->view->restrict[] = "outside_installation";
-        }
+        $this->view->restrict[] = Session::get("user/user_id") == null ? "inside_installation" : "outside_installation";
         $role_elements = "";
         $modules = appModulesModel::getAll();
         foreach ($modules as $module) {

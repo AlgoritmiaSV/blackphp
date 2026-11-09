@@ -132,13 +132,13 @@ trait Roles
         $this->view->data["title"] = _("Menu");
         $this->view->standard_form();
         $this->view->data["nav"] = $this->view->render("main/nav", true);
-        $modules = availableModulesModel::where("role_id", Session::get("role_id"))->orderBy("module_order")->getAllArray();
+        $modules = availableModulesModel::where("role_id", Session::get("user/role_id"))->orderBy("module_order")->getAllArray();
         $this->view->data["modules"] = "";
         foreach ($modules as $module) {
             foreach ($module as $key => $item) {
                 $this->view->data[$key] = $item;
             }
-            $this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("role_id"))
+            $this->view->data["methods"] = availableMethodsModel::where("role_id", Session::get("user/role_id"))
                 ->where("module_id", $module["module_id"])
                 ->orderBy("method_order")->getAllArray();
             $this->view->data["modules"] .= $this->view->render("modules", true);
@@ -225,12 +225,13 @@ trait Roles
 
         $this->view->data["users"] = implode(", ", array_column(usersModel::where("role_id", $role_id)->getAllArray(), "user_name"));
 
-        if ($role["role_id"] == Session::get("role_id")) {
+        if ($role["role_id"] == Session::get("user/role_id")) {
             $this->view->restrict[] = "self";
         }
 
         # Permissions
-        $appModules = appModulesModel::whereIn(array_column(entityModulesModel::getAllArray(), "module_id"))->getAll();
+        $appModules = appModulesModel::whereIn(array_column(entityModulesModel::getAllArray(), "module_id"))
+            ->getAll();
         $modules = "";
         foreach ($appModules as $module) {
             $this->view->data["module_name"] = _($module->getModuleName());
@@ -352,7 +353,7 @@ trait Roles
         $request = http::getRequestData();
         $this->check_permissions(empty($request["role_id"]) ? "create" : "update", "roles");
 
-        if ($request["role_id"] != Session::get("role_id")) {
+        if ($request["role_id"] != Session::get("user/role_id")) {
             # Acceso a los módulos
             roleModulesModel::where("role_id", $request["role_id"])
                 ->whereNotIn($request["modules"], "module_id")

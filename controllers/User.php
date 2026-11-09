@@ -46,7 +46,7 @@ class User extends Controller
     public function load_form_data()
     {
         $result = [];
-        if (Session::get("user_id") == null && $_POST["method"] != "SetNewPassword") {
+        if (Session::get("user/user_id") == null && $_POST["method"] != "SetNewPassword") {
             $result = $this->LoadLoginForm();
         } else {
             switch ($_POST["method"]) {
@@ -83,7 +83,7 @@ class User extends Controller
         }
         unset($locale);
 
-        $user = usersModel::find(Session::get("user_id"));
+        $user = usersModel::find(Session::get("user/user_id"));
         $result["update"] = [
             "theme_id" => Session::get("theme_id"),
             "locale" => Session::get("locale"),
@@ -188,9 +188,7 @@ class User extends Controller
             }
 
             # Cargar los datos del usuario a la sesión actual
-            foreach ($user->toArray() as $key => $value) {
-                Session::set($key, $value);
-            }
+            Session::set("user", $user->toArray());
 
             # Guardar en la sesión el identificador del equipo del usuario
             Session::set("blackphp_device_code", $request["blackphp_device_code"]);
@@ -285,7 +283,7 @@ class User extends Controller
             "public/styles/profile.css"
         ]);
 
-        $profileImage = "entities/" . Session::get("entity/entity_subdomain") . "/users/" . Session::get("user_id") . "-profile.jpg";
+        $profileImage = "entities/" . Session::get("entity/entity_subdomain") . "/users/" . Session::get("user/user_id") . "-profile.jpg";
         if (!file_exists($profileImage)) {
             $profileImage = "public/images/user.png";
         }
@@ -307,7 +305,7 @@ class User extends Controller
     {
         $this->session_required("json");
 
-        $user = usersModel::find(Session::get("user_id"));
+        $user = usersModel::find(Session::get("user/user_id"));
         if ($_POST["theme_id"] != Session::get("theme_id")) {
             $user->setThemeId($_POST["theme_id"]);
             $theme = appThemesModel::find($_POST["theme_id"]);
@@ -319,9 +317,9 @@ class User extends Controller
             Session::set("locale", $_POST["locale"]);
             Session::set("lang", explode("_", $_POST["locale"])[0]);
         }
-        if ($_POST["user_name"] != Session::get("user_name")) {
+        if ($_POST["user_name"] != Session::get("user/user_name")) {
             $user->setUserName($_POST["user_name"]);
-            Session::set("user_name", $_POST["user_name"]);
+            Session::set("user/user_name", $_POST["user_name"]);
         }
         $user->save();
 
@@ -335,7 +333,7 @@ class User extends Controller
         }
 
         if (!empty($_FILES["profile"]["name"])) {
-            $file = $dir . Session::get("user_id") . "-profile.jpg";
+            $file = $dir . Session::get("user/user_id") . "-profile.jpg";
             if (file_exists($file)) {
                 unlink($file);
             }
@@ -362,7 +360,7 @@ class User extends Controller
     public function ChangePassword()
     {
         $this->session_required("json");
-        $user = usersModel::find(Session::get("user_id"));
+        $user = usersModel::find(Session::get("user/user_id"));
         if (md5($_POST["current_password"]) != $user->getPassword() && !password_verify($_POST["current_password"], $user->getPasswordHash())) {
             ApiResponse::error(
                 code: "AUTH_INVALID_CREDENTIALS",

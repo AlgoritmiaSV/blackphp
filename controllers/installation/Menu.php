@@ -15,11 +15,7 @@ trait Menu
             $this->view->data["methods"] = appMethodsModel::where("module_id", $module["module_id"])->orderBy("default_order")->getAllArray();
             $this->view->data["modules"] .= $this->view->render("modules", true);
         }
-        if (Session::get("user_id") == null) {
-            $this->view->restrict[] = "inside_installation";
-        } else {
-            $this->view->restrict[] = "outside_installation";
-        }
+        $this->view->restrict[] = Session::get("user/user_id") == null ? "inside_installation" : "outside_installation";
         $this->view->data["content"] = $this->view->render("installation/menu", true);
         $this->view->render('main');
     }
@@ -86,7 +82,7 @@ trait Menu
         $user = usersModel::find($entity->getAdminUser());
 
         # Configuración de íconos del rol de administrador
-        if ($user->getUserId() != Session::get("user_id")) {
+        if ($user->getUserId() != Session::get("user/user_id")) {
             # Módulos del rol administrador
             roleModulesModel::where("role_id", $entity->getAdminRole())->whereNotIn($_POST["modules"], "module_id")->update(["status" => 0]);
             foreach ($_POST["modules"] as $module_id) {

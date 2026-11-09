@@ -27,11 +27,7 @@ trait Entity
 
         $this->view->data["title"] = _("Installation");
         $this->view->standard_form();
-        if (Session::get("user_id") == null) {
-            $this->view->restrict[] = "inside_installation";
-        } else {
-            $this->view->restrict[] = "outside_installation";
-        }
+        $this->view->restrict[] = Session::get("user/user_id") == null ? "inside_installation" : "outside_installation";
         $this->view->data["content"] = $this->view->render("installation/entity_data", true);
         $this->view->render('main');
     }
@@ -102,7 +98,7 @@ trait Entity
             "entity_name" => $request["entity_name"],
             "app_name" => empty($request["app_name"]) ? ucfirst($subdomain) : $request["app_name"],
             "entity_slogan" => $request["entity_slogan"],
-            "edition_user" => Session::get("user_id") == null ? 0 : Session::get("user_id"),
+            "edition_user" => Session::get("user/user_id") == null ? 0 : Session::get("user/user_id"),
             "user_edition_time" => $time
         ]);
         $entity->save();

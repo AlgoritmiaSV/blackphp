@@ -132,6 +132,6 @@ class http
     public static function isApiRequest()
     {
         return isset($_SERVER["REQUEST_URI"])
-            && str_starts_with($_SERVER["REQUEST_URI"], "ApiV1/") === true;
+            && str_starts_with($_SERVER["REQUEST_URI"], '/ApiV1/') === true;
     }
 }

@@ -46,6 +46,11 @@ class Controller
         $this->view = new View();
         $this->view->data["base_href"] = "/";
 
+        # Extrayendo información de JWT
+        if (http::isApiRequest()) {
+            Auth::loadJwt();
+        }
+
         #2 Extrayendo información del sistema
         $system = Session::get("system");
         if (empty($system)) {
@@ -409,6 +414,18 @@ class Controller
             $response = $_SERVER["REQUEST_METHOD"] == "GET" ? "html" : "json";
         }
         $actions = ["read" => 8, "create" => 4, "update" => 2, "delete" => 1];
+
+        if (http::isApiRequest() && Session::get("permissions") == null) {
+            $permissions = [];
+            $elements = roleElementsModel::where("role_id", Session::get("user/user_id"))
+                ->join("app_elements", "element_id")
+                ->getAll();
+            foreach ($elements as $item) {
+                $permissions[$item["element_key"]] = $item["permissions"];
+            }
+            Session::set("permissions", $permissions);
+        }
+
         $permissions = Session::get("permissions");
         if ($permissions == null) {
             if ($response == 'json') {

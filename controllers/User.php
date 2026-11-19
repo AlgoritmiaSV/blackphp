@@ -233,7 +233,27 @@ class User extends Controller
             }
             Session::set("permissions", $permissions);
 
-            ApiResponse::success(actions: ["reload" => true]);
+            # Generación de JWT
+            $data = [];
+            if (http::isApiRequest()) {
+                $payload = [
+                    "entity" => [
+                        "entity_id" => Session::get("entity/entity_id")
+                    ],
+                    "user" => [
+                        "user_id" => $user->getUserId(),
+                        "user_name" => $user->getUserName(),
+                        "role_id" => $user->getRoleId()
+                    ]
+                ];
+                $jwt = Auth::createJwt($payload);
+                $data["token"] = $jwt;
+            }
+
+            ApiResponse::success(
+                data: $data,
+                actions: ["reload" => true]
+            );
         } else {
             $login_attemp = new loginAttempsModel();
             $login_attemp->set([

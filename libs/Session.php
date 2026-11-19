@@ -7,6 +7,11 @@
 class Session
 {
     /**
+     * @var array $data Almacenamiento temporal de datos para consumir en peticiones con uso de sesión o API
+     */
+    private static array $data;
+
+    /**
      * Inicio de sesión
      * 
      * @return void
@@ -15,6 +20,7 @@ class Session
     {
         if (session_status() === PHP_SESSION_NONE) {
             @session_start();
+            self::$data = $_SESSION;
         }
     }
 
@@ -30,13 +36,19 @@ class Session
      */
     public static function set($key, $value)
     {
+        $data = [];
+        if (http::isApiRequest()) {
+            $data = &self::$data;
+        } else {
+            $data = &$_SESSION;
+        }
         if (strpos($key, '/') === false) {
-            $_SESSION[$key] = $value;
+            $data[$key] = $value;
             return;
         }
 
         $indexes = explode('/', $key);
-        $current = &$_SESSION;
+        $current = &$data;
 
         foreach ($indexes as $index) {
             if (!isset($current[$index]) || !is_array($current[$index])) {
@@ -66,11 +78,12 @@ class Session
      * 
      * @return mixed|null El valor solicitado, o null, si no existe.
      */
-    public static function get($key)
+    public static function get(string $key)
     {
+        $data = http::isApiRequest() ? self::$data : $_SESSION;
         if (strpos($key, "/") !== false) {
             $indexes = explode("/", $key);
-            $result = $_SESSION;
+            $result = $data;
             foreach ($indexes as $index) {
                 if (!isset($result[$index])) {
                     return null;
@@ -80,7 +93,7 @@ class Session
             return $result;
         }
 
-        return $_SESSION[$key] ?? null;
+        return $data[$key] ?? null;
     }
 
     /**

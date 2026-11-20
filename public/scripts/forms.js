@@ -15,7 +15,7 @@ build_selectors = function () {
         if ($(window).width() < 900) {
             selector.data("width", "100%");
         }
-        let data = json[selector.data("source")];
+        let data = json[selector.data("source")] ?? json?.data[selector.data("source")];
         if (data != null) {
             if (selector.data("search") || selector.data("default") == "none") {
                 item = $(document.createElement("option"));
@@ -244,12 +244,13 @@ $(function () {
             $(".age_input").trigger("change");
 
             /* Multiple checks */
-            if (json.check) {
+            if (json.check || json.data?.check) {
+                let checks = json.check ?? json.data.check;
                 $(".update_check").each(function () {
                     var check = $(this);
-                    if (json.check[check.data("source")]) {
+                    if (checks[check.data("source")]) {
                         var checked = false;
-                        $.each(json.check[check.data("source")], function (index, value) {
+                        $.each(checks[check.data("source")], function (index, value) {
                             if (value.id == check.attr("value")) {
                                 check.attr("checked", "checked");
                                 checked = true;
@@ -284,6 +285,7 @@ $(function () {
                     page_string: "{current_page} / {max_page}"
                 });
             }
+
             /* selectors */
             build_selectors();
             build_autocomplete();

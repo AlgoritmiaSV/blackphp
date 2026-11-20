@@ -264,7 +264,7 @@ class Installation extends Controller
         if (Session::get("entity/entity_id") != null) {
             $entity = installationDataModel::get()
                 ->toArray();
-            $data["update"] = $entity;
+            $data["formData"] = $entity;
             $data["check"] = [
                 "modules" => entityModulesModel::select("module_id AS id")
                     ->getAll(),
@@ -312,7 +312,7 @@ class Installation extends Controller
                     ->getAll();
             }
         }
-        http::json($data);
+        ApiResponse::success(data: $data);
     }
 
     /**

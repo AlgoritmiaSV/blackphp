@@ -86,13 +86,13 @@ class Settings extends Controller
                 $result = $this->LoadUserForm();
                 break;
         }
-        http::json($result);
+        ApiResponse::success(data: $result);
     }
 
     private function LoadEntityForm()
     {
         $result = [
-            "update" => entitiesModel::get()
+            "formData" => entitiesModel::get()
                 ->toArray()
         ];
         return $result;
@@ -101,11 +101,11 @@ class Settings extends Controller
     private function LoadPreferencesForm()
     {
         $result = [
-            "update" => []
+            "formData" => []
         ];
         $options = entityOptionsModel::join("app_options", "option_id")->getAll();
         foreach ($options as $option) {
-            $result["update"][$option["option_key"]] = $option["option_value"];
+            $result["formData"][$option["option_key"]] = $option["option_value"];
         }
 
         $optionValues = appOptionValuesModel::join("app_options", "option_id")->getAll();
@@ -128,7 +128,7 @@ class Settings extends Controller
         ];
         $role = rolesModel::find($_POST["id"]);
         if ($role->exists()) {
-            $result["update"] = $role->toArray();
+            $result["formData"] = $role->toArray();
             $read = [];
             $create = [];
             $update = [];
@@ -199,7 +199,7 @@ class Settings extends Controller
         $role = rolesModel::find($_POST["id"]);
         if ($role->exists()) {
             $result = [
-                "update" => $role->toArray(),
+                "formData" => $role->toArray(),
                 "check" => [
                     "modules" => roleModulesModel::select("module_id AS id")
                         ->where("role_id", $_POST["id"])
@@ -240,7 +240,8 @@ class Settings extends Controller
         }
         $result["roles"] = rolesModel::whereIn($asignables)->list();
         if ($_POST["method"] == "EditUser") {
-            $result["update"] = usersModel::find($_POST["id"])->toArray();
+            $result["formData"] = usersModel::find($_POST["id"])
+                ->toArray();
         }
         return $result;
     }
